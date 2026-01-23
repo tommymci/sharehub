@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recap - Your AI Secretary</title>
+    <link rel="icon" type="image/png" href="https://aimwork.ai/wp-content/uploads/2025/02/Recap.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 48px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1a1a2e;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #1a1a2e;
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #2d2d44;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid #1a1a2e;
+            color: #1a1a2e;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #1a1a2e;
+            color: #ffffff;
+        }
+
+        .btn-demo {
+            background: #6366f1;
+            color: #ffffff;
+            padding: 16px 36px;
+            font-size: 18px;
+        }
+
+        .btn-demo:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6366f1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 800;
+            color: #1a1a2e;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: #6366f1;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #4b5563;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-image {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        /* Video Section */
+        .video-section {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        section:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: #e0e7ff;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: 40px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #6b7280;
+            max-width: 600px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-center .section-subtitle {
+            margin: 0 auto;
+        }
+
+        /* Steps Section */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .step-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 40px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: #1a1a2e;
+            color: #ffffff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+
+        .step-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 16px;
+        }
+
+        .step-card p {
+            color: #6b7280;
+            margin-bottom: 24px;
+        }
+
+        .step-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .step-tag {
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4b5563;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 0;
+            border: 1px solid #e5e7eb;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-image {
+            width: 100%;
+            overflow: hidden;
+            background: #f9fafb;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .feature-content {
+            padding: 28px;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+        }
+
+        .feature-content p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .feature-card.full-width {
+            grid-column: span 2;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            margin-top: 60px;
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px 24px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: #1a1a2e;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .comparison-table th:first-child {
+            background: #f9fafb;
+            color: #1a1a2e;
+        }
+
+        .comparison-table th.highlight {
+            background: #6366f1;
+        }
+
+        .comparison-table td {
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .check {
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .limited {
+            color: #f59e0b;
+        }
+
+        /* Use Cases */
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 60px;
+        }
+
+        .use-case-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .use-case-card:hover {
+            border-color: #6366f1;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+        }
+
+        .use-case-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+        }
+
+        .use-case-card p {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .testimonial-card p {
+            color: #4b5563;
+            font-size: 15px;
+            font-style: italic;
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .testimonial-info h4 {
+            font-weight: 600;
+            color: #1a1a2e;
+            font-size: 15px;
+        }
+
+        .testimonial-info span {
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* FAQ Section */
+        .faq-list {
+            max-width: 800px;
+            margin: 60px auto 0;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 24px;
+            font-weight: 600;
+            color: #1a1a2e;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: #f9fafb;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 24px;
+            color: #6366f1;
+        }
+
+        .faq-item.active .faq-question::after {
+            content: '−';
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            color: #6b7280;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-section .section-title {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: #9ca3af;
+            max-width: 500px;
+            margin: 0 auto 40px;
+            font-size: 18px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px 0;
+            background: #ffffff;
+            text-align: center;
+        }
+
+        footer p {
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .use-cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card.full-width {
+                grid-column: span 1;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo img {
+                height: 40px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <img src="https://aimwork.ai/wp-content/uploads/2025/02/Recap.png" alt="Recap Logo">
+                    <span class="logo-text">Recap</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <span class="hero-badge">For Enterprise</span>
+            <h1>Recap<br><span>Your AI Secretary</span></h1>
+            <p>Transform meetings into professional minutes with multilingual AI transcription and complete privacy.</p>
+            <div class="hero-buttons">
+                <a href="https://recap.aimwork.ai/" class="btn btn-demo" target="_blank">Try Demo</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://jarvisnsam.ai/img/ProductHero_Voicebot.png" alt="Recap AI Platform">
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="container">
+            <div class="text-center" style="margin-bottom: 40px;">
+                <span class="section-badge">See It In Action</span>
+                <h2 class="section-title">Watch How Recap Works</h2>
+            </div>
+            <div class="video-container">
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src="https://www.youtube.com/embed/y2WnQO6XUPU?si=Osl1pDHNB1a47K92" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet Your AI Secretary -->
+    <section>
+        <div class="container text-center">
+            <span class="section-badge">For Enterprise</span>
+            <h2 class="section-title">Meet Your New AI Meeting Secretary</h2>
+            <p class="section-subtitle">Experience how Recap transforms your meeting documentation workflow with enterprise-grade AI that understands your business language and security requirements.</p>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">How It Works</span>
+                <h2 class="section-title">3 Simple Steps to Perfect Meeting Minutes</h2>
+                <p class="section-subtitle">Transform your recordings into professional documentation with our streamlined AI-powered workflow designed for enterprise efficiency.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Upload Recording</h3>
+                    <p>Drag and drop or record with your mobile device. Supports common audio and video formats with multilanguage support.</p>
+                    <div class="step-tags">
+                        <span class="step-tag">Audio</span>
+                        <span class="step-tag">Video</span>
+                        <span class="step-tag">Multi Devices</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Set Preferences</h3>
+                    <p>Choose meeting templates, add custom instructions for key points, and select your preferred output language.</p>
+                    <div class="step-tags">
+                        <span class="step-tag">Templates</span>
+                        <span class="step-tag">Instructions</span>
+                        <span class="step-tag">Language</span>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>View & Download</h3>
+                    <p>AI processes fast. Get precise transcript and professional minutes, ready to download for distribution.</p>
+                    <div class="step-tags">
+                        <span class="step-tag">Fast</span>
+                        <span class="step-tag">Transcript</span>
+                        <span class="step-tag">Minutes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section id="features">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">Key Features</span>
+                <h2 class="section-title">Secure On-Premise Meeting Intelligence</h2>
+                <p class="section-subtitle">Powerful AI capabilities with complete data sovereignty - all processing happens within your secure infrastructure, never in the cloud.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="https://jarvisnsam.ai/img/voicebot/Voicebot_Feature_Cantonese.png" alt="Cantonese Transcription">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Precise Cantonese and Multilingual Transcription</h3>
+                        <p>Generate precise transcriptions and professionally formatted meeting minutes with high accuracy, capturing every important detail of your conversations.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="https://jarvisnsam.ai/img/voicebot/Voicebot_Feature_Minute.png" alt="Smart Meeting Minutes">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Smart Meeting Minutes</h3>
+                        <p>Automatically generate structured and professional meeting minutes with action items, decisions, and key points organized exactly how you need them.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="https://jarvisnsam.ai/img/voicebot/Voicebot_Feature_Speaker.png" alt="Speaker Identification">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Speaker Identification</h3>
+                        <p>Automatically distinguish between different speakers in conversations, making transcripts more readable and useful.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-image">
+                        <img src="https://jarvisnsam.ai/img/voicebot/Voicebot_Feature_Instruction.png" alt="Tailored to Your Style">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Tailored to Your Style</h3>
+                        <p>Configure specific instructions and formatting preferences so your AI Secretary creates meeting minutes exactly how you want them structured.</p>
+                    </div>
+                </div>
+                <div class="feature-card full-width">
+                    <div class="feature-image">
+                        <img src="https://jarvisnsam.ai/img/voicebot/Voicebot_Feature_Secure.png" alt="Private and Secure">
+                    </div>
+                    <div class="feature-content">
+                        <h3>Completely Private & Secure</h3>
+                        <p>Complete on-premise deployment ensures your sensitive business conversations and meeting data remain entirely within your secure infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section id="comparison">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">Why Choose Recap</span>
+                <h2 class="section-title">Compare Your Options</h2>
+                <p class="section-subtitle">See how Recap stands out from other solutions</p>
+            </div>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th class="highlight">Recap</th>
+                            <th>Meeting Platforms<br><small>Google, Zoom, Teams</small></th>
+                            <th>Recording Devices<br><small>Plaud, Mobvoi</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mixed Cantonese English Transcript</td>
+                            <td class="check">Native support</td>
+                            <td class="limited">English only</td>
+                            <td class="limited">Limited</td>
+                        </tr>
+                        <tr>
+                            <td>Customized Minutes</td>
+                            <td class="check">Flexible</td>
+                            <td>Not available</td>
+                            <td class="limited">Limited</td>
+                        </tr>
+                        <tr>
+                            <td>Speaker Identification</td>
+                            <td class="check">Support</td>
+                            <td class="check">Support</td>
+                            <td class="check">Support</td>
+                        </tr>
+                        <tr>
+                            <td>Enterprise Features</td>
+                            <td class="check">Custom deployment</td>
+                            <td class="limited">Limited options</td>
+                            <td>Basic features</td>
+                        </tr>
+                        <tr>
+                            <td>Extra Cost for LLM Subscription</td>
+                            <td class="check">Not required</td>
+                            <td>Need subscription</td>
+                            <td>Need subscription</td>
+                        </tr>
+                        <tr>
+                            <td>Data Security</td>
+                            <td class="check">On-premise</td>
+                            <td>Cloud-only storage</td>
+                            <td>Requires cloud upload</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section>
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">Use Cases</span>
+                <h2 class="section-title">Versatile Enterprise Scenarios</h2>
+                <p class="section-subtitle">How Your AI Secretary Helps Different Teams</p>
+            </div>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h3>Meeting Minutes Creation</h3>
+                    <p>Your AI Secretary attends team meetings, board discussions, and client calls, creating professional meeting minutes just like a human secretary would.</p>
+                </div>
+                <div class="use-case-card">
+                    <h3>Interview Documentation</h3>
+                    <p>Let your AI Secretary handle HR interviews, research sessions, and media interviews, providing detailed notes and summaries for easy review.</p>
+                </div>
+                <div class="use-case-card">
+                    <h3>Conference Note-Taking</h3>
+                    <p>Your AI Secretary captures conference presentations, webinars, and training sessions, organizing key points and insights for future reference.</p>
+                </div>
+                <div class="use-case-card">
+                    <h3>Client Call Summaries</h3>
+                    <p>Never miss important client details again. Your AI Secretary documents customer calls and creates actionable summaries for your team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">Success Stories</span>
+                <h2 class="section-title">What Our Clients Say</h2>
+                <p class="section-subtitle">See how enterprises are transforming their meeting documentation with Recap</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p>"Recap has revolutionized our board meetings. We save 3+ hours per meeting on documentation, and the Cantonese transcription accuracy is exceptional."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SC</div>
+                        <div class="testimonial-info">
+                            <h4>Sarah Chen</h4>
+                            <span>COO, Financial Services</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"The on-premise deployment was crucial for us. Now we have AI-powered meeting intelligence without compromising our data security policies."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MW</div>
+                        <div class="testimonial-info">
+                            <h4>Michael Wong</h4>
+                            <span>CTO, Healthcare Group</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Our legal team loves how Recap captures every detail. The custom templates ensure compliance documentation is always perfect."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JL</div>
+                        <div class="testimonial-info">
+                            <h4>Jennifer Liu</h4>
+                            <span>Legal Director, Law Firm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-badge">FAQs</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">How accurate is the Cantonese transcription?</div>
+                    <div class="faq-answer">Our AI achieves excellent accuracy for Cantonese mixed with English dialogue, which is commonly used by Hong Kong people, and supports Mandarin as well. The system is specifically trained to understand local terminology, business jargon, and natural code-switching between Cantonese, Mandarin, and English as typically spoken in Hong Kong business environments.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What audio/video formats are supported?</div>
+                    <div class="faq-answer">Recap supports all common audio and video formats including MP3, MP4, M4A, and WAV. Files can be uploaded directly through the web interface from any device on your network.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How does on-premise deployment work?</div>
+                    <div class="faq-answer">Recap is a web-based system that can be accessed by different devices within your intranet. It's deployed as a complete on-premise solution entirely within your organization's infrastructure. All processing happens locally - no data ever leaves your secure environment. Your team can access it from any device on your network while maintaining complete data isolation.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize the meeting minutes format?</div>
+                    <div class="faq-answer">Yes! Recap offers complete customization of meeting minutes templates. You can define sections, formatting styles, what to include/exclude, and specific instructions for different meeting types. Create multiple templates for board meetings, client calls, team updates, etc.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How long does processing take?</div>
+                    <div class="faq-answer">Processing is remarkably fast - typically 2-3 minutes for a half-hour meeting. The actual processing time varies depending on your hardware specifications and recording file size. Once processed, transcripts and minutes can be viewed directly in the Recap interface or downloaded for distribution.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Does it identify different speakers?</div>
+                    <div class="faq-answer">Yes, Recap automatically identifies and labels different speakers in conversations, making transcripts more accurate and organized for easy review and follow-up.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How secure is my data with Recap?</div>
+                    <div class="faq-answer">Your data security is our top priority. Recap includes automatic data cleanup within specified periods that you configure. All data remains within your secure infrastructure with on-premise deployment. You have complete control over retention policies, ensuring sensitive meeting data is automatically purged according to your organization's security requirements.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title">Ready to Transform Your Meetings?</h2>
+            <p>Experience the power of AI-driven meeting documentation. Try Recap today and see the difference.</p>
+            <a href="https://recap.aimwork.ai/" class="btn btn-demo" target="_blank">Try Demo Now</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Recap. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ toggle functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                const answer = question.nextElementSibling;
+                const isOpen = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                    faq.querySelector('.faq-answer').style.display = 'none';
+                });
+                
+                // Toggle clicked item
+                if (!isOpen) {
+                    item.classList.add('active');
+                    answer.style.display = 'block';
+                }
+            });
+        });
+
+        // Initially hide all FAQ answers
+        document.querySelectorAll('.faq-answer').forEach(answer => {
+            answer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

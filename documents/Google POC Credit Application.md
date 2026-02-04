@@ -85,24 +85,18 @@ This lowers the barrier to participation while increasing viral reach - supporte
 | **AI Cost Efficiency** | <HK$2/transformation | Cost per AI operation |
 | **User Satisfaction** | 4.0+/5 | Post-transformation survey rating |
 
-### Fundraising & Donation Metrics
+### Fundraising Metrics
 
 | Metric | Target | Measurement |
 |--------|--------|-------------|
 | **Total Fundraising** | HK$300,000+ (~US$38,000) | All donations through platform |
-| **Online Donations** | HK$150,000+ | Direct online payment (AlipayHK) |
-| **Offline/Bank Transfers** | HK$150,000+ | Bank transfers & cheques |
-| **Average Donation** | HK$200+ | Per donor average |
 | **New Donors Acquired** | 500+ | First-time donors to CCF |
-| **Donation Conversion Rate** | 10%+ | % of users who donate after transformation |
-| **Recurring Donors** | 50+ | Users who donate multiple times |
+| **Donation Conversion Rate** | 5%+ | % of users who donate after transformation |
 
-### Donation Flow Details
-1. **Free Tier:** Users can transform photos for free (quota-limited)
-2. **Video Unlock:** Donation of any amount unlocks video generation feature
-3. **Fundraiser Model:** Users create personal fundraising pages, share with friends/family
-4. **Payment Methods:** AlipayHK (primary), bank transfer, cheque
-5. **Attribution Tracking:** All donations linked to referrer for leaderboard
+### Donation Flow
+- **Free Tier:** Users can transform photos for free (quota-limited)
+- **Video Unlock:** Donation unlocks video generation feature
+- **Fundraiser Model:** Users create personal fundraising pages, share to drive donations
 
 **Expected Outcome:** Demonstrate that AI-powered engagement increases fundraising participation by 2-3x compared to traditional campaign methods, proving the value of Google Cloud AI for nonprofit digital transformation.
 

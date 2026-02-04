@@ -75,18 +75,36 @@ This lowers the barrier to participation while increasing viral reach - supporte
 
 > *Please explain what success will look like after this POC is complete. What are the expected outcomes that will convince the customer to close their deal with Google? Expected outcomes should be measurable, (%, $ increases, # increase with volume of traffic, expected % of increased performance, etc).*
 
+### AI Usage Metrics
+
 | Metric | Target | Measurement |
 |--------|--------|-------------|
-| **Photo Transformations** | 10,000+ | Number of AI transformations completed |
-| **Video Generations** | 2,000+ | Number of Veo-generated videos |
-| **Social Shares** | 5,000+ | Tracked shares via platform analytics |
-| **Donation Conversion** | 15%+ | % of users who donate after transformation |
-| **Total Fundraising** | HK$500,000+ (~US$65,000) | Direct donations through platform |
-| **New Donors Acquired** | 1,000+ | First-time donors to CCF |
-| **AI Cost Efficiency** | <HK$1/transformation | Cost per AI operation |
-| **User Satisfaction** | 4.5+/5 | Post-transformation survey rating |
+| **Photo Transformations** | 3,000+ | Number of AI transformations completed |
+| **Video Generations** | 500+ | Number of Veo-generated videos (donation-gated) |
+| **Social Shares** | 2,000+ | Tracked shares via platform analytics |
+| **AI Cost Efficiency** | <HK$2/transformation | Cost per AI operation |
+| **User Satisfaction** | 4.0+/5 | Post-transformation survey rating |
 
-**Expected Outcome:** Demonstrate that AI-powered engagement increases fundraising participation by 3-5x compared to traditional campaign methods, proving the value of Google Cloud AI for nonprofit digital transformation.
+### Fundraising & Donation Metrics
+
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| **Total Fundraising** | HK$300,000+ (~US$38,000) | All donations through platform |
+| **Online Donations** | HK$150,000+ | Direct online payment (AlipayHK) |
+| **Offline/Bank Transfers** | HK$150,000+ | Bank transfers & cheques |
+| **Average Donation** | HK$200+ | Per donor average |
+| **New Donors Acquired** | 500+ | First-time donors to CCF |
+| **Donation Conversion Rate** | 10%+ | % of users who donate after transformation |
+| **Recurring Donors** | 50+ | Users who donate multiple times |
+
+### Donation Flow Details
+1. **Free Tier:** Users can transform photos for free (quota-limited)
+2. **Video Unlock:** Donation of any amount unlocks video generation feature
+3. **Fundraiser Model:** Users create personal fundraising pages, share with friends/family
+4. **Payment Methods:** AlipayHK (primary), bank transfer, cheque
+5. **Attribution Tracking:** All donations linked to referrer for leaderboard
+
+**Expected Outcome:** Demonstrate that AI-powered engagement increases fundraising participation by 2-3x compared to traditional campaign methods, proving the value of Google Cloud AI for nonprofit digital transformation.
 
 ---
 
@@ -94,38 +112,38 @@ This lowers the barrier to participation while increasing viral reach - supporte
 
 > *How will Google get 15X ROI with this POC during the 12 months following completion. This number should align with the Revenue Expected figure provided during submission. Examples: Will the customer sign a commit worth $X? Will the customer move additional workloads upon a successful POC and what is the value of them?*
 
-**POC Credit Requested:** US$5,000 (estimated)
+**POC Credit Requested:** US$3,000 (estimated)
 
-**Expected 15X ROI Path (US$75,000+ in 12 months):**
+**Expected 15X ROI Path (US$45,000+ in 12 months):**
 
 ### Immediate Value (Campaign Period - Mar 2026)
-- Campaign fundraising target: HK$500,000+ (~US$65,000)
-- Platform demonstrates Google Cloud AI capabilities to 10,000+ users
+- Campaign fundraising target: HK$300,000+ (~US$38,000)
+- Platform demonstrates Google Cloud AI capabilities to 3,000+ users
 - Case study potential for Google Cloud nonprofit marketing
 
 ### Post-POC Expansion (12 months following)
 
-1. **CCF Annual Adoption:** CCF plans to use this platform for future annual campaigns (2027, 2028), representing ongoing GCP consumption of ~US$3,000-5,000/year
+1. **CCF Annual Adoption:** CCF plans to use this platform for future annual campaigns (2027, 2028), representing ongoing GCP consumption of ~US$2,000-3,000/year
 
-2. **Template for Other Nonprofits:** Success case can be replicated for other Hong Kong charities (est. 5-10 organizations), each representing US$2,000-5,000 annual GCP spend
+2. **Template for Other Nonprofits:** Success case can be replicated for other Hong Kong charities (est. 3-5 organizations), each representing US$1,500-3,000 annual GCP spend
 
-3. **HKMCI (Development Partner) Commitment:**
-   - HKMCI (development partner) will recommend Google Cloud for future nonprofit projects
-   - Pipeline of 3-5 similar projects annually at ~US$5,000-10,000 each
+3. **Master Concept (Development Partner) Commitment:**
+   - Master Concept (development partner) will recommend Google Cloud for future nonprofit projects
+   - Pipeline of 2-3 similar projects annually at ~US$3,000-5,000 each
 
 4. **Enterprise Expansion:**
-   - HKMCI's corporate clients exposed to Gemini/Veo capabilities
+   - Master Concept's corporate clients exposed to Gemini/Veo capabilities
    - Potential enterprise AI adoption from demonstration effect
 
 ### Conservative 12-Month Revenue Projection
 
 | Source | Value |
 |--------|-------|
-| CCF ongoing usage | US$5,000 |
-| 3 nonprofit replications | US$15,000 |
-| HKMCI project pipeline | US$30,000 |
-| Enterprise referrals | US$25,000+ |
-| **Total** | **US$75,000+** |
+| CCF ongoing usage | US$3,000 |
+| 3 nonprofit replications | US$9,000 |
+| Master Concept project pipeline | US$15,000 |
+| Enterprise referrals | US$18,000+ |
+| **Total** | **US$45,000+** |
 
 ---
 
@@ -135,10 +153,10 @@ This lowers the barrier to participation while increasing viral reach - supporte
 
 | Product | Purpose | Usage |
 |---------|---------|-------|
-| **Gemini 2.5 Flash** | Photo-to-shaved-head AI transformation | ~10,000+ API calls |
-| **Veo 3.1** | Video generation from transformed images | ~2,000+ video generations |
+| **Gemini 2.5 Flash** | Photo-to-shaved-head AI transformation | ~3,000+ API calls |
+| **Veo 3.1** | Video generation from transformed images | ~500+ video generations |
 | **Firebase** | Authentication, Firestore database, Storage, Hosting | Full application backend |
-| **Cloud Storage** | Store original/transformed images and videos | ~50GB estimated |
+| **Cloud Storage** | Store original/transformed images and videos | ~20GB estimated |
 | **Cloud Run** (if needed) | Serverless compute for AI flow orchestration | On-demand |
 | **Vertex AI** | Model serving and management | API access |
 

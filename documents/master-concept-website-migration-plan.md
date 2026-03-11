@@ -7,7 +7,7 @@ title: Master Concept Website Migration Plan
 ## Table of Contents
 
 1. [Domains](#domains)
-2. [Architecture Mind Map](#architecture-mind-map)
+2. [Architecture Overview](#architecture-overview)
 3. [Context](#context)
 4. [Target Architecture](#target-architecture)
 5. [Tech Stack](#tech-stack)
@@ -43,11 +43,54 @@ title: Master Concept Website Migration Plan
 
 ---
 
-## Architecture Mind Map
+## Architecture Overview
 
-![Architecture Diagram](https://mermaid.ink/img/pako:eNqtlF9v4jgUxb-KRVUhzVKaPyQBHlaioaRooGUKzIy0zIPj3ICXECMn2bZb0c8-10mAdGbozkrNA4rNPT8fXx_nucZEALVu7fz8mcc87ZLnerqCDdS7pB5Qua43SDHxmUpO_QiSuqoJRZxO-b95mW5uH1WZKh8jDedSmQHO-JStl1JkcaDqznSqUwPqO_wnjMQDW1GZ5rQYVdMtZTxe4tjQsEDSeH2cMrXdbnd-vogPOjLrL2KCT_9u3Bve_rWobWiSgmQiZrBNm5QvFnHCU2huGOXNAP5Z1L4VisENVg-4BJ8mQHrbLbkRSYoL5RVVKrm4-BPL97J8eHv9dYb6W3hMm38nRLdwnRGNA9STCV1CUlknF1yN7jwUXPqRWF5-wOovQgYTCUlCJlI8Pv1Y3-uP8_1c0mDD41wxoU-RoAFxx9OKR-UkV8yHWJ6saMDiy4yTP8iM8uiBx8EBfShFM-7HKZZfRYKtky65ASkaxJ31cJkB0DRDYw00xlXncQ7rliOepA0yEHLTIJCyZsVDbrawPVEu9k5xhOL76-kM7XiSblefRlXZZJiL3FFv3r9GnRvRLADiYhBQ95n7-fv-TKqS-fT6Xm2gp7pD5gnIRNmU4gFff6oeuxOs_QI-vqgdZmqDvzDSv8pNiCwgU3SKLcdILCVMS9vVWs8V63vuhJSCVEg8eBQNNyoA2L7-AH8HPCrTUOiTzF-qThBv3rvvK0RGZSDxrI6ZUY-nV48T_yIvLy_EMyrtLYJQzJvKed7H5uZ44oCnv183fYpgn-iQR1H3TAeTWmEjSaVYQ_fMbvlWaJfDiwcepKuusX1sMBEJ2T0DMzTCoArDqJYgapgOHEBOp20z_zSoDTS0q6A8mCXKtwCv_sGT7fs2fQMVWtCpotQ9K1Etqrfa7ICifsvx2UlUaIIVWlVUkeqC5Ts6048sCC3T0k6zQvABqqz5sAQZ4ASmcQC1dea0W69B-n_sD6_uO8FUlt9nf0X03ukM88u9Z1m2xY6sloGJtf5HRvHG7-NgGQ49khywHGacJgXgvA5p_6oEgW3p2hEUhp229lavMFlaFYRfjpKkaXbHOnbdsKndeaNRGm5Of0VSn5B9o2xDNyt3sN3ROux0FhiEP7D0dwqVZ_x-pvS3MuWZv5-nXziq7b4DDi7N-w?bgColor=1a1a2e)
+### Front Door
 
-[Edit this diagram on Mermaid](https://mermaid.ai/live/edit?utm_source=mermaid_mcp_server&utm_medium=remote_server&utm_campaign=claude#pako:eNqtlF9v4jgUxb-KRVUhzVKaPyQBHlaioaRooGUKzIy0zIPj3ICXECMn2bZb0c8-10mAdGbozkrNA4rNPT8fXx_nucZEALVu7fz8mcc87ZLnerqCDdS7pB5Qua43SDHxmUpO_QiSuqoJRZxO-b95mW5uH1WZKh8jDedSmQHO-JStl1JkcaDqznSqUwPqO_wnjMQDW1GZ5rQYVdMtZTxe4tjQsEDSeH2cMrXdbnd-vogPOjLrL2KCT_9u3Bve_rWobWiSgmQiZrBNm5QvFnHCU2huGOXNAP5Z1L4VisENVg-4BJ8mQHrbLbkRSYoL5RVVKrm4-BPL97J8eHv9dYb6W3hMm38nRLdwnRGNA9STCV1CUlknF1yN7jwUXPqRWF5-wOovQgYTCUlCJlI8Pv1Y3-uP8_1c0mDD41wxoU-RoAFxx9OKR-UkV8yHWJ6saMDiy4yTP8iM8uiBx8EBfShFM-7HKZZfRYKtky65ASkaxJ31cJkB0DRDYw00xlXncQ7rliOepA0yEHLTIJCyZsVDbrawPVEu9k5xhOL76-kM7XiSblefRlXZZJiL3FFv3r9GnRvRLADiYhBQ95n7-fv-TKqS-fT6Xm2gp7pD5gnIRNmU4gFff6oeuxOs_QI-vqgdZmqDvzDSv8pNiCwgU3SKLcdILCVMS9vVWs8V63vuhJSCVEg8eBQNNyoA2L7-AH8HPCrTUOiTzF-qThBv3rvvK0RGZSDxrI6ZUY-nV48T_yIvLy_EMyrtLYJQzJvKed7H5uZ44oCnv183fYpgn-iQR1H3TAeTWmEjSaVYQ_fMbvlWaJfDiwcepKuusX1sMBEJ2T0DMzTCoArDqJYgapgOHEBOp20z_zSoDTS0q6A8mCXKtwCv_sGT7fs2fQMVWtCpotQ9K1Etqrfa7ICifsvx2UlUaIIVWlVUkeqC5Ts6048sCC3T0k6zQvABqqz5sAQZ4ASmcQC1dea0W69B-n_sD6_uO8FUlt9nf0X03ukM88u9Z1m2xY6sloGJtf5HRvHG7-NgGQ49khywHGacJgXgvA5p_6oEgW3p2hEUhp229lavMFlaFYRfjpKkaXbHOnbdsKndeaNRGm5Of0VSn5B9o2xDNyt3sN3ROux0FhiEP7D0dwqVZ_x-pvS3MuWZv5-nXziq7b4DDi7N-w)
+> **Firebase App Hosting** (All GCP)
+> Domains: `masterconcept.ai` (production) / `site.mcai.dev` (trial)
+
+### Routing
+
+| Path | Destination |
+|------|-------------|
+| `/blog/*` | WordPress on SiteGround (during transition) |
+| `/wp-admin/*` | WordPress on SiteGround (during transition) |
+| `/admin/*` | Payload CMS Admin Panel |
+| `/api/*` | Payload REST + GraphQL API |
+| `/*` | Next.js 15 App (landing pages) |
+
+### Frontend Stack
+
+| Component | Role |
+|-----------|------|
+| **Next.js 15** (App Router, TypeScript) | Framework |
+| **shadcn/ui** | Design system |
+| **Tailwind CSS** | Styling |
+| **Blocks** | Hero, CTA, Features, Pricing, Testimonial, BlogList, HubSpot Form, Download, etc. |
+
+### Payload CMS API Consumers
+
+| Consumer | How |
+|----------|-----|
+| **Claude Code** | Vibe coding + file upload via Local API |
+| **Admin Users** | Edit content in browser at `/admin` |
+| **WebMCP** (future) | AI agents via MCP protocol |
+
+### Data Layer (All GCP)
+
+| Service | Stores |
+|---------|--------|
+| **Cloud SQL PostgreSQL** | Pages, Posts, Categories, Tags, Users, Forms, SEO, Navigation, Settings |
+| **GCP Cloud Storage** (Firebase Storage) | Images (CDN), Ebooks/PDFs, Downloads, Auto-thumbnails |
+
+### 3-Layer Guardrails
+
+| Layer | Tool | Constrains |
+|-------|------|------------|
+| UI Design | shadcn/ui | Consistent components, prevents messy UI |
+| Content Structure | Payload CMS | Schema-enforced content types |
+| Code Patterns | CLAUDE.md / .cursorrules | Folder structure, naming, best practices |
 
 ---
 

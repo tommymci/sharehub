@@ -718,7 +718,7 @@ window.addEventListener('load', function() {
                             </td>
                             <td class="file-date" data-order="{{ file_date }}">
                                 {% if file_date != '2024-01-01' %}
-                                    {{ file_date | date: "%y/%m/%d" }}
+                                    {{ file_date | date: "%Y-%m-%d %H:%M" }}
                                 {% else %}
                                     -
                                 {% endif %}
@@ -738,7 +738,19 @@ window.addEventListener('load', function() {
 <!-- Footer with copyright -->
 <footer style="margin-top: 3rem; padding: 1.5rem 0; border-top: 1px solid #dee2e6; text-align: center; color: #6c757d; font-size: 0.85rem;">
     <div class="container">
-        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">Last updated: {{ site.time | date: "%Y-%m-%d %H:%M" }} UTC</p>
+        <p style="margin: 0 0 0.5rem 0; font-size: 0.8rem;">Last updated: <span id="last-updated"></span> HKT</p>
+<script>
+(function(){
+  var utc = new Date("{{ site.time | date: '%Y-%m-%dT%H:%M:%S+00:00' }}");
+  var hk = new Date(utc.getTime() + 8*60*60*1000);
+  var y = hk.getFullYear();
+  var m = String(hk.getMonth()+1).padStart(2,'0');
+  var d = String(hk.getDate()).padStart(2,'0');
+  var h = String(hk.getHours()).padStart(2,'0');
+  var min = String(hk.getMinutes()).padStart(2,'0');
+  document.getElementById('last-updated').textContent = y+'-'+m+'-'+d+' '+h+':'+min;
+})();
+</script>
         <p style="margin: 0;">© 2026 Share Hub v1.1</p>
     </div>
 </footer>

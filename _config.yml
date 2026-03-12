@@ -35,3 +35,7 @@ defaults:
       path: ""
     values:
       layout: "universal"
+  - scope:
+      path: "documents"
+    values:
+      permalink: /:basename:output_ext

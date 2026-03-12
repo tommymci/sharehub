@@ -1,8 +1,8 @@
 # Jekyll Configuration for GitHub Pages
 title: Share Hub
 description: Secure Document Sharing Portal
-baseurl: "/sharehub" # Required for GitHub Pages project site deployment
-url: "" # Will be dynamically determined
+baseurl: "" # Custom domain: tommy.mcai.dev (no path prefix needed)
+url: "https://tommy.mcai.dev"
 
 # Build settings
 markdown: kramdown

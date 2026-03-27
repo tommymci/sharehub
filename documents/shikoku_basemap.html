@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>四國自駕行程 Base Map</title>
+<style>
+  body { margin: 0; background: #f5f5f5; overflow: hidden; height: 100vh; }
+  .map-container { width: 100vw; height: 100vh; cursor: grab; }
+  .map-container.grabbing { cursor: grabbing; }
+  svg { width: 100%; height: 100%; }
+  .controls { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 6px; z-index: 10; }
+  .controls button { width: 40px; height: 40px; border: none; border-radius: 8px; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.15); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .controls button:hover { background: #eee; }
+  .hint { position: fixed; top: 12px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 6px 16px; border-radius: 20px; font-size: 13px; z-index: 10; pointer-events: none; opacity: 1; transition: opacity 1s; }
+  .hint.hide { opacity: 0; }
+</style>
+</head>
+<body>
+<div class="hint" id="hint">Scroll to zoom / Drag to pan</div>
+<div class="controls">
+  <button onclick="zoomIn()" title="Zoom in">+</button>
+  <button onclick="zoomOut()" title="Zoom out">&minus;</button>
+  <button onclick="resetView()" title="Reset view">&#8634;</button>
+</div>
+<div class="map-container" id="mapContainer">
+  <svg id="mapSvg" viewBox="195 625 235 260" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        text.label { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 5px; font-weight: bold; fill: #333; text-anchor: middle; }
+        text.label-sm { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 3.5px; fill: #555; text-anchor: middle; }
+        text.pref-label { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 4.5px; fill: #666; text-anchor: middle; font-style: italic; }
+        text.sea-label { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 5px; fill: #4A7FB5; text-anchor: middle; font-style: italic; }
+        text.title { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 8px; font-weight: bold; fill: #222; text-anchor: start; }
+        text.subtitle { font-family: "Hiragino Sans", "Noto Sans CJK JP", sans-serif; font-size: 4px; fill: #666; text-anchor: start; }
+        circle.landmark { fill: #E53935; stroke: white; stroke-width: 0.5; }
+        line.bridge { stroke: #795548; stroke-width: 1.2; stroke-dasharray: 1.5,1; }
+      </style>
+    </defs>
+    <rect x="195" y="625" width="235" height="260" fill="#C5DEF0"/>
+    <text class="title" x="200" y="636">日本四國自駕行程</text>
+    <text class="subtitle" x="200" y="641">4/4 - 13/4  Base Map (accurate geography)</text>
+    <!-- Honshu -->
+    <g fill="#E0E0E0" stroke="#999" stroke-width="0.5" stroke-linejoin="round">
+      <g transform="translate(230, 687)">
+        <path d="M73,40 L72,42 L69,40 L72,43 L70,42 L68,47 L63,45 L63,42 L54,44 L51,48 L39,49 L37,53 L30,55 L28,53 L25,56 L26,53 L23,47 L25,45 L17,44 L9,51 L10,54 L5,52 L4,46 L2,44 L2,37 L0,35 L5,30 L7,24 L6,22 L12,17 L20,19 L22,16 L27,18 L35,16 L32,11 L38,8 L45,0 L58,2 L65,4 L68,7 L66,14 L70,19 L69,24 L73,40 Z"/>
+        <path d="M45,53 L43,56 L41,53 L46,51 L45,53 Z"/>
+        <path d="M21,54 L20,50 L23,51 L22,59 L19,59 L21,56 L17,51 L21,54 Z"/>
+        <path d="M15,48 L16,50 L12,52 L15,48 Z"/>
+        <path d="M35,57 L33,56 L36,56 L35,57 Z"/>
+        <path d="M24,58 L26,58 L25,61 L28,61 L26,63 L20,62 L23,56 L26,56 L24,58 Z"/>
+        <path d="M59,49 L59,52 L56,49 L59,49 Z"/>
+        <path d="M57,50 L53,52 L54,50 L57,50 Z"/>
+        <path d="M60,44 L62,45 L59,47 L60,44 Z"/>
+      </g>
+      <g transform="translate(295, 673)">
+        <polygon points="58,8 59,14 51,22 52,29 50,32 54,38 53,41 46,39 49,42 43,49 34,48 39,49 36,53 34,52 33,57 27,55 25,58 23,52 23,55 19,51 15,55 10,52 12,56 8,54 4,38 5,33 1,28 3,21 0,18 1,15 8,14 7,10 14,10 13,7 15,6 18,0 25,2 29,7 39,1 38,3 45,6 46,12"/>
+      </g>
+      <g transform="translate(345, 655)">
+        <path d="M3,59 L4,56 L0,50 L2,47 L1,40 L9,32 L8,26 L14,24 L14,20 L7,3 L16,0 L33,1 L32,5 L36,10 L41,9 L42,11 L42,17 L36,17 L35,23 L42,28 L47,26 L49,33 L59,35 L58,40 L55,41 L56,45 L62,48 L60,49 L62,60 L59,62 L53,60 L40,66 L25,56 L11,57 L11,53 L8,58 L5,56 L3,59 Z"/>
+      </g>
+      <g transform="translate(345, 655)">
+        <path d="M31,90 L23,93 L23,88 L20,89 L20,86 L38,67 L39,69 L32,79 L35,88 L31,90 Z" fill="#EEEEEE"/>
+      </g>
+    </g>
+    <!-- Ehime -->
+    <g transform="translate(225, 737)" fill="#C8E6C9" stroke="#2E7D32" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M34,21 L31,20 L35,17 L34,21 Z"/>
+      <path d="M55,6 L51,6 L55,0 L57,3 L55,6 Z"/>
+      <path d="M60,5 L61,5 L60,7 L57,6 L60,5 Z"/>
+      <path d="M58,10 L54,12 L55,7 L60,8 L58,10 Z"/>
+      <path d="M32,85 L25,83 L25,86 L23,86 L24,81 L27,82 L21,76 L24,76 L22,72 L25,72 L22,71 L23,69 L20,67 L24,70 L28,66 L28,63 L24,63 L27,60 L19,60 L21,57 L19,56 L22,51 L16,50 L8,56 L0,57 L35,37 L41,18 L50,15 L48,11 L51,10 L59,24 L70,20 L80,22 L84,18 L89,20 L87,28 L63,32 L56,41 L53,51 L42,52 L46,61 L41,64 L35,72 L31,69 L34,82 L32,85 Z"/>
+    </g>
+    <!-- Kagawa -->
+    <g transform="translate(308, 724)" fill="#FFF9C4" stroke="#F9A825" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M6,33 L1,31 L4,21 L0,17 L6,20 L19,10 L26,13 L30,9 L31,14 L34,11 L37,14 L36,17 L45,22 L44,25 L31,23 L22,30 L15,27 L6,33 Z"/>
+      <path d="M27,5 L25,4 L29,4 L27,5 Z"/>
+      <path d="M40,0 L42,0 L40,8 L38,7 L38,5 L35,9 L35,5 L31,3 L40,0 Z" fill="#FFFDE7" stroke="#F9A825"/>
+    </g>
+    <!-- Tokushima -->
+    <g transform="translate(312, 744)" fill="#FFE0B2" stroke="#E65100" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M50,2 L52,0 L51,4 L50,2 Z"/>
+      <path d="M41,2 L49,0 L49,3 L52,4 L48,13 L55,20 L50,24 L57,26 L38,36 L33,43 L27,42 L25,38 L27,34 L20,33 L19,25 L13,27 L0,21 L2,13 L11,7 L18,10 L27,3 L40,5 L41,2 Z"/>
+    </g>
+    <!-- Kochi -->
+    <g transform="translate(251, 765)" fill="#B2DFDB" stroke="#00695C" stroke-width="0.6" stroke-linejoin="round">
+      <path d="M61,0 L74,6 L80,4 L81,12 L88,13 L86,17 L88,21 L94,22 L87,41 L75,25 L65,21 L55,23 L55,21 L56,24 L44,28 L50,28 L44,29 L42,32 L41,29 L38,33 L39,38 L37,44 L34,44 L30,52 L25,53 L25,61 L22,64 L25,70 L21,66 L14,68 L9,65 L5,67 L6,61 L10,60 L9,57 L6,57 L8,54 L5,41 L9,44 L15,36 L20,33 L16,24 L27,23 L30,13 L37,4 L61,0 Z"/>
+      <path d="M1,69 L0,70 L0,67 L1,69 Z"/>
+    </g>
+    <!-- Bridges -->
+    <line class="bridge" x1="327" y1="725" x2="324" y2="735"/>
+    <text class="label-sm" x="332" y="730" fill="#795548">瀬戸大橋</text>
+    <line class="bridge" x1="364" y1="746" x2="370" y2="744"/>
+    <text class="label-sm" x="374" y="748" fill="#795548">鳴門大橋</text>
+    <line class="bridge" x1="274" y1="738" x2="264" y2="745"/>
+    <line class="bridge" x1="264" y1="745" x2="259" y2="753"/>
+    <text class="label-sm" x="262" y="742" fill="#795548">しまなみ海道</text>
+    <!-- Prefecture labels -->
+    <text class="pref-label" x="260" y="792">愛媛県</text>
+    <text class="pref-label" x="322" y="738">香川県</text>
+    <text class="pref-label" x="345" y="768">徳島県</text>
+    <text class="pref-label" x="295" y="815">高知県</text>
+    <!-- Landmarks -->
+    <!-- 小豆島 -->
+    <text class="label" x="346" y="722">小豆島</text>
+    <!-- 高屋神社 - west Kagawa, label below-left -->
+    <circle class="landmark" cx="316" cy="744" r="1.5"/>
+    <text class="label" x="310" y="741" text-anchor="end">高屋神社</text>
+    <!-- 紫雲出山 - far west tip, label left -->
+    <circle class="landmark" cx="310" cy="750" r="1.5"/>
+    <text class="label" x="303" y="749" text-anchor="end">紫雲出山</text>
+    <!-- 栗林公園 - Takamatsu, label right -->
+    <circle class="landmark" cx="340" cy="744" r="1.5"/>
+    <text class="label" x="344" y="743" text-anchor="start">栗林公園</text>
+    <!-- 鳴門漩渦 - northeast, label right -->
+    <circle class="landmark" cx="363" cy="747" r="1.5"/>
+    <text class="label" x="367" y="746" text-anchor="start">鳴門漩渦</text>
+    <!-- 呆呆獸公園 - near Takamatsu, label below -->
+    <circle class="landmark" cx="333" cy="749" r="1.5"/>
+    <text class="label" x="333" y="755">呆呆獸公園</text>
+    <!-- 道後溫泉 - Matsuyama, label left -->
+    <circle class="landmark" cx="290" cy="775" r="1.5"/>
+    <text class="label" x="286" y="774" text-anchor="end">道後溫泉</text>
+    <!-- 大洲城 - label left -->
+    <circle class="landmark" cx="267" cy="797" r="1.5"/>
+    <text class="label" x="263" y="796" text-anchor="end">大洲城</text>
+    <!-- 宇和島城 - label left -->
+    <circle class="landmark" cx="250" cy="817" r="1.5"/>
+    <text class="label" x="246" y="816" text-anchor="end">宇和島城</text>
+    <!-- 高知城 - label right -->
+    <circle class="landmark" cx="276" cy="800" r="1.5"/>
+    <text class="label" x="280" y="799" text-anchor="start">高知城</text>
+    <!-- 桂濱 - label right -->
+    <circle class="landmark" cx="278" cy="825" r="1.5"/>
+    <text class="label" x="282" y="824" text-anchor="start">桂濱</text>
+    <!-- Sea labels -->
+    <text class="sea-label" x="310" y="715">瀬戸内海</text>
+    <text class="sea-label" x="290" y="855">太平洋</text>
+    <text class="sea-label" x="220" y="770">宇和海</text>
+    <text class="pref-label" x="300" y="690">本州</text>
+    <!-- Legend -->
+    <g transform="translate(380, 800)">
+      <rect x="0" y="0" width="45" height="45" fill="white" fill-opacity="0.8" rx="2"/>
+      <rect x="3" y="3" width="6" height="4" fill="#C8E6C9" stroke="#2E7D32" stroke-width="0.3"/>
+      <text class="label-sm" x="12" y="6" text-anchor="start">愛媛</text>
+      <rect x="3" y="10" width="6" height="4" fill="#FFF9C4" stroke="#F9A825" stroke-width="0.3"/>
+      <text class="label-sm" x="12" y="13" text-anchor="start">香川</text>
+      <rect x="3" y="17" width="6" height="4" fill="#FFE0B2" stroke="#E65100" stroke-width="0.3"/>
+      <text class="label-sm" x="12" y="20" text-anchor="start">徳島</text>
+      <rect x="3" y="24" width="6" height="4" fill="#B2DFDB" stroke="#00695C" stroke-width="0.3"/>
+      <text class="label-sm" x="12" y="27" text-anchor="start">高知</text>
+      <circle cx="6" cy="33" r="1.2" fill="#E53935" stroke="white" stroke-width="0.3"/>
+      <text class="label-sm" x="12" y="34.5" text-anchor="start">景點</text>
+      <line x1="3" y1="39" x2="9" y2="39" stroke="#795548" stroke-width="0.8" stroke-dasharray="1.5,1"/>
+      <text class="label-sm" x="12" y="41" text-anchor="start">橋</text>
+    </g>
+  </svg>
+</div>
+<script>
+const svg = document.getElementById('mapSvg');
+const container = document.getElementById('mapContainer');
+const hint = document.getElementById('hint');
+
+const initial = { x: 195, y: 625, w: 235, h: 260 };
+let vb = { ...initial };
+let isPanning = false, startX, startY, startVb;
+
+function setViewBox() {
+  svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+}
+
+function zoomAt(factor, cx, cy) {
+  const svgRect = svg.getBoundingClientRect();
+  const px = (cx - svgRect.left) / svgRect.width;
+  const py = (cy - svgRect.top) / svgRect.height;
+  const newW = vb.w * factor;
+  const newH = vb.h * factor;
+  vb.x += (vb.w - newW) * px;
+  vb.y += (vb.h - newH) * py;
+  vb.w = newW;
+  vb.h = newH;
+  setViewBox();
+}
+
+function zoomIn() { zoomAt(0.75, window.innerWidth / 2, window.innerHeight / 2); }
+function zoomOut() { zoomAt(1.333, window.innerWidth / 2, window.innerHeight / 2); }
+function resetView() { vb = { ...initial }; setViewBox(); }
+
+container.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const factor = e.deltaY > 0 ? 1.1 : 0.9;
+  zoomAt(factor, e.clientX, e.clientY);
+}, { passive: false });
+
+container.addEventListener('pointerdown', (e) => {
+  isPanning = true;
+  startX = e.clientX;
+  startY = e.clientY;
+  startVb = { ...vb };
+  container.classList.add('grabbing');
+  container.setPointerCapture(e.pointerId);
+});
+
+container.addEventListener('pointermove', (e) => {
+  if (!isPanning) return;
+  const svgRect = svg.getBoundingClientRect();
+  const dx = (e.clientX - startX) / svgRect.width * startVb.w;
+  const dy = (e.clientY - startY) / svgRect.height * startVb.h;
+  vb.x = startVb.x - dx;
+  vb.y = startVb.y - dy;
+  setViewBox();
+});
+
+container.addEventListener('pointerup', () => {
+  isPanning = false;
+  container.classList.remove('grabbing');
+});
+
+setTimeout(() => hint.classList.add('hide'), 3000);
+</script>
+</body>
+</html>

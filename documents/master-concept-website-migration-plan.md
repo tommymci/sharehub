@@ -116,8 +116,8 @@ Routing approach TBD (see [Section 6](#6-domain-routing-transition)). Target:
 
 | Service | Stores |
 |---------|--------|
-| **Cloud SQL PostgreSQL** (`mc-db`) | Pages, Posts, Categories, Tags, Users, Forms, SEO, Navigation, Settings |
-| **GCP Cloud Storage** (`mc-media`) | Images (CDN), Ebooks/PDFs, Downloads, Auto-thumbnails |
+| **Cloud SQL PostgreSQL** (`mcai-db`) | Pages, Posts, Categories, Tags, Users, Forms, SEO, Navigation, Settings |
+| **GCP Cloud Storage** (`mcai-media`) | Images (CDN), Ebooks/PDFs, Downloads, Auto-thumbnails |
 
 ### 3-Layer Guardrails
 
@@ -138,11 +138,11 @@ Routing approach TBD (see [Section 6](#6-domain-routing-transition)). Target:
 | CMS | **Payload CMS 3.x** | Content management, admin panel, API, auth |
 | Design System | **shadcn/ui** | Consistent UI components for vibe coding |
 | Styling | **Tailwind CSS** | Utility-first CSS via shadcn theming |
-| Storage | **GCP Cloud Storage** (`mc-media`) | All media/files, served via CDN |
-| Database | **Cloud SQL PostgreSQL** (`mc-db`) | GCP native, covered by GCP credits |
-| Hosting | **GCP Cloud Run** (`mc-website`) | Hosts Next.js + Payload app |
+| Storage | **GCP Cloud Storage** (`mcai-media`) | All media/files, served via CDN |
+| Database | **Cloud SQL PostgreSQL** (`mcai-db`) | GCP native, covered by GCP credits |
+| Hosting | **GCP Cloud Run** (`mcai-web`) | Hosts Next.js + Payload app |
 | CI/CD | **GitHub Actions** | Auto-deploy on git push to main |
-| Registry | **GCP Artifact Registry** (`mc-registry`) | Docker image storage |
+| Registry | **GCP Artifact Registry** (`mcai-registry`) | Docker image storage |
 | Forms | **HubSpot** (existing) | Lead capture, embedded via block component |
 | AI Guardrails | **CLAUDE.md / .cursorrules** | Enforces code patterns for structured vibe coding |
 | Blog (transition) | **WordPress on SiteGround** | Until blog migrated to Payload |
@@ -152,30 +152,31 @@ Routing approach TBD (see [Section 6](#6-domain-routing-transition)). Target:
 ## 5. Hosting & Infrastructure
 `DECIDED`
 
-### GCP Resources (mc- prefix)
+### GCP Resources (mcai- prefix)
 
 | Resource | Name | Purpose |
 |----------|------|---------|
-| Cloud Run Service | `mc-website` | Hosts Next.js + Payload app |
-| Cloud SQL Instance | `mc-db` | PostgreSQL database |
-| Cloud SQL Database | `mc-payload` | Payload data |
-| Cloud Storage Bucket | `mc-media` | All uploaded files |
-| Artifact Registry | `mc-registry` | Docker images |
-| Service Account | `mc-deploy@PROJECT.iam.gserviceaccount.com` | Deploy access |
+| Cloud Run Service | `mcai-web` | Hosts Next.js + Payload app |
+| Cloud SQL Instance | `mcai-db` | PostgreSQL database |
+| Cloud SQL Database | `mcai-payload` | Payload data |
+| Cloud Storage Bucket | `mcai-media` | All uploaded files |
+| Artifact Registry | `mcai-registry` | Docker images |
+| GCP Project | `mcai-web` | Project ID |
+| Service Account | `mcai-deploy@mcai-web.iam.gserviceaccount.com` | Deploy access |
 
 ### Environment Variables
 
 ```env
 # Database
-DATABASE_URI=postgresql://USER:PASSWORD@HOST:5432/mc-payload
+DATABASE_URI=postgresql://USER:PASSWORD@HOST:5432/mcai-payload
 
 # Payload CMS
 PAYLOAD_SECRET=your-random-secret-key-here
 PAYLOAD_API_KEY=key-for-claude-code-access
 
 # GCP Cloud Storage
-GCS_BUCKET=mc-media
-GCS_PROJECT_ID=your-gcp-project-id
+GCS_BUCKET=mcai-media
+GCS_PROJECT_ID=mcai-web
 
 # App
 NEXT_PUBLIC_SITE_URL=https://site.mcai.dev
@@ -188,9 +189,9 @@ NODE_ENV=production
 
 | Service | Role | Cost (after credits) |
 |---------|------|------|
-| Cloud Run (`mc-website`) | Next.js + Payload | ~$5-10/month |
-| Cloud SQL (`mc-db`) | Database (db-f1-micro) | ~$7-10/month |
-| Cloud Storage (`mc-media`) | Media/files | ~$1-2/month |
+| Cloud Run (`mcai-web`) | Next.js + Payload | ~$5-10/month |
+| Cloud SQL (`mcai-db`) | Database (db-f1-micro) | ~$7-10/month |
+| Cloud Storage (`mcai-media`) | Media/files | ~$1-2/month |
 | SiteGround GoGeek | WordPress blog (during transition) | ~$35/month (existing) |
 | **After full migration** | All GCP only | **~$15-25/month total** |
 
@@ -386,7 +387,7 @@ WordPress stores internal links as raw URL strings. If you change a slug, links 
 `NOTED`
 
 ```
-All uploads → Payload API → GCP Cloud Storage (mc-media bucket)
+All uploads → Payload API → GCP Cloud Storage (mcai-media bucket)
                   │
                   └→ Database record (filename, alt text, dimensions, thumbnails)
 ```
@@ -438,7 +439,7 @@ Step 6: Run seed on production → page appears live
 | Environment | Database | Purpose |
 |-------------|----------|---------|
 | Local | Local PostgreSQL | Dev/test content (safe to break) |
-| Production | Cloud SQL `mc-db` | Real content |
+| Production | Cloud SQL `mcai-db` | Real content |
 
 ### Seed Scripts (Content as Code)
 
@@ -458,7 +459,7 @@ After initial creation, ongoing content edits happen directly in production `/ad
 ## 14. Git, CI/CD & Deployment
 `PLANNED`
 
-### GitHub Repository: `mc-website`
+### GitHub Repository: `mcai-web`
 
 ### What Goes to GitHub vs What Doesn't
 
@@ -475,8 +476,8 @@ After initial creation, ongoing content edits happen directly in production `/ad
 
 On `git push` to `main`:
 1. Build Docker image
-2. Push to GCP Artifact Registry (`mc-registry`)
-3. Deploy to Cloud Run (`mc-website`)
+2. Push to GCP Artifact Registry (`mcai-registry`)
+3. Deploy to Cloud Run (`mcai-web`)
 
 ### GitHub Secrets
 
@@ -485,7 +486,7 @@ On `git push` to `main`:
 | `GCP_SA_KEY` | Service account JSON key |
 | `DATABASE_URI` | Cloud SQL connection string |
 | `PAYLOAD_SECRET` | Payload auth secret |
-| `GCS_BUCKET` | `mc-media` |
+| `GCS_BUCKET` | `mcai-media` |
 
 ### Day-to-Day Development Process
 

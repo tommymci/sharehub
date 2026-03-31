@@ -1,61 +1,96 @@
----
-title: Master Concept Website Migration Plan
----
-
 # Master Concept Website Migration Plan
+
+> **Status Legend:** `DECIDED` = confirmed approach | `PLANNED` = will implement | `NOTED` = recorded for future reference | `ACTIVE` = working on now
+
+---
 
 ## Table of Contents
 
-1. [Domains](#domains)
-2. [Architecture Overview](#architecture-overview)
-3. [Context](#context)
-4. [Target Architecture](#target-architecture)
-5. [Tech Stack](#tech-stack)
-6. [Payload CMS Feature Overview](#payload-cms-feature-overview)
-7. [Official Payload Plugins](#official-payload-plugins)
-8. [3-Layer Guardrail System](#3-layer-guardrail-system-structured-vibe-coding)
-9. [How Landing Pages Work](#how-landing-pages-work-code--cms-hybrid)
-10. [File & Media Management](#file--media-management)
-11. [HubSpot Integration](#hubspot-integration)
-12. [Domain Routing](#domain-routing-split-architecture)
-13. [Cross-Linking Blog & Landing Pages](#cross-linking-between-blog--landing-pages)
-14. [Migration Phases](#migration-phases)
-15. [Hosting & Cost](#hosting--cost)
-16. [Converting Elementor Pages](#converting-elementor-pages-to-code)
-17. [Payload CMS vs WordPress](#payload-cms-vs-wordpress-comparison)
-18. [AI-Automated SEO](#ai-automated-seo)
-19. [WebMCP Readiness](#webmcp-readiness)
-20. [Future Enhancements](#future-enhancements)
-21. [Reference URLs](#key-urls-for-reference)
+### Strategy & Decisions
+1. [Domains & Strategy](#1-domains--strategy) `DECIDED`
+2. [Context & Goals](#2-context--goals) `DECIDED`
+3. [Architecture Overview](#3-architecture-overview) `DECIDED`
+4. [Tech Stack](#4-tech-stack) `DECIDED`
+5. [Hosting & Infrastructure](#5-hosting--infrastructure) `DECIDED`
+6. [Domain Routing (Transition)](#6-domain-routing-transition) `NOTED`
+
+### CMS & Content
+7. [Payload CMS Features](#7-payload-cms-features) `NOTED`
+8. [Payload Plugins](#8-payload-plugins) `NOTED`
+9. [Payload CMS vs WordPress](#9-payload-cms-vs-wordpress) `NOTED`
+10. [Block System & Templates](#10-block-system--templates) `NOTED`
+11. [Internal Link Integrity](#11-internal-link-integrity) `NOTED`
+12. [File & Media Management](#12-file--media-management) `NOTED`
+
+### Development Workflow
+13. [Local Development & Preview](#13-local-development--preview) `PLANNED`
+14. [Git, CI/CD & Deployment](#14-git-cicd--deployment) `PLANNED`
+15. [Vibe Coding Workflow](#15-vibe-coding-workflow) `NOTED`
+16. [3-Layer Guardrails](#16-3-layer-guardrails) `PLANNED`
+
+### Migration
+17. [Migration Phases](#17-migration-phases) `PLANNED`
+18. [SEO Safety](#18-seo-safety) `PLANNED`
+19. [Converting Elementor Pages](#19-converting-elementor-pages) `NOTED`
+20. [Cross-Linking Blog & Landing Pages](#20-cross-linking-blog--landing-pages) `PLANNED`
+
+### Integrations & Future
+21. [HubSpot Integration](#21-hubspot-integration) `NOTED`
+22. [AI-Automated SEO](#22-ai-automated-seo) `NOTED`
+23. [WebMCP Readiness](#23-webmcp-readiness) `NOTED`
+24. [Future Enhancements](#24-future-enhancements) `NOTED`
+25. [Reference URLs](#25-reference-urls)
 
 ---
 
-## Domains
+## 1. Domains & Strategy
+`DECIDED`
 
 | Domain | Purpose |
 |--------|---------|
-| `masterconcept.ai` | **Final production** |
-| `site.masterconcept.ai` | Trial (current WordPress site, also used for new stack trial) |
-| `site.mcai.dev` | Trial / dev (build new structure here first) |
-| `mcai.dev` | Other uses |
+| `masterconcept.ai` | **Current production** (WordPress) → future Next.js |
+| Trial domain (TBD) | Options: `site.mcai.dev`, `masterconcept.io`, or other - flexible |
 
-**Strategy:** Build and test on `site.mcai.dev` first → then trial on `site.masterconcept.ai` → final production on `masterconcept.ai`.
+**Strategy:** Build and test the new framework on a separate trial domain first. No changes to production during trial phase. Migration to `masterconcept.ai` happens later.
 
 ---
 
-## Architecture Overview
+## 2. Context & Goals
+`DECIDED`
+
+**Current:** WordPress + Elementor on SiteGround (GoGeek shared hosting)
+- **Blog** - managed by marketing team
+- **Landing pages** - managed by Tommy
+
+**Problems:**
+- Elementor is not vibe-codeable (content stored as serialized DB data)
+- AI cannot easily read, edit, or generate Elementor pages
+- Performance issues and plugin conflicts
+- No path to WebMCP integration
+
+**Goal:** Modern, AI-friendly stack where:
+- Landing page design is vibe-coded (AI edits code directly)
+- All content editable in admin panel (no code needed for content)
+- Blog stays on WordPress during transition
+- Same domain, no broken links, no SEO loss
+
+---
+
+## 3. Architecture Overview
+`DECIDED`
 
 ### Front Door
+> **GCP Cloud Run** (hosted on GCP, auto-deploy via GitHub Actions)
 
-> **Firebase App Hosting** (All GCP)
-> Domains: `masterconcept.ai` (production) / `site.mcai.dev` (trial)
+### Routing (Production - During Transition)
 
-### Routing
+Routing approach TBD (see [Section 6](#6-domain-routing-transition)). Target:
 
 | Path | Destination |
 |------|-------------|
-| `/blog/*` | WordPress on SiteGround (during transition) |
-| `/wp-admin/*` | WordPress on SiteGround (during transition) |
+| `/blog/*` | WordPress on SiteGround |
+| `/wp-admin/*` | WordPress on SiteGround |
+| `/wp-content/*` | WordPress on SiteGround |
 | `/admin/*` | Payload CMS Admin Panel |
 | `/api/*` | Payload REST + GraphQL API |
 | `/*` | Next.js 15 App (landing pages) |
@@ -69,7 +104,7 @@ title: Master Concept Website Migration Plan
 | **Tailwind CSS** | Styling |
 | **Blocks** | Hero, CTA, Features, Pricing, Testimonial, BlogList, HubSpot Form, Download, etc. |
 
-### Payload CMS API Consumers
+### API Consumers
 
 | Consumer | How |
 |----------|-----|
@@ -81,8 +116,8 @@ title: Master Concept Website Migration Plan
 
 | Service | Stores |
 |---------|--------|
-| **Cloud SQL PostgreSQL** | Pages, Posts, Categories, Tags, Users, Forms, SEO, Navigation, Settings |
-| **GCP Cloud Storage** (Firebase Storage) | Images (CDN), Ebooks/PDFs, Downloads, Auto-thumbnails |
+| **Cloud SQL PostgreSQL** (`mc-db`) | Pages, Posts, Categories, Tags, Users, Forms, SEO, Navigation, Settings |
+| **GCP Cloud Storage** (`mc-media`) | Images (CDN), Ebooks/PDFs, Downloads, Auto-thumbnails |
 
 ### 3-Layer Guardrails
 
@@ -94,43 +129,8 @@ title: Master Concept Website Migration Plan
 
 ---
 
-## Context
-
-Current site runs on WordPress + Elementor on SiteGround (GoGeek shared hosting). The site has two parts:
-- **Blog** - managed by marketing team
-- **Landing pages** - managed by developer (Tommy)
-
-Problems with current setup:
-- Elementor is not vibe-codeable (content stored as serialized DB data, not code files)
-- AI cannot easily read, edit, or generate Elementor pages
-- Performance issues and plugin conflicts (e.g. ElementsKit shortcode rendering failures)
-- No path to WebMCP integration
-
-**Goal:** Migrate all pages to a modern, AI-friendly stack. All content (pages, blog, media, files) managed via Payload CMS admin panel. Landing page design is vibe-coded. Blog stays on WordPress during transition. Same domain, no broken links, no SEO impact. **Trial first on `site.mcai.dev`**, then migrate production.
-
----
-
-## Target Architecture
-
-```
-Firebase App Hosting (front door, site.mcai.dev → masterconcept.ai)
-  ├── /blog/*       → proxy to WordPress on SiteGround (during transition)
-  ├── /wp-admin/*   → proxy to WordPress on SiteGround (during transition)
-  ├── /admin/*      → Payload CMS admin panel
-  ├── /api/*        → Payload REST + GraphQL API
-  └── /*            → Next.js app (landing pages + eventually blog)
-
-All GCP (covered by credits):
-  ├── Cloud SQL PostgreSQL  → Payload database
-  └── GCP Cloud Storage     → Media / files (CDN served)
-      ├── Images
-      ├── Ebooks / PDFs (downloadable)
-      └── Any uploaded files
-```
-
----
-
-## Tech Stack
+## 4. Tech Stack
+`DECIDED`
 
 | Layer | Tool | Purpose |
 |-------|------|---------|
@@ -138,16 +138,96 @@ All GCP (covered by credits):
 | CMS | **Payload CMS 3.x** | Content management, admin panel, API, auth |
 | Design System | **shadcn/ui** | Consistent UI components for vibe coding |
 | Styling | **Tailwind CSS** | Utility-first CSS via shadcn theming |
-| Storage | **GCP Cloud Storage** (Firebase Storage) | All media/files, served via CDN |
-| Database | **Cloud SQL PostgreSQL** (GCP native, covered by GCP credits) | Payload data storage - same GCP network as Firebase for low latency |
-| Hosting | **Firebase App Hosting** | Auto-deploy from Git, Cloud Run behind the scenes |
+| Storage | **GCP Cloud Storage** (`mc-media`) | All media/files, served via CDN |
+| Database | **Cloud SQL PostgreSQL** (`mc-db`) | GCP native, covered by GCP credits |
+| Hosting | **GCP Cloud Run** (`mc-website`) | Hosts Next.js + Payload app |
+| CI/CD | **GitHub Actions** | Auto-deploy on git push to main |
+| Registry | **GCP Artifact Registry** (`mc-registry`) | Docker image storage |
 | Forms | **HubSpot** (existing) | Lead capture, embedded via block component |
 | AI Guardrails | **CLAUDE.md / .cursorrules** | Enforces code patterns for structured vibe coding |
 | Blog (transition) | **WordPress on SiteGround** | Until blog migrated to Payload |
 
 ---
 
-## Payload CMS Feature Overview
+## 5. Hosting & Infrastructure
+`DECIDED`
+
+### GCP Resources (mc- prefix)
+
+| Resource | Name | Purpose |
+|----------|------|---------|
+| Cloud Run Service | `mc-website` | Hosts Next.js + Payload app |
+| Cloud SQL Instance | `mc-db` | PostgreSQL database |
+| Cloud SQL Database | `mc-payload` | Payload data |
+| Cloud Storage Bucket | `mc-media` | All uploaded files |
+| Artifact Registry | `mc-registry` | Docker images |
+| Service Account | `mc-deploy@PROJECT.iam.gserviceaccount.com` | Deploy access |
+
+### Environment Variables
+
+```env
+# Database
+DATABASE_URI=postgresql://USER:PASSWORD@HOST:5432/mc-payload
+
+# Payload CMS
+PAYLOAD_SECRET=your-random-secret-key-here
+PAYLOAD_API_KEY=key-for-claude-code-access
+
+# GCP Cloud Storage
+GCS_BUCKET=mc-media
+GCS_PROJECT_ID=your-gcp-project-id
+
+# App
+NEXT_PUBLIC_SITE_URL=https://site.mcai.dev
+NODE_ENV=production
+```
+
+### Cost
+
+**All GCP services covered by free GCP credits.**
+
+| Service | Role | Cost (after credits) |
+|---------|------|------|
+| Cloud Run (`mc-website`) | Next.js + Payload | ~$5-10/month |
+| Cloud SQL (`mc-db`) | Database (db-f1-micro) | ~$7-10/month |
+| Cloud Storage (`mc-media`) | Media/files | ~$1-2/month |
+| SiteGround GoGeek | WordPress blog (during transition) | ~$35/month (existing) |
+| **After full migration** | All GCP only | **~$15-25/month total** |
+
+### Why Not Firebase?
+
+Firebase App Hosting is just a wrapper around GCP Cloud Run. Since you already have GCP with credits, use Cloud Run directly - full control, no extra abstraction.
+
+---
+
+## 6. Domain Routing (Transition)
+`NOTED` - approach not decided yet, will finalize when ready for production migration
+
+### The Problem
+`masterconcept.ai` DNS points to SiteGround (WordPress). Need both WordPress (blog) and Cloud Run (new pages) on the same domain during transition.
+
+### Options Discussed
+
+**Option A: Cloudflare Worker** (you have paid Cloudflare)
+- Worker routes by URL path: `/blog/*` → WordPress, `/*` → Cloud Run
+- No DNS changes, no email impact
+- Needs domain admin to add Worker Route + enable proxy (orange cloud)
+
+**Option B: Cloud Run as reverse proxy**
+- DNS points to Cloud Run instead of SiteGround
+- Next.js `rewrites` in config proxy blog paths to SiteGround
+- Risk: if Cloud Run goes down, WordPress also unreachable
+
+**Option C: WordPress as front door**
+- WordPress stays as default, specific paths proxy to Cloud Run
+- Lowest risk but more complex SiteGround config
+
+**Trial phase:** Not applicable - trial domain points directly to Cloud Run. This decision only matters when migrating `masterconcept.ai`.
+
+---
+
+## 7. Payload CMS Features
+`NOTED`
 
 ### Core Architecture
 - Lives **inside** your Next.js app (not a separate service)
@@ -155,290 +235,67 @@ All GCP (covered by credits):
 - Config-based: everything defined in code, version controlled
 - Free & open source (MIT license)
 
+### Content Management (Like WordPress)
+
+| Feature | How It Works |
+|---------|-------------|
+| **Slug management** | Auto-generated from title, editable, unique per collection |
+| **Tags** | Relationship collection, create/edit/delete in admin, assign to posts |
+| **Categories** | Relationship collection with parent/child hierarchy |
+| **Page hierarchy** | Parent/child pages via Nested Docs plugin (breadcrumbs, tree) |
+| **Drafts** | Save as draft without publishing, autosave |
+| **Scheduled publishing** | Set publish date/time, auto-publishes |
+| **Version history** | Full diff viewer, one-click restore to any version |
+| **Media library** | Upload, crop, focal point, auto-generated thumbnails |
+| **Search** | Built-in search across all collections |
+| **Bulk operations** | Bulk select, edit, delete |
+
 ### Content Modeling
-- **Collections**: Pages, Posts, Media, Categories, Tags, Users, Forms, etc.
+- **Collections**: Pages, Posts, Media, Categories, Tags, Users, Forms
 - **Globals**: Site Settings, Navigation, Footer (singleton data)
 - **Blocks Field**: Modular content blocks (like Gutenberg but code-defined)
-- **30+ field types**: text, richText, number, date, relationship, array, group, blocks, tabs, upload, select, checkbox, radio, point, JSON, email, code, and more
+- **30+ field types**: text, richText, number, date, relationship, array, group, blocks, tabs, upload, select, checkbox, and more
 - **Conditional logic**: show/hide fields based on other field values
-- **Validation**: built-in and custom per-field
 
 ### Admin Panel (`/admin`)
-- **Auto-generated UI** from your config - no manual admin building
-- **Live Preview**: see page changes in real-time as you edit (side-by-side iframe)
-- **Version History**: full diff viewer, one-click restore to any prior version
-- **Drafts & Autosave**: publish/unpublish workflow, auto-saves without affecting live content
-- **Bulk operations**: bulk select, edit, delete
-- **Dark mode**: built-in
-- **White-labeling**: custom logo, colors, favicon - fully rebrandable
-- **Custom views**: add custom React components to admin panel
+- **Auto-generated UI** from config - no manual admin building
+- **Live Preview**: real-time side-by-side editing
+- **Rich Text Editor**: Lexical-based, similar to WordPress Gutenberg
+- **Dark mode**, **white-labeling** (custom logo/colors)
+- **Anyone can create pages from existing blocks** - no code needed, just pick blocks and fill content
 
-### Rich Text Editor (Blog Writing)
-- **Lexical-based editor** (modern, customizable)
-- Bold, italic, headings, lists, links, images, embeds
-- Inline and block-level embeds
-- Custom features and nodes can be added
-- Similar experience to WordPress Gutenberg for marketing team
-
-### API (3 Ways to Access Content)
-- **REST API** (auto-mounted at `/api`) - full CRUD, pagination, filtering, sorting
-- **GraphQL API** (auto-mounted at `/api/graphql`) - full CRUD queries & mutations
-- **Local API** - direct database access from server code (no HTTP overhead, fully typed)
-- **Claude Code uses Local API** to create pages, upload files, seed content
-
-### Media Management
-- **Upload collections**: any collection can handle file uploads
-- **Image resizing**: auto-generates multiple sizes (thumbnail, medium, large, etc.)
-- **Image cropping**: built-in crop tool in admin UI
-- **Focal point selector**: set focal point, all sizes re-crop around it
-- **Cloud storage**: official plugin for GCP Cloud Storage (`@payloadcms/storage-gcs`)
-- **All uploads go through Payload API** → tracked in database + stored in GCP Cloud Storage
-
-### Page & Content Hierarchy
-- **Parent/child pages** via Nested Docs plugin (breadcrumbs, tree structure)
-- **Categories & Tags** as relationship collections (like WordPress)
-- **Any custom taxonomy** you need (not limited to categories/tags)
-
-### Authentication & Access Control
-- **Built-in email/password auth** with JWT tokens
-- **Role-based access control (RBAC)**: Admin, Editor, Author, custom roles
-- **Document-level access**: per-operation (create, read, update, delete)
-- **Field-level access**: individual fields can have their own rules
-- **API keys** for machine-to-machine auth
-- **CMS Login URL**: `https://site.mcai.dev/admin` (auto-generated login page)
-- **Password security**: bcrypt hashing, account lockout, password reset via email
-
-### User Roles Plan
+### Authentication & Roles
 
 | Role | Who | Permissions |
 |------|-----|-------------|
-| **Admin** | Tommy | Full access - everything |
+| **Admin** | Tommy | Full access |
 | **Editor** | Marketing team | Create/edit/publish posts & pages, upload media |
-| **Author** | Blog writers | Create/edit own posts only, upload media |
-| **API Key** | Claude Code | Create/edit pages, upload media via API (no browser login) |
+| **Author** | Blog writers | Create/edit own posts only |
+| **API Key** | Claude Code | API access (no browser login) |
 
-Claude Code authenticates via API Key stored in `.env`:
-```
-PAYLOAD_API_KEY=your-secret-key-here
-```
-
-### SEO
-- **SEO Plugin** (`@payloadcms/plugin-seo`): meta title, description, Open Graph fields
-- Injected into any collection automatically
-- Works with Next.js metadata API for full control
-
-### Forms
-- **Form Builder Plugin** (`@payloadcms/plugin-form-builder`): create forms in admin panel
-- Submission storage in database, viewable in admin
-- Email notifications on submission
-- **HubSpot integration**: use `afterChange` hooks to POST submissions to HubSpot API
-- **Or embed HubSpot forms directly** via a HubSpotFormBlock component
-
-### Redirects
-- **Redirects Plugin** (`@payloadcms/plugin-redirects`): manage URL redirects in admin
-- 301/302/307/308 support
-- Critical for migration: preserve old WordPress URLs
-
-### Localization (if needed)
-- Built-in, field-level localization
-- Unlimited locales
-
-### Email
-- Built-in SMTP email support (via nodemailer)
-- Used for password resets, form notifications, any transactional email
-
-### Webhooks / Integrations
-- **Hooks system**: `beforeChange`, `afterChange`, `beforeDelete`, `afterDelete` on any collection
-- Use hooks to: sync to HubSpot, trigger rebuilds, notify Slack, fire webhooks to any URL
+### API (3 Ways to Access Content)
+- **REST API** - full CRUD, pagination, filtering
+- **GraphQL API** - flexible queries & mutations
+- **Local API** - direct database access from server code (Claude Code uses this)
 
 ---
 
-## Official Payload Plugins
+## 8. Payload Plugins
+`NOTED`
 
 | Plugin | What It Does |
 |--------|-------------|
-| `@payloadcms/plugin-seo` | Meta title, description, Open Graph, structured data fields |
+| `@payloadcms/plugin-seo` | Meta title, description, Open Graph fields |
 | `@payloadcms/storage-gcs` | Store uploads in GCP Cloud Storage |
-| `@payloadcms/plugin-form-builder` | Admin-built forms, submission storage, email notifications |
+| `@payloadcms/plugin-form-builder` | Admin-built forms, submissions, email notifications |
 | `@payloadcms/plugin-redirects` | URL redirect management (critical for migration) |
 | `@payloadcms/plugin-nested-docs` | Parent/child page hierarchy with breadcrumbs |
 | `@payloadcms/plugin-search` | Fast search collection sync |
-| `@payloadcms/plugin-stripe` | Stripe payment integration |
-| `@payloadcms/plugin-multi-tenant` | Multi-site / SaaS tenant isolation |
-| `@payloadcms/plugin-sentry` | Error tracking |
 
 ---
 
-## 3-Layer Guardrail System (Structured Vibe Coding)
-
-| Layer | Tool | Purpose |
-|-------|------|---------|
-| Design System | shadcn/ui | All UI must use these components - prevents messy/inconsistent UI |
-| Content & Pages | Payload CMS | All content managed via admin panel + API |
-| AI Rules | CLAUDE.md + .cursorrules | Enforces code patterns, folder structure, naming conventions |
-
----
-
-## How Landing Pages Work: Code + CMS Hybrid
-
-### What AI vibe-codes (code files in Git):
-- Block component design & layout (React + shadcn/ui + Tailwind)
-- Page templates (how blocks are arranged)
-- New block types
-- Animations, interactions
-
-### What you edit in `/admin` (no code):
-- Page title, slug, cover image, meta description
-- Text content, headings, CTAs
-- Which blocks to use and their order
-- Upload images/files
-- SEO fields
-- Publish / draft / schedule
-
-### What Claude Code can do in one shot:
-1. Create new block components (design)
-2. Upload images/files to GCP Cloud Storage via Payload API
-3. Create pages with content in CMS via Payload Local API
-4. Page is live - fine-tune in `/admin` if needed
-
----
-
-## File & Media Management
-
-### Storage Architecture
-```
-All uploads → Payload API → GCP Cloud Storage (Firebase Storage)
-                  │
-                  └→ Database record created
-                     (filename, size, dimensions, alt text,
-                      auto-generated thumbnails, linked to pages)
-```
-
-### Who Can Upload
-| Who | How | Tracked in CMS? |
-|-----|-----|-----------------|
-| Claude Code | Payload Local API (`payload.create({ collection: 'media' })`) | Yes ✅ |
-| Admin user | Drag & drop in `/admin` → Media | Yes ✅ |
-| **Never** upload directly to Cloud Storage - always go through Payload API |
-
-### File Types
-- Images (jpg, png, webp, svg) → auto-generates thumbnails
-- PDFs / Ebooks → downloadable links
-- Any file type you configure
-
----
-
-## HubSpot Integration
-
-| Feature | How |
-|---------|-----|
-| Embed HubSpot forms | HubSpotFormBlock component (paste Portal ID + Form ID in admin) |
-| Sync form submissions to HubSpot | Payload `afterChange` hook on form-submissions collection |
-| Ebook download with HubSpot form | HubSpotFormBlock + link to PDF in Payload Media |
-
----
-
-## Domain Routing (Split Architecture)
-
-**Firebase Hosting as the front door** using `firebase.json` rewrites:
-- `/blog/**` → proxy to WordPress on SiteGround (during transition)
-- `/wp-admin/**` → proxy to WordPress on SiteGround (during transition)
-- `/**` (everything else) → Next.js + Payload app on Firebase
-
-**Result:** Single domain, visitors see no difference.
-
----
-
-## Cross-Linking Between Blog & Landing Pages
-
-| Scenario | Solution |
-|----------|----------|
-| Blog post links to landing page | Normal links (`/pricing`) - same domain |
-| Landing page shows blog post list | BlogListBlock fetches from WordPress REST API (transition) → later from Payload |
-| Keep original landing page URLs | Same slug in Payload CMS |
-| Images from WordPress | `next/image` remote patterns (transition) → later all in GCP Cloud Storage |
-
----
-
-## Migration Phases
-
-### Phase 1: Set Up New Stack
-- Initialize Next.js 15 project with TypeScript
-- Install Payload CMS 3.x (inside Next.js app)
-- Install shadcn/ui + Tailwind CSS
-- Set up GCP Cloud Storage via `@payloadcms/storage-gcs`
-- Set up Cloud SQL PostgreSQL instance on GCP (db-f1-micro, same region as Firebase)
-- Set up Firebase App Hosting with Git auto-deploy
-- Create CLAUDE.md with project rules
-- Install Payload plugins: SEO, Nested Docs, Redirects, Form Builder
-- Define collections: Pages, Posts, Media, Categories, Tags, Navigation, Site Settings
-- Build shared layout (header, footer, nav) using screenshot-to-code
-
-### Phase 2: Configure Domain Routing
-- Set up Firebase Hosting rewrites in `firebase.json`
-- Route `/blog/*` and `/wp-admin/*` to SiteGround WordPress
-- Route everything else to Next.js + Payload
-- Test cross-linking between systems
-- Set up redirects plugin for any URL changes
-
-### Phase 3: Migrate Landing Pages (One by One)
-- For each Elementor landing page:
-  1. Screenshot the page
-  2. Use screenshot-to-code → React/Tailwind block components
-  3. Register new block types in Payload if needed
-  4. Upload images via Payload API → GCP Cloud Storage
-  5. Create page in Payload admin, set same slug
-  6. Arrange blocks, fill in content
-  7. Test the page
-- Migrate HubSpot form pages (create HubSpotFormBlock)
-- Migrate ebook/download pages (upload files to Payload Media)
-
-### Phase 4: Migrate Blog (Optional - When Ready)
-- Export WordPress posts via REST API
-- Import into Payload Posts collection (title, content, categories, tags, images)
-- Marketing team switches from wp-admin to `/admin`
-- Migrate WordPress media to GCP Cloud Storage via Payload API
-- Remove WordPress proxy rules from Firebase
-- Downgrade/cancel SiteGround
-
-### Phase 5: Cleanup & Optimization
-- Performance testing (expect major speed improvement)
-- Verify all SEO: meta tags, structured data, sitemaps, redirects
-- Set up caching headers
-- Configure Payload version history retention
-- Set up user roles (Admin for you, Editor for marketing team)
-
----
-
-## Hosting & Cost
-
-**All GCP services covered by your free GCP credits.**
-
-| Service | Role | Cost (after credits) |
-|---------|------|------|
-| Firebase App Hosting (Blaze) | Next.js + Payload + front door | ~$5-10/month |
-| Cloud SQL PostgreSQL | Payload database | ~$7-10/month (db-f1-micro) |
-| GCP Cloud Storage | Media/files | ~$1-2/month (pay per GB) |
-| SiteGround GoGeek | WordPress blog (during transition) | ~$35/month (existing) |
-| **After full migration** | All GCP only | **~$15-25/month total** |
-| **With GCP credits** | Everything covered | **$0 while credits last** |
-
-**All under one GCP console + billing. No external database accounts needed.**
-
----
-
-## Converting Elementor Pages to Code
-
-1. **Screenshot-to-code** (github.com/abi/screenshot-to-code) - screenshot existing pages, AI generates React/Tailwind block components
-2. **Images** - upload to Payload Media (→ GCP Cloud Storage) via API
-3. **Header/Footer** - rebuild once as React components
-4. **Popups** - rebuild as React modal components
-5. **HubSpot forms** - embed via HubSpotFormBlock
-6. **Ebooks/downloads** - upload to Payload Media, link in CTA blocks
-
----
-
-## Payload CMS vs WordPress Comparison
+## 9. Payload CMS vs WordPress
+`NOTED`
 
 | Feature | WordPress | Payload CMS 3.x |
 |---------|-----------|-----------------|
@@ -450,95 +307,415 @@ All uploads → Payload API → GCP Cloud Storage (Firebase Storage)
 | Page templates | PHP template files | React/shadcn components |
 | Live preview | Preview in new tab | Side-by-side iframe (real-time) |
 | Version history | Basic revisions | Full diffs + one-click restore |
-| SEO | Yoast/RankMath (mature) | SEO plugin (meta, OG - simpler but sufficient) |
-| Forms | CF7/Gravity Forms | Form Builder plugin + HubSpot embed |
+| SEO | Yoast/RankMath (mature) | SEO plugin (simpler but sufficient) |
 | Access control | 5 fixed roles | Custom RBAC, document + field level |
-| API | REST (+ GraphQL plugin) | REST + GraphQL + Local API (all built-in) |
+| API | REST only | REST + GraphQL + Local API |
 | Performance | 180-250ms TTFB | 50-120ms TTFB |
-| Plugin ecosystem | 60,000+ plugins | ~50 official + community (growing) |
+| Plugin ecosystem | 60,000+ | ~50 official (growing) |
 | AI/vibe coding | Not possible | Native (code-first, TypeScript) |
-| Type safety | None (PHP) | Full TypeScript end-to-end |
+| Block flexibility | Static HTML output | Full-stack React (can call APIs, query DB, use any npm package at render time) |
 
 ---
 
-## AI-Automated SEO
+## 10. Block System & Templates
+`NOTED`
 
-This stack enables AI to automate SEO tasks that were impossible with WordPress + Elementor:
+### Starting Point: Payload Website Template
 
-| SEO Task | How AI Automates It |
-|----------|-------------------|
-| **Meta titles & descriptions** | Claude reads page content via Payload API → generates optimized meta → writes to SEO plugin fields |
-| **Open Graph images** | Auto-generate OG images using Next.js `ImageResponse` API per page |
-| **Alt text for images** | Claude generates descriptive alt text when uploading images via Payload API |
-| **Internal linking** | Claude reads all pages/posts via Payload API → suggests/adds relevant internal links |
-| **Structured data (JSON-LD)** | Claude generates schema markup (Product, FAQ, Article, etc.) based on page content |
-| **Sitemap** | Next.js auto-generates `sitemap.xml` from all Payload pages/posts |
-| **Content optimization** | Claude analyzes existing pages → suggests keyword/readability improvements |
-| **Redirect management** | Claude uses Payload Redirects plugin to bulk-manage 301s during migration |
-| **Bulk SEO audit** | Claude reads all pages via API → flags missing meta, broken links, missing alt text |
-| **Blog post SEO** | Claude reviews draft posts → suggests title/description/heading improvements before publish |
-
-**Why this works:** All content is accessible via Payload API (REST/GraphQL/Local). Claude Code can read every page, analyze it, and update SEO fields programmatically - no manual page-by-page editing.
-
-**Example workflow:**
+```bash
+npx create-payload-app@latest -t website
 ```
-You: "Audit all landing pages for SEO and fix issues"
 
-Claude Code:
-1. Fetches all pages via Payload Local API
-2. Checks each page for: missing meta description, missing alt text,
-   no internal links, missing structured data
-3. Generates and writes fixes directly to Payload
-4. Reports: "Fixed 12 pages: added meta descriptions (8),
-   alt text (15 images), structured data (5 pages)"
-```
+**Pre-built blocks included:**
+
+| Block | Description |
+|-------|-------------|
+| Hero | Headline, subtitle, CTA buttons, background image |
+| Content | Rich text content section |
+| Media Block | Full-width or inline images/videos |
+| Call to Action | CTA banner with heading + button |
+| Archive | Auto-lists posts (like WordPress blog archive) |
+| Form Block | Dynamic forms |
+| Code Block | Syntax-highlighted code |
+| Banner | Alert/notice banner |
+
+### shadcn/ui Block Library (Additional UI Components)
+
+Hero sections, feature grids, pricing cards, testimonials, FAQ, CTA, footer, header/nav, stats, team cards, blog list, and more.
+
+### Custom Blocks Needed
+
+| Block | Based on |
+|-------|----------|
+| HubSpotFormBlock | Your existing HubSpot forms |
+| DownloadBlock | Ebook download pages |
+| FlipCardsBlock | `html-widgets/` folder (already have HTML) |
+| ComparisonTableBlock | `html-widgets/` folder |
+| ServiceTabsBlock | `html-widgets/` folder |
+
+**Your `html-widgets/` folder = block prototypes.** Claude Code converts each to a Payload block component.
+
+### Why Blocks Are More Flexible Than WordPress
+
+WordPress blocks output **static HTML**. Payload blocks are **full-stack React components** that can:
+- Call external APIs at render time (dynamic pricing, live data)
+- Query database (show related posts, filter by user)
+- Use any npm package (charts, maps, 3D, animations)
+- Personalize by user/location
+- Integrate AI at render time
 
 ---
 
-## WebMCP Readiness
+## 11. Internal Link Integrity
+`NOTED`
 
-This stack is **already structured for WebMCP**. Here's why:
+**Key advantage over WordPress.**
 
-### What exists now (ready to expose as MCP tools):
-- **Payload REST API** (`/api/pages`, `/api/posts`, `/api/media`) - full CRUD
-- **Payload GraphQL API** (`/api/graphql`) - flexible queries
-- **Next.js API routes** - custom endpoints for any logic
+WordPress stores internal links as raw URL strings. If you change a slug, links break. Payload stores links as **relationship references** (page ID):
 
-### When WebMCP matures, you just add an MCP server layer:
-```
-MCP Server (Next.js API route)
-  ├── Tool: "create-page"      → calls Payload Local API
-  ├── Tool: "update-content"   → calls Payload Local API
-  ├── Tool: "upload-media"     → calls Payload Local API
-  ├── Tool: "publish-post"     → calls Payload Local API
-  ├── Tool: "get-analytics"    → calls analytics API
-  └── Tool: "audit-seo"       → reads all content, returns report
-```
-
-**AI agents (Claude, ChatGPT, etc.) could then:**
-- Create and publish pages on your site via natural language
-- Update content across multiple pages at once
-- Upload and manage media
-- Run SEO audits and apply fixes
-- All through MCP protocol - no custom integration needed
-
-The APIs already exist in Payload. WebMCP just wraps them in the MCP protocol format.
+| Scenario | WordPress | Payload CMS |
+|----------|-----------|-------------|
+| Change slug | Links break or redirect | All links auto-resolve |
+| Delete a page | 404 errors | Admin warns "3 pages link to this" |
+| Move page (change parent) | URL breaks | ID unchanged, auto-resolves |
+| Find pages linking to X | Need plugin | Built-in query |
 
 ---
 
-## Future Enhancements
+## 12. File & Media Management
+`NOTED`
 
-- **WebMCP server:** Wrap Payload APIs as MCP tools when protocol matures
-- **AI SEO automation:** Scheduled SEO audits and auto-optimization
-- **Payload Live Preview:** Real-time editing preview (side-by-side)
-- **Full blog migration:** Move all blog content from WordPress to Payload
-- **Cancel SiteGround:** Once everything runs on Firebase + Payload
-- **Multi-language:** Payload's built-in localization if needed
-- **AI content generation:** Claude generates blog drafts, landing page copy via Payload API
+```
+All uploads → Payload API → GCP Cloud Storage (mc-media bucket)
+                  │
+                  └→ Database record (filename, alt text, dimensions, thumbnails)
+```
+
+| Who | How | Tracked in CMS? |
+|-----|-----|-----------------|
+| Claude Code | Payload Local API | Yes |
+| Admin user | Drag & drop in `/admin` | Yes |
+| **Never** upload directly to Cloud Storage - always through Payload API |
 
 ---
 
-## Key URLs for Reference
+## 13. Local Development & Preview
+`PLANNED`
+
+### Setup
+
+```
+Your laptop (localhost:3000)
+├── Next.js dev server        ← hot reload
+├── Payload CMS admin         ← localhost:3000/admin
+├── Local PostgreSQL          ← dev content (safe to break)
+└── Local file uploads        ← /media folder (dev only)
+```
+
+### Complete Vibe Coding Flow
+
+```
+Step 1: Claude creates block .tsx file
+        → Hot reload → see empty block instantly
+
+Step 2: Claude creates seed script + runs on LOCAL DB
+        → Page appears at localhost:3000/pricing with content
+
+Step 3: You fine-tune in localhost:3000/admin
+        → Live preview, adjust text/images
+
+Step 4: Claude syncs: reads local DB → updates seed script
+        → Seed script now matches your final edits
+        → Commit to Git
+
+Step 5: git push → GitHub Actions → deploys to Cloud Run
+
+Step 6: Run seed on production → page appears live
+```
+
+### Two Databases
+
+| Environment | Database | Purpose |
+|-------------|----------|---------|
+| Local | Local PostgreSQL | Dev/test content (safe to break) |
+| Production | Cloud SQL `mc-db` | Real content |
+
+### Seed Scripts (Content as Code)
+
+Seed scripts in Git capture initial page content. Idempotent (safe to run multiple times):
+
+```
+Git repo
+├── src/blocks/PricingBlock.tsx    ← design (code)
+├── src/seed/pricing-page.ts       ← content (code)
+└── src/seed/assets/               ← seed images
+```
+
+After initial creation, ongoing content edits happen directly in production `/admin`.
+
+---
+
+## 14. Git, CI/CD & Deployment
+`PLANNED`
+
+### GitHub Repository: `mc-website`
+
+### What Goes to GitHub vs What Doesn't
+
+| GitHub (version controlled) | NOT in GitHub |
+|-----------------------------|---------------|
+| All code (`.tsx`, `.ts`, `.css`) | Media files → Cloud Storage |
+| Block components | Database content → Cloud SQL |
+| Payload collection schemas | `.env` files (secrets) |
+| Seed scripts + seed assets | `node_modules/`, `.next/` |
+| CLAUDE.md, configs | Service account keys |
+| Dockerfile, GitHub Actions | User uploads |
+
+### GitHub Actions Auto-Deploy
+
+On `git push` to `main`:
+1. Build Docker image
+2. Push to GCP Artifact Registry (`mc-registry`)
+3. Deploy to Cloud Run (`mc-website`)
+
+### GitHub Secrets
+
+| Secret | Value |
+|--------|-------|
+| `GCP_SA_KEY` | Service account JSON key |
+| `DATABASE_URI` | Cloud SQL connection string |
+| `PAYLOAD_SECRET` | Payload auth secret |
+| `GCS_BUCKET` | `mc-media` |
+
+### Day-to-Day Development Process
+
+| Scenario | Process |
+|----------|---------|
+| **New feature/block** | `git checkout -b feature/new-block` → develop → PR → review → merge to `main` → auto-deploys |
+| **Bug fix** | `git checkout -b fix/issue-name` → fix → PR → merge → auto-deploys |
+| **Hotfix (urgent)** | Push directly to `main` → auto-deploys immediately |
+| **Content update** | No deploy needed - edit in `/admin` directly |
+| **Rollback bad deploy** | `git revert <commit>` → push → auto-deploys previous version |
+
+### Future Updates & Maintenance
+
+| Task | How |
+|------|-----|
+| **Update Payload CMS version** | `npm update @payloadcms/...` → test locally → push |
+| **Update Next.js version** | `npm update next` → test locally → push |
+| **Update shadcn/ui components** | `npx shadcn@latest add <component>` → test → push |
+| **Add new Payload plugin** | `npm install @payloadcms/plugin-xxx` → configure → test → push |
+| **Security patches** | Dependabot PRs on GitHub → review → merge → auto-deploys |
+
+---
+
+## 15. Vibe Coding Workflow
+`NOTED`
+
+### Three Channels, Each Handles Its Own Concern
+
+| Channel | What | When |
+|---------|------|------|
+| **GitHub → Cloud Run** | Code changes (design, components, schemas) | Git push triggers auto-deploy |
+| **Payload API → Cloud SQL** | Content changes (text, pages, SEO) | Instant via `/admin` or Claude Code API |
+| **Payload API → Cloud Storage** | Media uploads (images, PDFs) | Instant via `/admin` or Claude Code API |
+
+### Day-to-Day After Setup
+
+| Task | Who | Where | Git? |
+|------|-----|-------|------|
+| Fix a typo | Anyone | `/admin` | No |
+| Change pricing | Anyone | `/admin` | No |
+| New blog post | Marketing | `/admin` | No |
+| Create page from existing blocks | Anyone | `/admin` | No |
+| Upload images | Anyone | `/admin` | No |
+| **Design a NEW block type** | Claude Code | `.tsx` file | Yes |
+| **Redesign how a block looks** | Claude Code | `.tsx` file | Yes |
+| **Change site layout** | Claude Code | `.tsx` file | Yes |
+
+**90% of daily work = `/admin` panel. Only new designs need Claude Code.**
+
+---
+
+## 16. 3-Layer Guardrails
+`PLANNED`
+
+| Layer | Tool | Purpose |
+|-------|------|---------|
+| Design System | shadcn/ui | All UI must use these components |
+| Content & Pages | Payload CMS | Schema-enforced content types |
+| AI Rules | CLAUDE.md + .cursorrules | Folder structure, naming, code patterns |
+
+---
+
+## 17. Migration Phases
+`PLANNED`
+
+### Phase 0: Trial on `site.mcai.dev` `ACTIVE`
+- Build new site on separate domain
+- No risk to production
+- Learn the stack, build blocks, test admin panel
+- Recreate a few pages to validate approach
+
+### Phase 1: Set Up Production Infrastructure
+- Set up Cloud SQL, Cloud Storage, Cloud Run on GCP
+- Configure GitHub Actions auto-deploy
+- Define all Payload collections
+- Build header/footer/nav matching current brand
+- Install Payload plugins
+
+### Phase 2: Configure Domain Routing
+- Set up Cloudflare Worker for `masterconcept.ai`
+- Route `/blog/*` to WordPress, everything else to Cloud Run
+- Test cross-linking between systems
+- A record unchanged, just Worker route added
+
+### Phase 3: Migrate Landing Pages (One by One)
+- Screenshot → screenshot-to-code → React/Tailwind blocks
+- Upload images via Payload API
+- Create page in admin, same slug
+- Monitor SEO per page (see [SEO Safety](#18-seo-safety))
+- Migrate HubSpot form pages, ebook/download pages
+
+### Phase 4: Migrate Blog (Optional - When Ready)
+- Export WordPress posts via REST API
+- Import into Payload Posts collection
+- Marketing team switches to `/admin`
+- Remove WordPress proxy rules
+- Downgrade/cancel SiteGround
+
+### Phase 5: Cleanup & Optimization
+- Performance testing
+- SEO verification (meta, structured data, sitemaps, redirects)
+- Configure user roles
+- Set up version history retention
+
+---
+
+## 18. SEO Safety
+`PLANNED`
+
+### What Google Cares About
+
+| Factor | Risk | Action |
+|--------|------|--------|
+| Same URLs | Zero risk | Keep same slugs in Payload |
+| Same content | Low risk | Copy exact content |
+| No broken links | Low risk | 301 redirects via Payload plugin |
+| Crawlable HTML | Zero risk | Next.js SSR = fully crawlable |
+| Page speed | **Improves** | Next.js much faster than Elementor |
+| Domain authority | Zero risk | Same domain |
+| Backlinks | Zero risk | Same URLs |
+
+### Page-by-Page Migration (No Big Bang)
+
+```
+Move ONE page → monitor 2 weeks → rankings stable? → move next page
+```
+
+If any page drops: investigate, fix, or rollback that single page (WordPress still running).
+
+### Per-Page Checklist
+
+```
+Before: Record rankings, impressions, clicks
+After:  Verify URL, content, meta, images, structured data, speed
+        Submit for re-indexing in GSC
+        Monitor for 2 weeks
+```
+
+### Performance Should IMPROVE
+
+| Factor | WordPress + Elementor | Next.js + Payload |
+|--------|----------------------|-------------------|
+| Page load | 2-4 seconds | 0.5-1.5 seconds |
+| TTFB | 180-250ms | 50-120ms |
+| JS bundle | 500KB-2MB | 50-200KB |
+
+---
+
+## 19. Converting Elementor Pages
+`NOTED`
+
+1. **Screenshot-to-code** - AI generates React/Tailwind from screenshots
+2. **Images** - upload to Payload Media → GCP Cloud Storage
+3. **Header/Footer** - rebuild once, match current brand (same logo, colors, fonts, nav)
+4. **Popups** - rebuild as React modal components
+5. **HubSpot forms** - embed via HubSpotFormBlock
+6. **Ebooks/downloads** - upload to Payload Media
+7. **`html-widgets/`** - convert existing HTML widgets to Payload block components
+
+### Style Consistency During Transition
+
+Blog (WordPress) and landing pages (Next.js) can coexist on same domain. Keep same header/footer/nav/brand colors/fonts = visitors won't notice. Landing pages already look different from blog posts on most sites.
+
+---
+
+## 20. Cross-Linking Blog & Landing Pages
+`PLANNED`
+
+| Scenario | Solution |
+|----------|----------|
+| Blog post links to landing page | Normal links (`/pricing`) - same domain |
+| Landing page shows blog posts | Fetch from WordPress REST API (transition) → later from Payload |
+| Keep original URLs | Same slug in Payload CMS |
+| Images from WordPress | `next/image` remote patterns (transition) |
+
+---
+
+## 21. HubSpot Integration
+`NOTED`
+
+| Feature | How |
+|---------|-----|
+| Embed HubSpot forms | HubSpotFormBlock (paste Portal ID + Form ID in admin) |
+| Sync submissions | Payload `afterChange` hook → HubSpot API |
+| Ebook download + form | HubSpotFormBlock + PDF link from Payload Media |
+
+---
+
+## 22. AI-Automated SEO
+`NOTED`
+
+| SEO Task | How |
+|----------|-----|
+| Meta titles & descriptions | Claude reads content → generates → writes to Payload SEO fields |
+| Open Graph images | Auto-generate via Next.js `ImageResponse` API |
+| Alt text for images | Claude generates when uploading via Payload API |
+| Internal linking | Claude reads all pages → suggests/adds links |
+| Structured data (JSON-LD) | Claude generates schema markup from content |
+| Sitemap | Next.js auto-generates from Payload pages/posts |
+| Bulk SEO audit | Claude reads all pages → flags missing meta, broken links |
+
+---
+
+## 23. WebMCP Readiness
+`NOTED`
+
+**WebMCP** (W3C Draft, Feb 2026) lets websites expose capabilities to AI agents in the browser. Different from regular MCP - runs client-side via `navigator.modelContext`.
+
+- Status: Chrome 146 Canary early preview, cross-browser ~late 2027
+- **Works on ANY website** (WordPress or Next.js) - not a migration reason
+- Next.js has `webmcp-next` plugin for easier integration
+- Can add to WordPress too via HTML `toolname` attributes or JS API
+
+When ready, Payload APIs can be exposed as WebMCP tools for AI agents to create/update pages, upload media, run SEO audits.
+
+---
+
+## 24. Future Enhancements
+`NOTED`
+
+- WebMCP server when protocol matures
+- AI SEO automation (scheduled audits)
+- Full blog migration from WordPress to Payload
+- Cancel SiteGround after full migration
+- Multi-language via Payload's built-in localization
+- AI content generation via Payload API
+
+---
+
+## 25. Reference URLs
 
 - Payload CMS demo: https://demo.payloadcms.com/admin/login
 - Payload CMS docs: https://payloadcms.com/docs
@@ -547,5 +724,6 @@ The APIs already exist in Payload. WebMCP just wraps them in the MCP protocol fo
 - Payload plugins: https://payloadcms.com/docs/plugins/overview
 - screenshot-to-code: https://github.com/abi/screenshot-to-code
 - shadcn/ui: https://ui.shadcn.com
-- Firebase App Hosting docs: https://firebase.google.com/docs/app-hosting
 - GCS Storage plugin: https://payloadcms.com/docs/plugins/cloud-storage
+- Cloud Run docs: https://cloud.google.com/run/docs
+- GitHub Actions + Cloud Run: https://cloud.google.com/run/docs/continuous-deployment-with-cloud-build

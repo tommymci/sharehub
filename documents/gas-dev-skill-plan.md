@@ -297,11 +297,19 @@ mock-data.json
 
 **Google Drive root folder:** [App](https://drive.google.com/drive/folders/1KDBskPXvLC8cYzPbrb58Q_x6veD3V8_X?usp=drive_link)
 
-| Project | Account | GAS Type | Sheet | Web App | Drive Folder |
-|---------|---------|----------|-------|---------|-------------|
-| **PayU** | hkmci.com | Standalone | PayU Sheet | Yes (Anyone) | App/PayU/ |
-| **Master Draw** | hkmci.com | Sheet-bound | Master Draw Sheet | Yes (Anyone) | App/Master Draw/ |
-| **Master Form** | hkmci.com | Standalone | Master Form Sheet | Yes (Anyone_Anonymous) | App/Master Form/ |
+| Project | Account | GAS Type | Web App Access | Drive Folder |
+|---------|---------|----------|---------------|-------------|
+| **PayU** | hkmci.com | Standalone | Anyone | App/PayU/ |
+| **Master Draw** | hkmci.com | Sheet-bound | Anyone | App/Master Draw/ |
+| **Master Form** | hkmci.com | Standalone | Anyone_Anonymous | App/Master Form/ |
+
+**Deployment & Embed Links:**
+
+| Project | Apps Script Web App | iframe Embed |
+|---------|-------------------|--------------|
+| **PayU** | [Deploy Link](https://script.google.com/macros/s/AKfycbziWvHyUUoVbdFMMSqKUdfQyjvXlQSvkA8BPwl7xKFEgwZWKF0MfjMdi06ZvW47Su_UKQ/exec) | [mcai.dev/payu](https://mcai.dev/payu/) |
+| **Master Draw** | [Deploy Link](https://script.google.com/macros/s/AKfycbwf3jwQsQQoYIBGyG3_uoIUO_vtLfHkSlZ23bbKcBoKMaXwbDVsbkTD8ivX_wFEoGPgdA/exec) | [masterconcept.ai/link/master-draw](https://masterconcept.ai/link/master-draw/) |
+| **Master Form** | [Deploy Link](https://script.google.com/macros/s/AKfycbzOOyRuaWedAIpTcXlZvPjb3J_KNBqUAJz-_EdRZKVKhJbb-atCce2H8NeNDfKNJoDTOA/exec) | [masterconcept.ai/link/eohk](https://masterconcept.ai/link/eohk) |
 
 ### 2.5 Standalone vs Sheet-Bound Apps Script
 

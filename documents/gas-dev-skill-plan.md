@@ -291,6 +291,43 @@ mock-data.json
 }
 ```
 
+> **Note:** The accounts.json format may evolve as more projects are added. The skill should always read the current accounts.json to understand available projects rather than hardcoding assumptions about its structure.
+
+### 2.4 Real Project Examples
+
+| Project | Account | GAS Type | Sheet | Web App | Drive Folder |
+|---------|---------|----------|-------|---------|-------------|
+| **PayU** | hkmci.com | Standalone | PayU Sheet | Yes (Anyone) | App/PayU/ |
+| **Master Draw** | hkmci.com | Sheet-bound | Master Draw Sheet | Yes (Anyone) | App/Master Draw/ |
+| **Master Form** | hkmci.com | Standalone | Master Form Sheet | Yes (Anyone_Anonymous) | App/Master Form/ |
+
+### 2.5 Standalone vs Sheet-Bound Apps Script
+
+There are two types of Apps Script projects:
+
+**Standalone GAS** (e.g. PayU, Master Form)
+- Created via `clasp create` — produces an independent `.gs` file in Drive
+- Can be moved freely between Drive folders via API
+- Has its own scriptId, separate from any Sheet
+- Appears as a separate file in Drive folder alongside the Sheet
+
+**Sheet-Bound GAS** (e.g. Master Draw)
+- Created from within a Google Sheet (Extensions → Apps Script)
+- The script is embedded inside the Sheet — no separate file in Drive
+- Cannot be moved independently via Drive API (move the Sheet instead)
+- `parents` returns `undefined` when querying via Drive API
+- Access via: open Sheet → Extensions → Apps Script
+- The scriptId still works with clasp for push/deploy
+
+**How to tell which type:**
+- Query `drive.files.get(scriptId, { fields: 'parents' })`
+- If `parents` is `undefined` → likely **sheet-bound**
+- If `parents` has a folder ID → **standalone**
+
+**When to use which:**
+- **Standalone** — when the web app is the primary product, Sheet is just the database
+- **Sheet-bound** — when the Sheet is the primary product, script adds functionality to it
+
 ---
 
 ## 3. Development Workflow
@@ -299,7 +336,7 @@ mock-data.json
 
 1. Create Google Sheet via Sheets API (using `gws-client.js`)
 2. Create Drive folder for the project
-3. `clasp create --title "ProjectName"` in project folder
+3. `clasp create --title "ProjectName"` in project folder (creates standalone GAS)
 4. Move GAS file to Drive folder via Drive API
 5. Set up `appsscript.json` with timezone, webapp config
 6. Register in `accounts.json` with all IDs

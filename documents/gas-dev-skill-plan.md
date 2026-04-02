@@ -446,11 +446,21 @@ var now = Utilities.formatDate(new Date(), 'Asia/Hong_Kong', 'yyyy-MM-dd HH:mm:s
 - Success page: use `justSubmitted` flag — don't persist on refresh
 - `navigate()` function handles same-hash re-routing
 
-**iframe considerations:**
-- `setXFrameOptionsMode(ALLOWALL)` in doGet
-- No `alert()` — use inline error messages
-- `localStorage` for state persistence across refresh
-- Hash routing creates browser history entries for back button
+**iframe embedding & branding:**
+
+Apps Script web app URLs are long and ugly (e.g. `script.google.com/macros/s/AKfyc.../exec`). The standard practice is to embed them in an iframe on a branded domain (e.g. `masterconcept.ai/link/eohk` or `mcai.dev/payu`). This has important implications:
+
+- **Web app access MUST be `ANYONE` or `ANYONE_ANONYMOUS`** — if the GAS requires Google login (`MYSELF` or `DOMAIN`), the OAuth prompt cannot render inside an iframe and the app will fail to load
+- **For private apps, use password protection instead of Google auth** — implement a client-side password check (hash-based) or server-side via Script Properties, rather than relying on Google login
+- **`setXFrameOptionsMode(ALLOWALL)`** is required in doGet for iframe embedding
+- **`alert()` / `confirm()` / `prompt()` are blocked** in iframe sandbox — always use inline error messages and custom UI instead
+- **`localStorage`** works within the iframe origin for state persistence across refresh
+- **Hash routing** creates browser history entries so back button works inside the iframe
+
+**iframe-specific gotchas:**
+- `google.script.run` success/failure callbacks may silently fail if the return value can't be serialized — always return simple strings
+- Authorization popups from `google.script.run` cannot display inside iframe — all server functions must be pre-authorized by running them once in the script editor
+- Form submissions that hang with no response usually mean the function needs re-authorization
 
 **Responsive design:**
 - Raleway font + Material Icons Outlined

@@ -1,5 +1,34 @@
 # Claude Skill: `gas-dev` — Google Apps Script Development Assistant
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Framework Overview](#framework-overview)
+- [1. Prerequisites](#1-prerequisites)
+  - [1.1 CLI Tools](#11-cli-tools)
+  - [1.2 Google Cloud Platform Setup](#12-google-cloud-platform-setup-one-time-manual)
+  - [1.3 Authentication & Multi-Account Management](#13-authentication--multi-account-management)
+- [2. Project Structure](#2-project-structure)
+  - [2.1 Standard File Layout](#21-standard-file-layout)
+  - [2.2 Mirrored Folder Structure (Local ↔ Google Drive)](#22-mirrored-folder-structure-local--google-drive)
+  - [2.3 .claspignore](#23-claspignore-always-include)
+  - [2.3 accounts.json Structure](#23-accounts-json-structure)
+  - [2.4 Real Project Examples](#24-real-project-examples)
+  - [2.5 Standalone vs Sheet-Bound Apps Script](#25-standalone-vs-sheet-bound-apps-script)
+- [3. Development Workflow](#3-development-workflow)
+  - [3.1 Creating a New Project](#31-creating-a-new-project)
+  - [3.2 Local Development](#32-local-development)
+  - [3.3 Deployment](#33-deployment)
+- [4. Coding Preferences](#4-coding-preferences)
+  - [4.1 File Organization](#41-file-organization)
+  - [4.2 Backend Patterns](#42-backend-patterns-codejs)
+  - [4.3 Key Gotchas](#43-key-gotchas)
+  - [4.4 Frontend Patterns](#44-frontend-patterns)
+- [5. Skill File Structure](#5-skill-file-structure)
+- [6. Verification](#6-verification)
+
+---
+
 ## Overview
 
 A Claude skill that encodes the full Google Apps Script (GAS) development workflow — from project creation to deployment — so Claude can assist efficiently with any GAS project without re-learning the setup each time.

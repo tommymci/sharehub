@@ -23,6 +23,109 @@ Goal: connect Gemini Enterprise (Agentspace) to Alpha Vantage and SEC EDGAR via 
 
 ---
 
+## Quick start — use the MCP from Claude (or any MCP client)
+
+### Step 1 — get the OAuth credentials
+
+You need three values. The first two are public and fixed; the secret is shared privately.
+
+| What | Value | Where to find it |
+|---|---|---|
+| **Token URL** | `https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/oauth/token` | Public — already in this doc |
+| **Client ID** | `ge-mcp-client` | Public — already in this doc |
+| **Client Secret** | (64-char hex string) | **Ask Tommy.** Stored locally at `ge-mcp-oauth-proxy/SECRETS.local.md` (gitignored). Production copy lives in Cloudflare Workers secrets — view via `wrangler secret list`, but the value itself is write-only there. **Do not embed it in any public doc, repo, or chat — share via 1Password / password manager.** |
+
+### Step 2 — exchange the credentials for a JWT
+
+```bash
+curl -X POST https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=ge-mcp-client&client_secret=<paste-secret>"
+```
+
+Returns:
+
+```json
+{ "access_token": "eyJhbGciOiJIUzI1NiIs...", "token_type": "Bearer", "expires_in": 3600 }
+```
+
+The `access_token` is a JWT valid for 1 hour. Pass it as a Bearer token to the MCP endpoint.
+
+### Step 3 — connect from your MCP client
+
+#### A. Claude API (`mcp_servers` parameter)
+
+```python
+import anthropic
+client = anthropic.Anthropic()  # ANTHROPIC_API_KEY in env
+
+response = client.beta.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=4096,
+    mcp_servers=[{
+        "type": "url",
+        "url": "https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/mcp",
+        "name": "alpha-vantage",
+        "authorization_token": "<JWT from Step 2>",
+    }],
+    betas=["mcp-client-2025-04-04"],
+    messages=[{"role": "user", "content": "What's Apple's current stock price?"}],
+)
+```
+
+A working reference script: `test_mcp_with_claude.py` in the repo.
+
+#### B. Claude Code (CLI)
+
+```bash
+claude mcp add alpha-vantage \
+  --transport http \
+  https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/mcp \
+  --header "Authorization: Bearer <JWT>"
+```
+
+JWT expires every hour, so for long-running CLI use you'll want a small wrapper that re-fetches.
+
+#### C. Claude Desktop / Cursor / Cline
+
+These read a JSON config. Add an entry like:
+
+```json
+{
+  "mcpServers": {
+    "alpha-vantage": {
+      "type": "http",
+      "url": "https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer <JWT>"
+      }
+    }
+  }
+}
+```
+
+For the SEC EDGAR server, use `/sec/mcp` instead of `/mcp` — same OAuth credentials work for both (path-based routing in the proxy).
+
+### Step 4 — what tools the agent gets
+
+After connecting, the agent automatically discovers these tools via MCP `tools/list`:
+
+**Alpha Vantage** (`/mcp`): `get_stock_quote`, `get_company_overview`, `search_symbols`, `get_daily_time_series`
+**SEC EDGAR** (`/sec/mcp`): `search_companies`, `get_company_filings`, `get_company_facts`, `get_filing_text`
+
+### Where each kind of secret lives
+
+| Secret | Stored in | Who can read it |
+|---|---|---|
+| Alpha Vantage API key (free tier, `3BZN8...`) | Cloudflare Workers secret on `alphavantage-mcp` Worker — also in `alphavantage-mcp/.dev.vars` and `ge-mcp-oauth-proxy/SECRETS.local.md` (both gitignored) | Cloudflare account owner (Master Concept Demo) + whoever has the local repo |
+| OAuth Client Secret | Cloudflare Workers secret on `ge-mcp-oauth-proxy` Worker — also in `ge-mcp-oauth-proxy/.dev.vars` and `ge-mcp-oauth-proxy/SECRETS.local.md` (both gitignored) | Same as above |
+| OAuth JWT signing secret (HMAC) | Cloudflare Workers secret only — never on disk in plaintext outside `.dev.vars` | Cloudflare account owner. Rotating it invalidates all live JWTs. |
+| GE OAuth Client Secret (the one GE sends back) | Same as OAuth Client Secret above (GE just stores a copy of what we provided) | Master Concept GE workspace admins |
+
+If you ever leak the OAuth Client Secret or JWT secret: regenerate (`openssl rand -hex 32`), `wrangler secret put`, redeploy. Done.
+
+---
+
 ## 1. Cloudflare Workers (deployed, all functional)
 
 | Worker | URL | Purpose |

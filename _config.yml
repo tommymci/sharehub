@@ -38,4 +38,4 @@ defaults:
   - scope:
       path: "documents"
     values:
-      permalink: /:basename:output_ext
+      permalink: /documents/:basename:output_ext

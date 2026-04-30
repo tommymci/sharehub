@@ -7,6 +7,22 @@ date: 2026-04-30
 
 Goal: connect Gemini Enterprise (Agentspace) to Alpha Vantage and SEC EDGAR via custom MCP servers, with an OAuth 2.0 proxy in front so GE can authenticate.
 
+## Status at a glance
+
+| Layer | Status |
+|---|---|
+| Cloudflare Worker stack (proxy + 2 MCP servers) | ✅ Live, deployed, end-to-end smoke-tested |
+| OAuth + JWT + service-binding routing | ✅ Working |
+| Gemini Enterprise engine + clean workspace | ✅ Created — bookmark: <https://vertexaisearch.cloud.google.com/home/cid/6bd325f8-e1e4-4bb3-b5d0-064176f5f140> |
+| MCP data stores registered in GE (FEDERATED mode) | ✅ Active in `mc-ge-agents` + `zorro-agentspace` |
+| Agent UI / chat in GE | ✅ Functional |
+| **Tool-calling from GE (original goal)** | ❌ **Blocked** on Google-side ACTIONS init bug — see §7 |
+| **Tool-calling from any other MCP client** | ✅ **Works today** (Claude API, Claude Desktop, Claude Code, Cursor, Cline, etc.) — see §6a |
+
+> 📌 **Net result:** The Cloudflare backend is fully usable as an MCP server **for any client except GE** right now. GE-side is one cleanup command away whenever Google fixes their init pipeline. Full diagnostic + escalation path in §7.
+
+---
+
 ## 1. Cloudflare Workers (deployed, all functional)
 
 | Worker | URL | Purpose |

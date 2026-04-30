@@ -102,7 +102,52 @@ For "What's Apple's stock price" use cases, **ACTIONS** is required — precise 
 | GE engine + workspace | ✅ Working — clean MC GE Agents workspace bookmarked |
 | MCP data stores (FEDERATED) | ✅ Active in `mc-ge-agents` + `zorro-agentspace` |
 | Agent UI / chat | ✅ Functional |
-| **Tool-calling (the actual goal)** | ❌ **Blocked** on Google-side ACTIONS init bug |
+| **Tool-calling from GE (original goal)** | ❌ **Blocked** on Google-side ACTIONS init bug — see §7 |
+| **Tool-calling from any other MCP client** | ✅ **Works today** — see §6a |
+
+### 6a. The MCP servers work with non-GE MCP clients today
+
+Even though Gemini Enterprise can't yet invoke MCP tools (Google-side init bug), the deployed Cloudflare Workers are **standard remote-MCP HTTP servers**. Any MCP client can connect — [Claude API](https://docs.claude.com/en/docs/build-with-claude/mcp) via the `mcp_servers` parameter, Claude Desktop, [Claude Code](https://docs.claude.com/en/docs/claude-code/mcp), Cursor, Cline, etc.
+
+**Endpoints (live):**
+
+- OAuth token: <https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/oauth/token>
+- Alpha Vantage MCP: <https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/mcp>
+- SEC EDGAR MCP: <https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/sec/mcp>
+- Health: <https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/health>
+
+**End-to-end proof** (verified live during build via curl + MCP JSON-RPC):
+
+```bash
+# 1. OAuth handshake
+curl -X POST https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "grant_type=client_credentials&client_id=ge-mcp-client&client_secret=<...>"
+# → { "access_token": "eyJ...", "expires_in": 3600 }
+
+# 2. tools/list returns 8 tools (4 AV + 4 SEC EDGAR) — full MCP initialize → tools/list
+# 3. tools/call get_stock_quote(symbol="IBM") returns live Alpha Vantage data
+```
+
+**Claude API integration** (the same pattern works for Claude Desktop / Claude Code / Cursor / Cline):
+
+```python
+client.beta.messages.create(
+    model="claude-sonnet-4-6",
+    mcp_servers=[{
+        "type": "url",
+        "url": "https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev/mcp",
+        "name": "alpha-vantage",
+        "authorization_token": "<JWT from /oauth/token>",
+    }],
+    betas=["mcp-client-2025-04-04"],
+    messages=[{"role": "user", "content": "What's Apple's current stock price?"}],
+)
+```
+
+A ready-to-run reference script lives at `test_mcp_with_claude.py` in the repo — set `ANTHROPIC_API_KEY` and run it to verify the chain end-to-end with Claude.
+
+**Practical takeaway:** the Cloudflare Worker stack is **not waiting on Google** — it's a usable MCP backend right now for any non-GE client. The GE side is one cleanup command away whenever Google's init pipeline gets fixed.
 
 ## 7. Outstanding blocker — Google-side init pipeline bug
 

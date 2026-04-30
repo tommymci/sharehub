@@ -27,9 +27,9 @@ Goal: connect Gemini Enterprise (Agentspace) to Alpha Vantage and SEC EDGAR via 
 
 | Worker | URL | Purpose |
 |---|---|---|
-| **OAuth Proxy** | https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev | Issues JWTs; routes `/mcp` → Alpha Vantage, `/sec/mcp` → SEC EDGAR via service bindings |
-| **Alpha Vantage MCP** | https://alphavantage-mcp.masterconcept-hongkong.workers.dev | 4 financial-data tools (`get_stock_quote`, `get_company_overview`, `search_symbols`, `get_daily_time_series`) |
-| **SEC EDGAR MCP** | https://sec-edgar-mcp.masterconcept-hongkong.workers.dev | 4 SEC-filings tools (`search_companies`, `get_company_filings`, `get_company_facts`, `get_filing_text`) |
+| **OAuth Proxy** | <https://ge-mcp-oauth-proxy.masterconcept-hongkong.workers.dev> | Issues JWTs; routes `/mcp` → Alpha Vantage, `/sec/mcp` → SEC EDGAR via service bindings |
+| **Alpha Vantage MCP** | <https://alphavantage-mcp.masterconcept-hongkong.workers.dev> | 4 financial-data tools (`get_stock_quote`, `get_company_overview`, `search_symbols`, `get_daily_time_series`) |
+| **SEC EDGAR MCP** | <https://sec-edgar-mcp.masterconcept-hongkong.workers.dev> | 4 SEC-filings tools (`search_companies`, `get_company_filings`, `get_company_facts`, `get_filing_text`) |
 
 Cloudflare account: **Master Concept Demo** (`mcmsp.dev`).
 
@@ -63,8 +63,8 @@ Cloudflare account: **Master Concept Demo** (`mcmsp.dev`).
 
 | Resource | URL / ID |
 |---|---|
-| **MC GE Agents workspace** (clean financial-demo workspace) | https://vertexaisearch.cloud.google.com/home/cid/6bd325f8-e1e4-4bb3-b5d0-064176f5f140 |
-| Cloud Console — engine admin | https://console.cloud.google.com/gen-app-builder/engines/mc-ge-agents/data?project=solutionday-cloudsummit |
+| **MC GE Agents workspace** (clean financial-demo workspace) | <https://vertexaisearch.cloud.google.com/home/cid/6bd325f8-e1e4-4bb3-b5d0-064176f5f140> |
+| Cloud Console — engine admin | <https://console.cloud.google.com/gen-app-builder/engines/mc-ge-agents/data?project=solutionday-cloudsummit> |
 | GE Engine | `projects/745425319636/locations/global/collections/default_collection/engines/mc-ge-agents` |
 | Alpha Vantage MCP data store | `alpha-vantage-mcp_1777445667644_mcp_data` (FEDERATED — attached to `mc-ge-agents` + `zorro-agentspace`) |
 | SEC EDGAR MCP data store | `sec-edgar-mcp_1777449696212_mcp_data` (FEDERATED — same engines) |

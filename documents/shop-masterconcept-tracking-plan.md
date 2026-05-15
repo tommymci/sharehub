@@ -87,6 +87,7 @@ date: 2026-05-15
 2. 建立 **GTM container**（Web），拿到 `GTM-XXXXXXX` ID。
 3. 把 GTM snippet 加到 Next.js root layout。因為有 CSP nonce，必須用 `next/script` 並顯式傳入 nonce：
 
+   {% raw %}
    ```tsx
    // app/[lng]/layout.tsx (head)
    <Script
@@ -102,6 +103,7 @@ date: 2026-05-15
      }}
    />
    ```
+   {% endraw %}
    同時在 `<body>` 加上 `<noscript>` iframe，給關閉 JS 的用戶使用。
 
 4. 在 GTM 內新增 **GA4 Configuration tag**，指向 `G-XXXXXXX` Measurement ID，trigger = **All Pages**。

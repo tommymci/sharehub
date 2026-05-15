@@ -13,20 +13,30 @@ date: 2026-05-15
 
 | 項目 | 狀態 | ID / 備註 |
 |---|---|---|
-| GTM container（Web） | ✅ 已建立 | `GTM-MBBXJM2F` |
+| GTM container — **Prod** | ✅ 已建立 | `GTM-MBBXJM2F` → 裝在 `shop.masterconcept.ai` |
+| GTM container — **Dev** | ✅ 已建立 | `GTM-5JPNZQDT` → 裝在 `dev.shop.masterconcept.ai` |
 | GA4 Property — Production | ✅ 已建立 | `G-S42GRZGW62` |
 | GA4 Property — Development | ✅ 已建立 | `G-HYZDFDW7EW` |
-| GTM snippet 安裝至 Next.js | ⏳ 待工程師埋入 | 見 [Phase 1](#phase-1--基礎建置半天) |
+| GTM snippet 安裝至 Next.js（環境變數切換） | ⏳ 待工程師埋入 | 見 [Phase 1](#phase-1--基礎建置半天) |
+| 兩個 GTM 內建好 Google Tag | ⏳ 待設定 | 見 [Phase 1](#phase-1--基礎建置半天) |
 | dataLayer events 埋點 | ⏳ 待開發 | 見 [Phase 2](#phase-2--event-埋點工程師-12-天) |
 | Google Ads conversion tag | ⏳ 未開始 | 見 [Phase 3](#phase-3--接通-google-ads約-30-分鐘) |
 | Server-side conversion（付款 webhook） | ⏳ 未開始 | 見 [Section 7](#7-server-side-conversion-tracking付款流程離站) |
 
-**Dev / Prod 環境切換建議：**
-在 GTM 內用一個 **Lookup Table variable**，輸入 = `{{Page Hostname}}`：
-- `shop.masterconcept.ai` → `G-S42GRZGW62`（Prod）
-- 其他（如 `staging.*`、`localhost`） → `G-HYZDFDW7EW`（Dev）
+**Dev / Prod 環境隔離策略 — 兩個 GTM container（已決定）：**
 
-GA4 Configuration tag 的 Measurement ID 欄位填這個變數，這樣同一份 GTM container 就能同時服務 Prod 與 Dev，不會把測試數據污染到正式報表。
+```
+┌──────────────────────────────────┐    ┌──────────────────────────────────┐
+│ GTM-MBBXJM2F  (Prod)             │    │ GTM-5JPNZQDT  (Dev)              │
+│  → shop.masterconcept.ai         │    │  → dev.shop.masterconcept.ai     │
+├──────────────────────────────────┤    ├──────────────────────────────────┤
+│ Google Tag                       │    │ Google Tag                       │
+│   Measurement ID: G-S42GRZGW62   │    │   Measurement ID: G-HYZDFDW7EW   │
+│   Trigger: All Pages             │    │   Trigger: All Pages             │
+└──────────────────────────────────┘    └──────────────────────────────────┘
+```
+
+兩個 container 完全隔離，**不需要** hostname filter / Lookup Table — Next.js 根據環境變數自動載入對應 container。Dev 可大膽測試，改完用 **Export Container JSON → Import 到 Prod** 流程升版。
 
 ---
 
@@ -104,53 +114,86 @@ GA4 Configuration tag 的 Measurement ID 欄位填這個變數，這樣同一份
 
 ### Phase 1 — 基礎建置（半天）
 
-1. ✅ **已完成** — GA4 property 已建立：
-   - Production: `G-S42GRZGW62`
-   - Development: `G-HYZDFDW7EW`
-2. ✅ **已完成** — GTM container 已建立：`GTM-MBBXJM2F`
-3. ⏳ **待工程師執行** — 把 GTM snippet 加到 Next.js root layout。因為有 CSP nonce，必須用 `next/script` 並顯式傳入 nonce：
+#### 1.1 ✅ 已完成
+- GA4 Production property: `G-S42GRZGW62`
+- GA4 Development property: `G-HYZDFDW7EW`
+- GTM Production container: `GTM-MBBXJM2F`
+- GTM Development container: `GTM-5JPNZQDT`
 
-   {% raw %}
-   ```tsx
-   // app/[lng]/layout.tsx (head)
-   <Script
-     id="gtm-init"
-     strategy="afterInteractive"
-     nonce={nonce}
-     dangerouslySetInnerHTML={{
-       __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-         'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.nonce='${nonce}';
-         f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MBBXJM2F');`
-     }}
-   />
-   ```
-   {% endraw %}
-   同時在 `<body>` 開頭加上 `<noscript>` iframe，給關閉 JS 的用戶使用：
+#### 1.2 ⏳ 兩個 GTM container 內各建一個 Google Tag
 
-   ```html
-   <noscript>
-     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBBXJM2F"
-             height="0" width="0" style="display:none;visibility:hidden"></iframe>
-   </noscript>
-   ```
+| Container | Measurement ID | Trigger |
+|---|---|---|
+| `GTM-MBBXJM2F` (Prod) | `G-S42GRZGW62` | **All Pages** |
+| `GTM-5JPNZQDT` (Dev) | `G-HYZDFDW7EW` | **All Pages** |
 
-4. ⏳ **待 GTM 內設定** — 在 GTM 新增以下兩個元件：
+⚠️ **不要**建 GA4 Event tag 來發 pageview — Google Tag 載入時會自動送 `page_view`，重複建會雙重計數。GA4 Event tag 留到 Phase 2 才用（埋 `add_to_cart`、`purchase` 等自訂事件）。
 
-   **a. Lookup Table Variable** (名稱建議：`GA4 - Measurement ID`)
-   - Input Variable: `{{Page Hostname}}`
-   - Default Value: `G-HYZDFDW7EW` (Dev)
-   - Rows:
-     | Input | Output |
-     |---|---|
-     | `shop.masterconcept.ai` | `G-S42GRZGW62` |
+#### 1.3 ⏳ Next.js 端用環境變數切換 GTM ID
 
-   **b. GA4 Configuration tag**
-   - Measurement ID: `{{GA4 - Measurement ID}}`
-   - Trigger: All Pages
+**`.env.production`**（Vercel / 正式部署）
+```
+NEXT_PUBLIC_GTM_ID=GTM-MBBXJM2F
+```
 
-**完成條件：** GA4 Realtime 報表（Prod property）能看到正式環境的 pageview，且 Dev property 看到測試環境的流量。
+**`.env.development`**（dev branch / `dev.shop.masterconcept.ai`）
+```
+NEXT_PUBLIC_GTM_ID=GTM-5JPNZQDT
+```
+
+**`app/[lng]/layout.tsx`** —— 因為有 CSP nonce，必須用 `next/script` 並顯式傳 nonce：
+
+{% raw %}
+```tsx
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
+
+<Script
+  id="gtm-init"
+  strategy="afterInteractive"
+  nonce={nonce}
+  dangerouslySetInnerHTML={{
+    __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.nonce='${nonce}';
+      f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${gtmId}');`
+  }}
+/>
+```
+{% endraw %}
+
+`<body>` 開頭加上 `<noscript>` iframe（同樣用 env 變數）：
+
+```tsx
+<noscript>
+  <iframe
+    src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+    height="0" width="0" style={{display:'none',visibility:'hidden'}} />
+</noscript>
+```
+
+#### 1.4 ⏳ 驗證
+
+| 環境 | 部署到 | GTM container | GA4 property |
+|---|---|---|---|
+| Prod | `shop.masterconcept.ai` | `GTM-MBBXJM2F` | `G-S42GRZGW62` |
+| Dev | `dev.shop.masterconcept.ai` | `GTM-5JPNZQDT` | `G-HYZDFDW7EW` |
+
+**完成條件：**
+- Prod 網域查看原始碼 → 看到 `GTM-MBBXJM2F`，**看不到** `GTM-5JPNZQDT`
+- Dev 網域查看原始碼 → 相反
+- GA4 Prod property Realtime → 只看到正式環境流量
+- GA4 Dev property Realtime → 只看到測試環境流量
+- 兩個 GTM Preview mode 各自連網域，Google Tag fire 一次、無雙重計數
+
+#### 1.5 上 Prod 流程（Dev → Prod 同步 GTM 設定）
+
+之後 Phase 2 / 3 都在 Dev container 先改、先測：
+
+1. Dev container 改完 → Submit → Publish → Dev 環境驗證
+2. Dev container → **Admin → Export Container** → 下載 JSON
+3. Prod container → **Admin → Import Container** → 選 JSON → Workspace = `Default`，Choose import option = **Merge**（保留 Prod 已有設定）→ Confirm
+4. Prod container Preview 驗證 → Publish
 
 ### Phase 2 — Event 埋點（工程師 1–2 天）
 

@@ -9,6 +9,27 @@ date: 2026-05-15
 
 ---
 
+## 🟢 專案目前進度（Last updated: 2026-05-15）
+
+| 項目 | 狀態 | ID / 備註 |
+|---|---|---|
+| GTM container（Web） | ✅ 已建立 | `GTM-MBBXJM2F` |
+| GA4 Property — Production | ✅ 已建立 | `G-S42GRZGW62` |
+| GA4 Property — Development | ✅ 已建立 | `G-HYZDFDW7EW` |
+| GTM snippet 安裝至 Next.js | ⏳ 待工程師埋入 | 見 [Phase 1](#phase-1--基礎建置半天) |
+| dataLayer events 埋點 | ⏳ 待開發 | 見 [Phase 2](#phase-2--event-埋點工程師-12-天) |
+| Google Ads conversion tag | ⏳ 未開始 | 見 [Phase 3](#phase-3--接通-google-ads約-30-分鐘) |
+| Server-side conversion（付款 webhook） | ⏳ 未開始 | 見 [Section 7](#7-server-side-conversion-tracking付款流程離站) |
+
+**Dev / Prod 環境切換建議：**
+在 GTM 內用一個 **Lookup Table variable**，輸入 = `{{Page Hostname}}`：
+- `shop.masterconcept.ai` → `G-S42GRZGW62`（Prod）
+- 其他（如 `staging.*`、`localhost`） → `G-HYZDFDW7EW`（Dev）
+
+GA4 Configuration tag 的 Measurement ID 欄位填這個變數，這樣同一份 GTM container 就能同時服務 Prod 與 Dev，不會把測試數據污染到正式報表。
+
+---
+
 ## 1. 現況稽核 — 目前裝了什麼？
 
 我抓取 `https://shop.masterconcept.ai/` 的真實 HTML（會 307 跳轉到 `/zh-TW/google-workspace`），並 grep 整份原始碼掃描追蹤碼特徵。
@@ -83,9 +104,11 @@ date: 2026-05-15
 
 ### Phase 1 — 基礎建置（半天）
 
-1. 在 Google Analytics admin 建立 **GA4 property**。
-2. 建立 **GTM container**（Web），拿到 `GTM-XXXXXXX` ID。
-3. 把 GTM snippet 加到 Next.js root layout。因為有 CSP nonce，必須用 `next/script` 並顯式傳入 nonce：
+1. ✅ **已完成** — GA4 property 已建立：
+   - Production: `G-S42GRZGW62`
+   - Development: `G-HYZDFDW7EW`
+2. ✅ **已完成** — GTM container 已建立：`GTM-MBBXJM2F`
+3. ⏳ **待工程師執行** — 把 GTM snippet 加到 Next.js root layout。因為有 CSP nonce，必須用 `next/script` 並顯式傳入 nonce：
 
    {% raw %}
    ```tsx
@@ -99,16 +122,35 @@ date: 2026-05-15
          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
          'https://www.googletagmanager.com/gtm.js?id='+i+dl;j.nonce='${nonce}';
-         f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-XXXXXXX');`
+         f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MBBXJM2F');`
      }}
    />
    ```
    {% endraw %}
-   同時在 `<body>` 加上 `<noscript>` iframe，給關閉 JS 的用戶使用。
+   同時在 `<body>` 開頭加上 `<noscript>` iframe，給關閉 JS 的用戶使用：
 
-4. 在 GTM 內新增 **GA4 Configuration tag**，指向 `G-XXXXXXX` Measurement ID，trigger = **All Pages**。
+   ```html
+   <noscript>
+     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBBXJM2F"
+             height="0" width="0" style="display:none;visibility:hidden"></iframe>
+   </noscript>
+   ```
 
-**完成條件：** GA4 Realtime 報表能看到 pageview。
+4. ⏳ **待 GTM 內設定** — 在 GTM 新增以下兩個元件：
+
+   **a. Lookup Table Variable** (名稱建議：`GA4 - Measurement ID`)
+   - Input Variable: `{{Page Hostname}}`
+   - Default Value: `G-HYZDFDW7EW` (Dev)
+   - Rows:
+     | Input | Output |
+     |---|---|
+     | `shop.masterconcept.ai` | `G-S42GRZGW62` |
+
+   **b. GA4 Configuration tag**
+   - Measurement ID: `{{GA4 - Measurement ID}}`
+   - Trigger: All Pages
+
+**完成條件：** GA4 Realtime 報表（Prod property）能看到正式環境的 pageview，且 Dev property 看到測試環境的流量。
 
 ### Phase 2 — Event 埋點（工程師 1–2 天）
 

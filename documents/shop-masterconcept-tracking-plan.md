@@ -17,8 +17,11 @@ date: 2026-05-15
 | GTM container — **Dev** | ✅ 已建立 | `GTM-5JPNZQDT` → 裝在 `dev.shop.masterconcept.ai` |
 | GA4 Property — Production | ✅ 已建立 | `G-S42GRZGW62` |
 | GA4 Property — Development | ✅ 已建立 | `G-HYZDFDW7EW` |
-| GTM snippet 安裝至 Next.js（環境變數切換） | ⏳ 待工程師埋入 | 見 [Phase 1](#phase-1--基礎建置半天) |
-| 兩個 GTM 內建好 Google Tag | ⏳ 待設定 | 見 [Phase 1](#phase-1--基礎建置半天) |
+| Google Tag (Prod GTM, Trigger = All Pages) | ✅ 已設定 | Tag Type = Google Tag, Tag ID = `G-S42GRZGW62` |
+| Google Tag (Dev GTM, Trigger = All Pages) | ✅ 已設定 | Tag Type = Google Tag, Tag ID = `G-HYZDFDW7EW` |
+| GTM snippet 安裝至 Next.js（環境變數切換） | ⏳ 待工程師埋入 | 見 [Phase 1.3](#phase-1--基礎建置半天) |
+| Publish 兩個 GTM container | ⏳ 待 Publish | Submit → Publish 後正式網站才會載入 Tag |
+| GA4 Realtime 驗證 pageview | ⏳ 待驗證 | Prod / Dev 兩個 property 都要看到流量 |
 | dataLayer events 埋點 | ⏳ 待開發 | 見 [Phase 2](#phase-2--event-埋點工程師-12-天) |
 | Google Ads conversion tag | ⏳ 未開始 | 見 [Phase 3](#phase-3--接通-google-ads約-30-分鐘) |
 | Server-side conversion（付款 webhook） | ⏳ 未開始 | 見 [Section 7](#7-server-side-conversion-tracking付款流程離站) |
@@ -114,20 +117,22 @@ date: 2026-05-15
 
 ### Phase 1 — 基礎建置（半天）
 
-#### 1.1 ✅ 已完成
+#### 1.1 ✅ 已完成 — GA4 + GTM 帳號
 - GA4 Production property: `G-S42GRZGW62`
 - GA4 Development property: `G-HYZDFDW7EW`
 - GTM Production container: `GTM-MBBXJM2F`
 - GTM Development container: `GTM-5JPNZQDT`
 
-#### 1.2 ⏳ 兩個 GTM container 內各建一個 Google Tag
+#### 1.2 ✅ 已完成 — 兩個 GTM container 內的 Google Tag
 
-| Container | Measurement ID | Trigger |
-|---|---|---|
-| `GTM-MBBXJM2F` (Prod) | `G-S42GRZGW62` | **All Pages** |
-| `GTM-5JPNZQDT` (Dev) | `G-HYZDFDW7EW` | **All Pages** |
+| Container | Tag Type | Tag ID | Trigger |
+|---|---|---|---|
+| `GTM-MBBXJM2F` (Prod) | Google Tag | `G-S42GRZGW62` | **All Pages** |
+| `GTM-5JPNZQDT` (Dev) | Google Tag | `G-HYZDFDW7EW` | **All Pages** |
 
-⚠️ **不要**建 GA4 Event tag 來發 pageview — Google Tag 載入時會自動送 `page_view`，重複建會雙重計數。GA4 Event tag 留到 Phase 2 才用（埋 `add_to_cart`、`purchase` 等自訂事件）。
+⚠️ **沒有**建 GA4 Event tag 來發 pageview — Google Tag 載入時會自動送 `page_view`，重複建會雙重計數。GA4 Event tag 留到 Phase 2 才用（埋 `add_to_cart`、`purchase` 等自訂事件）。
+
+⚠️ **記得 Submit → Publish** 兩個 container。沒 Publish 之前 Tag 只在 Preview 模式下 fire，正式訪客看不到。
 
 #### 1.3 ⏳ Next.js 端用環境變數切換 GTM ID
 

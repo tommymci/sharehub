@@ -1,8 +1,3 @@
----
-title: "finda.cloud — Tech Stack & SEO Audit"
-date: 2026-06-05
----
-
 # finda.cloud — Tech Stack & SEO Audit
 
 **Site:** https://finda.cloud/
@@ -33,6 +28,7 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 ## 1. Technology stack
 
 ### Frontend
+
 | Layer | Detail |
 |---|---|
 | Framework | **React 18** (`createRoot`, `react-dom`) — SPA, rendered fully in the browser |
@@ -42,6 +38,7 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 | Bundle | Single, **not code-split**, ~1.04 MB uncompressed (served Brotli-compressed) |
 
 ### Hosting / infra
+
 | Layer | Detail |
 |---|---|
 | Host | **Firebase Hosting** (Google) — TXT `hosting-site=findacloud-website`, anchor IP `199.36.158.100` |
@@ -69,6 +66,7 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 - Google Search Console connected.
 
 ### 🔴 Critical
+
 | Issue | Evidence | Impact |
 |---|---|---|
 | **Content rendered only in JS** | Raw HTML body is `<div id="root"></div>` — no `<h1>`, `<nav>`, `<main>`, `<article>`, no `<noscript>` fallback | Non-JS crawlers (and social / LinkedIn / many AI crawlers) see an empty page; Google renders JS only on a deferred second pass |

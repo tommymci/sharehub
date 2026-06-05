@@ -1,198 +1,164 @@
+---
+title: "finda.cloud — Tech Stack & SEO Audit"
+date: 2026-06-05
+---
+
 # finda.cloud — Tech Stack & SEO Audit
 
-**Site:** https://finda.cloud/
-**Company:** Finda Cloud Technology Limited — APAC cloud / SaaS value-added distributor
-**Audited:** 2026-06-05 (external black-box analysis; no server access)
+**Site:** https://finda.cloud/ · **Company:** Finda Cloud Technology Limited — APAC cloud / SaaS value-added distributor · **Audited:** 2026-06-05 (external black-box analysis, no server access)
+
+## Contents
+{:#contents}
+
+1. [Executive summary](#summary)
+2. [Technology stack](#stack)
+3. [What's working well](#working)
+4. [Issues found](#issues)
+5. [Recommendations](#recommendations)
+6. [Target region & language](#region)
+7. [Questions for the website manager](#questions)
 
 ---
 
-## Executive summary
+## 1. Executive summary
+{:#summary}
 
-The marketing site is a **client-rendered React single-page app on Firebase Hosting** with an
-**excellent `<head>` meta layer** but **almost no crawlable content**. Search engines that don't
-execute JavaScript see a near-empty page. On top of that, three issues actively work against ranking:
+finda.cloud is a **client-rendered React single-page app on Firebase Hosting** with an **excellent
+`<head>` meta layer** but **almost no content that search engines can read**. The page body is an empty
+`<div id="root">` filled in by JavaScript, so non-JS crawlers and social scrapers see a blank page.
 
-1. **Soft-404s everywhere** — every URL (including random paths and old WordPress URLs) returns
-   HTTP `200` with the empty app shell instead of a real `404`.
-2. **News & events exist but are invisible to search** — articles are stored in **Firestore** and
-   rendered client-side at numeric-ID URLs (`/news/1`, `/events/101`). They are **not in the sitemap**
-   (which lists only static section routes), they use **non-descriptive numeric IDs instead of slugs**,
-   and they return an empty HTML shell. Three independent reasons Google can't discover or index them.
-3. **`robots.txt` is effectively missing** (returns the app shell on every request). The
-   `sitemap.xml` *is* valid (9 clean section routes) but omits every news/event detail page. Separately,
-   old WordPress URLs that Google indexed (Tencent Cloud, Zoom announcements) now soft-404 to the SPA —
-   lost content, keywords, and link equity.
+The site genuinely has a **news & events section** (stored in Firestore, e.g. `/news/1`, `/events/101`),
+but that content is **invisible to search** for three independent reasons: it's not in the sitemap, it
+uses numeric-ID URLs instead of keyword slugs, and it's rendered only in the browser.
 
-The meta tags, social cards, HTTPS, CDN and analytics are all done well. The gap is **rendering +
-content**, not metadata. This is a content + technical-SEO problem more than a "tags" problem.
+The metadata, social cards, HTTPS, CDN and analytics are all done well. **The gap is rendering and
+content discoverability, not tags.** Fixing how pages are rendered and how news/events are exposed
+(sitemap + slugs + homepage links) addresses most of the issues at once.
 
 ---
 
-## 1. Technology stack
+## 2. Technology stack
+{:#stack}
 
 ### Frontend
 
 | Layer | Detail |
 |---|---|
-| Framework | **React 18** (`createRoot`, `react-dom`) — SPA, rendered fully in the browser |
-| Build tool | **Vite** (hashed `/assets/index-*.js` + `.css`, `modulepreload` injection) |
+| Framework | **React 18** (`createRoot`) — SPA, rendered fully in the browser |
+| Build tool | **Vite** (hashed `/assets/index-*.js` + `.css`, `modulepreload`) |
 | Routing | **React Router** (client-side) |
-| UI libs | **lucide-react** icons (93 refs), **Framer Motion** animation |
-| Bundle | Single, **not code-split**, ~1.04 MB uncompressed (served Brotli-compressed) |
+| UI | **lucide-react** icons, **Framer Motion** animation |
+| Bundle | Single, not code-split, ~1.04 MB uncompressed (served Brotli-compressed) |
 
-### Hosting / infra
+### Hosting & infrastructure
 
 | Layer | Detail |
 |---|---|
-| Host | **Firebase Hosting** (Google) — TXT `hosting-site=findacloud-website`, anchor IP `199.36.158.100` |
-| CDN | **Fastly** edge (`x-served-by: cache-nrt-…`, Tokyo PoP) |
-| Protocols | HTTP/2 **and** HTTP/3 (`alt-svc: h3`), Brotli compression |
-| TLS | Google Trust Services managed cert (Firebase). *Note:* served leaf CN shows another tenant domain — normal for Firebase shared multi-SAN certs, but worth confirming the cert lists `finda.cloud`. |
-| DNS | **SiteGround** name servers (legacy WordPress host still controls DNS); registrar **GoDaddy**; WHOIS privacy proxy; current registration 2023-02-25, expires 2027 |
-| Email | **Google Workspace** (MX `aspmx.l.google.com`); SPF includes `sendersrv.com` + `dnssmarthost.net` (email-marketing / transactional sending) |
+| Host | **Firebase Hosting** (Google) — `hosting-site=findacloud-website`, IP `199.36.158.100` |
+| CDN | **Fastly** edge (Tokyo PoP), HTTP/2 **and** HTTP/3, Brotli |
+| TLS | Google Trust Services managed cert (confirm SAN lists `finda.cloud`) |
+| DNS | **SiteGround** nameservers; registrar **GoDaddy**; reg. 2023, expires 2027 |
+| Email | **Google Workspace** (MX); SPF includes email-marketing senders |
 
 ### Data & integrations
-- **Cloud Firestore** (`firestore.googleapis.com`) — backs the dynamic **news/events** content, fetched client-side
-- **EmailJS** (`api.emailjs.com`) — contact-form submission; **WhatsApp** click-to-chat link
-- **Intercom "Fin AI"** support chat widget (`app_id: iwd6wqhz`)
-- **Google Analytics** + **Microsoft Clarity** (behaviour analytics / heatmaps)
-- **Google Search Console** verified (TXT `google-site-verification=…`)
-- **Zoom** domain verification TXT (`ZOOM_verify_…`) — distributor relationship
+
+- **Cloud Firestore** — backs the dynamic **news/events** content, fetched client-side
+- **EmailJS** — contact-form submission; **WhatsApp** click-to-chat link
+- **Intercom "Fin AI"** support chat widget
+- **Google Analytics** + **Microsoft Clarity** (behaviour analytics)
+- **Google Search Console** verified; **Zoom** domain verification (distributor relationship)
 
 ---
 
-## 2. Technical SEO
+## 3. What's working well
+{:#working}
 
-### ✅ Strong
 - Keyword-rich, well-sized `<title>` and `<meta description>`, region-targeted (HK / SG / APAC).
-- Complete **Open Graph** + **Twitter Card** tags; OG image valid (`200`, 1220×640, with `og:image:alt`).
-- **Canonical** tag present, `lang="en"`, responsive viewport.
-- HTTPS everywhere, HSTS, HTTP→HTTPS 301, fast TTFB (~0.21 s cold), HTTP/3, Brotli.
-- Google Search Console connected.
+- Complete **Open Graph** + **Twitter Card** tags; valid OG image (1220×640).
+- **Canonical** tag, `lang="en"`, responsive viewport.
+- HTTPS + HSTS, HTTP→HTTPS redirect, HTTP/3, Brotli, fast TTFB (~0.2 s).
+- Valid `sitemap.xml` for the main section routes; Google Search Console connected.
 
-### 🔴 Critical
+---
 
-| Issue | Evidence | Impact |
+## 4. Issues found
+{:#issues}
+
+| Severity | Issue | Why it matters |
 |---|---|---|
-| **Content rendered only in JS** | Raw HTML body is `<div id="root"></div>` — no `<h1>`, `<nav>`, `<main>`, `<article>`, no `<noscript>` fallback | Non-JS crawlers (and social / LinkedIn / many AI crawlers) see an empty page; Google renders JS only on a deferred second pass |
-| **Soft-404s on every route** | Random paths, `/wp-login.php`, `/wp-json/`, old blog URLs all return **HTTP 200** + app shell | Google flags soft-404s; crawl budget wasted; dead URLs look "alive" |
-| **News/events not in sitemap** | `sitemap.xml` lists 9 static section routes (incl. `/news-events`) but **no** `/news/{id}` or `/events/{id}` detail pages; those are Firestore-backed and never enumerated | Real article content is undiscoverable — Google has no path to it |
-| **Numeric-ID URLs, no slugs** | Articles live at `/news/1`, `/events/101` instead of keyword slugs | URLs carry zero keyword signal; weaker relevance, CTR, and shareability |
-| **`robots.txt` missing** | 3/3 repeat hits return the SPA shell, not a real file | No crawl directives; sitemap not advertised via robots |
-| **Legacy blog lost** | Indexed WordPress posts (`/category/news/`, partnership posts) now return the empty SPA | Lost indexed content, keywords, and inbound link equity |
-| **No structured data** | No JSON-LD anywhere | No `Organization` / `Product` rich results; weaker entity recognition |
-
-### 🟡 Secondary
-- **No `hreflang`** despite multi-region targeting; site is **English-only** (no Traditional Chinese for the primary HK/Macau market).
-- **Missing security headers** — only HSTS present; no CSP, `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`.
-- **Obsolete `<meta keywords>`** — ignored by all major engines (harmless, dated).
-- **1 MB single bundle, no code-splitting** — hurts Core Web Vitals (LCP/TBT), a mobile ranking factor on APAC networks.
+| 🔴 Critical | **Content rendered only in JS** — body is `<div id="root"></div>`, no `<h1>`/`<nav>`/`<noscript>` | Non-JS crawlers and social/LinkedIn/AI scrapers see an empty page; Google renders JS only on a slower second pass |
+| 🔴 Critical | **News/events not in the sitemap** — only 9 static routes listed, no `/news/{id}` or `/events/{id}` | Real article content is undiscoverable; Google has no path to it |
+| 🔴 Critical | **Numeric-ID URLs, no slugs** — articles live at `/news/1`, `/events/101` | URLs carry zero keyword signal; weaker relevance, click-through and shareability |
+| 🔴 Critical | **Soft-404s on every route** — unknown paths return HTTP `200` + the app shell | Google flags soft-404s; crawl budget wasted; dead URLs look "alive" |
+| 🟠 High | **`robots.txt` missing** — returns the app shell, not a real file | No crawl directives; sitemap isn't advertised |
+| 🟠 High | **No structured data (JSON-LD)** | No `Organization` / `Article` rich results; weaker entity recognition |
+| 🟡 Medium | **No `hreflang`, English-only** | No Traditional Chinese for the primary HK/Macau audience |
+| 🟡 Medium | **Missing security headers** (only HSTS present) | No CSP, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` |
+| 🟢 Low | **1 MB single bundle, no code-splitting** | Hurts Core Web Vitals (LCP/TBT) on mobile/APAC networks |
 
 ---
 
-## 3. Content SEO
+## 5. Recommendations
+{:#recommendations}
 
-The site is **content-thin to crawlers**: the static section pages carry little crawlable body text,
-and — importantly — the site **does have a news/events section** (Firestore-backed, e.g. `/news/1`,
-`/events/101`), but that content is **invisible to search**: not in the sitemap, numeric-ID URLs, and
-client-rendered (empty HTML). So the content exists but earns no SEO value. Separately, the older
-WordPress announcements (Tencent Cloud authorized distributor, Zoom distributor, Freshworks) that Google
-indexed now soft-404 to the SPA.
+Ordered by impact. The first three solve most of the problem together.
 
-Consequences:
-- The pages targeting valuable commercial terms ("Tencent Cloud reseller Hong Kong", "Zoom
-  distributor HK", "SaaS distributor APAC") have **little indexable text** to rank on.
-- **No localized Chinese content** for HK/Macau, even though the brand's partnerships and press
-  coverage are bilingual and the local audience searches in Traditional Chinese.
-- Brand/entity signals are weak without `Organization` schema, an "About/Contact" with `LocalBusiness`
-  data, or a content hub that earns links.
+| # | Action | Why / how |
+|---|---|---|
+| 1 | **Render real HTML** (SSR / SSG / prerender) | Highest ROI — gives crawlers and social scrapers actual content. Add a prerender step to the Vite build (`vite-plugin-prerender`, `react-snap`) or move to Next.js/Astro |
+| 2 | **Make news/events indexable** | (a) **Generate sitemap entries dynamically** from the Firestore collection (with `lastmod`); (b) switch detail URLs to **keyword slugs** (`/news/{slug}`), self-canonical per article; (c) ensure each is prerendered |
+| 3 | **Surface news/events on the homepage** | Add a "Latest news / events" block on `/` linking to each article. Improves internal linking, crawl discovery and freshness signals — and is good for visitors |
+| 4 | **Return real `404`s** for unknown routes | Stop serving `200` + app shell for everything; 301 any stray old URLs to a relevant page |
+| 5 | **Add a `robots.txt`** referencing the sitemap | Currently missing; advertise the (extended) sitemap and submit in Search Console |
+| 6 | **Add JSON-LD** | `Organization` + `LocalBusiness` (HK office) site-wide, `Article`/`NewsArticle` on each news/event page |
+| 7 | **Add `hreflang` + Traditional Chinese** | Match how the HK/Macau market searches |
+| 8 | **Add security headers** | CSP, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options` |
+| 9 | **Code-split the bundle** | Improve Core Web Vitals; drop the obsolete `<meta keywords>` |
 
----
-
-## 4. "Do we need a blog for more keyword coverage?" — Yes
-
-**Recommended.** You effectively *had* one and lost it in the migration. A blog/insights hub is the
-cheapest, highest-leverage way to rebuild keyword coverage and topical authority:
-
-- Target the commercial + informational terms around each partnership: Tencent Cloud, Zoom, Freshworks,
-  XaaS/SaaS distribution, cloud migration in HK/SG.
-- Re-publish or 301-redirect the **old indexed news/partnership posts** so you recover that equity
-  instead of soft-404ing it.
-- Publish in **English and Traditional Chinese** to match how the HK/Macau market searches.
-- Each post is an indexable page with real text — directly addressing the "empty SPA" problem for at
-  least part of the site.
-
-Cadence matters less than consistency; even 1–2 quality posts/month rebuilds a content footprint.
+**On a blog:** the existing news/events section can double as the keyword engine once it's indexable
+(points 1–3). A dedicated blog/insights hub is worthwhile later for informational terms (Tencent Cloud,
+Zoom, Freshworks, SaaS distribution in HK/SG), ideally bilingual — but fixing news/events visibility
+comes first and reuses content you already have.
 
 ---
 
-## 5. Target region
+## 6. Target region & language
+{:#region}
 
-Evidence points to **Hong Kong + Macau + Singapore, broader APAC**:
-- Meta copy: "HK, SG & APAC"; Tencent Cloud **港澳 (HK/Macau)** authorized distributor; Zoom **Hong
-  Kong** distributor; office in **Kwun Tong, Kowloon, Hong Kong**.
+Evidence points to **Hong Kong + Macau + Singapore, broader APAC**: meta copy "HK, SG & APAC"; Tencent
+Cloud **港澳 (HK/Macau)** authorized distributor; Zoom **Hong Kong** distributor; office in **Kwun Tong,
+Kowloon, Hong Kong**.
 
 Implications:
-- Add **`hreflang`** for `en` and `zh-Hant` (and consider `zh-HK`).
-- Publish **Traditional Chinese** versions of key pages and blog posts.
+
+- Add **`hreflang`** for `en` and `zh-Hant` (consider `zh-HK`) and publish **Traditional Chinese**
+  versions of key pages and articles.
 - Add **`LocalBusiness` / `Organization` JSON-LD** with the HK address; set up / verify Google Business
   Profile for local-pack visibility.
-- Confirm Search Console **international targeting** and that the sitemap covers both language variants.
+- Confirm **international targeting** in Search Console and that the sitemap covers both language variants.
 
 ---
 
-## 6. Prioritized recommendations
+## 7. Questions for the website manager
+{:#questions}
 
-1. **Fix rendering** (highest ROI) — add SSR / SSG / prerendering so crawlers get real HTML.
-   Options: migrate to Next.js/Astro, or add a prerender step to the existing Vite build
-   (`vite-plugin-prerender`, `react-snap`) or a Firebase + prerender.io / Rendertron path.
-2. **Return real `404`s** for unknown routes; stop serving `200` + app shell for everything.
-3. **Make news/events indexable** — (a) **dynamically generate sitemap entries** for every Firestore
-   news & event item (with `lastmod`), optionally a `news-sitemap.xml` with Google News tags; (b) switch
-   detail URLs from numeric IDs to **keyword slugs** (`/news/{slug}`, keep the ID for internal lookup or
-   use `/news/{id}-{slug}`), with a self-referencing canonical per article; (c) ensure they're
-   prerendered so a sitemapped URL returns real HTML.
-4. **Add a `robots.txt`** (referencing the sitemap); the existing `sitemap.xml` is valid for the 9
-   section routes but must be extended per point 3 and submitted in Search Console.
-5. **Recover the old blog/news** — 301-redirect or re-publish the indexed WordPress posts; run a
-   bilingual blog going forward.
-6. **Add JSON-LD** — `Organization` + `LocalBusiness` (HK office), `Product`/`Service` for offerings,
-   and `Article`/`NewsArticle` on each news/event detail page.
-7. **Add `hreflang` + Traditional Chinese content** for HK/Macau.
-8. **Add security headers** (CSP, `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
-   `Permissions-Policy`, `X-Frame-Options`).
-9. **Code-split the bundle** to improve Core Web Vitals; drop the obsolete keywords meta.
+These can't be determined from outside — please confirm:
 
----
-
-## 7. Open questions for the website manager
-
-These can't be determined from outside the site — please confirm:
-
-1. **Rendering plan:** Is the SPA intended to stay client-rendered, or is SSR/prerendering on the
-   roadmap? (Determines how we fix the "empty HTML" problem.)
-2. **Old WordPress content:** What happened to the previous blog/news? Is the content archived anywhere
-   so we can 301-redirect or re-publish it? Are the old URLs expected to stay live?
-3. **robots.txt / sitemap.xml:** `sitemap.xml` is valid but only covers static routes; `robots.txt`
-   returns the app shell (no real file). How is the sitemap generated — can it loop the Firestore
+1. **Rendering plan** — is the SPA staying client-rendered, or is SSR/prerendering on the roadmap?
+2. **Sitemap generation** — `sitemap.xml` covers only static routes; can it loop the Firestore
    news/events collection so every article is included automatically?
-4. **News/event URLs:** Can detail pages move from numeric IDs (`/news/1`) to **keyword slugs**? Is
-   there a slug field in Firestore, or would we add one? Should old numeric URLs 301 to the new slugs?
-5. **404 handling:** Is the catch-all `200` + app shell intentional, or should unknown routes return a
-   real 404?
-6. **Languages:** Is a Traditional Chinese (zh-Hant) version planned for the HK/Macau audience, or is
-   English-only deliberate?
-7. **Blog ownership:** Who would own a relaunched blog (in-house, agency)? What cadence is realistic?
-8. **Search Console:** Can we get access to Search Console + GA4 to confirm current indexing, soft-404
-   reports, and which queries already drive traffic?
-9. **Analytics IDs:** Please confirm the GA4 / Microsoft Clarity property IDs so we can validate
-   tracking is firing correctly.
-10. **TLS cert:** Please confirm the production certificate's SAN list includes `finda.cloud`
-    (the externally observed leaf CN belonged to another Firebase tenant).
-11. **www / domain:** Should `www.finda.cloud` resolve and redirect to the apex? (It currently doesn't
-    respond.)
+3. **News/event URLs** — can detail pages move from numeric IDs (`/news/1`) to **keyword slugs**? Is
+   there a slug field in Firestore, or would we add one? Should old numeric URLs 301 to new slugs?
+4. **Homepage news block** — can we add a "latest news/events" section on the homepage linking to each
+   article?
+5. **404 handling** — is the catch-all `200` + app shell intentional, or should unknown routes 404?
+6. **Languages** — is a Traditional Chinese (zh-Hant) version planned, or is English-only deliberate?
+7. **Search Console / GA4 access** — to confirm current indexing, soft-404 reports and top queries.
+8. **Analytics IDs** — confirm the GA4 / Microsoft Clarity property IDs so we can validate tracking.
+9. **TLS cert** — confirm the production certificate's SAN list includes `finda.cloud`.
+10. **www / domain** — should `www.finda.cloud` resolve and redirect to the apex? (It currently doesn't.)
 
 ---
 
-*Black-box audit — findings are based on externally observable signals (HTTP headers, HTML/JS bundle,
-DNS/WHOIS, public search results). Server-side configuration should be confirmed with the team.*
+*Black-box audit — based on externally observable signals (HTTP headers, HTML/JS bundle, DNS/WHOIS,
+public search). Server-side configuration should be confirmed with the team.*

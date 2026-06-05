@@ -14,11 +14,14 @@ execute JavaScript see a near-empty page. On top of that, three issues actively 
 
 1. **Soft-404s everywhere** — every URL (including random paths and old WordPress URLs) returns
    HTTP `200` with the empty app shell instead of a real `404`.
-2. **`robots.txt` and `sitemap.xml` are served unreliably** — most requests return the app shell, not
-   the real files. When the sitemap does appear it lists only ~4 low-value URLs (including `/404` and a
-   Google-verification token).
-3. **The old WordPress blog/news is gone** — partnership announcements that Google indexed (Tencent
-   Cloud, Zoom) now resolve to the empty SPA. That's lost content, lost keywords, and lost link equity.
+2. **News & events exist but are invisible to search** — articles are stored in **Firestore** and
+   rendered client-side at numeric-ID URLs (`/news/1`, `/events/101`). They are **not in the sitemap**
+   (which lists only static section routes), they use **non-descriptive numeric IDs instead of slugs**,
+   and they return an empty HTML shell. Three independent reasons Google can't discover or index them.
+3. **`robots.txt` is effectively missing** (returns the app shell on every request). The
+   `sitemap.xml` *is* valid (9 clean section routes) but omits every news/event detail page. Separately,
+   old WordPress URLs that Google indexed (Tencent Cloud, Zoom announcements) now soft-404 to the SPA —
+   lost content, keywords, and link equity.
 
 The meta tags, social cards, HTTPS, CDN and analytics are all done well. The gap is **rendering +
 content**, not metadata. This is a content + technical-SEO problem more than a "tags" problem.
@@ -48,7 +51,9 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 | DNS | **SiteGround** name servers (legacy WordPress host still controls DNS); registrar **GoDaddy**; WHOIS privacy proxy; current registration 2023-02-25, expires 2027 |
 | Email | **Google Workspace** (MX `aspmx.l.google.com`); SPF includes `sendersrv.com` + `dnssmarthost.net` (email-marketing / transactional sending) |
 
-### Third-party services
+### Data & integrations
+- **Cloud Firestore** (`firestore.googleapis.com`) — backs the dynamic **news/events** content, fetched client-side
+- **EmailJS** (`api.emailjs.com`) — contact-form submission; **WhatsApp** click-to-chat link
 - **Intercom "Fin AI"** support chat widget (`app_id: iwd6wqhz`)
 - **Google Analytics** + **Microsoft Clarity** (behaviour analytics / heatmaps)
 - **Google Search Console** verified (TXT `google-site-verification=…`)
@@ -71,8 +76,9 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 |---|---|---|
 | **Content rendered only in JS** | Raw HTML body is `<div id="root"></div>` — no `<h1>`, `<nav>`, `<main>`, `<article>`, no `<noscript>` fallback | Non-JS crawlers (and social / LinkedIn / many AI crawlers) see an empty page; Google renders JS only on a deferred second pass |
 | **Soft-404s on every route** | Random paths, `/wp-login.php`, `/wp-json/`, old blog URLs all return **HTTP 200** + app shell | Google flags soft-404s; crawl budget wasted; dead URLs look "alive" |
-| **`robots.txt` / `sitemap.xml` unreliable** | 3/3 repeat hits returned the SPA shell, not the files | Crawlers frequently get no valid robots directives and no URL list |
-| **Thin / broken sitemap** | When present, ~4 URLs only — includes `/404` and a `google…` verification token | Almost nothing for Google to discover; junk entries |
+| **News/events not in sitemap** | `sitemap.xml` lists 9 static section routes (incl. `/news-events`) but **no** `/news/{id}` or `/events/{id}` detail pages; those are Firestore-backed and never enumerated | Real article content is undiscoverable — Google has no path to it |
+| **Numeric-ID URLs, no slugs** | Articles live at `/news/1`, `/events/101` instead of keyword slugs | URLs carry zero keyword signal; weaker relevance, CTR, and shareability |
+| **`robots.txt` missing** | 3/3 repeat hits return the SPA shell, not a real file | No crawl directives; sitemap not advertised via robots |
 | **Legacy blog lost** | Indexed WordPress posts (`/category/news/`, partnership posts) now return the empty SPA | Lost indexed content, keywords, and inbound link equity |
 | **No structured data** | No JSON-LD anywhere | No `Organization` / `Product` rich results; weaker entity recognition |
 
@@ -86,10 +92,12 @@ content**, not metadata. This is a content + technical-SEO problem more than a "
 
 ## 3. Content SEO
 
-The site is **content-thin**: roughly four real routes and no crawlable body text. There is currently
-**no live blog or news section** — the WordPress content that previously carried keyword-rich
-announcements (Tencent Cloud authorized distributor, Zoom distributor, Freshworks) was dropped in the
-migration to the React SPA and now soft-404s.
+The site is **content-thin to crawlers**: the static section pages carry little crawlable body text,
+and — importantly — the site **does have a news/events section** (Firestore-backed, e.g. `/news/1`,
+`/events/101`), but that content is **invisible to search**: not in the sitemap, numeric-ID URLs, and
+client-rendered (empty HTML). So the content exists but earns no SEO value. Separately, the older
+WordPress announcements (Tencent Cloud authorized distributor, Zoom distributor, Freshworks) that Google
+indexed now soft-404 to the SPA.
 
 Consequences:
 - The pages targeting valuable commercial terms ("Tencent Cloud reseller Hong Kong", "Zoom
@@ -139,15 +147,21 @@ Implications:
    Options: migrate to Next.js/Astro, or add a prerender step to the existing Vite build
    (`vite-plugin-prerender`, `react-snap`) or a Firebase + prerender.io / Rendertron path.
 2. **Return real `404`s** for unknown routes; stop serving `200` + app shell for everything.
-3. **Ship reliable, static `robots.txt` and a real `sitemap.xml`** (clean URLs only — no `/404`, no
-   verification tokens); submit in Search Console.
-4. **Recover the old blog/news** — 301-redirect or re-publish the indexed WordPress posts; stand up a
+3. **Make news/events indexable** — (a) **dynamically generate sitemap entries** for every Firestore
+   news & event item (with `lastmod`), optionally a `news-sitemap.xml` with Google News tags; (b) switch
+   detail URLs from numeric IDs to **keyword slugs** (`/news/{slug}`, keep the ID for internal lookup or
+   use `/news/{id}-{slug}`), with a self-referencing canonical per article; (c) ensure they're
+   prerendered so a sitemapped URL returns real HTML.
+4. **Add a `robots.txt`** (referencing the sitemap); the existing `sitemap.xml` is valid for the 9
+   section routes but must be extended per point 3 and submitted in Search Console.
+5. **Recover the old blog/news** — 301-redirect or re-publish the indexed WordPress posts; run a
    bilingual blog going forward.
-5. **Add JSON-LD** — `Organization` + `LocalBusiness` (HK office), and `Product`/`Service` for offerings.
-6. **Add `hreflang` + Traditional Chinese content** for HK/Macau.
-7. **Add security headers** (CSP, `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
+6. **Add JSON-LD** — `Organization` + `LocalBusiness` (HK office), `Product`/`Service` for offerings,
+   and `Article`/`NewsArticle` on each news/event detail page.
+7. **Add `hreflang` + Traditional Chinese content** for HK/Macau.
+8. **Add security headers** (CSP, `X-Content-Type-Options: nosniff`, `Referrer-Policy`,
    `Permissions-Policy`, `X-Frame-Options`).
-8. **Code-split the bundle** to improve Core Web Vitals; drop the obsolete keywords meta.
+9. **Code-split the bundle** to improve Core Web Vitals; drop the obsolete keywords meta.
 
 ---
 
@@ -159,20 +173,23 @@ These can't be determined from outside the site — please confirm:
    roadmap? (Determines how we fix the "empty HTML" problem.)
 2. **Old WordPress content:** What happened to the previous blog/news? Is the content archived anywhere
    so we can 301-redirect or re-publish it? Are the old URLs expected to stay live?
-3. **robots.txt / sitemap.xml:** Are these meant to be deployed as static files on Firebase? They're
-   currently returning the app shell on most requests — is that a known deploy/cache config issue?
-4. **404 handling:** Is the catch-all `200` + app shell intentional, or should unknown routes return a
+3. **robots.txt / sitemap.xml:** `sitemap.xml` is valid but only covers static routes; `robots.txt`
+   returns the app shell (no real file). How is the sitemap generated — can it loop the Firestore
+   news/events collection so every article is included automatically?
+4. **News/event URLs:** Can detail pages move from numeric IDs (`/news/1`) to **keyword slugs**? Is
+   there a slug field in Firestore, or would we add one? Should old numeric URLs 301 to the new slugs?
+5. **404 handling:** Is the catch-all `200` + app shell intentional, or should unknown routes return a
    real 404?
-5. **Languages:** Is a Traditional Chinese (zh-Hant) version planned for the HK/Macau audience, or is
+6. **Languages:** Is a Traditional Chinese (zh-Hant) version planned for the HK/Macau audience, or is
    English-only deliberate?
-6. **Blog ownership:** Who would own a relaunched blog (in-house, agency)? What cadence is realistic?
-7. **Search Console:** Can we get access to Search Console + GA4 to confirm current indexing, soft-404
+7. **Blog ownership:** Who would own a relaunched blog (in-house, agency)? What cadence is realistic?
+8. **Search Console:** Can we get access to Search Console + GA4 to confirm current indexing, soft-404
    reports, and which queries already drive traffic?
-8. **Analytics IDs:** Please confirm the GA4 / Microsoft Clarity property IDs so we can validate
+9. **Analytics IDs:** Please confirm the GA4 / Microsoft Clarity property IDs so we can validate
    tracking is firing correctly.
-9. **TLS cert:** Please confirm the production certificate's SAN list includes `finda.cloud`
-   (the externally observed leaf CN belonged to another Firebase tenant).
-10. **www / domain:** Should `www.finda.cloud` resolve and redirect to the apex? (It currently doesn't
+10. **TLS cert:** Please confirm the production certificate's SAN list includes `finda.cloud`
+    (the externally observed leaf CN belonged to another Firebase tenant).
+11. **www / domain:** Should `www.finda.cloud` resolve and redirect to the apex? (It currently doesn't
     respond.)
 
 ---

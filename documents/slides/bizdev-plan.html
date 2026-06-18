@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Album — Business Development & Go-To-Market Plan</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap">
+  <!-- Iconify: 200k+ icons, zero build -->
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root{
+      --mc-orange:#FF9E1B; --mc-orange-deep:#E8890B;
+      --bg:#0A1726; --panel:#12273C; --line:#21455F;
+      --text:#E8EEF4; --muted:#9DB2C6;
+    }
+    .reveal-viewport{ background:
+      radial-gradient(1200px 800px at 80% -10%, rgba(255,158,27,.10), transparent 60%), var(--bg); }
+    .reveal{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:30px; }
+    .reveal h1,.reveal h2,.reveal h3{ font-family:'Inter',sans-serif; font-weight:800; color:#fff;
+      text-transform:none; letter-spacing:-.5px; }
+    .reveal h1{ font-size:2.2em; font-weight:900; } .reveal h2{ font-size:1.5em; } .reveal h3{ font-size:1.05em; }
+    .reveal strong, .reveal .accent{ color:var(--mc-orange); }
+    .reveal a{ color:var(--mc-orange); }
+    .reveal section{ text-align:left; }
+    .reveal .center{ text-align:center; }
+    .reveal li{ margin:.3em 0; list-style:none; position:relative; padding-left:1.5em; }
+    .reveal li iconify-icon{ position:absolute; left:0; top:.15em; color:var(--mc-orange); }
+    .reveal .progress{ color:var(--mc-orange); height:4px; }
+    .reveal .controls{ color:var(--mc-orange); }
+    .reveal .slide-number{ background:transparent; color:var(--muted); }
+    .kicker{ color:var(--mc-orange); font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+      font-size:.5em; margin-bottom:.5em; display:flex; align-items:center; gap:.5em; }
+    .center .kicker{ justify-content:center; }
+    .lead{ color:var(--muted); font-size:.78em; }
+    .muted{ color:var(--muted); }
+
+    .mc-logo{ position:fixed; top:18px; left:26px; z-index:60; display:flex; align-items:center; gap:10px; }
+    .logo-chip{ background:#fff; border-radius:9px; padding:6px 11px; display:inline-flex; align-items:center;
+      box-shadow:0 4px 16px rgba(0,0,0,.28); }
+    .logo-chip img{ display:block; }
+    .mc-logo .wordmark{ color:#fff; font-weight:800; font-size:15px; letter-spacing:.3px; opacity:.9; }
+    .footer-note{ position:fixed; bottom:13px; right:24px; color:var(--muted); font-size:11px; z-index:60; }
+
+    /* Hero slides over a photo: translucent panel keeps text legible */
+    .hero-panel{ background:rgba(8,18,30,.62); backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:38px 46px; display:inline-block; }
+
+    .grid{ display:grid; gap:18px; margin-top:.5em; }
+    .g3{ grid-template-columns:repeat(3,1fr); } .g2{ grid-template-columns:repeat(2,1fr); }
+    .card{ background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px 24px; }
+    .card .ico{ width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+      background:rgba(255,158,27,.14); margin-bottom:.5em; }
+    .card .ico iconify-icon{ font-size:26px; color:var(--mc-orange); }
+    .card h3{ margin:.1em 0 .3em; color:#fff; }
+    .card .big{ font-size:1.9em; font-weight:900; color:var(--mc-orange); }
+    .card.center .ico{ margin:0 auto .5em; }
+    .pill{ display:inline-block; background:var(--mc-orange); color:#0A1726; border-radius:999px;
+      padding:3px 13px; font-size:.55em; font-weight:800; margin-bottom:.3em; }
+    .tiers .card.feat{ border-color:var(--mc-orange); transform:translateY(-8px);
+      box-shadow:0 18px 50px rgba(255,158,27,.18); }
+    .funnel span{ display:flex; align-items:center; gap:.6em; background:var(--panel); border:1px solid var(--line);
+      border-left:4px solid var(--mc-orange); border-radius:10px; margin:9px auto; padding:11px 18px; }
+    .funnel iconify-icon{ color:var(--mc-orange); font-size:1.1em; }
+    table{ width:100%; border-collapse:collapse; font-size:.66em; }
+    th,td{ border-bottom:1px solid var(--line); padding:11px 8px; text-align:left; }
+    th{ color:var(--mc-orange); }
+    .frame{ border-radius:14px; border:1px solid var(--line); box-shadow:0 18px 50px rgba(0,0,0,.4);
+      width:100%; object-fit:cover; }
+  </style>
+</head>
+<body>
+  <div class="mc-logo"><span class="wordmark">Master&nbsp;Album</span></div>
+  <div class="footer-note">Confidential · Draft</div>
+
+  <div class="reveal"><div class="slides">
+
+    <!-- 1 · Title (hero photo) -->
+    <section class="center" data-background-image="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <span class="logo-chip" style="margin-bottom:20px; padding:12px 18px;"><img src="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png" alt="Master Album" style="height:54px;"></span>
+        <p class="kicker"><iconify-icon icon="lucide:presentation"></iconify-icon> Business Development &amp; Go-To-Market Plan</p>
+        <h1>Master&nbsp;Album</h1>
+        <p class="lead">AI face-recognition photo delivery — turning a popular internal tool into a subscription product.</p>
+        <p class="muted" style="margin-top:1em; font-size:.55em;">[Name] · [Date] · Master Concept</p>
+      </div>
+    </section>
+
+    <!-- 2 · Agenda -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:list"></iconify-icon> Contents</p>
+      <h2>What we'll cover</h2>
+      <div class="grid g2" style="font-size:.85em;">
+        <ul>
+          <li><iconify-icon icon="lucide:file-text"></iconify-icon> Executive summary</li>
+          <li><iconify-icon icon="lucide:globe"></iconify-icon> Market opportunity</li>
+          <li><iconify-icon icon="lucide:lightbulb"></iconify-icon> Problem &amp; value proposition</li>
+          <li><iconify-icon icon="lucide:box"></iconify-icon> Product overview</li>
+          <li><iconify-icon icon="lucide:users"></iconify-icon> Target segments (ICP)</li>
+        </ul>
+        <ul>
+          <li><iconify-icon icon="lucide:swords"></iconify-icon> Competitive positioning</li>
+          <li><iconify-icon icon="lucide:rocket"></iconify-icon> Go-to-market strategy</li>
+          <li><iconify-icon icon="lucide:tag"></iconify-icon> Pricing &amp; packaging</li>
+          <li><iconify-icon icon="lucide:line-chart"></iconify-icon> Roadmap &amp; KPIs</li>
+          <li><iconify-icon icon="lucide:flag"></iconify-icon> The ask &amp; next steps</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 · Executive summary -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:file-text"></iconify-icon> Executive Summary</p>
+      <h2>The opportunity in one slide</h2>
+      <div class="grid g3">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:trending-up"></iconify-icon></div><h3>Proven demand</h3><p class="muted">Already popular internally — strong organic pull from event teams.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:crosshair"></iconify-icon></div><h3>Clear wedge</h3><p class="muted">Face-search photo delivery for events; Drive-native, low friction.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:repeat"></iconify-icon></div><h3>Recurring model</h3><p class="muted">Subscription tiers per organisation / event volume.</p></div>
+      </div>
+    </section>
+
+    <!-- 4 · Market opportunity (hero) -->
+    <section data-background-image="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <p class="kicker"><iconify-icon icon="lucide:globe"></iconify-icon> Market Opportunity</p>
+        <h2>Why now</h2>
+        <ul>
+          <li><iconify-icon icon="lucide:wind"></iconify-icon> <strong>Tailwind:</strong> [event photography + AI search demand]</li>
+          <li><iconify-icon icon="lucide:shuffle"></iconify-icon> <strong>Shift:</strong> [manual sharing → self-serve face search]</li>
+          <li><iconify-icon icon="lucide:zap"></iconify-icon> <strong>Trigger:</strong> [internal traction → external demand]</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5 · Market sizing -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:pie-chart"></iconify-icon> Market Sizing</p>
+      <h2>TAM · SAM · SOM</h2>
+      <div class="grid g3">
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:globe-2"></iconify-icon></div><h3>TAM</h3><div class="big">[$X]</div><p class="muted">All event / photo delivery</p></div>
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:map"></iconify-icon></div><h3>SAM</h3><div class="big">[$Y]</div><p class="muted">HK / APAC orgs &amp; events</p></div>
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:target"></iconify-icon></div><h3>SOM</h3><div class="big">[$Z]</div><p class="muted">Year-1 realistic capture</p></div>
+      </div>
+    </section>
+
+    <!-- 6 · Problem -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:lightbulb"></iconify-icon> Problem · Jobs-to-be-Done</p>
+      <h2>The pain we remove</h2>
+      <ul>
+        <li><iconify-icon icon="lucide:search-x"></iconify-icon> Guests can't easily find <strong>their own</strong> photos after an event.</li>
+        <li><iconify-icon icon="lucide:clock"></iconify-icon> Organisers waste hours manually sorting &amp; sending galleries.</li>
+        <li><iconify-icon icon="lucide:shield-alert"></iconify-icon> Existing tools are generic, not privacy-aware, or hard to use.</li>
+      </ul>
+    </section>
+
+    <!-- 7 · Solution + product image -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:sparkles"></iconify-icon> Solution · Value Proposition</p>
+      <h2>Find me in seconds</h2>
+      <div class="grid g2" style="align-items:center;">
+        <div>
+          <div class="card" style="margin-bottom:14px;"><div class="ico"><iconify-icon icon="lucide:scan-face"></iconify-icon></div><h3>For guests</h3><p class="muted">Selfie or Google login → instantly see every photo you're in.</p></div>
+          <div class="card"><div class="ico"><iconify-icon icon="lucide:folder-sync"></iconify-icon></div><h3>For organisers</h3><p class="muted">Point at a Drive folder → auto-indexed, auto-synced album.</p></div>
+        </div>
+        <img class="frame" src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=900&q=80" alt="product screenshot placeholder">
+      </div>
+    </section>
+
+    <!-- 8 · Product overview -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:box"></iconify-icon> Product</p>
+      <h2>At a glance</h2>
+      <div class="grid g3">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:folder-sync"></iconify-icon></div><h3>Drive-native</h3><p class="muted">Index in place · 15-min auto-sync.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:scan-face"></iconify-icon></div><h3>Face search</h3><p class="muted">InsightFace + people wall.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:images"></iconify-icon></div><h3>Guest gallery</h3><p class="muted">Find-me + full-album browse.</p></div>
+      </div>
+    </section>
+
+    <!-- 9 · ICP -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:users"></iconify-icon> Target Segments</p>
+      <h2>Ideal Customer Profile</h2>
+      <div class="grid g3">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:building-2"></iconify-icon></div><h3>Primary</h3><p class="muted">[Corporate / MICE event teams]</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:camera"></iconify-icon></div><h3>Secondary</h3><p class="muted">[Photographers / agencies]</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:map-pin"></iconify-icon></div><h3>Beachhead</h3><p class="muted">[HK enterprises &amp; associations]</p></div>
+      </div>
+    </section>
+
+    <!-- 10 · Competitive positioning -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:swords"></iconify-icon> Competitive Landscape</p>
+      <h2>How we win</h2>
+      <table>
+        <tr><th>Capability</th><th>Master Album</th><th>Generic galleries</th><th>Manual sharing</th></tr>
+        <tr><td>Face self-search</td><td class="accent">✓</td><td>partial</td><td>✗</td></tr>
+        <tr><td>Drive-native auto-sync</td><td class="accent">✓</td><td>✗</td><td>✗</td></tr>
+        <tr><td>Privacy / access control</td><td class="accent">✓</td><td>varies</td><td>✗</td></tr>
+        <tr><td>Setup effort</td><td class="accent">Minutes</td><td>Medium</td><td>High</td></tr>
+      </table>
+    </section>
+
+    <!-- 11 · GTM -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:rocket"></iconify-icon> Go-To-Market Strategy</p>
+      <h2>Motion &amp; channels</h2>
+      <div class="grid g2">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:gauge"></iconify-icon></div><h3>Motion</h3><p class="muted">[Product-led trial → assisted upgrade for orgs]</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:share-2"></iconify-icon></div><h3>Channels</h3><p class="muted">[Direct · MC client base · partners · referrals]</p></div>
+      </div>
+      <p class="lead" style="margin-top:.6em;">Land with a single event → expand to org-wide plan.</p>
+    </section>
+
+    <!-- 12 · Pricing -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:tag"></iconify-icon> Pricing &amp; Packaging</p>
+      <h2>Subscription tiers</h2>
+      <div class="grid g3 tiers">
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:sprout"></iconify-icon></div><h3>Starter</h3><div class="big">[$ /mo]</div><p class="muted">1 album · core face search</p></div>
+        <div class="card center feat"><span class="pill">Most popular</span><div class="ico"><iconify-icon icon="lucide:star"></iconify-icon></div><h3>Pro</h3><div class="big">[$ /mo]</div><p class="muted">Multiple albums · auto-sync · branding</p></div>
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:building"></iconify-icon></div><h3>Enterprise</h3><div class="big">[Custom]</div><p class="muted">SSO · SLA · volume · API</p></div>
+      </div>
+    </section>
+
+    <!-- 13 · Funnel -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:filter"></iconify-icon> Customer Journey</p>
+      <h2>Acquisition funnel</h2>
+      <div class="funnel" style="max-width:560px; margin:0 auto; font-size:.8em;">
+        <span><iconify-icon icon="lucide:eye"></iconify-icon> <span><strong>Awareness</strong> — [content · MC network · events]</span></span>
+        <span><iconify-icon icon="lucide:user-plus"></iconify-icon> <span><strong>Acquisition</strong> — [free event / trial]</span></span>
+        <span><iconify-icon icon="lucide:rocket"></iconify-icon> <span><strong>Activation</strong> — [first album indexed]</span></span>
+        <span><iconify-icon icon="lucide:credit-card"></iconify-icon> <span><strong>Revenue</strong> — [upgrade to paid tier]</span></span>
+        <span><iconify-icon icon="lucide:megaphone"></iconify-icon> <span><strong>Referral</strong> — [organiser → new events]</span></span>
+      </div>
+    </section>
+
+    <!-- 14 · KPIs + chart -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:line-chart"></iconify-icon> Traction &amp; KPIs</p>
+      <h2>What we'll measure</h2>
+      <div class="grid g2" style="align-items:center;">
+        <ul>
+          <li><iconify-icon icon="lucide:user-plus"></iconify-icon> <strong>Acquisition:</strong> [signups · activated albums]</li>
+          <li><iconify-icon icon="lucide:dollar-sign"></iconify-icon> <strong>Revenue:</strong> [MRR · ARPA]</li>
+          <li><iconify-icon icon="lucide:calculator"></iconify-icon> <strong>Efficiency:</strong> [CAC · LTV · payback]</li>
+          <li><iconify-icon icon="lucide:heart"></iconify-icon> <strong>Retention:</strong> [logo &amp; net revenue retention]</li>
+        </ul>
+        <div class="card"><canvas id="mrrChart" height="180"></canvas>
+          <p class="muted center" style="font-size:.5em; margin-top:.4em;">Illustrative MRR ramp (placeholder)</p></div>
+      </div>
+    </section>
+
+    <!-- 15 · Roadmap -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:map"></iconify-icon> Roadmap</p>
+      <h2>Now · Next · Later</h2>
+      <div class="grid g3">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:flag"></iconify-icon></div><h3>Now</h3><p class="muted">[Billing · self-serve onboarding]</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:arrow-right-circle"></iconify-icon></div><h3>Next</h3><p class="muted">[Branding · analytics · API]</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:sparkles"></iconify-icon></div><h3>Later</h3><p class="muted">[Marketplace · integrations]</p></div>
+      </div>
+    </section>
+
+    <!-- 16 · Team -->
+    <section>
+      <p class="kicker"><iconify-icon icon="lucide:users-round"></iconify-icon> Team</p>
+      <h2>Who's building it</h2>
+      <div class="grid g3">
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:user"></iconify-icon></div><h3>[Name]</h3><p class="muted">[Role]</p></div>
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:user"></iconify-icon></div><h3>[Name]</h3><p class="muted">[Role]</p></div>
+        <div class="card center"><div class="ico"><iconify-icon icon="lucide:user"></iconify-icon></div><h3>[Name]</h3><p class="muted">[Role]</p></div>
+      </div>
+    </section>
+
+    <!-- 17 · The ask (hero) -->
+    <section class="center" data-background-image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <p class="kicker"><iconify-icon icon="lucide:flag"></iconify-icon> The Ask · Next Steps</p>
+        <h2>What we need to go to market</h2>
+        <p class="lead">[Budget / headcount / decision] — and the first 3 milestones.</p>
+        <p class="muted" style="margin-top:1em; font-size:.55em;">Master Concept · album.mcai.dev</p>
+      </div>
+    </section>
+
+  </div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script>
+    Reveal.initialize({ hash:true, slideNumber:'c/t', transition:'slide', backgroundTransition:'fade', controls:true, progress:true });
+    new Chart(document.getElementById('mrrChart'), {
+      type:'line',
+      data:{ labels:['Q1','Q2','Q3','Q4'],
+        datasets:[{ label:'MRR', data:[10,28,55,96], borderColor:'#FF9E1B',
+          backgroundColor:'rgba(255,158,27,.18)', fill:true, tension:.35, pointBackgroundColor:'#FF9E1B' }]},
+      options:{ plugins:{ legend:{ labels:{ color:'#9DB2C6' }}},
+        scales:{ x:{ ticks:{ color:'#9DB2C6' }, grid:{ color:'#21455F' }},
+                 y:{ ticks:{ color:'#9DB2C6' }, grid:{ color:'#21455F' }}}}
+    });
+  </script>
+</body>
+</html>

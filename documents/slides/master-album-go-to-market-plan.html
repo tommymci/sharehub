@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Album — Go-To-Market Plan</title>
+  <link rel="icon" type="image/png" href="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png">
+  <link rel="apple-touch-icon" href="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root{ --mc-orange:#FF9E1B; --mc-orange-deep:#E8890B; --bg:#0A1726; --panel:#13283D; --panel-2:#0F2236; --line:#26496530; --line-s:#2B5170; --text:#EAF1F8; --muted:#9FB4C8; }
+    *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+    .reveal-viewport{ background: radial-gradient(1100px 760px at 86% -12%, rgba(255,158,27,.10), transparent 58%), var(--bg); }
+    .reveal{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:26px; font-weight:400; }
+    .reveal h1,.reveal h2,.reveal h3{ font-family:'Inter',sans-serif; color:#fff; text-transform:none; letter-spacing:-.6px; margin:0; }
+    .reveal h1{ font-size:3.1em; font-weight:900; line-height:1.02; }
+    .reveal h2{ font-size:1.55em; font-weight:800; line-height:1.08; }
+    .reveal h3{ font-size:.82em; font-weight:700; }
+    .reveal strong, .reveal .accent{ color:var(--mc-orange); font-weight:700; }
+    .reveal p{ line-height:1.45; margin:.35em 0; }
+    .reveal a{ color:var(--mc-orange); }
+    .reveal ul{ margin:0; }
+    .reveal li{ margin:.45em 0; list-style:none; position:relative; padding-left:1.65em; line-height:1.4; }
+    .reveal li iconify-icon{ position:absolute; left:0; top:.12em; color:var(--mc-orange); font-size:1.05em; }
+    .reveal .progress{ color:var(--mc-orange); height:3px; }
+    .reveal .controls{ color:var(--mc-orange); }
+    .reveal .controls .controls-arrow{ opacity:.4; transition:opacity .2s, transform .2s; }
+    .reveal .controls .controls-arrow:hover{ opacity:1; }
+    .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; right:18px; bottom:14px; text-shadow:0 1px 8px rgba(0,0,0,.7); }
+    .lead{ color:var(--muted); font-size:.82em; } .muted{ color:var(--muted); } .small{ font-size:.66em; }
+
+    .reveal .slides{ text-align:left; }
+    .reveal .slides > section{ box-sizing:border-box; width:100%; padding:0 84px; display:flex; flex-direction:column; justify-content:center; }
+    .reveal .slides > section.hero{ align-items:center; text-align:center; }
+
+    /* running header */
+    .brandbar{ position:fixed; top:22px; left:28px; z-index:60; display:flex; align-items:center; gap:10px; font-family:'Inter',system-ui,sans-serif;
+      background:rgba(8,18,30,.55); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.09); border-radius:13px; padding:8px 15px 8px 11px;
+      box-shadow:0 6px 22px rgba(0,0,0,.28); }
+    .brandbar img{ height:24px; display:block; }
+    .brandbar .nm{ color:#fff; font-weight:700; font-size:15px; letter-spacing:.2px; line-height:1; }
+    .brandbar .nm span{ color:#fff; font-weight:600; opacity:.92; }
+    .footer-note{ position:fixed; bottom:16px; left:28px; color:#fff; opacity:.82; font-size:12px; z-index:60; letter-spacing:.2px; font-family:'Inter',system-ui,sans-serif;
+      background:rgba(8,18,30,.5); backdrop-filter:blur(10px); border-radius:9px; padding:5px 12px; }
+    .fs-btn{ position:fixed; top:22px; right:24px; z-index:61; width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+      background:rgba(8,18,30,.55); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.10); border-radius:11px; color:#fff; cursor:pointer;
+      box-shadow:0 6px 22px rgba(0,0,0,.28); transition:color .2s, border-color .2s; }
+    .fs-btn:hover{ border-color:var(--mc-orange); color:var(--mc-orange); }
+    .fs-btn iconify-icon{ font-size:21px; }
+
+    /* section header */
+    .slide-head{ display:flex; align-items:center; gap:18px; margin:0 0 .85em; padding-bottom:.55em; border-bottom:1px solid var(--line-s); }
+    .slide-head .hicon{ flex:none; width:60px; height:60px; border-radius:16px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--mc-orange),var(--mc-orange-deep)); box-shadow:0 10px 26px rgba(255,158,27,.30); }
+    .slide-head .hicon iconify-icon{ font-size:32px; color:#0A1726; }
+    .slide-head .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px; text-transform:uppercase; font-size:.5em; margin:0 0 4px; }
+    .slide-head h2{ line-height:1.05; }
+
+    /* title slide */
+    .title-sub{ color:var(--mc-orange); font-weight:800; font-size:1.05em; letter-spacing:5px; text-transform:uppercase; margin:.35em 0 .55em; }
+    .kicker-c{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px; text-transform:uppercase; font-size:.52em; margin:0 0 .6em; display:flex; align-items:center; gap:.5em; justify-content:center; }
+    /* light-background section (for divider/title pages) */
+    .reveal section.light h1,.reveal section.light h2,.reveal section.light h3{ color:#0A1726; }
+    .reveal section.light .lead{ color:#52606D; }
+    .reveal section.light .kicker-c,.reveal section.light .title-sub{ color:var(--mc-orange-deep); }
+
+    /* section divider */
+    .reveal .slides > section.divider{ }
+    .dv{ display:flex; align-items:center; gap:56px; }
+    .dv-num{ font-size:13em; font-weight:900; line-height:.74; color:transparent; -webkit-text-stroke:3px var(--mc-orange); flex:none; }
+    .dv .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:3px; text-transform:uppercase; font-size:.5em; margin:0 0 .5em; }
+    .dv-title{ font-size:2.7em; line-height:1.02; }
+    .dv .lead{ margin-top:.6em; max-width:13em; }
+
+    /* cards / grids */
+    .body{ display:flex; flex-direction:column; justify-content:center; gap:.5em; }
+    .grid{ display:grid; gap:18px; width:100%; }
+    .g3{ grid-template-columns:repeat(3,1fr); } .g2{ grid-template-columns:repeat(2,1fr); } .g4{ grid-template-columns:repeat(4,1fr); }
+    .card{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:18px; padding:24px; display:flex; flex-direction:column; }
+    .card .ico{ width:50px; height:50px; border-radius:13px; display:flex; align-items:center; justify-content:center; background:rgba(255,158,27,.13); margin-bottom:.6em; }
+    .card .ico iconify-icon{ font-size:27px; color:var(--mc-orange); }
+    .card h3{ margin:0 0 .35em; color:#fff; } .card p{ margin:0; }
+    .card.center{ align-items:center; text-align:center; } .card.center .ico{ margin:0 auto .55em; }
+    .card .big{ font-size:1.85em; font-weight:900; color:var(--mc-orange); line-height:1; margin-bottom:.18em; }
+    .pill{ display:inline-block; background:var(--mc-orange); color:#0A1726; border-radius:999px; padding:3px 14px; font-size:.52em; font-weight:800; margin-bottom:.45em; }
+    .tiers .card.feat{ border-color:var(--mc-orange); box-shadow:0 20px 50px rgba(255,158,27,.16); }
+    .decisions{ gap:14px; } .decisions .card{ padding:14px 16px; }
+    .decisions .card .ico{ width:38px; height:38px; border-radius:11px; margin-bottom:7px; }
+    .decisions .card .ico iconify-icon{ font-size:21px; }
+    .decisions .card h3{ font-size:15.5px; } .decisions .card p{ font-size:12px; }
+
+    /* big stats row */
+    .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center; }
+    .stat .n{ font-size:3.4em; font-weight:900; color:var(--mc-orange); line-height:1; letter-spacing:-1px; }
+    .stat .l{ color:var(--muted); font-size:.72em; margin-top:.6em; line-height:1.35; }
+
+    /* big-number comparison */
+    .compare{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:30px; text-align:center; }
+    .compare .n{ font-size:3.6em; font-weight:900; line-height:1; letter-spacing:-1px; }
+    .compare .n small{ font-size:.3em; font-weight:700; color:var(--muted); }
+    .compare .win .n{ color:var(--mc-orange); } .compare .lose .n{ color:#7C93A8; }
+    .compare .l{ color:var(--muted); font-size:.7em; margin-top:.5em; }
+    .compare .vs{ color:var(--mc-orange); font-weight:800; font-size:1.1em; border:2px solid var(--line-s); border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; }
+
+    /* horizontal flow */
+    .flow{ display:flex; align-items:stretch; justify-content:center; gap:6px; }
+    .flow .step{ flex:1; text-align:center; padding:18px 14px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; }
+    .flow .step .num{ width:42px; height:42px; border-radius:50%; background:var(--mc-orange); color:#0A1726; font-weight:900; display:flex; align-items:center; justify-content:center; margin:0 auto .55em; }
+    .flow .step h3{ margin:.1em 0 .3em; } .flow .step p{ font-size:.62em; }
+    .flow .arrow{ display:flex; align-items:center; color:var(--mc-orange); font-size:1.5em; }
+
+    /* timeline */
+    .timeline{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; position:relative; padding-top:8px; }
+    .timeline::before{ content:''; position:absolute; top:21px; left:14%; right:14%; height:2px; background:var(--line-s); }
+    .tl{ text-align:center; position:relative; }
+    .tl .dot{ width:28px; height:28px; border-radius:50%; background:var(--mc-orange); border:5px solid var(--bg); margin:0 auto 16px; box-shadow:0 0 0 1px var(--mc-orange); }
+    .tl h3{ color:var(--mc-orange); font-size:.95em; margin-bottom:.4em; }
+    .tl p{ font-size:.66em; color:var(--muted); }
+
+    .funnel span{ display:flex; align-items:center; gap:.7em; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-left:4px solid var(--mc-orange); border-radius:12px; margin:11px auto; padding:14px 20px; }
+    .funnel iconify-icon{ color:var(--mc-orange); font-size:1.15em; }
+    .tbl{ border-radius:16px; overflow:hidden; border:1px solid var(--line-s); box-shadow:0 18px 50px rgba(0,0,0,.35); }
+    table{ width:100%; border-collapse:collapse; font-size:.64em; background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+    th,td{ padding:24px 26px; text-align:left; border-bottom:1px solid var(--line-s); }
+    tr:last-child td{ border-bottom:none; }
+    th{ color:#fff; font-weight:800; background:rgba(255,255,255,.04); letter-spacing:.2px; }
+    th:not(:first-child), td:not(:first-child){ text-align:center; }
+    td:first-child{ color:var(--text); font-weight:600; }
+    .compete th:nth-child(2), .compete td:nth-child(2){ background:rgba(255,158,27,.11); }
+    .compete th:nth-child(2){ color:var(--mc-orange); }
+    .tbl tr.hl td{ background:rgba(255,158,27,.12); }
+    .tbl tr.hl td:first-child{ color:var(--mc-orange); font-weight:800; }
+    .tbl .yes{ color:#46D39A; font-weight:800; font-size:1.15em; }
+    .tbl .no{ color:#5F7891; font-size:1.05em; }
+    .tbl .mut{ color:var(--muted); }
+    .tbl .hi{ color:var(--mc-orange); font-weight:800; }
+    .pricetbl th, .pricetbl td{ padding:13px 14px; }
+    .pricetbl th{ vertical-align:bottom; }
+    .pricetbl th .pr{ display:block; color:var(--mc-orange); font-weight:900; font-size:1.15em; margin-top:4px; letter-spacing:0; }
+    .pricetbl td:first-child{ font-weight:600; }
+    .pricetbl td:nth-child(4), .pricetbl th:nth-child(4){ background:rgba(255,158,27,.12); }
+    .pricetbl th:nth-child(4){ color:var(--mc-orange); }
+    /* pricing cards with aligned feature rows */
+    .ptiers2{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:stretch; width:100%; }
+    .ptier{ position:relative; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:18px 16px 14px; display:flex; flex-direction:column; }
+    .ptier.feat{ border-color:var(--mc-orange); box-shadow:0 18px 50px rgba(255,158,27,.16); }
+    .ptier > .pill{ position:absolute; top:-11px; left:50%; transform:translateX(-50%); margin:0; }
+    .ptier .ico{ width:44px; height:44px; border-radius:12px; background:rgba(255,158,27,.14); display:flex; align-items:center; justify-content:center; margin:0 auto .4em; }
+    .ptier .ico iconify-icon{ font-size:24px; color:var(--mc-orange); }
+    .ptier h3{ text-align:center; color:#fff; font-size:.82em; margin-bottom:.05em; }
+    .ptier .big{ text-align:center; font-size:1.65em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    .ptier .big small{ font-size:.34em; color:var(--muted); font-weight:700; }
+    .ptier .bundle{ text-align:center; color:var(--text); font-weight:700; font-size:.6em; margin:.45em 0 .65em; padding-bottom:.7em; border-bottom:1px solid var(--line-s); }
+    .pf{ display:flex; align-items:center; gap:9px; font-size:.58em; color:var(--text); padding:5px 2px; }
+    .pf iconify-icon{ flex:none; font-size:1.3em; color:var(--mc-orange); }
+    .pf .y{ color:#46D39A; } .pf .n{ color:#5F7891; }
+    .pf.off{ color:var(--muted); }
+    /* timeline + revenue ramp */
+    .revtl{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch; width:100%; }
+    .revcol{ display:flex; flex-direction:column; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:16px 14px 14px; }
+    .revcol.feat{ border-color:var(--mc-orange); box-shadow:0 18px 50px rgba(255,158,27,.16); }
+    .revcol .ph{ flex:1; }
+    .revcol .q{ color:var(--mc-orange); font-weight:800; font-size:13px; letter-spacing:1px; }
+    .revcol h3{ color:#fff; margin:3px 0 4px; font-size:17px; }
+    .revcol .ph p{ color:var(--muted); font-size:12px; line-height:1.4; margin:0; }
+    .revcol .barbox{ height:120px; display:flex; align-items:flex-end; margin:12px 0 9px; }
+    .revcol .fill{ width:100%; background:linear-gradient(180deg,var(--mc-orange),var(--mc-orange-deep)); border-radius:8px 8px 0 0; min-height:5px; }
+    .revcol .mrr{ text-align:center; color:var(--mc-orange); font-weight:900; font-size:22px; line-height:1; }
+    .revcol .mrr small{ display:block; color:var(--muted); font-weight:600; font-size:10px; margin-top:3px; letter-spacing:.5px; }
+    .frame{ border-radius:16px; border:1px solid var(--line-s); box-shadow:0 20px 50px rgba(0,0,0,.45); width:100%; object-fit:cover; max-height:430px; }
+    .hero-panel{ background:rgba(8,18,30,.70); backdrop-filter:blur(7px); border:1px solid rgba(255,255,255,.09); border-radius:24px; padding:48px 58px; display:inline-block; }
+    .tag{ display:inline-block; font-size:.5em; color:var(--mc-orange); border:1px solid var(--mc-orange); border-radius:6px; padding:1px 8px; margin-left:.45em; vertical-align:middle; font-weight:700; }
+    /* pain -> fix mapping */
+    .ps{ display:grid; grid-template-columns:1fr 46px 1fr; gap:14px 0; align-items:center; width:100%; }
+    .ps-hd{ text-transform:uppercase; letter-spacing:1.6px; font-weight:800; font-size:12px; padding:0 4px 2px; }
+    .ps-hd.p{ color:var(--muted); } .ps-hd.f{ color:var(--mc-orange); }
+    .ps-pain,.ps-fix{ display:flex; align-items:center; gap:13px; border:1px solid var(--line-s); border-radius:14px; padding:14px 16px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+    .ps-fix{ border-color:var(--mc-orange); background:rgba(255,158,27,.06); }
+    .ps-pain iconify-icon{ color:#7C93A8; font-size:26px; flex:none; }
+    .ps-fix iconify-icon{ color:var(--mc-orange); font-size:26px; flex:none; }
+    .ps-pain b,.ps-fix b{ display:block; color:#fff; font-weight:700; font-size:17px; }
+    .ps-pain span,.ps-fix span{ color:var(--muted); font-size:13px; }
+    .ps-arrow{ text-align:center; color:var(--mc-orange); font-size:26px; font-weight:800; }
+    .chip{ display:inline-block; background:var(--panel); border:1px solid var(--line-s); border-radius:999px; padding:4px 12px; margin:4px 3px 0; font-size:13px; color:var(--text); }
+    .chip iconify-icon{ color:var(--mc-orange); vertical-align:-2px; margin-right:5px; font-size:15px; }
+    .gp-note{ display:flex; align-items:center; gap:16px; margin-top:18px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-left:4px solid var(--mc-orange); border-radius:14px; padding:16px 20px; }
+    .gp-note img{ width:42px; height:42px; flex:none; }
+    .gp-note b{ display:block; color:#fff; font-weight:800; font-size:18px; margin-bottom:3px; }
+    .gp-note span{ color:var(--muted); font-size:14px; line-height:1.45; }
+    /* hand-built architecture diagram */
+    .arch{ display:flex; align-items:stretch; justify-content:center; gap:6px; width:100%; }
+    .lane{ flex:1; display:flex; flex-direction:column; gap:8px; min-width:0; }
+    .lane.core{ flex:1.18; }
+    .lane-hd{ text-align:center; color:var(--mc-orange); font-weight:800; letter-spacing:1.3px; text-transform:uppercase; font-size:11px; }
+    .node{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:11px; padding:8px 11px; display:flex; align-items:center; gap:9px; }
+    .node img{ width:22px; height:22px; flex:none; object-fit:contain; }
+    .node iconify-icon{ font-size:21px; color:var(--mc-orange); flex:none; }
+    .node .t{ font-size:13.5px; line-height:1.22; min-width:0; }
+    .node .t b{ color:#fff; font-weight:700; display:block; }
+    .node .t span{ color:var(--muted); font-size:11.5px; }
+    .arrow-d{ text-align:center; color:var(--mc-orange); font-size:13px; line-height:.5; letter-spacing:.5px; font-weight:700; }
+    .group{ background:rgba(255,255,255,.03); border:1px solid var(--line-s); border-radius:14px; padding:10px; display:flex; flex-direction:column; gap:8px; }
+    .group.data{ background:rgba(255,255,255,.03); border-color:var(--line-s); }
+    .group-hd{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; text-align:center; }
+    .group.data .group-hd{ color:#fff; }
+    .zonearrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex:none; padding:0 1px; }
+    .zonearrow b{ color:var(--mc-orange); font-size:24px; line-height:1; }
+    .zonearrow span{ font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-top:4px; }
+    .orsep{ text-align:center; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:1.5px; }
+    .lane-note{ color:var(--muted); font-size:11px; line-height:1.35; margin-top:3px; }
+    .dgroup{ border:1.5px dashed var(--line-s); border-radius:14px; padding:9px 9px 10px; display:flex; flex-direction:column; gap:7px; background:rgba(255,255,255,.03); }
+    .dgroup-lbl{ color:var(--muted); font-size:9.5px; text-transform:uppercase; letter-spacing:1px; margin:1px 0 -1px 3px; }
+    .dgroup .sub{ margin-left:0; }
+    .lane-hd iconify-icon{ font-size:15px; vertical-align:-2px; margin-right:5px; }
+    .sublabel{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; text-align:center; }
+    .sublabel iconify-icon{ font-size:13px; vertical-align:-2px; margin-right:4px; }
+    .subhd{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; text-align:left; margin:2px 0 -2px 3px; }
+    .arch.compact{ gap:5px; }
+    .arch.compact .lane{ gap:5px; }
+    .arch.compact .node{ padding:5px 10px; gap:8px; border-radius:10px; min-height:48px; box-sizing:border-box; align-items:center; }
+    .arch.compact .node img{ width:18px; height:18px; }
+    .arch.compact .node iconify-icon{ font-size:18px; }
+    .arch.compact .node .t{ font-size:11.5px; line-height:1.18; }
+    .arch.compact .node .t span{ font-size:9.5px; }
+    .arch.compact .group, .arch.compact .dgroup{ padding:7px; gap:5px; }
+    .arch.compact .subhd{ font-size:8.5px; margin:1px 0 -3px 3px; }
+    .arch.compact .lane-hd{ font-size:12.5px; margin-bottom:7px; }
+    .arch.compact .sublabel{ font-size:12.5px; margin:4px 0 5px; }
+    .arch.compact .arrow-d{ font-size:22px; }
+    .arch.compact .orsep{ font-size:9px; }
+    .arch.compact .group-hd{ font-size:9.5px; }
+    .storageband{ flex-direction:column; align-items:stretch; margin-top:-6px; }
+    .storage-row{ display:flex; gap:6px; }
+    .storage-row .node{ flex:1; min-width:0; }
+    .node.planned{ border:1.5px dashed var(--mc-orange); }
+    .node.planned .t b{ color:var(--muted); }
+    .soon{ display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; color:#0A1726 !important; background:var(--muted); border-radius:5px; padding:1px 6px; margin-left:6px; vertical-align:middle; }
+  </style>
+</head>
+<body>
+  <div class="brandbar"><img src="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png" alt="Master Album"><span class="nm">Master&nbsp;Album <span>· Go-To-Market Plan</span></span></div>
+  <button class="fs-btn" onclick="toggleFs()" title="Full screen (or press F)"><iconify-icon icon="lucide:maximize"></iconify-icon></button>
+  <div class="footer-note">Internal · Draft for alignment</div>
+
+  <div class="reveal"><div class="slides">
+
+    <!-- 1 · Title -->
+    <section class="hero" data-background-image="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <img src="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png" alt="Master Album" style="height:112px; margin-bottom:14px; filter:drop-shadow(0 12px 30px rgba(0,0,0,.45));">
+        <h1>Master&nbsp;Album</h1>
+        <p class="title-sub">Go-To-Market Plan</p>
+        <p class="lead">From internal tool to global subscription.</p>
+        <p class="muted small" style="margin-top:1.3em;">By Tommy Shum · Master Concept · 22 June 2026</p>
+      </div>
+    </section>
+
+    <!-- 3 · Problem -> Solution -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:sparkles"></iconify-icon></span><div><p class="kicker">Problem → Solution</p><h2>The pain, and how we fix it</h2></div></div>
+      <div class="body"><div class="ps">
+        <div class="ps-hd p">The problem</div><div></div><div class="ps-hd f">Master Album fixes it</div>
+
+        <div class="ps-pain"><iconify-icon icon="lucide:search-x"></iconify-icon><div><b>Guests can't find themselves</b><span>lost in a 1,000-photo dump</span></div></div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-fix"><iconify-icon icon="lucide:scan-face"></iconify-icon><div><b>Find me in seconds</b><span>selfie or Google login → your photos</span></div></div>
+
+        <div class="ps-pain"><iconify-icon icon="lucide:clock"></iconify-icon><div><b>Organisers waste hours</b><span>sorting &amp; sending galleries</span></div></div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-fix"><iconify-icon icon="lucide:link"></iconify-icon><div><b>Share one link</b><span>guests self-serve — zero sorting</span></div></div>
+
+        <div class="ps-pain"><iconify-icon icon="lucide:hourglass"></iconify-icon><div><b>Slow setup, late photos</b><span>big uploads; new additions get missed</span></div></div>
+        <div class="ps-arrow">→</div>
+        <div class="ps-fix"><iconify-icon icon="lucide:folder-sync"></iconify-icon><div><b>Drive-native</b><span>point at a folder · auto-syncs new photos</span></div></div>
+      </div>
+      <p class="muted small" style="margin-top:1.1em; text-align:center; line-height:1.85;">Target Persona: <span class="chip"><iconify-icon icon="lucide:megaphone"></iconify-icon>Marketing &amp; events teams</span> <span class="chip"><iconify-icon icon="lucide:graduation-cap"></iconify-icon>Schools &amp; universities</span> <span class="chip"><iconify-icon icon="lucide:camera"></iconify-icon>Photographers &amp; studios</span> <span class="chip"><iconify-icon icon="lucide:presentation"></iconify-icon>Associations · MICE</span> <span class="chip"><iconify-icon icon="lucide:heart"></iconify-icon>Weddings</span> <span class="chip"><iconify-icon icon="lucide:trophy"></iconify-icon>Sports clubs</span></p></div>
+    </section>
+
+    <!-- 5 · Competitor Analysis -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:bar-chart-3"></iconify-icon></span><div><p class="kicker">Market</p><h2>How the market prices this</h2></div></div>
+      <div class="body"><div class="tbl"><table style="font-size:.64em;">
+        <tr><th>Tool</th><th>Model</th><th>Price (USD)</th><th>Free tier</th></tr>
+        <tr><td>Memzo</td><td>Per-photo</td><td>US$0.03 / photo</td><td>300 photos</td></tr>
+        <tr><td>FotoOwl / Kwikpic</td><td>Annual</td><td>US$90–360 / yr</td><td>Trial</td></tr>
+        <tr><td>Samaro</td><td>Monthly</td><td>US$9–95 / mo</td><td>Yes</td></tr>
+        <tr><td>Premagic</td><td>Monthly</td><td>US$18–60 / mo</td><td>—</td></tr>
+      </table></div>
+      <div class="gp-note"><img src="https://api.iconify.design/logos/google-photos.svg"><div><b>And Google Photos?</b><span>Face grouping works only in your <em>own</em> library — guests can't self-search a shared album (and it's disabled in some regions). <strong style="color:var(--mc-orange);">Guest self-search is our wedge</strong>, and nobody meters searches.</span></div></div></div>
+    </section>
+
+    <!-- 6 · Cost Breakdown -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:calculator"></iconify-icon></span><div><p class="kicker">Unit Economics</p><h2>What it costs us to run (USD)</h2></div></div>
+      <div class="body"><div class="grid g2" style="align-items:start;">
+        <div class="tbl"><table style="font-size:.58em;">
+          <tr><th>Fixed · always-on</th><th>/ month</th></tr>
+          <tr><td>Cloud SQL · Postgres + pgvector</td><td>US$10–25</td></tr>
+          <tr><td>Cloud Run · web service (1 warm)</td><td>US$5–15</td></tr>
+          <tr><td>Cloudflare R2 (first 10 GB free)</td><td>US$0</td></tr>
+          <tr><td>Scheduler · Secret Manager</td><td>~US$0</td></tr>
+          <tr class="hl"><td>Baseline</td><td>≈ US$15–40</td></tr>
+        </table></div>
+        <div class="tbl"><table style="font-size:.58em;">
+          <tr><th>Variable · per Album</th><th>cost</th></tr>
+          <tr><td>Indexing (Cloud Run Job, ~1,500 photos)</td><td>~US$0.06</td></tr>
+          <tr><td>R2 storage (~7 GB while kept)</td><td>~US$0.10/mo</td></tr>
+          <tr><td>Face-search queries (pgvector)</td><td>~US$0</td></tr>
+          <tr class="hl"><td>All-in per Album</td><td>&lt; US$1</td></tr>
+        </table></div>
+      </div>
+      <p class="muted small" style="margin-top:.9em; text-align:center;">Illustrative: <strong>50 Albums / month ≈ US$35–40 all-in</strong> — costs are tiny and mostly fixed.</p></div>
+    </section>
+
+    <!-- 7 · Pricing + Referral -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:tag"></iconify-icon></span><div><p class="kicker">Pricing · USD <span class="tag">proposed</span></p><h2>Simple, generous, global</h2></div></div>
+      <div class="body"><div class="ptiers2">
+        <div class="ptier">
+          <div class="ico"><iconify-icon icon="lucide:gift"></iconify-icon></div>
+          <h3>Free</h3><div class="big">US$0</div><div class="bundle">100 photos / month</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Drive auto-sync</div>
+          <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>MC badge shown</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>SSO · API</div>
+          <div class="pf"><iconify-icon icon="lucide:headphones"></iconify-icon>Community support</div>
+          <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Upgrade / PAYG for more</div>
+        </div>
+        <div class="ptier">
+          <div class="ico"><iconify-icon icon="lucide:sprout"></iconify-icon></div>
+          <h3>Starter</h3><div class="big">US$19<small>/mo</small></div><div class="bundle">3,000 photos / month</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
+          <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>No MC badge</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>SSO · API</div>
+          <div class="pf"><iconify-icon icon="lucide:headphones"></iconify-icon>Email support</div>
+          <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Overage US$12 / 1,000</div>
+        </div>
+        <div class="ptier feat">
+          <span class="pill">Most popular</span>
+          <div class="ico"><iconify-icon icon="lucide:star"></iconify-icon></div>
+          <h3>Pro</h3><div class="big">US$49<small>/mo</small></div><div class="bundle">15,000 photos / month</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
+          <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>Custom branding</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Analytics</div>
+          <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>SSO · API</div>
+          <div class="pf"><iconify-icon icon="lucide:headphones"></iconify-icon>Priority support</div>
+          <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Overage US$10 / 1,000</div>
+        </div>
+        <div class="ptier">
+          <div class="ico"><iconify-icon icon="lucide:building"></iconify-icon></div>
+          <h3>Enterprise</h3><div class="big">Custom</div><div class="bundle">Unlimited photos</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
+          <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>White-label + domain</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Analytics</div>
+          <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>SSO · API</div>
+          <div class="pf"><iconify-icon icon="lucide:headphones"></iconify-icon>Dedicated support</div>
+          <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Custom overage</div>
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:.9em; text-align:center;">One currency — <strong>photos indexed</strong> (counted at indexing · albums unlimited). Spend order: <strong>referral credits → monthly bundle → overage</strong>. No subscription? <strong>PAYG US$15 / 1,000</strong> · Referral <strong>+100 / +100</strong>.</p></div>
+    </section>
+
+    <!-- 8 · Go-To-Market & Growth Loop -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:rocket"></iconify-icon></span><div><p class="kicker">Go-To-Market</p><h2>Self-serve, global, viral by design</h2></div></div>
+      <div class="body">
+        <div class="sublabel" style="margin-bottom:9px;">Acquisition channels</div>
+        <div class="grid g4 small">
+          <div class="card"><div class="ico"><iconify-icon icon="lucide:building-2"></iconify-icon></div><h3>MC client base</h3><p class="muted small">Warm intros to existing Master Concept clients.</p></div>
+          <div class="card"><div class="ico"><iconify-icon icon="lucide:handshake"></iconify-icon></div><h3>Partners</h3><p class="muted small">Photographers &amp; agencies bring their clients.</p></div>
+          <div class="card"><div class="ico"><iconify-icon icon="lucide:search"></iconify-icon></div><h3>Organic search</h3><p class="muted small">"Find my photos" SEO &amp; content.</p></div>
+          <div class="card"><div class="ico"><iconify-icon icon="lucide:infinity"></iconify-icon></div><h3>Guest loop</h3><p class="muted small">Every attendee discovers us — viral ↓</p></div>
+        </div>
+        <div class="sublabel" style="margin:16px 0 9px;">The viral guest loop</div>
+        <div class="flow">
+          <div class="step"><div class="num">1</div><h3>Awareness</h3><p>Guest opens a shared album → sees Master Album.</p></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="num">2</div><h3>Activation</h3><p>Find-me returns their photos — the wow.</p></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="num">3</div><h3>Conversion</h3><p>Guest runs their own album → a customer.</p></div>
+          <div class="arrow">→</div>
+          <div class="step"><div class="num">4</div><h3>Referral</h3><p>Invites more organisers → loop repeats.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline & Expected Revenue -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:trending-up"></iconify-icon></span><div><p class="kicker">Timeline &amp; Revenue <span class="tag">illustrative</span></p><h2>Revenue forecast</h2></div></div>
+      <div class="body">
+        <div class="card" style="height:400px; padding:16px 20px 12px;"><canvas id="revChart"></canvas></div>
+        <p class="muted small" style="margin-top:.8em; text-align:center;"><strong style="color:var(--mc-orange);">Go live early July 2026.</strong> Illustrative Year-1 forecast — stacked users (free + paid) + MRR line · exit ≈ <strong>US$20k MRR (~US$240k ARR)</strong>, on mostly-fixed cost. <span class="tag">numbers to validate</span></p>
+      </div>
+    </section>
+
+    <!-- Development Roadmap (section title) -->
+    <section class="hero" data-background-image="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <p class="kicker-c"><iconify-icon icon="lucide:git-branch"></iconify-icon> Behind the product</p>
+        <h1 style="font-size:2.7em;">Development Roadmap</h1>
+        <p class="lead">What's built today — and what's coming next.</p>
+      </div>
+    </section>
+
+    <!-- 4 · Architecture -->
+    <section>
+      <div class="body">
+        <div class="arch compact">
+
+          <!-- Photo Ingest (two paths) -->
+          <div class="lane">
+            <div class="lane-hd"><iconify-icon icon="lucide:image-plus"></iconify-icon>Photo Ingest</div>
+            <div class="node"><iconify-icon icon="lucide:upload-cloud"></iconify-icon><div class="t"><b>Direct Upload</b><span>photos sent straight to Cloudflare R2</span></div></div>
+            <div class="orsep">or</div>
+            <div class="dgroup">
+              <div class="node"><img src="https://api.iconify.design/logos/google-drive.svg"><div class="t"><b>Google Drive</b><span>indexed in place — no re-upload</span></div></div>
+              <div class="arrow-d">▲<span style="font-size:11px; margin-left:4px; vertical-align:2px;">Sync</span></div>
+              <div class="node sub"><iconify-icon icon="lucide:clock"></iconify-icon><div class="t"><b>Cloud Scheduler</b><span>auto-syncs the folder every 15 min</span></div></div>
+              <div class="node sub"><iconify-icon icon="lucide:key-round"></iconify-icon><div class="t"><b>Service Account</b><span>secure read access to Drive</span></div></div>
+            </div>
+            <div class="orsep">or</div>
+            <div class="node planned"><img src="https://api.iconify.design/logos/microsoft-onedrive.svg"><div class="t"><b>OneDrive <span class="soon">TBC</span></b><span>needs Microsoft Graph API (Azure AD)</span></div></div>
+          </div>
+
+          <div class="zonearrow"><b>⇄</b></div>
+
+          <!-- Backend -->
+          <div class="lane core">
+            <div class="lane-hd"><iconify-icon icon="lucide:server"></iconify-icon>Backend</div>
+            <div class="group">
+              <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud.svg" style="height:15px;vertical-align:middle;margin-right:5px;">Google Cloud Run</div>
+              <div class="node"><img src="https://api.iconify.design/logos/fastapi-icon.svg"><div class="t"><b>FastAPI</b><span>search, sign-in &amp; serves the web app</span></div></div>
+              <div class="node"><img src="https://api.iconify.design/logos/python.svg"><div class="t"><b>Face Recognition</b><span>each face → a digital fingerprint (InsightFace)</span></div></div>
+              <div class="node"><iconify-icon icon="lucide:users"></iconify-icon><div class="t"><b>People Grouping</b><span>DBSCAN clustering</span></div></div>
+              <div class="node planned"><iconify-icon icon="lucide:mail"></iconify-icon><div class="t"><b>Email Notifications <span class="soon">TBC</span></b><span>invitation &amp; billing email (Resend)</span></div></div>
+              <div class="node planned"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqA7oJmsogQw7CIJgLIsfANpICtskop6nyoeaWLhy4yzYqJ38TRwoC1Vfk&amp;s=10"><div class="t"><b>Payment Gateway <span class="soon">TBC</span></b><span>Stripe — payments, plans, usage &amp; invoices</span></div></div>
+            </div>
+          </div>
+
+          <div class="zonearrow"><b>⇄</b></div>
+
+          <!-- Frontend -->
+          <div class="lane">
+            <div class="lane-hd"><iconify-icon icon="lucide:app-window"></iconify-icon>Frontend</div>
+            <div class="node"><iconify-icon icon="ph:ice-cream-fill"></iconify-icon><div class="t"><b>Web App</b><span>HTML, vanilla JS &amp; Jinja2 templates</span></div></div>
+            <div class="node"><img src="https://api.iconify.design/logos/google-icon.svg"><div class="t"><b>Google OAuth</b><span>guest sign-in + fetches your Google photo</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:scan-face"></iconify-icon><div class="t"><b>Find Me</b><span>your selfie or Google photo → finds you</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:users-round"></iconify-icon><div class="t"><b>People Wall</b><span>browse most recognised faces &amp; naming</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:images"></iconify-icon><div class="t"><b>Photos</b><span>gallery · my photos · search · download</span></div></div>
+            <div class="node planned"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon><div class="t"><b>User Dashboard <span class="soon">TBC</span></b><span>albums, usage &amp; billing — self-serve</span></div></div>
+            <div class="node planned"><iconify-icon icon="lucide:shield-check"></iconify-icon><div class="t"><b>Consent &amp; Privacy <span class="soon">TBC</span></b><span>GDPR · biometric opt-in &amp; deletion</span></div></div>
+          </div>
+
+        </div>
+
+        <div class="arch compact storageband">
+          <div class="arrow-d">⇅</div>
+          <div class="sublabel"><iconify-icon icon="lucide:database"></iconify-icon>Storage</div>
+          <div class="storage-row">
+            <div class="node"><img src="https://api.iconify.design/logos/postgresql.svg"><div class="t"><b>Face Database</b><span>fingerprints + instant search (Postgres + pgvector)</span></div></div>
+            <div class="node"><img src="https://api.iconify.design/logos/cloudflare-icon.svg"><div class="t"><b>Photo Storage</b><span>photos, previews &amp; avatars (Cloudflare R2)</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:trash-2"></iconify-icon><div class="t"><b>Auto-Purge</b><span>Cloud Scheduler · daily retention</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · The Ask -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:flag"></iconify-icon></span><div><p class="kicker">The Ask</p><h2>Decisions to align on</h2></div></div>
+      <div class="body"><div class="grid g2 decisions">
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:rocket"></iconify-icon></div><h3>Go-to-market — green-light?</h3><p class="muted small">Launch Master Album as a paid, global product · <strong>go live early July 2026</strong>.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:credit-card"></iconify-icon></div><h3>Payment gateway — Stripe or Airwallex?</h3><p class="muted small">Stripe = global reach · Airwallex = HK/APAC + local methods (FPS). Pick one; consider Merchant-of-Record for tax.</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:tag"></iconify-icon></div><h3>Product name — keep "Master Album"?</h3><p class="muted small">Works internally; confirm it lands for a global, consumer-facing audience (domain &amp; trademark).</p></div>
+        <div class="card"><div class="ico"><iconify-icon icon="lucide:percent"></iconify-icon></div><h3>Sales commission?</h3><p class="muted small">Offer paid photo sales? If so, our take — <strong>0%</strong> like rivals (Memzo), or a margin for extra revenue.</p></div>
+        <div class="card" style="grid-column:1 / -1;"><div class="ico"><iconify-icon icon="lucide:user-check"></iconify-icon></div><h3>Who owns it?</h3><p class="muted small">Assign a lead to drive the launch and the first customers.</p></div>
+      </div>
+      <p class="muted small" style="margin-top:.9em; text-align:center;">Proven product · tiny cost · clear pricing — <strong style="color:var(--mc-orange);">ready to commercialise.</strong></p></div>
+    </section>
+
+  </div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script>
+    var isNarrow = window.matchMedia('(max-width: 768px)').matches;
+    var isTouch  = window.matchMedia('(pointer: coarse)').matches;
+    Reveal.initialize({
+      width:1280, height:720, margin:0.06, center:true,
+      hash:true, slideNumber:'c/t', transition:'slide', transitionSpeed:'fast', backgroundTransition:'fade',
+      controls:true, controlsLayout:'edges', controlsBackArrows:'visible', progress:true,
+      // On phones, switch to reveal's vertical scroll view so the deck reads/scrolls naturally
+      view: isNarrow ? 'scroll' : null, scrollProgress: true
+    });
+    // Click-anywhere-to-advance: desktop (fine pointer) only — leave touch devices to swipe/scroll
+    if (!isTouch) {
+      document.querySelector('.reveal').addEventListener('click', function(e){
+        if (e.target.closest('a, button, input, textarea, select, .controls')) return;
+        if (window.getSelection && String(window.getSelection())) return;
+        Reveal.next();
+      });
+    }
+    function toggleFs(){
+      try{
+        if(!document.fullscreenElement){ (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement); }
+        else { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+      }catch(e){}
+    }
+    document.addEventListener('fullscreenchange', function(){
+      var b=document.querySelector('.fs-btn iconify-icon');
+      if(b) b.setAttribute('icon', document.fullscreenElement ? 'lucide:minimize' : 'lucide:maximize');
+    });
+
+    // Revenue forecast combo chart — rendered when its slide is shown (so the canvas has a real size)
+    var revChart=null;
+    function renderRev(){
+      var el=document.getElementById('revChart');
+      if(!el || revChart) return;
+      revChart=new Chart(el,{
+        data:{ labels:[['Jul 26','Go live'],['Q4 26','Public launch'],['Q1 27','Grow'],['Q2 27','Scale']],
+          datasets:[
+            { type:'bar', label:'Free users', data:[200,1200,4000,9000], backgroundColor:'rgba(159,180,200,.45)', stack:'u', yAxisID:'y', borderRadius:4 },
+            { type:'bar', label:'Paid users', data:[10,100,300,650], backgroundColor:'#FF9E1B', stack:'u', yAxisID:'y', borderRadius:4 },
+            { type:'line', label:'MRR (US$)', data:[500,4000,11000,20000], borderColor:'#46D39A', backgroundColor:'rgba(70,211,154,.15)', yAxisID:'y1', tension:.35, borderWidth:3, pointRadius:4, pointBackgroundColor:'#46D39A', fill:false }
+          ]},
+        options:{ responsive:true, maintainAspectRatio:false, interaction:{ intersect:false, mode:'index' },
+          plugins:{ legend:{ labels:{ color:'#EAF1F8', usePointStyle:true, boxWidth:9, padding:18 } } },
+          scales:{
+            x:{ stacked:true, ticks:{ color:'#9FB4C8', font:{ size:12 } }, grid:{ color:'#2B517040' } },
+            y:{ stacked:true, position:'left', title:{ display:true, text:'Users', color:'#9FB4C8' }, ticks:{ color:'#9FB4C8' }, grid:{ color:'#2B517040' } },
+            y1:{ position:'right', title:{ display:true, text:'MRR (US$)', color:'#46D39A' }, ticks:{ color:'#46D39A', callback:function(v){ return '$'+(v/1000)+'k'; } }, grid:{ drawOnChartArea:false } }
+          }
+        }
+      });
+    }
+    Reveal.on('ready', function(e){ if(e.currentSlide && e.currentSlide.querySelector('#revChart')) renderRev(); });
+    Reveal.on('slidechanged', function(e){ if(e.currentSlide && e.currentSlide.querySelector('#revChart')) renderRev(); });
+  </script>
+</body>
+</html>

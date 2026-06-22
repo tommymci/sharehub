@@ -92,6 +92,16 @@
     .decisions .card .ico{ width:38px; height:38px; border-radius:11px; margin-bottom:7px; }
     .decisions .card .ico iconify-icon{ font-size:21px; }
     .decisions .card h3{ font-size:15.5px; } .decisions .card p{ font-size:12px; }
+    /* token usage meter (Claude/ChatGPT-style) */
+    .tokmeter{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:20px 26px; }
+    .tokmeter .row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:11px; }
+    .tokmeter .plan{ color:#fff; font-weight:700; font-size:18px; } .tokmeter .plan b{ color:var(--mc-orange); }
+    .tokmeter .used{ color:var(--muted); font-size:15px; } .tokmeter .used b{ color:#fff; font-size:26px; font-weight:900; }
+    .tokbar{ height:26px; background:#0A1726; border:1px solid var(--line-s); border-radius:999px; overflow:hidden; }
+    .tokbar .fill{ height:100%; background:linear-gradient(90deg,var(--mc-orange-deep),var(--mc-orange)); border-radius:999px; display:flex; align-items:center; justify-content:flex-end; padding-right:11px; color:#0A1726; font-weight:800; font-size:12px; }
+    .tokmeter .sub{ display:flex; justify-content:space-between; color:var(--muted); font-size:13px; margin-top:9px; }
+    .tokcols .card h3{ display:flex; align-items:center; gap:7px; }
+    .tokcols .card li b{ color:var(--mc-orange); }
 
     /* big stats row */
     .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center; }
@@ -322,7 +332,7 @@
       <div class="body"><div class="ptiers2">
         <div class="ptier">
           <div class="ico"><iconify-icon icon="lucide:gift"></iconify-icon></div>
-          <h3>Free</h3><div class="big">US$0</div><div class="bundle">100 photos / month</div>
+          <h3>Free</h3><div class="big">US$0</div><div class="bundle">100 tokens / month</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>MC badge shown</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
@@ -332,7 +342,7 @@
         </div>
         <div class="ptier">
           <div class="ico"><iconify-icon icon="lucide:sprout"></iconify-icon></div>
-          <h3>Starter</h3><div class="big">US$19<small>/mo</small></div><div class="bundle">3,000 photos / month</div>
+          <h3>Starter</h3><div class="big">US$19<small>/mo</small></div><div class="bundle">3,000 tokens / month</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>No MC badge</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
@@ -343,7 +353,7 @@
         <div class="ptier feat">
           <span class="pill">Most popular</span>
           <div class="ico"><iconify-icon icon="lucide:star"></iconify-icon></div>
-          <h3>Pro</h3><div class="big">US$49<small>/mo</small></div><div class="bundle">15,000 photos / month</div>
+          <h3>Pro</h3><div class="big">US$49<small>/mo</small></div><div class="bundle">15,000 tokens / month</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>Custom branding</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Analytics</div>
@@ -353,7 +363,7 @@
         </div>
         <div class="ptier">
           <div class="ico"><iconify-icon icon="lucide:building"></iconify-icon></div>
-          <h3>Enterprise</h3><div class="big">Custom</div><div class="bundle">Unlimited photos</div>
+          <h3>Enterprise</h3><div class="big">Custom</div><div class="bundle">Unlimited tokens</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>White-label + domain</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Analytics</div>
@@ -362,7 +372,33 @@
           <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Custom overage</div>
         </div>
       </div>
-      <p class="muted small" style="margin-top:.9em; text-align:center;">One currency — <strong>photos indexed</strong> (counted at indexing · albums unlimited). Spend order: <strong>referral credits → monthly bundle → overage</strong>. No subscription? <strong>PAYG US$15 / 1,000</strong> · Referral <strong>+100 / +100</strong>.</p></div>
+      <p class="muted small" style="margin-top:.9em; text-align:center;"><strong>1 token = 1 photo indexed</strong> · face search free · albums unlimited · monthly allowance resets · top-ups from <strong>US$15 / 1,000 tokens</strong> · <strong>+100 tokens</strong> per referral.</p></div>
+    </section>
+
+    <!-- Token usage -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:coins"></iconify-icon></span><div><p class="kicker">AI-native pricing</p><h2>Pay with tokens</h2></div></div>
+      <div class="body">
+        <div class="tokmeter">
+          <div class="row"><span class="plan"><b>Pro plan</b> · monthly tokens</span><span class="used"><b>8,250</b> / 15,000 tokens used this month</span></div>
+          <div class="tokbar"><div class="fill" style="width:55%;">55%</div></div>
+          <div class="sub"><span>6,750 tokens left</span><span>resets in 12 days · top up anytime</span></div>
+        </div>
+        <div class="grid g2 tokcols" style="margin-top:16px;">
+          <div class="card"><h3><iconify-icon icon="lucide:minus-circle" style="color:#FF6B6B;"></iconify-icon>Spend tokens</h3>
+            <ul class="small">
+              <li><iconify-icon icon="lucide:scan-face"></iconify-icon><b>−1</b> token · index a photo (face detection)</li>
+              <li><iconify-icon icon="lucide:image"></iconify-icon><b>−2</b> tokens · large / RAW / 4K+ photo</li>
+              <li><iconify-icon icon="lucide:search"></iconify-icon><b>Free</b> · face search, viewing &amp; download</li>
+            </ul></div>
+          <div class="card"><h3><iconify-icon icon="lucide:plus-circle" style="color:#46D39A;"></iconify-icon>Get tokens</h3>
+            <ul class="small">
+              <li><iconify-icon icon="lucide:calendar-clock"></iconify-icon><b>Monthly allowance</b> — Free 100 · Pro 15,000 · resets monthly</li>
+              <li><iconify-icon icon="lucide:gift"></iconify-icon><b>+100</b> tokens · per successful referral</li>
+              <li><iconify-icon icon="lucide:shopping-cart"></iconify-icon><b>Top-up packs</b> · 1,000 tokens = US$15</li>
+            </ul></div>
+        </div>
+      </div>
     </section>
 
     <!-- 8 · Go-To-Market & Growth Loop -->

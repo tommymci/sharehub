@@ -31,7 +31,7 @@
     .reveal .controls{ color:var(--mc-orange); }
     .reveal .controls .controls-arrow{ opacity:.4; transition:opacity .2s, transform .2s; }
     .reveal .controls .controls-arrow:hover{ opacity:1; }
-    .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; right:18px; bottom:14px; text-shadow:0 1px 8px rgba(0,0,0,.7); }
+    .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; top:33px; right:80px; bottom:auto; text-shadow:0 1px 8px rgba(0,0,0,.7); }
     .lead{ color:var(--muted); font-size:.82em; } .muted{ color:var(--muted); } .small{ font-size:.66em; }
 
     .reveal .slides{ text-align:left; }
@@ -88,6 +88,8 @@
     .card .big{ font-size:1.85em; font-weight:900; color:var(--mc-orange); line-height:1; margin-bottom:.18em; }
     .pill{ display:inline-block; background:var(--mc-orange); color:#0A1726; border-radius:999px; padding:3px 14px; font-size:.52em; font-weight:800; margin-bottom:.45em; }
     .tiers .card.feat{ border-color:var(--mc-orange); box-shadow:0 20px 50px rgba(255,158,27,.16); }
+    .pnum{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--mc-orange),var(--mc-orange-deep)); color:#0A1726; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:17px; margin-bottom:9px; }
+    .ph-date{ color:var(--mc-orange) !important; font-weight:700; font-size:.62em; margin:0 0 .5em !important; }
     .decisions{ gap:14px; } .decisions .card{ padding:14px 16px; }
     .decisions .card .ico{ width:38px; height:38px; border-radius:11px; margin-bottom:7px; }
     .decisions .card .ico iconify-icon{ font-size:21px; }
@@ -215,7 +217,10 @@
     .arrow-d{ text-align:center; color:var(--mc-orange); font-size:13px; line-height:.5; letter-spacing:.5px; font-weight:700; }
     .group{ background:rgba(255,255,255,.03); border:1px solid var(--line-s); border-radius:14px; padding:10px; display:flex; flex-direction:column; gap:8px; }
     .group.data{ background:rgba(255,255,255,.03); border-color:var(--line-s); }
-    .group-hd{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; text-align:center; }
+    .group-hd{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; display:flex; align-items:center; justify-content:center; gap:5px; line-height:1; flex:0 0 auto; height:16px; margin:0; }
+    .group-hd img{ display:inline-block; }
+    .group{ justify-content:flex-start; }
+    .arch.compact .node{ flex:none; }
     .group.data .group-hd{ color:#fff; }
     .zonearrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex:none; padding:0 1px; }
     .zonearrow b{ color:var(--mc-orange); font-size:24px; line-height:1; }
@@ -230,15 +235,15 @@
     .sublabel iconify-icon{ font-size:13px; vertical-align:-2px; margin-right:4px; }
     .subhd{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; text-align:left; margin:2px 0 -2px 3px; }
     .arch.compact{ gap:5px; }
-    .arch.compact .lane{ gap:5px; }
-    .arch.compact .node{ padding:5px 10px; gap:8px; border-radius:10px; min-height:48px; box-sizing:border-box; align-items:center; }
+    .arch.compact .lane{ gap:4px; }
+    .arch.compact .node{ padding:4px 10px; gap:8px; border-radius:10px; min-height:40px; box-sizing:border-box; align-items:center; }
     .arch.compact .node img{ width:18px; height:18px; }
     .arch.compact .node iconify-icon{ font-size:18px; }
     .arch.compact .node .t{ font-size:11.5px; line-height:1.18; }
     .arch.compact .node .t span{ font-size:9.5px; }
-    .arch.compact .group, .arch.compact .dgroup{ padding:7px; gap:5px; }
+    .arch.compact .group, .arch.compact .dgroup{ padding:6px; gap:4px; flex:none; }
     .arch.compact .subhd{ font-size:8.5px; margin:1px 0 -3px 3px; }
-    .arch.compact .lane-hd{ font-size:12.5px; margin-bottom:7px; }
+    .arch.compact .lane-hd{ font-size:12.5px; margin-bottom:4px; }
     .arch.compact .sublabel{ font-size:12.5px; margin:4px 0 5px; }
     .arch.compact .arrow-d{ font-size:22px; }
     .arch.compact .orsep{ font-size:9px; }
@@ -254,7 +259,6 @@
 <body>
   <div class="brandbar"><img src="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png" alt="Master Album"><span class="nm">Master&nbsp;Album <span>· Go-To-Market Plan</span></span></div>
   <button class="fs-btn" onclick="toggleFs()" title="Full screen (or press F)"><iconify-icon icon="lucide:maximize"></iconify-icon></button>
-  <div class="footer-note">Internal · Draft for alignment</div>
 
   <div class="reveal"><div class="slides">
 
@@ -332,7 +336,7 @@
       <div class="body"><div class="ptiers2">
         <div class="ptier">
           <div class="ico"><iconify-icon icon="lucide:gift"></iconify-icon></div>
-          <h3>Free</h3><div class="big">US$0</div><div class="bundle">100 tokens / month</div>
+          <h3>Free</h3><div class="big">US$0</div><div class="bundle">100 tokens</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>MC badge shown</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
@@ -342,7 +346,7 @@
         </div>
         <div class="ptier">
           <div class="ico"><iconify-icon icon="lucide:sprout"></iconify-icon></div>
-          <h3>Starter</h3><div class="big">US$19<small>/mo</small></div><div class="bundle">3,000 tokens / month</div>
+          <h3>Starter</h3><div class="big">US$19</div><div class="bundle">3,000 tokens</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>No MC badge</div>
           <div class="pf off"><iconify-icon class="n" icon="lucide:x"></iconify-icon>Analytics</div>
@@ -353,7 +357,7 @@
         <div class="ptier feat">
           <span class="pill">Most popular</span>
           <div class="ico"><iconify-icon icon="lucide:star"></iconify-icon></div>
-          <h3>Pro</h3><div class="big">US$49<small>/mo</small></div><div class="bundle">15,000 tokens / month</div>
+          <h3>Pro</h3><div class="big">US$49</div><div class="bundle">15,000 tokens</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Drive auto-sync</div>
           <div class="pf"><iconify-icon icon="lucide:badge"></iconify-icon>Custom branding</div>
           <div class="pf"><iconify-icon class="y" icon="lucide:check"></iconify-icon>Analytics</div>
@@ -372,7 +376,7 @@
           <div class="pf"><iconify-icon icon="lucide:credit-card"></iconify-icon>Custom overage</div>
         </div>
       </div>
-      <p class="muted small" style="margin-top:.9em; text-align:center;"><strong>1 token = 1 photo indexed</strong> · face search free · albums unlimited · monthly allowance resets · top-ups from <strong>US$15 / 1,000 tokens</strong> · <strong>+100 tokens</strong> per referral.</p></div>
+      <p class="muted small" style="margin-top:.9em; text-align:center;"><strong>1 token = 1 photo indexed</strong> · face search free · albums unlimited · top-ups from <strong>US$15 / 1,000 tokens</strong> · <strong>+100 tokens</strong> per referral · tokens <strong>expire</strong> (paid 12 mo · free 90 days).</p></div>
     </section>
 
     <!-- Token usage -->
@@ -380,9 +384,9 @@
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:coins"></iconify-icon></span><div><p class="kicker">AI-native pricing</p><h2>Pay with tokens</h2></div></div>
       <div class="body">
         <div class="tokmeter">
-          <div class="row"><span class="plan"><b>Pro plan</b> · monthly tokens</span><span class="used"><b>8,250</b> / 15,000 tokens used this month</span></div>
-          <div class="tokbar"><div class="fill" style="width:55%;">55%</div></div>
-          <div class="sub"><span>6,750 tokens left</span><span>resets in 12 days · top up anytime</span></div>
+          <div class="row"><span class="plan"><b>Token wallet</b> · usage-based</span><span class="used"><b>6,750</b> tokens left</span></div>
+          <div class="tokbar"><div class="fill" style="width:45%;">45% left</div></div>
+          <div class="sub"><span>spent 8,250 of 15,000</span><span>tokens expire after 12 months · top up anytime</span></div>
         </div>
         <div class="grid g2 tokcols" style="margin-top:16px;">
           <div class="card"><h3><iconify-icon icon="lucide:minus-circle" style="color:#FF6B6B;"></iconify-icon>Spend tokens</h3>
@@ -393,11 +397,12 @@
             </ul></div>
           <div class="card"><h3><iconify-icon icon="lucide:plus-circle" style="color:#46D39A;"></iconify-icon>Get tokens</h3>
             <ul class="small">
-              <li><iconify-icon icon="lucide:calendar-clock"></iconify-icon><b>Monthly allowance</b> — Free 100 · Pro 15,000 · resets monthly</li>
+              <li><iconify-icon icon="lucide:calendar-clock"></iconify-icon><b>Plan grant</b> — Free 100 · Pro 15,000 tokens (recurring)</li>
               <li><iconify-icon icon="lucide:gift"></iconify-icon><b>+100</b> tokens · per successful referral</li>
-              <li><iconify-icon icon="lucide:shopping-cart"></iconify-icon><b>Top-up packs</b> · 1,000 tokens = US$15</li>
+              <li><iconify-icon icon="lucide:shopping-cart"></iconify-icon><b>Top-up packs</b> · 1,000 tokens = US$15 (valid 12 mo)</li>
             </ul></div>
         </div>
+        <p class="muted small" style="text-align:center; margin-top:.7em;">Tokens are usage-based and <strong>expire</strong> (paid 12 mo · free/referral 90 days) — caps our liability &amp; keeps cost predictable.</p>
       </div>
     </section>
 
@@ -469,12 +474,16 @@
           <div class="lane core">
             <div class="lane-hd"><iconify-icon icon="lucide:server"></iconify-icon>Backend</div>
             <div class="group">
-              <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud.svg" style="height:15px;vertical-align:middle;margin-right:5px;">Google Cloud Run</div>
+              <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud.svg" style="height:12px;vertical-align:middle;display:inline-block;margin-right:5px;">Cloud Run Service · Web</div>
               <div class="node"><img src="https://api.iconify.design/logos/fastapi-icon.svg"><div class="t"><b>FastAPI</b><span>search, sign-in &amp; serves the web app</span></div></div>
+              <div class="node planned"><iconify-icon icon="lucide:coins"></iconify-icon><div class="t"><b>Token System <span class="soon">TBC</span></b><span>wallet · expiry · gamification</span></div></div>
+              <div class="node planned"><iconify-icon icon="lucide:credit-card"></iconify-icon><div class="t"><b>Payment Gateway <span class="soon">TBC</span></b><span>Stripe or Airwallex — pay-as-you-go</span></div></div>
+              <div class="node planned"><iconify-icon icon="lucide:mail"></iconify-icon><div class="t"><b>Email Notifications <span class="soon">TBC</span></b><span>invitation &amp; billing email (Resend)</span></div></div>
+            </div>
+            <div class="group">
+              <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud.svg" style="height:12px;vertical-align:middle;display:inline-block;margin-right:5px;">Cloud Run Job · Indexer</div>
               <div class="node"><img src="https://api.iconify.design/logos/python.svg"><div class="t"><b>Face Recognition</b><span>each face → a digital fingerprint (InsightFace)</span></div></div>
               <div class="node"><iconify-icon icon="lucide:users"></iconify-icon><div class="t"><b>People Grouping</b><span>DBSCAN clustering</span></div></div>
-              <div class="node planned"><iconify-icon icon="lucide:mail"></iconify-icon><div class="t"><b>Email Notifications <span class="soon">TBC</span></b><span>invitation &amp; billing email (Resend)</span></div></div>
-              <div class="node planned"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqA7oJmsogQw7CIJgLIsfANpICtskop6nyoeaWLhy4yzYqJ38TRwoC1Vfk&amp;s=10"><div class="t"><b>Payment Gateway <span class="soon">TBC</span></b><span>Stripe — payments, plans, usage &amp; invoices</span></div></div>
             </div>
           </div>
 
@@ -488,7 +497,7 @@
             <div class="node"><iconify-icon icon="lucide:scan-face"></iconify-icon><div class="t"><b>Find Me</b><span>your selfie or Google photo → finds you</span></div></div>
             <div class="node"><iconify-icon icon="lucide:users-round"></iconify-icon><div class="t"><b>People Wall</b><span>browse most recognised faces &amp; naming</span></div></div>
             <div class="node"><iconify-icon icon="lucide:images"></iconify-icon><div class="t"><b>Photos</b><span>gallery · my photos · search · download</span></div></div>
-            <div class="node planned"><iconify-icon icon="lucide:layout-dashboard"></iconify-icon><div class="t"><b>User Dashboard <span class="soon">TBC</span></b><span>albums, usage &amp; billing — self-serve</span></div></div>
+            <div class="node planned"><iconify-icon icon="lucide:user-cog"></iconify-icon><div class="t"><b>Member System <span class="soon">TBC</span></b><span>accounts · referral · dashboard</span></div></div>
             <div class="node planned"><iconify-icon icon="lucide:shield-check"></iconify-icon><div class="t"><b>Consent &amp; Privacy <span class="soon">TBC</span></b><span>GDPR · biometric opt-in &amp; deletion</span></div></div>
           </div>
 
@@ -504,18 +513,6 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- 10 · The Ask -->
-    <section>
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:flag"></iconify-icon></span><div><p class="kicker">The Ask</p><h2>Decisions to align on</h2></div></div>
-      <div class="body"><div class="grid g2 decisions">
-        <div class="card"><div class="ico"><iconify-icon icon="lucide:rocket"></iconify-icon></div><h3>Go-to-market — green-light?</h3><p class="muted small">Launch Master Album as a paid, global product · <strong>go live early July 2026</strong>.</p></div>
-        <div class="card"><div class="ico"><iconify-icon icon="lucide:credit-card"></iconify-icon></div><h3>Payment gateway — Stripe or Airwallex?</h3><p class="muted small">Stripe = global reach · Airwallex = HK/APAC + local methods (FPS). Pick one; consider Merchant-of-Record for tax.</p></div>
-        <div class="card"><div class="ico"><iconify-icon icon="lucide:tag"></iconify-icon></div><h3>Product name — keep "Master Album"?</h3><p class="muted small">Works internally; confirm it lands for a global, consumer-facing audience (domain &amp; trademark).</p></div>
-        <div class="card"><div class="ico"><iconify-icon icon="lucide:percent"></iconify-icon></div><h3>Sales commission?</h3><p class="muted small">Offer paid photo sales? If so, our take — <strong>0%</strong> like rivals (Memzo), or a margin for extra revenue.</p></div>
-      </div>
-      <p class="muted small" style="margin-top:.9em; text-align:center;">Proven product · tiny cost · clear pricing — <strong style="color:var(--mc-orange);">ready to commercialise.</strong></p></div>
     </section>
 
   </div></div>

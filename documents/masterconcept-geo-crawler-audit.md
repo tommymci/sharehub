@@ -65,23 +65,38 @@ is stale/synthetic, not a live rendered crawl. **The framework is reasonable; th
 ## 4. The real fix — allow AI *citation* bots at Cloudflare
 Let answer-engines that **cite + drive referral traffic** through; keep blocking bulk **training** scrapers.
 
-- **Allow:** `ChatGPT-User` · `OAI-SearchBot` · `PerplexityBot` · `Perplexity-User` · `Claude-User`
-- **Keep blocking:** `GPTBot` · `CCBot` · `ClaudeBot` · `Google-Extended` · `Bytespider` · `Amazonbot`
+- **Allow (citation / answer engines):** `ChatGPT-User` · `OAI-SearchBot` · `PerplexityBot` · `Perplexity-User` · `Claude-User`
+- **Keep blocking (bulk trainers):** `GPTBot` · `CCBot` · `ClaudeBot` · `Google-Extended` · `Bytespider` · `Amazonbot` · `meta-externalagent`
 
-**Where:** Cloudflare → Security → Bots ("Manage AI bots" per-bot allow/block). If all-or-nothing, add a
-WAF Custom Rule *above* the AI block, action **Skip**, gated on verified bots:
+### ✅ Recommended for our plan — **works on Cloudflare FREE** (no paid add-on needed)
+Our zone is on the **Free** plan, so do it by **User-Agent matching** (no Bot Management required):
+
+1. **Turn OFF** the "Block AI bots" toggle (Cloudflare → **Security → Bots**). On Free it's all-or-nothing
+   and is what's currently blocking the *citation* bots we want.
+2. Add **one WAF Custom Rule** (Free includes 5) — Security → WAF → Custom rules — **Action: Block**:
 
 ```
-(cf.bot_management.verified_bot) and (
-  http.user_agent contains "ChatGPT-User" or
-  http.user_agent contains "OAI-SearchBot" or
-  http.user_agent contains "PerplexityBot" or
-  http.user_agent contains "Perplexity-User" or
-  http.user_agent contains "Claude-User"
-)
+(http.user_agent contains "GPTBot") or (http.user_agent contains "CCBot") or
+(http.user_agent contains "ClaudeBot") or (http.user_agent contains "Google-Extended") or
+(http.user_agent contains "Bytespider") or (http.user_agent contains "Amazonbot") or
+(http.user_agent contains "meta-externalagent")
 ```
 
-Supplementary robots.txt (AIOSEO → Tools → Robots.txt) — allow the citation bots, disallow trainers.
+**Result:** trainers blocked; `ChatGPT-User` / `OAI-SearchBot` / `PerplexityBot` / `Perplexity-User` /
+`Claude-User` pass through (HTTP 200) and can read + cite the site.
+
+> **Trade-off (Free):** this matches **UA strings**, which can be spoofed — a scraper *could* fake a
+> citation UA to get in. For GEO/citation that's an acceptable risk (those are the bots we *want*).
+> Cryptographic verification needs **Bot Management** (Enterprise) — overkill here.
+
+### Plan tiers (so support knows what's needed)
+| Approach | Plan |
+|---|---|
+| "Block AI bots" toggle + WAF custom rule by **User-Agent** (the recommendation above) | **Free** ✅ |
+| **Super Bot Fight Mode** — nicer UI with an "AI bots" allow/block category | Pro (~US$20/mo) — optional |
+| `cf.bot_management.verified_bot` (verify bot authenticity, the *original* drafted rule) | Enterprise ❌ not needed |
+
+Supplementary **robots.txt** (AIOSEO → Tools → Robots.txt) — allow the citation bots, disallow trainers.
 *(Cloudflare is the real gate; robots.txt only helps bots that already get through.)*
 
 ---

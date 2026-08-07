@@ -236,7 +236,7 @@
     .subhd{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; text-align:left; margin:2px 0 -2px 3px; }
     .arch.compact{ gap:5px; }
     .arch.compact .lane{ gap:4px; }
-    .arch.compact .node{ padding:4px 10px; gap:8px; border-radius:10px; min-height:40px; box-sizing:border-box; align-items:center; }
+    .arch.compact .node{ padding:3px 10px; gap:8px; border-radius:10px; min-height:34px; box-sizing:border-box; align-items:center; }
     .arch.compact .node img{ width:18px; height:18px; }
     .arch.compact .node iconify-icon{ font-size:18px; }
     .arch.compact .node .t{ font-size:11.5px; line-height:1.18; }
@@ -254,10 +254,21 @@
     .node.planned{ border:1.5px dashed var(--mc-orange); }
     .node.planned .t b{ color:var(--muted); }
     .soon{ display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; color:#0A1726 !important; background:var(--muted); border-radius:5px; padding:1px 6px; margin-left:6px; vertical-align:middle; }
+  
+    .dmgrid{ display:grid; grid-template-columns:1fr 34px 1fr; align-items:center; gap:6px 0; }
+    .dmgrid .dhd{ display:flex; align-items:center; justify-content:center; gap:5px; color:var(--mc-orange); font-weight:800; text-transform:uppercase; letter-spacing:1px; font-size:12px; padding-bottom:3px; }
+    .dmgrid .dhd img{ height:14px; margin:0 !important; vertical-align:middle; }
+    .dmgrid{ align-items:stretch; }
+    .dmgrid .node{ width:100%; box-sizing:border-box; height:44px; min-height:44px; padding:5px 11px; overflow:hidden; }
+    .dmgrid > .dmlink{ align-self:center; }
+    .dmlink{ position:relative; height:2px; background:var(--mc-orange); margin:0 2px; }
+    .dmlink::after{ content:''; position:absolute; right:0; top:-4px; width:0; height:0; border:5px solid transparent; border-left:7px solid var(--mc-orange); }
+    .dmlink.pl{ background:repeating-linear-gradient(90deg,var(--mc-orange) 0 4px,transparent 4px 7px); }
+    .vlink{ text-align:center; color:var(--mc-orange); font-size:18px; line-height:1; margin:0; }
   </style>
 </head>
 <body>
-  <div class="brandbar"><img src="https://masterconcept.ai/wp-content/uploads/2026/05/maco-master-album.png" alt="Master Album"><span class="nm">Master&nbsp;Album <span>· Go-To-Market Plan</span></span></div>
+  <div class="brandbar"><img src="https://apps.masterconcept.ai/static/icons/mcbms.png" alt="MCBMS"><span class="nm">MCP&nbsp;Framework</span></div>
   <button class="fs-btn" onclick="toggleFs()" title="Full screen (or press F)"><iconify-icon icon="lucide:maximize"></iconify-icon></button>
 
   <div class="reveal"><div class="slides">
@@ -271,72 +282,46 @@
     </section>
 
     <section>
-      <div class="body">
+                  <div class="body">
         <div class="arch compact">
-          <div class="lane">
-            <div class="lane-hd"><iconify-icon icon="lucide:plug"></iconify-icon>MCP Layer</div>
-            <div class="group">
-              <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud-run.svg" style="height:13px;vertical-align:middle;margin-right:5px;">bq-mcp &middot; shared Cloud Run</div>
-              <div class="node planned"><iconify-icon icon="lucide:users-round"></iconify-icon><div class="t"><b>IAM access &middot; Google Group</b><span>run.invoker on the Cloud Run &rarr; gates the MCP &amp; tools</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/bms2</b><span>Master Concept &middot; BigQuery</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/fc-bms2</b><span>Finda Cloud &middot; BigQuery</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp &middot; Billing</b><span>Google Billing &middot; BigQuery</span></div></div>
-              <div class="node planned"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/cms <span class="soon">Planned</span></b><span>CMS &middot; BigQuery</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:package"></iconify-icon><div class="t"><b>Predefined tools</b><span>curated, parameterized (revenue, cost, P&amp;L&hellip;)</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:function-square"></iconify-icon><div class="t"><b>Composable &amp; free-form SQL</b><span>bms2_query (deterministic) &middot; run_sql (admin)</span></div></div>
+
+          <div style="flex:2.25; display:flex; flex-direction:column; gap:6px; min-width:0;">
+            <div class="dmgrid">
+              <div class="dhd"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4" >Data source</div><div></div><div class="dhd"><img src="https://api.iconify.design/logos/google-cloud-run.svg" >bq-mcp &middot; Cloud Run</div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>mc-bms2</b><span>Master Concept &middot; &larr; BMS2 MySQL (CDC)</span></div></div><div class="dmlink"></div><div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/bms2</b><span>Master Concept tools</span></div></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>fc-bms2</b><span>Finda Cloud mirror &middot; &larr; Finda BMS</span></div></div><div class="dmlink"></div><div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/fc-bms2</b><span>Finda Cloud tools</span></div></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>Google Billing</b><span>GCP/GMP billing &amp; cost export</span></div></div><div class="dmlink"></div><div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp &middot; Billing</b><span>billing &amp; cost tools</span></div></div>
+              <div class="node planned"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>CMS</b><span>BigQuery dataset &middot; content data</span></div></div><div class="dmlink pl"></div><div class="node planned"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>/mcp/cms</b><span>CMS tools</span></div></div>
+              <div class="node planned"><iconify-icon icon="lucide:building-2"></iconify-icon><div class="t"><b>NetSuite</b><span>native NetSuite ERP &middot; not BigQuery</span></div></div><div class="dmlink pl"></div><div class="node planned"><iconify-icon icon="lucide:building-2"></iconify-icon><div class="t"><b>NetSuite MCP</b><span>native &middot; separate MCP</span></div></div>
+            
+              <div></div><div></div><div class="node"><iconify-icon icon="lucide:package"></iconify-icon><div class="t"><b>Predefined tools</b><span>curated, parameterized (revenue, cost, P&amp;L&hellip;)</span></div></div>
+              <div></div><div></div><div class="node"><iconify-icon icon="lucide:function-square"></iconify-icon><div class="t"><b>Composable &amp; free-form SQL</b><span>bms2_query &middot; run_sql (admin)</span></div></div>
+              <div class="node"><iconify-icon icon="lucide:blocks"></iconify-icon><div class="t"><b>Marketplace Plugin</b><span>bms2@zorskill &middot; Claude Code skill</span></div></div><div class="dmlink"></div><div class="node" style="background:linear-gradient(180deg,rgba(252,140,20,.20),rgba(252,140,20,.08)); border:1px solid var(--mc-orange);"><iconify-icon icon="lucide:users-round" style="color:var(--mc-orange);"></iconify-icon><div class="t"><b>IAM access &middot; Google Group</b><span>run.invoker on the Cloud Run &mdash; gates the MCP &amp; tools</span></div></div>
             </div>
-            <div class="group">
-              <div class="group-hd"><iconify-icon icon="lucide:building-2"></iconify-icon>NetSuite MCP &middot; native <span class="soon">Planned</span></div>
-              <div class="node planned"><iconify-icon icon="lucide:building-2"></iconify-icon><div class="t"><b>NetSuite MCP</b><span>native NetSuite ERP &mdash; separate MCP, not BigQuery</span></div></div>
+                      <div style="margin-top:auto; display:flex; align-items:center; gap:7px; font-size:.62em; color:var(--muted); letter-spacing:.02em; padding-top:8px;">
+              <span style="display:inline-block;width:18px;height:12px;border:1.5px dashed var(--mc-orange);border-radius:3px;"></span>
+              <span>to be developed</span>
             </div>
           </div>
+
           <div class="zonearrow"><b>&#8644;</b></div>
 
-          <!-- BMS Agent -->
-          <div class="lane core">
+          <div style="flex:1.15; display:flex; flex-direction:column; gap:4px; min-width:0;">
             <div class="lane-hd"><img src="https://api.iconify.design/logos/google-cloud-run.svg" style="height:14px;vertical-align:middle;margin-right:6px;">BMS Agent &middot; Cloud Run</div>
-            <div class="group">
-              <div class="group-hd"><iconify-icon icon="lucide:cpu"></iconify-icon>Models</div>
-              <div class="node"><iconify-icon icon="lucide:sparkles"></iconify-icon><div class="t"><b>Claude Sonnet 5 / Opus 5</b><span>direct Anthropic API &middot; default</span></div></div>
-              <div class="node"><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/gemini-color.png"><div class="t"><b>Gemini 2.5 Pro / 3.6 Flash</b><span>run_sql: Pro yes &middot; Flash no</span></div></div>
-            </div>
-            <div class="group">
-              <div class="group-hd"><iconify-icon icon="lucide:wand-2"></iconify-icon>Reasoning &amp; guardrails</div>
-              <div class="node"><iconify-icon icon="lucide:book-open-text"></iconify-icon><div class="t"><b>System prompt &amp; grounding</b><span>teaches the LLM how to use the tools &mdash; date-grounding, billing recipes, trap-safe SQL</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:key-round"></iconify-icon><div class="t"><b>JWT auth &middot; RS256</b><span>MCBMS signs (private key) &middot; agent verifies (public key) &middot; ds claim scopes datasets</span></div></div>
-              <div class="node"><iconify-icon icon="lucide:check-check"></iconify-icon><div class="t"><b>Evals</b><span>16 regression cases</span></div></div>
-            </div>
-          </div>
-
-          <div class="zonearrow"><b>&#8644;</b></div>
-
-          <!-- MCBMS · SiteGround -->
-          <div class="lane">
+            <div class="node"><img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=128"><div class="t"><b>Claude Sonnet 5 / Opus 5</b><span>direct Anthropic API &middot; default</span></div></div>
+            <div class="node"><img src="https://registry.npmmirror.com/@lobehub/icons-static-png/latest/files/dark/gemini-color.png"><div class="t"><b>Gemini 2.5 Pro / 3.6 Flash</b><span>run_sql: Pro yes &middot; Flash no</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:book-open-text"></iconify-icon><div class="t"><b>System prompt &amp; grounding</b><span>teaches the LLM how to use the tools</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:key-round"></iconify-icon><div class="t"><b>JWT auth &middot; RS256</b><span>MCBMS signs (private) &middot; agent verifies (public)</span></div></div>
+            <div class="vlink"><b>&#8597;</b></div>
             <div class="lane-hd"><img src="https://apps.masterconcept.ai/static/icons/mcbms.png" style="height:15px;vertical-align:middle;margin-right:6px;">MCBMS &middot; SiteGround</div>
-            <div class="node"><iconify-icon icon="lucide:message-square-text"></iconify-icon><div class="t"><b>Chat Widget</b><span>ask BMS in plain English, in-app</span></div></div>
-            <div class="node"><iconify-icon icon="lucide:cpu"></iconify-icon><div class="t"><b>Model picker</b><span>Claude Sonnet 5 / Opus 5 &middot; Gemini Pro / Flash</span></div></div>
-            <div class="node"><iconify-icon icon="lucide:layers"></iconify-icon><div class="t"><b>Dataset picker</b><span>Master Concept &middot; Finda Cloud &middot; Billing</span></div></div>
-            <div class="node"><iconify-icon icon="lucide:bar-chart-3"></iconify-icon><div class="t"><b>Charts</b><span>trend &middot; cost-by-customer &middot; ageing</span></div></div>
             <div class="node"><img src="https://api.iconify.design/logos/google-icon.svg"><div class="t"><b>Google login</b><span>sign in with Google &mdash; guards the app (OAuth)</span></div></div>
-            <div class="node"><iconify-icon icon="lucide:shield-check"></iconify-icon><div class="t"><b>Granular permissions</b><span>scoped by module &amp; data view &mdash; agent.use / agent.mc / agent.finda</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:shield-check"></iconify-icon><div class="t"><b>Granular permissions</b><span>scoped by module &amp; data view &mdash; agent.use / .mc / .finda</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:message-square-text"></iconify-icon><div class="t"><b>Chat Widget</b><span>ask BMS in plain English</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:cpu"></iconify-icon><div class="t"><b>Model picker</b><span>Claude &middot; Gemini</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:layers"></iconify-icon><div class="t"><b>Dataset picker</b><span>MC &middot; Finda &middot; Billing</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:bar-chart-3"></iconify-icon><div class="t"><b>Charts</b><span>trend &middot; cost-by-customer &middot; ageing</span></div></div>
           </div>
 
-          </div>
-
-        <div class="arch compact storageband">
-          <div class="arrow-d">&#8645;</div>
-          <div class="sublabel"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4" style="height:14px;vertical-align:middle;margin-right:6px;">Data sources</div>
-          <div class="storage-row">
-            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>mc-bms2</b><span>Master Concept &middot; &larr; BMS2 MySQL (CDC)</span></div></div>
-            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>fc-bms2</b><span>Finda Cloud mirror</span></div></div>
-            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>Google Billing</b><span>GCP/GMP billing export</span></div></div>
-            <div class="node planned"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>CMS <span class="soon">Planned</span></b><span>BigQuery dataset</span></div></div>
-            <div class="node planned"><iconify-icon icon="lucide:building-2"></iconify-icon><div class="t"><b>NetSuite <span class="soon">Planned</span></b><span>native ERP &middot; not BigQuery</span></div></div>
-          </div>
-        </div>
-        <div style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:.6em;font-size:.62em;color:var(--muted);letter-spacing:.02em;">
-          <span style="display:inline-block;width:18px;height:12px;border:1.5px dashed var(--mc-orange);border-radius:3px;"></span>
-          <span>dashed border = to be developed</span>
         </div>
       </div>
     </section>

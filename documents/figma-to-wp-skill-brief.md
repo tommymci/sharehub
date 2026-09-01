@@ -16,6 +16,21 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 - Access to the **WP Buddy abilities** (via the MCP/REST layer), especially **`mc/set-post-html`**.
 - Work **draft → review → publish** (set `status`), not publish-in-one-shot.
 
+## 0b. Figma access + API token
+**Access:** use the **shared Figma account** (Tommy provides the login) — work inside that account.
+
+**How to get the Figma Personal Access Token** (the skill uses this to read designs/assets):
+1. Log into Figma (shared account) → top-left menu / your avatar → **Settings**.
+2. Open the **Security** tab.
+3. Under **Personal access tokens** → **Generate new token**.
+4. Name it (e.g. `wp-skill`), set an expiry, and set **scopes to read-only** — *File content: Read* (and *Library assets: Read* if using components).
+5. **Generate token → copy it immediately** (Figma shows it **only once**).
+6. Put it in the skill config as an env var / secret, e.g. `FIGMA_TOKEN` — **never commit it or paste it in chat**.
+
+**File key:** it's in the design URL → `figma.com/design/<FILE_KEY>/…`. Share the file URL(s); the key isn't secret.
+
+**Security (shared account):** treat the token as a password. Store it as a secret only; to revoke, go to **Settings → Security → Personal access tokens → delete** the token (and rotate it if the dev leaves or it leaks).
+
 ## 1. Page body = raw HTML (NOT Elementor)
 - Pages are built as **raw HTML** adapted from the Figma export.
 - Write it with **`mc/set-post-html`** — the normal REST create/update runs **KSES and strips** `<div>`/`<style>`/structural HTML.
@@ -61,6 +76,7 @@ Use the WP Buddy `wpb_` shortcodes so content stays dynamic + language-aware:
 ---
 
 ## Checklist — what the developer needs
+- [ ] **Figma:** shared-account login + a **read-only Personal Access Token** (`FIGMA_TOKEN`) + the file key/URL
 - [ ] WP **Application Password** (edit + publish) + REST base URL
 - [ ] Access to **`mc/set-post-html`** (and other WP Buddy abilities) via MCP/REST
 - [ ] The **`wpb_` shortcode** list + **Post List presets**

@@ -9,6 +9,16 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 
 **Site facts:** SiteGround-hosted · **WPML** multilingual (EN / 繁 `zh-hant` / 简 `zh-hans`) · Elementor + ElementsKit · **Permalink Manager Pro** · WP Buddy custom plugin.
 
+**Runs on:** Claude Code (terminal) **and** Claude Cowork — one skill, same as *mcai-webapp*.
+**Website requests come from:** the Asana board → <https://app.asana.com/1/9811672847608/project/1193839356417761/board/1205105526607663>
+
+---
+
+## Scope — phased rollout
+- **Phase 1 — Update existing AI-built pages.** Edit/refresh a page already built by the AI builder (swap an image, update a section, change a related-posts block, fix copy). Safest first step — the page, slug, and translations already exist.
+- **Phase 2 — Build a new page from scratch.** From a Figma design → a full new WP page (create the post, set slug / parent / category, assemble the HTML, upload assets, wire shortcodes + CTA popup).
+- **Phase 3 — Translation *(TBD)*.** Generate/link the other-language versions via WPML. **Scope not finalised yet** — decide later.
+
 ---
 
 ## 0. Access needed (prerequisites)

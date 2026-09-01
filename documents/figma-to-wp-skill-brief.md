@@ -18,11 +18,12 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 - [ ] **Update an existing AI-built page** — edit/refresh a page already built by the AI builder (swap an image, update a section, change a related-posts block, fix copy).
 - [ ] **Build a new page from scratch** — from a Figma design → a full new WP page.
 - [ ] **Read the Figma design** via the Figma API (file key + token) — frames, text, assets.
-- [ ] **Export images/icons from Figma → upload to WP Media Library**; reference the uploaded URLs (re-use existing assets, WebP, mind the upload WAF).
+- [ ] **Export images/icons from Figma → rename to good filenames → upload to WP Media Library**; reference the uploaded URLs (re-use existing assets, WebP, mind the upload WAF).
+- [ ] **Reserve ~90px top clearance** for the fixed site header on every page.
 - [ ] **Write the page body as raw HTML** via `mc/set-post-html` (avoids KSES stripping) — not Elementor.
 - [ ] **Insert reusable shortcodes** for dynamic sections — related posts `[wpb_post_list]`, authors `[wpb_authors]`, etc. (never hardcode these).
 - [ ] **Use relative links** (`/solutions/…`), not absolute, so WPML can localize.
-- [ ] **Wire the "Contact us" CTA** to the shared per-language popup (reuse it; don't rebuild the form).
+- [ ] **Wire the "Contact us" CTA** via the contact-us popup **shortcode** → shared per-language popup (reuse it; don't rebuild the form).
 - [ ] **Set slug / parent / category**, regenerate the Permalink Manager URI, and add **301 redirects** on any slug change.
 - [ ] **Enqueue JS** via the assets script for interactions (inline `<script>` is stripped on output).
 - [ ] **Draft → review → publish** (status control).
@@ -53,12 +54,14 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 
 ## 1. Page body = raw HTML (NOT Elementor)
 - Pages are built as **raw HTML** adapted from the Figma export.
+- **Reserve ~90px top clearance** for the fixed site header — add top padding / a spacer to the first section so the hero isn't hidden behind the header.
 - Write it with **`mc/set-post-html`** — the normal REST create/update runs **KSES and strips** `<div>`/`<style>`/structural HTML.
 - ⚠️ **Never open these pages with "Edit with Elementor"** — it converts them into an Elementor page and hides the AI/HTML content.
 - Inline `<script>` is **stripped on output** and SiteGround **combines JS** → put interactivity in the **enqueued script** (`assets/wpbuddy-page.js`), not inline `<script>`.
 
 ## 2. Images / icons from Figma
 - **Export from Figma → upload to the WP Media Library** (`/wp/v2/media`) → reference the **uploaded URL** in the HTML. Do **not** hotlink Figma URLs.
+- **Rename the exported files to good, descriptive names** (kebab-case, e.g. `geospatial-fleet-hero.webp`) *before* upload — never the default Figma names (`Group 123.png`). Good filenames help SEO and make media re-use easier.
 - Watch the **media-upload WAF** (SiteGround can block some uploads) — and **re-use already-uploaded assets** instead of re-uploading duplicates.
 - Serve **WebP** + right-sized images (mobile PageSpeed is sensitive to image weight).
 
@@ -73,8 +76,9 @@ Use the WP Buddy `wpb_` shortcodes so content stays dynamic + language-aware:
 - Hardcoded absolute links **break WPML language switching** (and staging). Relative links let WPML localize them.
 
 ## 5. "Contact us" CTA = shared popup (don't rebuild the form)
-- The CTA opens the **existing shared contact popup** (Elementor/ElementsKit popup) — which has a **different ID per language** (contact-popup family, e.g. `809 / 75990 / 5368 / 3757`).
-- **Reuse the existing popup trigger**; the WP Buddy **Header-CTA** tool already maps the right popup + label per language. Don't create a new form.
+- **Most CTAs should open the general "Contact us" form** — use the **shortcode Tommy created for it** *(confirm the exact tag with Tommy — it's defined outside the plugin)*. Don't build a new form per page.
+- Under the hood it's the **existing shared contact popup** (Elementor popup), which has a **different ID per language** (contact-popup family, e.g. `809 / 75990 / 5368 / 3757`), opened via `elementor-action:action=popup:open`.
+- The WP Buddy **Header-CTA** tool already maps the right popup + label per language for the header button — reuse the same popups.
 
 ## 6. WPML — the hard part (get this right)
 - Each page is a **separate post per language** (EN / 繁 / 简).

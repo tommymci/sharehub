@@ -14,10 +14,20 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 
 ---
 
-## Scope — phased rollout
-- **Phase 1 — Update existing AI-built pages.** Edit/refresh a page already built by the AI builder (swap an image, update a section, change a related-posts block, fix copy). Safest first step — the page, slug, and translations already exist.
-- **Phase 2 — Build a new page from scratch.** From a Figma design → a full new WP page (create the post, set slug / parent / category, assemble the HTML, upload assets, wire shortcodes + CTA popup).
-- **Phase 3 — Translation *(TBD)*.** Generate/link the other-language versions via WPML. **Scope not finalised yet** — decide later.
+## Features the skill must have
+- [ ] **Update an existing AI-built page** — edit/refresh a page already built by the AI builder (swap an image, update a section, change a related-posts block, fix copy).
+- [ ] **Build a new page from scratch** — from a Figma design → a full new WP page.
+- [ ] **Read the Figma design** via the Figma API (file key + token) — frames, text, assets.
+- [ ] **Export images/icons from Figma → upload to WP Media Library**; reference the uploaded URLs (re-use existing assets, WebP, mind the upload WAF).
+- [ ] **Write the page body as raw HTML** via `mc/set-post-html` (avoids KSES stripping) — not Elementor.
+- [ ] **Insert reusable shortcodes** for dynamic sections — related posts `[wpb_post_list]`, authors `[wpb_authors]`, etc. (never hardcode these).
+- [ ] **Use relative links** (`/solutions/…`), not absolute, so WPML can localize.
+- [ ] **Wire the "Contact us" CTA** to the shared per-language popup (reuse it; don't rebuild the form).
+- [ ] **Set slug / parent / category**, regenerate the Permalink Manager URI, and add **301 redirects** on any slug change.
+- [ ] **Enqueue JS** via the assets script for interactions (inline `<script>` is stripped on output).
+- [ ] **Draft → review → publish** (status control).
+- [ ] **Purge SiteGround cache** after publishing.
+- [ ] **Translation (WPML)** — create + link the other-language versions into one translation group, with language-aware terms. *(scope TBD)*
 
 ---
 

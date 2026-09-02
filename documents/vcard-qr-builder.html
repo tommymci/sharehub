@@ -91,7 +91,7 @@ access: private
       <div class="qrbox" id="qrbox"></div>
       <div style="text-align:left;margin-top:16px">
         <div class="ctl"><span class="lb">Grid size</span><input type="range" id="q_ver" min="0" max="20" step="1" value="0"><span class="val" id="q_verV" style="flex-basis:64px">Auto</span></div>
-        <div class="ctl"><span class="lb">Image size (px)</span><input type="range" id="q_size" min="96" max="600" step="4" value="220"><span class="val" id="q_sizeV">220</span></div>
+        <div class="ctl"><span class="lb">Image size (px)</span><input type="range" id="q_size" min="96" max="600" step="4" value="220"><span class="val" id="q_sizeV" style="flex-basis:118px">220</span></div>
         <div class="ctl"><span class="lb">Error corr.</span>
           <select id="q_ec" style="flex:1">
             <option value="L">L — 7% (sparsest)</option>
@@ -118,6 +118,14 @@ access: private
       <table class="cap"><thead><tr><th>Grid</th><th>EC-L</th><th>EC-M</th><th>EC-Q</th><th>EC-H</th></tr></thead><tbody id="capBody"></tbody></table>
     </div>
     <div class="note">The <b style="color:var(--accent)">highlighted</b> cell = the grid &amp; EC your current QR is using — so you can see why this size was chosen, and what to trim to reach a smaller row.</div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h2>Share this setup with the team</h2>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <code id="setupLine" style="flex:1;min-width:240px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--txt);word-break:break-word;line-height:1.5"></code>
+      <button class="act primary" id="cpSetup">Copy setup</button>
+    </div>
+    <div class="note">Karin: pick the fields &amp; sizes above, then hit <b>Copy setup</b> and send us this one line — it says exactly which fields to include and which QR grid to use. Your choices are also remembered in this browser.</div>
   </div>
 </div>
 
@@ -177,6 +185,20 @@ function loadPreset(){
 document.getElementById('preset').addEventListener('change',loadPreset);
 var QLIB=false;
 function byteLen(s){ return new Blob([s]).size; }
+var DPI=300; // print resolution assumed for px→mm (name-card standard)
+function pxToMm(px){ return (px/DPI*25.4).toFixed(1); }
+// remember the chosen fields + sizes in this browser
+var LSKEY='mcVcardBuilder_v1';
+var PERSIST=['c_org','c_title','c_mobile','c_office','c_email','c_url','q_size','q_ec','q_ver','q_margin','f_ascii','preset'];
+function saveState(){ try{ var o={}; PERSIST.forEach(function(id){ var el=document.getElementById(id); if(!el)return; o[id]=(el.type==='checkbox')?el.checked:el.value; }); localStorage.setItem(LSKEY,JSON.stringify(o)); }catch(e){} }
+function loadState(){ try{ var raw=localStorage.getItem(LSKEY); if(!raw)return; var o=JSON.parse(raw); PERSIST.forEach(function(id){ if(!(id in o))return; var el=document.getElementById(id); if(!el)return; if(el.type==='checkbox')el.checked=!!o[id]; else el.value=o[id]; }); }catch(e){} }
+var FLABEL={c_org:'Company',c_title:'Title',c_mobile:'Mobile',c_office:'Office',c_email:'Email',c_url:'Website'};
+function setupLine(){
+  var ec=document.getElementById('q_ec').value, forced=+document.getElementById('q_ver').value, grid=(17+4*forced)+'×'+(17+4*forced);
+  var on=[]; ['c_org','c_title','c_mobile','c_office','c_email','c_url'].forEach(function(id){ var el=document.getElementById(id); if(el&&el.checked)on.push(FLABEL[id]); });
+  var size=+document.getElementById('q_size').value, margin=document.getElementById('q_margin').value;
+  return 'vCard QR setup — Fields: '+(on.join(', ')||'name only')+' · Grid: '+grid+' · EC-'+ec+' · Image: '+size+'px ('+pxToMm(size)+'mm @'+DPI+'dpi) · Quiet zone: '+margin;
+}
 function render(){
   var vc=buildVcard();
   document.getElementById('vc').textContent=vc;
@@ -188,7 +210,7 @@ function render(){
   var sld=document.getElementById('q_ver'); sld.min=minVer; sld.max=Math.max(minVer,20);
   if(+sld.value<minVer) sld.value=minVer;
   var forced=+sld.value;
-  document.getElementById('q_sizeV').textContent=size;
+  document.getElementById('q_sizeV').textContent=size+'px · '+pxToMm(size)+'mm';
   document.getElementById('q_marginV').textContent=margin;
   document.getElementById('q_verV').textContent=(17+4*forced)+'×'+(17+4*forced);
   var qr=null;
@@ -215,6 +237,8 @@ function render(){
     var hr=modules?tb.querySelector('tr[data-dim="'+modules+'"]'):null;
     if(hr){ hr.classList.add('hlrow'); var hc=hr.querySelector('td[data-ec="'+ec+'"]'); if(hc)hc.classList.add('hl'); }
   }
+  var sl=document.getElementById('setupLine'); if(sl)sl.textContent=setupLine();
+  saveState();
 }
 // wire inputs
 ['f_name','f_org','f_title','f_mobile','f_office','f_email','f_url','f_ascii','c_org','c_title','c_mobile','c_office','c_email','c_url','q_size','q_ec','q_ver','q_margin'].forEach(function(id){
@@ -226,6 +250,8 @@ document.getElementById('dl').onclick=function(){
   document.body.appendChild(a); a.click(); a.remove();
 };
 document.getElementById('cp').onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(buildVcard()); this.textContent='Copied ✓'; var b=this; setTimeout(function(){b.textContent='Copy vCard';},1200); };
+document.getElementById('cpSetup').onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(setupLine()); this.textContent='Copied ✓'; var b=this; setTimeout(function(){b.textContent='Copy setup';},1200); };
+loadState(); // restore saved fields + sizes before first render
 // load a version-capable QR lib (qrcode-generator) then render
 var s=document.createElement('script'); s.src='https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js';
 s.onload=function(){ try{ if(qrcode.stringToBytesFuncs&&qrcode.stringToBytesFuncs['UTF-8']) qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8']; }catch(e){} loadPreset(); };

@@ -23,7 +23,7 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 - [ ] **Write the page body as raw HTML** via `mc/set-post-html` (avoids KSES stripping) — not Elementor.
 - [ ] **Insert reusable shortcodes** for dynamic sections — related posts `[wpb_post_list]`, authors `[wpb_authors]`, etc. (never hardcode these).
 - [ ] **Use relative links** (`/solutions/…`), not absolute, so WPML can localize.
-- [ ] **Wire the "Contact us" CTA** via **`[wpb_hs_form form="…"]`** (HubSpot form lightbox popup) — use the general Contact-us form GUID; don't rebuild the form.
+- [ ] **Wire the "Contact us" CTA** via **`[wpb_hs_form form="2b601d13-6d01-4228-bd3b-d4e794d81f0b"]`** — one HubSpot form for all languages; don't rebuild the form.
 - [ ] **Set slug / parent / category**, regenerate the Permalink Manager URI, and add **301 redirects** on any slug change.
 - [ ] **Enqueue JS** via the assets script for interactions (inline `<script>` is stripped on output).
 - [ ] **Draft → review → publish** (status control).
@@ -76,10 +76,15 @@ Use the WP Buddy `wpb_` shortcodes so content stays dynamic + language-aware:
 - Hardcoded absolute links **break WPML language switching** (and staging). Relative links let WPML localize them.
 
 ## 5. "Contact us" CTA = HubSpot form popup shortcode
-- Use the shortcode **`[wpb_hs_form form="FORM_GUID" text="Contact us" style="primary" align="center"]`** (alias `[wpb_hubspot_form]`) — a button that opens the HubSpot form in a **lightbox popup** (defined in WP Buddy `hs-form-popup.php`).
-- Get it from **WP Buddy → Shortcode → HubSpot Form Button** (pick the form from the dropdown → it generates the exact shortcode). Use the **general Contact-us form's GUID**. Don't rebuild a form per page.
+- **The general Contact-us form is ONE HubSpot form for all languages** — GUID **`2b601d13-6d01-4228-bd3b-d4e794d81f0b`** (same form on the EN / 繁 / 简 contact pages).
+- **Use this one line — it works in every language** (renders a button that opens the form in a lightbox popup):
+  ```
+  [wpb_hs_form form="2b601d13-6d01-4228-bd3b-d4e794d81f0b" text="Contact us" style="primary" align="center"]
+  ```
+  Defined in WP Buddy `hs-form-popup.php` (alias `[wpb_hubspot_form]`). Generate/verify it in **WP Buddy → Shortcode → HubSpot Form Button**.
 - Attributes: `form` (GUID, required) · `text` · `style` primary/secondary/link · `align` · `title` (optional); `portal`/`region` default to MC's HubSpot (`3456479`/`na1`).
-- *(Legacy method still on some older pages: a `data-cta="form"` link + Elementor popup `#elementor-action:action=popup:open`, per-language IDs EN=`809` / 繁=`3757` / 简=`5368`. Prefer the shortcode.)*
+- **Don't rebuild a form per page or per language** — same GUID everywhere.
+- *(Legacy method on some older pages, e.g. geospatial: a `data-cta="form"` link → `/link/…contact-us-form` that opens the Elementor contact popup — those popups ARE per-language: EN=`809` / 繁=`3757` / 简=`5368`. Prefer the shortcode above.)*
 
 ## 6. WPML — the hard part (get this right)
 - Each page is a **separate post per language** (EN / 繁 / 简).

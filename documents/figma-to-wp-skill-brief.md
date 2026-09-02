@@ -59,6 +59,15 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 - ⚠️ **Never open these pages with "Edit with Elementor"** — it converts them into an Elementor page and hides the AI/HTML content.
 - Inline `<script>` is **stripped on output** and SiteGround **combines JS** → put interactivity in the **enqueued script** (`assets/wpbuddy-page.js`), not inline `<script>`.
 
+## 1b. JavaScript / interactivity
+- **You CANNOT use inline `<script>` in the page** — it's stripped on output (and SG combines JS). Raw `<script>` pasted into the page **won't run**.
+- **JS is not banned** — put interaction code in the enqueued script **`assets/wpbuddy-page.js`** (part of WP Buddy) and trigger it from the HTML via **classes / data-attributes**.
+- **Ready-made — no JS to write, just use these classes:**
+  - **Tabs** → `.ptab` buttons + `.ppanel` panels, linked by `data-p`.
+  - **Accordion (single-open)** → `.acc-head` + `.acc-item`.
+- For a **new** interaction not covered, **add it to `wpbuddy-page.js`** in the repo (it deploys with the plugin) — never inline in the page.
+- "Dynamic" content (post lists, contact form, embeds) → use the **shortcodes** (`[wpb_post_list]`, `[wpb_hs_form]`, `[wpb_zoom]`), not JS.
+
 ## 2. Images / icons from Figma
 - **Export from Figma → upload to the WP Media Library** (`/wp/v2/media`) → reference the **uploaded URL** in the HTML. Do **not** hotlink Figma URLs.
 - **Rename the exported files to good, descriptive names** (kebab-case, e.g. `geospatial-fleet-hero.webp`) *before* upload — never the default Figma names (`Group 123.png`). Good filenames help SEO and make media re-use easier.

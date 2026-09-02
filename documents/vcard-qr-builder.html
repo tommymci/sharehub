@@ -31,6 +31,12 @@ access: private
   .ctl{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .ctl .lb{flex:0 0 82px;font-size:11.5px;color:var(--mut)}
   input[type=range]{flex:1;accent-color:var(--accent)}
+  /* grid slider: full scale always shown; too-small grids greyed via --split */
+  input[type=range].gridslider{-webkit-appearance:none;appearance:none;height:6px;border-radius:4px;background:transparent}
+  input[type=range].gridslider::-webkit-slider-runnable-track{height:6px;border-radius:4px;background:linear-gradient(to right,var(--line) 0,var(--line) var(--split,0%),var(--accent) var(--split,0%),var(--accent) 100%)}
+  input[type=range].gridslider::-moz-range-track{height:6px;border-radius:4px;background:linear-gradient(to right,var(--line) 0,var(--line) var(--split,0%),var(--accent) var(--split,0%),var(--accent) 100%)}
+  input[type=range].gridslider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:15px;height:15px;margin-top:-4.5px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:pointer}
+  input[type=range].gridslider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:2px solid var(--accent);cursor:pointer}
   .val{flex:0 0 52px;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px}
   .qrwrap{text-align:center}
   .qrbox{background:#fff;border-radius:12px;padding:14px;display:inline-block;line-height:0}
@@ -90,7 +96,7 @@ access: private
       <h2 style="text-align:left">Preview</h2>
       <div class="qrbox" id="qrbox"></div>
       <div style="text-align:left;margin-top:16px">
-        <div class="ctl"><span class="lb">Grid size</span><input type="range" id="q_ver" min="0" max="20" step="1" value="0"><span class="val" id="q_verV" style="flex-basis:64px">Auto</span></div>
+        <div class="ctl"><span class="lb">Grid size</span><input type="range" id="q_ver" class="gridslider" min="1" max="20" step="1" value="11"><span class="val" id="q_verV" style="flex-basis:64px">Auto</span></div>
         <div class="ctl"><span class="lb">Image size (px)</span><input type="range" id="q_size" min="96" max="600" step="4" value="220"><span class="val" id="q_sizeV" style="flex-basis:118px">220</span></div>
         <div class="ctl"><span class="lb">Print DPI</span>
           <select id="q_dpi" style="flex:1">
@@ -212,11 +218,13 @@ function render(){
   var size=+document.getElementById('q_size').value, ec=document.getElementById('q_ec').value,
       margin=+document.getElementById('q_margin').value;
   var bytes=byteLen(vc);
-  // grid slider can't shrink below the smallest version that fits the current content
-  var minVer=qrVersion(bytes,ec); if(minVer>=99)minVer=40;
-  var sld=document.getElementById('q_ver'); sld.min=minVer; sld.max=Math.max(minVer,20);
-  if(+sld.value<minVer) sld.value=minVer;
+  // grid slider shows the full scale; grids too small for the content are greyed out
+  var SMIN=1, SMAX=20;
+  var minVer=qrVersion(bytes,ec); if(minVer>=99||minVer>SMAX)minVer=SMAX;
+  var sld=document.getElementById('q_ver');
+  if(+sld.value<minVer) sld.value=minVer;   // can't land on a too-small grid
   var forced=+sld.value;
+  sld.style.setProperty('--split', (((minVer-SMIN)/(SMAX-SMIN))*100).toFixed(1)+'%');
   document.getElementById('q_sizeV').textContent=size+'px · '+pxToMm(size)+'mm';
   document.getElementById('q_marginV').textContent=margin;
   document.getElementById('q_verV').textContent=(17+4*forced)+'×'+(17+4*forced);

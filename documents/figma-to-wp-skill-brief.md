@@ -1,6 +1,6 @@
 ---
 title: "Figma → WordPress Page Builder — Skill Brief"
-date: 2026-09-01
+date: 2026-09-02
 ---
 
 # Figma → WordPress Page Builder — Skill Brief
@@ -23,7 +23,7 @@ A working note of **how we currently build/update `masterconcept.ai` pages from 
 - [ ] **Write the page body as raw HTML** via `mc/set-post-html` (avoids KSES stripping) — not Elementor.
 - [ ] **Insert reusable shortcodes** for dynamic sections — related posts `[wpb_post_list]`, authors `[wpb_authors]`, etc. (never hardcode these).
 - [ ] **Use relative links** (`/solutions/…`), not absolute, so WPML can localize.
-- [ ] **Wire the "Contact us" CTA** via the contact-us popup **shortcode** → shared per-language popup (reuse it; don't rebuild the form).
+- [ ] **Wire the "Contact us" CTA** via **`[wpb_hs_form form="…"]`** (HubSpot form lightbox popup) — use the general Contact-us form GUID; don't rebuild the form.
 - [ ] **Set slug / parent / category**, regenerate the Permalink Manager URI, and add **301 redirects** on any slug change.
 - [ ] **Enqueue JS** via the assets script for interactions (inline `<script>` is stripped on output).
 - [ ] **Draft → review → publish** (status control).
@@ -75,10 +75,11 @@ Use the WP Buddy `wpb_` shortcodes so content stays dynamic + language-aware:
 - Use **site-relative** links (`/solutions/xxx/`), **not** absolute (`https://masterconcept.ai/...`).
 - Hardcoded absolute links **break WPML language switching** (and staging). Relative links let WPML localize them.
 
-## 5. "Contact us" CTA = shared popup (don't rebuild the form)
-- **Most CTAs should open the general "Contact us" form** — use the **shortcode Tommy created for it** *(confirm the exact tag with Tommy — it's defined outside the plugin)*. Don't build a new form per page.
-- Under the hood it's the **existing shared contact popup** (Elementor popup), which has a **different ID per language** (contact-popup family, e.g. `809 / 75990 / 5368 / 3757`), opened via `elementor-action:action=popup:open`.
-- The WP Buddy **Header-CTA** tool already maps the right popup + label per language for the header button — reuse the same popups.
+## 5. "Contact us" CTA = HubSpot form popup shortcode
+- Use the shortcode **`[wpb_hs_form form="FORM_GUID" text="Contact us" style="primary" align="center"]`** (alias `[wpb_hubspot_form]`) — a button that opens the HubSpot form in a **lightbox popup** (defined in WP Buddy `hs-form-popup.php`).
+- Get it from **WP Buddy → Shortcode → HubSpot Form Button** (pick the form from the dropdown → it generates the exact shortcode). Use the **general Contact-us form's GUID**. Don't rebuild a form per page.
+- Attributes: `form` (GUID, required) · `text` · `style` primary/secondary/link · `align` · `title` (optional); `portal`/`region` default to MC's HubSpot (`3456479`/`na1`).
+- *(Legacy method still on some older pages: a `data-cta="form"` link + Elementor popup `#elementor-action:action=popup:open`, per-language IDs EN=`809` / 繁=`3757` / 简=`5368`. Prefer the shortcode.)*
 
 ## 6. WPML — the hard part (get this right)
 - Each page is a **separate post per language** (EN / 繁 / 简).

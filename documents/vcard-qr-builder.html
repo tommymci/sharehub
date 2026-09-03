@@ -1,6 +1,6 @@
 ---
 title: "vCard QR Builder"
-date: 2026-09-02
+date: 2026-09-03
 access: private
 ---
 
@@ -97,7 +97,7 @@ access: private
       <div class="qrbox" id="qrbox"></div>
       <div style="text-align:left;margin-top:16px">
         <div class="ctl"><span class="lb">Grid size</span><input type="range" id="q_ver" class="gridslider" min="1" max="20" step="1" value="11"><span class="val" id="q_verV" style="flex-basis:64px">Auto</span></div>
-        <div class="ctl"><span class="lb">Image size (px)</span><input type="range" id="q_size" min="96" max="600" step="4" value="220"><span class="val" id="q_sizeV" style="flex-basis:118px">220</span></div>
+        <div class="ctl"><span class="lb">Image size (px)</span><input type="range" id="q_size" min="96" max="600" step="1" value="177"><span class="val" id="q_sizeV" style="flex-basis:118px">177</span></div>
         <div class="ctl"><span class="lb">Print DPI</span>
           <select id="q_dpi" style="flex:1">
             <option value="150">150 dpi</option>
@@ -201,7 +201,7 @@ function byteLen(s){ return new Blob([s]).size; }
 function dpiVal(){ var el=document.getElementById('q_dpi'); return el?(+el.value||300):300; } // printing resolution
 function pxToMm(px){ return (px/dpiVal()*25.4).toFixed(1); }
 // remember the chosen fields + sizes in this browser
-var LSKEY='mcVcardBuilder_v1';
+var LSKEY='mcVcardBuilder_v2';
 var PERSIST=['c_org','c_title','c_mobile','c_office','c_email','c_url','q_size','q_dpi','q_ec','q_ver','q_margin','f_ascii','preset'];
 function saveState(){ try{ var o={}; PERSIST.forEach(function(id){ var el=document.getElementById(id); if(!el)return; o[id]=(el.type==='checkbox')?el.checked:el.value; }); localStorage.setItem(LSKEY,JSON.stringify(o)); }catch(e){} }
 function loadState(){ try{ var raw=localStorage.getItem(LSKEY); if(!raw)return; var o=JSON.parse(raw); PERSIST.forEach(function(id){ if(!(id in o))return; var el=document.getElementById(id); if(!el)return; if(el.type==='checkbox')el.checked=!!o[id]; else el.value=o[id]; }); }catch(e){} }

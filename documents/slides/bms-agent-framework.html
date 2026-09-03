@@ -326,6 +326,70 @@
       </div>
     </section>
 
+    <section>
+      <div class="slide-head">
+        <div class="hicon"><iconify-icon icon="lucide:git-fork"></iconify-icon></div>
+        <div><p class="kicker">Access architecture</p><h2>Three ways in &mdash; one shared set of tools</h2></div>
+      </div>
+      <div class="body">
+        <div class="arch compact" style="align-items:flex-start; gap:16px;">
+
+          <!-- Lane A: developers & skills -->
+          <div class="lane">
+            <div class="lane-hd"><iconify-icon icon="lucide:terminal"></iconify-icon>Developers &amp; Skills</div>
+            <div class="node"><iconify-icon icon="lucide:blocks"></iconify-icon><div class="t"><b>bms2 skill &middot; dashboards</b><span>Claude Code / CLI &middot; ad-hoc</span></div></div>
+            <div class="sublabel"><iconify-icon icon="lucide:key-round"></iconify-icon>run.invoker &middot; Google ID token</div>
+            <div class="arrow-d">&#9660; direct</div>
+          </div>
+
+          <!-- Lane B: coworkers via the new mc-mcp gateway -->
+          <div class="lane">
+            <div class="lane-hd"><img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=128" style="height:14px;vertical-align:middle;margin-right:6px;">Coworkers &middot; Claude Desktop</div>
+            <div class="node"><img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=128"><div class="t"><b>Custom connector</b><span>connect by URL</span></div></div>
+            <div class="arrow-d">&#9660;</div>
+            <div class="node" style="background:linear-gradient(180deg,rgba(252,140,20,.20),rgba(252,140,20,.08)); border:1px solid var(--mc-orange);"><iconify-icon icon="lucide:shield-check" style="color:var(--mc-orange);"></iconify-icon><div class="t"><b>mc-mcp gateway <span class="soon" style="background:var(--mc-orange);">NEW</span></b><span>mcp.mcai.dev &middot; standard MCP + OAuth</span></div></div>
+            <div class="sublabel"><iconify-icon icon="lucide:lock"></iconify-icon>Google login @hkmci.com &middot; per-dataset policy</div>
+            <div class="arrow-d">&#9660;</div>
+          </div>
+
+          <!-- Lane C: the BMS Agent inside MCBMS -->
+          <div class="lane">
+            <div class="lane-hd"><img src="https://apps.masterconcept.ai/static/icons/mcbms.png" style="height:15px;vertical-align:middle;margin-right:6px;">BMS Agent &middot; MCBMS</div>
+            <div class="node"><iconify-icon icon="lucide:message-square-text"></iconify-icon><div class="t"><b>Chat widget</b><span>ask BMS in plain English</span></div></div>
+            <div class="arrow-d">&#9660;</div>
+            <div class="node"><img src="https://api.iconify.design/logos/google-cloud-run.svg"><div class="t"><b>BMS Agent &middot; Cloud Run</b><span>Claude &middot; Gemini</span></div></div>
+            <div class="sublabel"><iconify-icon icon="lucide:key-round"></iconify-icon>service account &middot; run.invoker</div>
+            <div class="arrow-d">&#9660;</div>
+          </div>
+
+        </div>
+
+        <div class="orsep" style="margin:2px 0 8px;">all three call the same tools</div>
+
+        <div class="group">
+          <div class="group-hd"><img src="https://api.iconify.design/logos/google-cloud-run.svg" style="height:13px;margin-right:5px;vertical-align:middle;">4 private MCP servers &middot; Cloud Run &middot; Google Toolbox &middot; asia-east2</div>
+          <div class="storage-row">
+            <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>bq-mc-bms2</b><span>/mcp/bms2 &middot; 15 tools</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>bq-fc-bms2</b><span>/mcp/fc-bms2 &middot; 13 tools</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>bq-gcp-billing</b><span>/mcp/billing &middot; 6 tools</span></div></div>
+            <div class="node"><iconify-icon icon="lucide:server"></iconify-icon><div class="t"><b>bq-mc-cms</b><span>/mcp/mc-cms &middot; 9 tools</span></div></div>
+          </div>
+        </div>
+
+        <div class="vlink"><b>&#8595;</b></div>
+
+        <div class="group data">
+          <div class="group-hd"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4" style="height:13px;margin-right:5px;vertical-align:middle;">BigQuery &mdash; read-only mirrors</div>
+          <div class="storage-row">
+            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>mc-bms2</b><span>Master Concept</span></div></div>
+            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>fc-bms2</b><span>Finda Cloud</span></div></div>
+            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>billing</b><span>GCP cost</span></div></div>
+            <div class="node"><img src="https://api.iconify.design/simple-icons/googlebigquery.svg?color=%234285F4"><div class="t"><b>cms</b><span>Cloud reseller</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </div></div>
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>

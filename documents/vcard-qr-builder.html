@@ -159,7 +159,7 @@ function buildCapTable(){
   }).join('');
 }
 buildCapTable();
-function asciiOnly(s){ return String(s||'').replace(/[^\x20-\x7E]/g,'').replace(/\s+/g,' ').trim(); }
+function asciiOnly(s){ return String(s||'').replace(/[^\x20-\x7E]/g,'').replace(/\(\s*\)/g,'').replace(/\[\s*\]/g,'').replace(/\s+/g,' ').trim(); }
 function buildVcard(){
   var strip=document.getElementById('f_ascii').checked;
   function g(id){ var v=document.getElementById(id).value.trim(); return strip?asciiOnly(v):v; }

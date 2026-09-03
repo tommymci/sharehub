@@ -88,7 +88,8 @@ access: private
       </div>
       <label><span class="lb"><input type="checkbox" class="fchk" id="c_email" checked> Email</span><input type="text" id="f_email" value="zorro.cheng@hkmci.com"></label>
       <label><span class="lb"><input type="checkbox" class="fchk" id="c_url" checked> Website (URL)</span><input type="text" id="f_url" value="https://masterconcept.ai"></label>
-      <label class="toggle"><input type="checkbox" id="f_ascii" checked> Strip non-ASCII (how the live app saves it)</label>
+      <label class="toggle"><input type="checkbox" id="f_ascii"> Strip to ASCII-only (drop Chinese) — leave OFF to match the live directory</label>
+      <div class="note" id="asciiWarn" style="display:none;color:var(--accent);margin-top:6px"></div>
     </div>
 
     <!-- RIGHT: preview -->
@@ -213,6 +214,16 @@ function setupLine(){
   return 'vCard QR setup — Fields: '+(on.join(', ')||'name only')+' · Grid: '+grid+' · EC-'+ec+' · Image: '+size+'px ('+pxToMm(size)+'mm @'+dpiVal()+'dpi) · Quiet zone: '+margin;
 }
 function render(){
+  // if the contact has non-ASCII (e.g. Chinese) text, keep it — matching the live
+  // directory — and lock the strip toggle OFF so the name can't be dropped
+  var raw=['f_name','f_org','f_title','f_email','f_url'].map(function(id){return document.getElementById(id).value;}).join('');
+  var hasCJK=/[^\x00-\x7F]/.test(raw);
+  var ascii=document.getElementById('f_ascii'), aw=document.getElementById('asciiWarn');
+  if(hasCJK){
+    ascii.checked=false; ascii.disabled=true;
+    aw.textContent='⚠ Non-ASCII characters detected (e.g. Chinese name) — kept so the QR matches the live directory, so stripping is locked off here.';
+    aw.style.display='';
+  } else { ascii.disabled=false; aw.style.display='none'; }
   var vc=buildVcard();
   document.getElementById('vc').textContent=vc;
   var size=+document.getElementById('q_size').value, ec=document.getElementById('q_ec').value,

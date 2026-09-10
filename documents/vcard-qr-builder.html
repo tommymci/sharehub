@@ -123,6 +123,8 @@ access: private
       <pre id="vc"></pre>
       <div class="btns">
         <button class="act primary" id="dl">⬇ Download .vcf</button>
+        <button class="act" id="dlsvg">⬇ QR (SVG)</button>
+        <button class="act" id="dlpng">⬇ QR (PNG)</button>
         <button class="act" id="cp">Copy vCard</button>
       </div>
       <div class="note" id="warn"></div>
@@ -247,6 +249,7 @@ function render(){
   document.getElementById('q_verV').textContent=(17+4*forced)+'×'+(17+4*forced);
   var qr=null;
   if(window.qrcode){ try{ qr=qrcode(forced, ec); qr.addData(vc); qr.make(); }catch(e){} }
+  window.__qr=qr; window.__qrMargin=margin;   // keep the current QR for SVG/PNG download
   var modules = qr ? qr.getModuleCount() : (17+4*forced);
   var ver = (modules-17)/4;
   var cap=(ver>=1&&ver<CAP[ec].length)?CAP[ec][ver]:0;
@@ -280,6 +283,17 @@ document.getElementById('dl').onclick=function(){
   var vc=buildVcard(), blob=new Blob([vc],{type:'text/vcard;charset=utf-8'}), a=document.createElement('a');
   a.href=URL.createObjectURL(blob); a.download=(document.getElementById('f_name').value.replace(/[^A-Za-z0-9]+/g,'-')||'contact')+'.vcf';
   document.body.appendChild(a); a.click(); a.remove();
+};
+function qrSlug(){ return (document.getElementById('f_name').value.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-+|-+$/g,'')||'contact')+'-qr'; }
+document.getElementById('dlsvg').onclick=function(){
+  var qr=window.__qr; if(!qr){ alert('QR not ready yet — adjust a field and try again.'); return; }
+  var svg=qr.createSvgTag({cellSize:8, margin:(window.__qrMargin||2), scalable:true});   // crisp vector, any size
+  var blob=new Blob([svg],{type:'image/svg+xml;charset=utf-8'}), a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download=qrSlug()+'.svg'; document.body.appendChild(a); a.click(); a.remove();
+};
+document.getElementById('dlpng').onclick=function(){
+  var img=document.querySelector('#qrbox img'); if(!img){ alert('QR not ready yet.'); return; }
+  var a=document.createElement('a'); a.href=img.src; a.download=qrSlug()+'.png'; document.body.appendChild(a); a.click(); a.remove();
 };
 document.getElementById('cp').onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(buildVcard()); this.textContent='Copied ✓'; var b=this; setTimeout(function(){b.textContent='Copy vCard';},1200); };
 document.getElementById('cpSetup').onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(setupLine()); this.textContent='Copied ✓'; var b=this; setTimeout(function(){b.textContent='Copy setup';},1200); };

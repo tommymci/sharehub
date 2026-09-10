@@ -73,6 +73,8 @@ access: private
       <label><span class="lb">Load a real example</span>
         <select id="preset">
           <option value="karin">Karin Wang (王心汝) — Designer, Taiwan</option>
+          <option value="charlie">Charlie Chou (周昌毅) — Marketing Specialist, Taiwan</option>
+          <option value="lacey">Lacey Lin (林靖耘) — Marketing Manager, Taiwan</option>
           <option value="daniel">Daniel Cheng — longest vCard (max density)</option>
           <option value="chen">Chen Zhi Peng (陳志鵬) — Chinese name</option>
         </select></label>
@@ -165,8 +167,8 @@ function buildVcard(){
   var strip=document.getElementById('f_ascii').checked;
   function g(id){ var v=document.getElementById(id).value.trim(); return strip?asciiOnly(v):v; }
   var name=g('f_name'), org=g('f_org'), title=g('f_title'),
-      mob=document.getElementById('f_mobile').value.replace(/[^+0-9]/g,''),
-      off=document.getElementById('f_office').value.replace(/[^+0-9]/g,''),
+      mob=document.getElementById('f_mobile').value.replace(/[^+0-9#]/g,''),
+      off=document.getElementById('f_office').value.replace(/[^+0-9#]/g,''),
       email=document.getElementById('f_email').value.trim(), url=document.getElementById('f_url').value.trim();
   function on(id){ var el=document.getElementById(id); return !el||el.checked; }
   var L=['BEGIN:VCARD','VERSION:3.0','N:'+name+';;;;','FN:'+name];
@@ -180,15 +182,19 @@ function buildVcard(){
   return L.join('\r\n');
 }
 // real contacts pulled from the live directory — edge cases for stress-testing
+// TW legal company name (from the Office sheet Company Name column)
+var TW_ORG='馬來西亞商思想科技有限公司台灣分公司';
 var PRESETS={
- karin:{name:'Karin Wang(王心汝)',title:'Designer',mobile:'+886 917 736 787',office:'+886 2 7709 7530',email:'karin.wang@masterconcept.ai'},
+ karin:{name:'Karin Wang(王心汝)',title:'Designer',mobile:'+886 917 736 787',office:'+886 2 7709 7530',email:'karin.wang@masterconcept.ai',org:TW_ORG},
+ charlie:{name:'Charlie Chou(周昌毅)',title:'Marketing Specialist',mobile:'+886 955 587 569',office:'+886 2 7709 7530#569',email:'charlie.chou@masterconcept.ai',org:TW_ORG},
+ lacey:{name:'Lacey Lin(林靖耘)',title:'Marketing Manager',mobile:'+886 956 516 662',office:'+886 2 7709 7530#662',email:'lacey.lin@masterconcept.ai',org:TW_ORG},
  daniel:{name:'Daniel, Cheng Daniel Timothy',title:'AI Specialist Trainee',mobile:'9264 8405',office:'3465 6037',email:'daniel.cheng@masterconcept.ai'},
  chen:{name:'Chen Zhi Peng(陳志鵬)',title:'Programmer (HZ)',mobile:'+86 153 3659 3671',office:'',email:'zp.chen@hkmci.com'}
 };
 function loadPreset(){
   var p=PRESETS[document.getElementById('preset').value]; if(!p)return;
   document.getElementById('f_name').value=p.name;
-  document.getElementById('f_org').value='Master Concept';
+  document.getElementById('f_org').value=p.org||'Master Concept';
   document.getElementById('f_title').value=p.title;
   document.getElementById('f_mobile').value=p.mobile;
   document.getElementById('f_office').value=p.office;

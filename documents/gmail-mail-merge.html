@@ -13,16 +13,19 @@ date: 2026-09-22
   :root{
     --bg:#f7f8fa; --surface:#ffffff; --border:#e2e5ea; --text:#1c2128;
     --muted:#5b6673; --accent:#2f6fd0; --accent-soft:#eaf1fc; --code-bg:#f0f2f5;
+    --shadow:0 1px 3px rgba(20,25,35,.07),0 6px 18px rgba(20,25,35,.05);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --bg:#14171c; --surface:#1b1f26; --border:#2c323b; --text:#e6e9ee;
       --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b; --code-bg:#242a33;
+      --shadow:0 1px 3px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
     }
   }
   :root[data-theme="dark"]{
     --bg:#14171c; --surface:#1b1f26; --border:#2c323b; --text:#e6e9ee;
     --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b; --code-bg:#242a33;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
   }
   *{box-sizing:border-box}
   body{
@@ -33,16 +36,18 @@ date: 2026-09-22
   }
   .wrap{max-width:660px; margin:0 auto; padding:44px 16px 80px}
   h1{font-size:1.75rem; line-height:1.2; margin:0 0 6px; letter-spacing:-.02em}
-  .lede{color:var(--muted); margin:0 0 34px}
-  h2{font-size:1.05rem; margin:32px 0 10px; letter-spacing:-.01em}
+  .lede{color:var(--muted); margin:0 0 22px}
+  .hero{width:100%; height:auto; margin:0 0 34px; display:block}
+  h2{display:flex; align-items:center; gap:10px; font-size:1.05rem;
+     margin:34px 0 12px; letter-spacing:-.01em}
+  .num{flex:none; width:26px; height:26px; border-radius:50%; background:var(--accent);
+       color:#fff; font-size:.82rem; font-weight:700; display:grid; place-items:center}
+  h2 svg{flex:none; width:18px; height:18px; color:var(--muted)}
   p{margin:0 0 12px}
   ol,ul{margin:0 0 12px; padding-left:20px}
   li{margin:5px 0}
   code{background:var(--code-bg); padding:.12em .38em; border-radius:4px;
        font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.88em}
-  pre{background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
-      padding:12px; overflow-x:auto; font-family:ui-monospace,Menlo,Consolas,monospace;
-      font-size:.75rem; line-height:1.4; margin:0 0 14px}
   .scroller{overflow-x:auto; margin:0 0 14px}
   table{width:100%; border-collapse:collapse; background:var(--surface);
         border:1px solid var(--border); border-radius:8px; overflow:hidden;
@@ -50,6 +55,29 @@ date: 2026-09-22
   th,td{text-align:left; padding:8px 11px; border-bottom:1px solid var(--border)}
   th{background:var(--accent-soft); font-weight:600; font-size:.82rem}
   tr:last-child td{border-bottom:none}
+
+  /* Gmail compose mock-up */
+  .compose{background:var(--surface); border:1px solid var(--border); border-radius:10px;
+           box-shadow:var(--shadow); overflow:hidden; margin:0 0 6px; font-size:.86rem}
+  .cbar{background:var(--code-bg); padding:7px 12px; display:flex; justify-content:space-between;
+        color:var(--muted); font-size:.8rem; border-bottom:1px solid var(--border)}
+  .crow{display:flex; align-items:center; gap:10px; padding:10px 12px;
+        border-bottom:1px solid var(--border); color:var(--muted)}
+  .crow .grow{flex:1}
+  .hi{background:var(--accent-soft); outline:2px solid var(--accent); outline-offset:-2px;
+      border-radius:6px; margin:4px 6px; border-bottom:none}
+  .sw{display:inline-flex; align-items:center; gap:7px; color:var(--accent); font-weight:600;
+      white-space:nowrap}
+  .sw i{width:30px; height:17px; border-radius:20px; background:var(--accent);
+        position:relative; display:inline-block}
+  .sw i::after{content:""; position:absolute; top:2px; right:2px; width:13px; height:13px;
+               border-radius:50%; background:#fff}
+  .cbody{height:52px}
+  .cfoot{padding:10px 12px; border-top:1px solid var(--border)}
+  .send{background:var(--accent); color:#fff; padding:5px 16px; border-radius:20px;
+        font-size:.82rem; font-weight:600; display:inline-block}
+  .caption{color:var(--accent); font-size:.85rem; font-weight:600; margin:0 0 14px; padding-left:2px}
+
   .mail{background:var(--surface); border:1px solid var(--border);
         border-left:3px solid var(--accent); border-radius:8px; padding:14px 16px; margin:0 0 14px}
   .mail p{margin:0 0 9px} .mail p:last-child{margin-bottom:0}
@@ -68,7 +96,43 @@ date: 2026-09-22
 <h1>Gmail Mail Merge</h1>
 <p class="lede">Send a personalised email to a whole list. Each person gets their own private message. 10 minutes, no add-ons.</p>
 
-<h2>1. Make a Google Sheet</h2>
+<!-- hero: sheet + one draft -> personalised emails -->
+<svg class="hero" viewBox="0 0 620 130" role="img" aria-label="A spreadsheet and one draft email become three personalised emails">
+  <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- sheet -->
+    <rect x="12" y="26" width="104" height="78" rx="7" fill="var(--surface)" stroke="var(--border)"/>
+    <path d="M12 46h104M46 46v58M81 46v58" stroke="var(--border)"/>
+    <rect x="12" y="26" width="104" height="20" rx="7" fill="var(--accent-soft)" stroke="var(--border)"/>
+    <g stroke="var(--muted)" opacity=".6">
+      <path d="M22 57h14M56 57h14M90 57h16M22 74h14M56 74h14M90 74h16M22 91h14M56 91h14M90 91h16"/>
+    </g>
+    <!-- draft -->
+    <rect x="186" y="34" width="96" height="62" rx="7" fill="var(--surface)" stroke="var(--accent)"/>
+    <path d="M186 45l48 28 48-28" stroke="var(--accent)"/>
+    <!-- arrows -->
+    <path d="M128 65h44M296 65h40" stroke="var(--muted)"/>
+    <path d="M166 59l7 6-7 6M330 59l7 6-7 6" stroke="var(--muted)"/>
+    <!-- fan out -->
+    <path d="M336 65h18q8 0 8-8V28q0-8 8-8h20M336 65h30M336 65h18q8 0 8 8v29q0 8 8 8h20" stroke="var(--muted)"/>
+    <!-- three envelopes -->
+    <g stroke="var(--accent)" fill="var(--surface)">
+      <rect x="396" y="8" width="66" height="40" rx="6"/><path d="M396 16l33 19 33-19"/>
+      <rect x="396" y="45" width="66" height="40" rx="6"/><path d="M396 53l33 19 33-19"/>
+      <rect x="396" y="82" width="66" height="40" rx="6"/><path d="M396 90l33 19 33-19"/>
+    </g>
+  </g>
+  <g font-size="11" fill="var(--muted)" font-family="-apple-system,sans-serif">
+    <text x="64" y="120" text-anchor="middle">Your list</text>
+    <text x="234" y="112" text-anchor="middle">One draft</text>
+    <text x="476" y="32">Hi Derek…</text>
+    <text x="476" y="69">Hi Mary…</text>
+    <text x="476" y="106">Hi KK…</text>
+  </g>
+</svg>
+
+<h2><span class="num">1</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 9v12"/></svg>
+  Make a Google Sheet</h2>
 <p>Row 1 = column headers. One column must hold the email addresses.</p>
 <div class="scroller">
 <table>
@@ -79,16 +143,30 @@ date: 2026-09-22
 </div>
 <p class="muted">No blank rows in the middle — Gmail stops reading there.</p>
 
-<h2>2. Turn on Mail merge</h2>
-<p>In Gmail on a computer: <strong>Compose</strong> → full-screen the window → click in the <strong>To</strong> field → switch on <strong>Mail merge</strong> at the right of that row.</p>
-<pre>│ To                    ( ●─) Mail merge   Cc  Bcc │  ← here
-│ [ Send ▾ ]  ← "Schedule send", NOT the merge</pre>
+<h2><span class="num">2</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="22" height="10" rx="5"/><circle cx="17" cy="12" r="3" fill="currentColor"/></svg>
+  Turn on Mail merge</h2>
+<p>In Gmail on a computer: <strong>Compose</strong> → full-screen the window → click in the <strong>To</strong> field.</p>
+
+<div class="compose">
+  <div class="cbar"><span>New Message</span><span>⌄ &nbsp;⤢ &nbsp;✕</span></div>
+  <div class="crow hi"><span>To</span><span class="grow"></span>
+    <span class="sw"><i></i> Mail merge</span><span>Cc &nbsp;Bcc</span></div>
+  <div class="crow"><span>Subject</span></div>
+  <div class="cbody"></div>
+  <div class="cfoot"><span class="send">Send ▾</span></div>
+</div>
+<p class="caption">↑ the toggle lives in the To row — not in the Send button</p>
 <p class="muted">Not there? Full-screen the window first. Then check you're sending from your own address, with no scheduled send and Confidential mode off. Still missing means your Workspace plan lacks it — ask IT.</p>
 
-<h2>3. Load your list</h2>
+<h2><span class="num">3</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4M4 17v3h16v-3"/></svg>
+  Load your list</h2>
 <p>Click the <strong>Sheets icon</strong> in the To field → pick your Sheet → choose the <code>Email</code> column → <strong>Insert</strong>. Check the recipient count looks right.</p>
 
-<h2>4. Write it with @ tags</h2>
+<h2><span class="num">4</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/></svg>
+  Write it with @ tags</h2>
 <p>Type <code>@</code> in the subject or body and pick a column. Example:</p>
 <div class="mail">
   <p><strong>Subject:</strong> <span class="tag">@First Name</span>, a question about <span class="tag">@School</span></p>
@@ -98,10 +176,14 @@ date: 2026-09-22
 <p>Derek gets: <em>"Hi Derek, I work with Hong Kong schools on your Workspace renewal — worth a short chat with PLK Primary School?"</em></p>
 <p class="muted">Click a tag to set a default (e.g. <code>there</code>) so empty cells don't send "Hi ,".</p>
 
-<h2>5. Test, then send</h2>
+<h2><span class="num">5</span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+  Test, then send</h2>
 <p>Add <strong>yourself as a row</strong>, re-load the list, and send. There's no preview and no undo. Check your copy, delete the test row, reload, send for real.</p>
 
-<h2>Limits</h2>
+<h2>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.5"/></svg>
+  Limits</h2>
 <ul>
   <li>1,500 recipients per day.</li>
   <li>Text only — no per-person images, links or attachments.</li>

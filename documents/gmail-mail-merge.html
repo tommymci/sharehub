@@ -12,224 +12,103 @@ date: 2026-09-22
 <style>
   :root{
     --bg:#f7f8fa; --surface:#ffffff; --border:#e2e5ea; --text:#1c2128;
-    --muted:#5b6673; --accent:#2f6fd0; --accent-soft:#eaf1fc;
-    --code-bg:#f0f2f5; --warn-bg:#fff6e6; --warn-border:#e8b552;
-    --ok:#2e7d55; --no:#b3392f;
+    --muted:#5b6673; --accent:#2f6fd0; --accent-soft:#eaf1fc; --code-bg:#f0f2f5;
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
       --bg:#14171c; --surface:#1b1f26; --border:#2c323b; --text:#e6e9ee;
-      --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b;
-      --code-bg:#242a33; --warn-bg:#33291a; --warn-border:#8a6a2c;
-      --ok:#66c398; --no:#e8837a;
+      --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b; --code-bg:#242a33;
     }
   }
   :root[data-theme="dark"]{
     --bg:#14171c; --surface:#1b1f26; --border:#2c323b; --text:#e6e9ee;
-    --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b;
-    --code-bg:#242a33; --warn-bg:#33291a; --warn-border:#8a6a2c;
-    --ok:#66c398; --no:#e8837a;
+    --muted:#9aa4b2; --accent:#6aa3f0; --accent-soft:#1e2a3b; --code-bg:#242a33;
   }
   *{box-sizing:border-box}
   body{
     margin:0; background:var(--bg); color:var(--text);
-    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
          "PingFang HK","Microsoft JhengHei",sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:780px; margin:0 auto; padding:48px 16px 96px}
-  header.hd{margin-bottom:40px}
-  h1{font-size:2rem; line-height:1.2; margin:0 0 10px; letter-spacing:-.02em}
-  .lede{color:var(--muted); font-size:1.06rem; margin:0}
-  h2{
-    font-size:1.25rem; margin:44px 0 14px; padding-top:22px;
-    border-top:1px solid var(--border); letter-spacing:-.01em;
-  }
-  h3{font-size:1rem; margin:26px 0 8px; color:var(--text)}
-  p{margin:0 0 14px}
-  ul,ol{margin:0 0 14px; padding-left:22px}
-  li{margin:6px 0}
-  code{
-    background:var(--code-bg); padding:.12em .38em; border-radius:4px;
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.88em;
-  }
-  pre{
-    background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
-    padding:14px; overflow-x:auto; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-size:.8rem; line-height:1.45; margin:0 0 16px;
-  }
-  table{
-    width:100%; border-collapse:collapse; margin:0 0 18px; background:var(--surface);
-    border:1px solid var(--border); border-radius:8px; overflow:hidden; font-size:.94rem;
-  }
-  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--border); vertical-align:top}
-  th{background:var(--accent-soft); font-weight:600; font-size:.85rem; letter-spacing:.01em}
+  .wrap{max-width:660px; margin:0 auto; padding:44px 16px 80px}
+  h1{font-size:1.75rem; line-height:1.2; margin:0 0 6px; letter-spacing:-.02em}
+  .lede{color:var(--muted); margin:0 0 34px}
+  h2{font-size:1.05rem; margin:32px 0 10px; letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  ol,ul{margin:0 0 12px; padding-left:20px}
+  li{margin:5px 0}
+  code{background:var(--code-bg); padding:.12em .38em; border-radius:4px;
+       font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.88em}
+  pre{background:var(--code-bg); border:1px solid var(--border); border-radius:8px;
+      padding:12px; overflow-x:auto; font-family:ui-monospace,Menlo,Consolas,monospace;
+      font-size:.75rem; line-height:1.4; margin:0 0 14px}
+  .scroller{overflow-x:auto; margin:0 0 14px}
+  table{width:100%; border-collapse:collapse; background:var(--surface);
+        border:1px solid var(--border); border-radius:8px; overflow:hidden;
+        font-size:.9rem; min-width:420px}
+  th,td{text-align:left; padding:8px 11px; border-bottom:1px solid var(--border)}
+  th{background:var(--accent-soft); font-weight:600; font-size:.82rem}
   tr:last-child td{border-bottom:none}
-  .scroller{overflow-x:auto; margin:0 0 18px}
-  .scroller table{margin:0; min-width:520px}
-  .mail{
-    background:var(--surface); border:1px solid var(--border);
-    border-left:3px solid var(--accent); border-radius:8px; padding:16px 18px; margin:0 0 18px;
-  }
-  .mail p{margin:0 0 10px}
-  .mail p:last-child{margin-bottom:0}
-  .mail .subj{font-size:.85rem; color:var(--muted); padding-bottom:10px; border-bottom:1px solid var(--border); margin-bottom:12px}
-  .note{
-    background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:8px;
-    padding:12px 16px; margin:0 0 18px;
-  }
-  .note p:last-child{margin-bottom:0}
-  .yes{color:var(--ok); font-weight:600}
-  .no{color:var(--no); font-weight:600}
-  .tag{
-    background:var(--accent-soft); color:var(--accent); border:1px solid color-mix(in srgb,var(--accent) 35%, transparent);
-    padding:.1em .45em; border-radius:20px; font-size:.85em; font-weight:600; white-space:nowrap;
-  }
-  footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:.87rem}
-  @media (max-width:520px){ h1{font-size:1.6rem} .wrap{padding:32px 16px 72px} }
+  .mail{background:var(--surface); border:1px solid var(--border);
+        border-left:3px solid var(--accent); border-radius:8px; padding:14px 16px; margin:0 0 14px}
+  .mail p{margin:0 0 9px} .mail p:last-child{margin-bottom:0}
+  .tag{background:var(--accent-soft); color:var(--accent);
+       border:1px solid color-mix(in srgb,var(--accent) 35%, transparent);
+       padding:.1em .45em; border-radius:20px; font-size:.85em; font-weight:600; white-space:nowrap}
+  .muted{color:var(--muted); font-size:.92rem}
+  footer{margin-top:44px; padding-top:16px; border-top:1px solid var(--border);
+         color:var(--muted); font-size:.85rem}
+  @media (max-width:520px){ h1{font-size:1.5rem} .wrap{padding:30px 16px 64px} }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="hd">
-  <h1>Gmail Mail Merge — Step by Step</h1>
-  <p class="lede">Send one personalised email to a whole list, straight from Gmail. No add-ons, no code.</p>
-</header>
+<h1>Gmail Mail Merge</h1>
+<p class="lede">Send a personalised email to a whole list. Each person gets their own private message. 10 minutes, no add-ons.</p>
 
-<h2>Before you start</h2>
-<p>Mail merge sends a <strong>separate, personalised email to each person on a list</strong>. Nobody sees anyone else's address, and replies come back to your inbox as normal conversations.</p>
-<p>You need three things:</p>
-<ol>
-  <li><strong>Gmail in a desktop browser</strong> at mail.google.com. The phone app cannot do this.</li>
-  <li><strong>Your work Google account</strong> — not a personal @gmail.com one.</li>
-  <li><strong>A Google Sheet</strong> with your list. We build it in Step 1.</li>
-</ol>
-<p>First run takes about 10 minutes. After that it is 2 minutes per campaign.</p>
-<div class="note"><p>You can send to <strong>1,500 recipients per day</strong>, counted across everything you send that day.</p></div>
-
-<h2>Step 1 — Build the Google Sheet</h2>
-<p>Open a new Google Sheet and type your list. <strong>Row 1 must be the column headers</strong> — Gmail turns each header into a merge tag you can drop into the email.</p>
-<p>A working sample:</p>
+<h2>1. Make a Google Sheet</h2>
+<p>Row 1 = column headers. One column must hold the email addresses.</p>
 <div class="scroller">
 <table>
   <tr><th>Email</th><th>First Name</th><th>School</th><th>Topic</th></tr>
-  <tr><td>derek.chan@plkps.edu.hk</td><td>Derek</td><td>PLK Primary School</td><td>Google Workspace for Education renewal</td></tr>
-  <tr><td>mary.wong@stpaul.edu.hk</td><td>Mary</td><td>St Paul's College</td><td>moving your school mail to Gmail</td></tr>
-  <tr><td>kk.lee@tsuenwan.edu.hk</td><td>KK</td><td>Tsuen Wan Secondary</td><td>classroom collaboration tools</td></tr>
+  <tr><td>derek.chan@plkps.edu.hk</td><td>Derek</td><td>PLK Primary School</td><td>your Workspace renewal</td></tr>
+  <tr><td>mary.wong@stpaul.edu.hk</td><td>Mary</td><td>St Paul's College</td><td>moving school mail to Gmail</td></tr>
 </table>
 </div>
-<p>Rules that matter:</p>
-<ul>
-  <li><strong>One column must hold the email addresses.</strong> Name it <code>Email</code> so it is obvious.</li>
-  <li>Headers can be anything — <code>First Name</code>, <code>School</code>, <code>Topic</code>, <code>Meeting Date</code>. Spaces are fine.</li>
-  <li><strong>No blank rows</strong> in the middle of the list. Gmail stops reading at the first empty row.</li>
-  <li>Keep each cell short. It gets dropped into a sentence, so <em>moving your school mail to Gmail</em> reads well, <em>MAIL MIGRATION PROJECT</em> does not.</li>
-  <li>Fill every cell if you can. Blanks leave gaps unless you set a default value (Step 4).</li>
-</ul>
+<p class="muted">No blank rows in the middle — Gmail stops reading there.</p>
 
-<h2>Step 2 — Turn on Mail merge in Gmail</h2>
-<p>The toggle sits in the <strong>To row</strong> of a new message — not in the Send button.</p>
-<ol>
-  <li>In Gmail, click <strong>Compose</strong>.</li>
-  <li>Click the <strong>full-screen icon</strong> at the top right of the compose box. In a narrow window the toggle is hidden.</li>
-  <li>Click inside the <strong>To</strong> field. The <code>Cc</code> and <code>Bcc</code> labels appear.</li>
-  <li>At the far right of that same row, switch on <strong>Mail merge</strong>.</li>
-</ol>
-<pre>┌─ New Message ───────────────────────────────── ⌄ ⤢ ✕ ─┐
-│ To                           ( ●─) Mail merge  Cc  Bcc │  ← here
-│ Subject                                                │
-│                                                        │
-│ [ Send ▾ ]   ← "Schedule send" lives here, not the merge │
-└────────────────────────────────────────────────────────┘</pre>
-<p>When it is on, the To field changes colour and a Sheets icon appears.</p>
-<h3>If you cannot see the toggle</h3>
-<ul>
-  <li>The compose window is <strong>full screen</strong> (step 2 above).</li>
-  <li>The <strong>From</strong> address is your own — not an alias, and you are not writing as someone else's delegate.</li>
-  <li>No <strong>scheduled send</strong> is set on this draft, and <strong>Confidential mode</strong> is off. Both block mail merge.</li>
-  <li>You are on <strong>desktop Gmail</strong>, not the mobile app or offline mode.</li>
-</ul>
-<p>Still nothing? Your account's Google Workspace plan does not include the feature. Only an IT admin can change that — no setting on your side will bring it back.</p>
+<h2>2. Turn on Mail merge</h2>
+<p>In Gmail on a computer: <strong>Compose</strong> → full-screen the window → click in the <strong>To</strong> field → switch on <strong>Mail merge</strong> at the right of that row.</p>
+<pre>│ To                    ( ●─) Mail merge   Cc  Bcc │  ← here
+│ [ Send ▾ ]  ← "Schedule send", NOT the merge</pre>
+<p class="muted">Not there? Full-screen the window first. Then check you're sending from your own address, with no scheduled send and Confidential mode off. Still missing means your Workspace plan lacks it — ask IT.</p>
 
-<h2>Step 3 — Pull the list in from your Sheet</h2>
-<ol>
-  <li>Click the <strong>Sheets icon</strong> in the To field (or the <strong>Add from a spreadsheet</strong> link).</li>
-  <li>Pick the Sheet you saved in Step 1.</li>
-  <li>Gmail asks which column holds the <strong>email addresses</strong> — choose <code>Email</code>.</li>
-  <li>Click <strong>Insert</strong>.</li>
-</ol>
-<p>The To field now shows how many recipients were loaded, for example <em>3 recipients</em>. Check that number against your Sheet. If it is short, you almost certainly have a blank row in the middle of the list.</p>
-<p>Every other column — <code>First Name</code>, <code>School</code>, <code>Topic</code> — is now available as a merge tag.</p>
+<h2>3. Load your list</h2>
+<p>Click the <strong>Sheets icon</strong> in the To field → pick your Sheet → choose the <code>Email</code> column → <strong>Insert</strong>. Check the recipient count looks right.</p>
 
-<h2>Step 4 — Write the email with merge tags</h2>
-<p>Merge tags work in <strong>both the subject line and the body</strong>. To insert one, type <code>@</code> and pick a column from the dropdown that appears. It drops in as a small chip.</p>
-<p>Write this, using the sample Sheet from Step 1:</p>
+<h2>4. Write it with @ tags</h2>
+<p>Type <code>@</code> in the subject or body and pick a column. Example:</p>
 <div class="mail">
-  <p class="subj"><strong>Subject:</strong> <span class="tag">@First Name</span>, a question about <span class="tag">@School</span></p>
+  <p><strong>Subject:</strong> <span class="tag">@First Name</span>, a question about <span class="tag">@School</span></p>
   <p>Hi <span class="tag">@First Name</span>,</p>
-  <p>I work with a number of Hong Kong schools on <span class="tag">@Topic</span>, and I thought it might be worth a short chat with <span class="tag">@School</span>.</p>
-  <p>Would 20 minutes next week suit you? Happy to work around your timetable.</p>
-  <p>Best regards,<br>[your name and signature]</p>
+  <p>I work with Hong Kong schools on <span class="tag">@Topic</span> — worth a short chat with <span class="tag">@School</span>?</p>
 </div>
-<p>Derek receives:</p>
-<div class="mail">
-  <p class="subj"><strong>Subject:</strong> Derek, a question about PLK Primary School</p>
-  <p>Hi Derek,</p>
-  <p>I work with a number of Hong Kong schools on Google Workspace for Education renewal, and I thought it might be worth a short chat with PLK Primary School.</p>
-</div>
-<p>Mary receives the same email with her own name, school and topic. Each person gets a private message of their own.</p>
-<h3>Set a default for blank cells</h3>
-<p>If a cell is empty the tag sends as nothing, and <em>Hi ,</em> looks careless. To protect against it:</p>
-<ol>
-  <li>Click the merge tag chip you inserted.</li>
-  <li>Enter a <strong>default value</strong>, for example <code>there</code> for <span class="tag">@First Name</span>.</li>
-</ol>
-<p>Anyone with a blank cell then gets <em>Hi there,</em> instead of a gap. Do this for every tag you use.</p>
+<p>Derek gets: <em>"Hi Derek, I work with Hong Kong schools on your Workspace renewal — worth a short chat with PLK Primary School?"</em></p>
+<p class="muted">Click a tag to set a default (e.g. <code>there</code>) so empty cells don't send "Hi ,".</p>
 
-<h2>Step 5 — Test, then send</h2>
-<div class="note"><p><strong>Always test first.</strong> There is no preview and no undo: the moment you click Send, every email goes out for real.</p></div>
-<ol>
-  <li>Add <strong>yourself as an extra row</strong> in the Sheet, with realistic values in every column.</li>
-  <li>Re-insert the list in Gmail so your row is included.</li>
-  <li>Click <strong>Send</strong>. Gmail shows a confirmation with the recipient count — read it before confirming.</li>
-  <li>Open the email that arrives in your own inbox. Check the name, the school, the topic and the subject line all read naturally.</li>
-  <li>Fix anything odd, delete your test row, re-insert the list, and send to the real group.</li>
-</ol>
-<p>What each recipient gets:</p>
+<h2>5. Test, then send</h2>
+<p>Add <strong>yourself as a row</strong>, re-load the list, and send. There's no preview and no undo. Check your copy, delete the test row, reload, send for real.</p>
+
+<h2>Limits</h2>
 <ul>
-  <li>A private email addressed only to them. Nobody can see the rest of the list.</li>
-  <li>Your normal signature and formatting.</li>
-  <li>An <strong>unsubscribe link</strong> at the bottom. Gmail adds this automatically and it cannot be removed.</li>
+  <li>1,500 recipients per day.</li>
+  <li>Text only — no per-person images, links or attachments.</li>
+  <li>No Cc, Bcc, or scheduled send.</li>
+  <li>Gmail adds an unsubscribe link you can't remove.</li>
 </ul>
-<p>Replies land in your inbox as ordinary emails. If someone unsubscribes, Gmail leaves them out of your future merges.</p>
-
-<h2>What it cannot do</h2>
-<p>Merge tags insert <strong>plain text only</strong>. That rules out a few things people often ask for:</p>
-<div class="scroller">
-<table>
-  <tr><th>You want</th><th>Possible?</th></tr>
-  <tr><td>Different name, school, date or sentence per person</td><td><span class="yes">Yes</span> — any column works</td></tr>
-  <tr><td>The same image for everyone</td><td><span class="yes">Yes</span> — insert it in the body as usual</td></tr>
-  <tr><td>A <strong>different image per person</strong>, from a URL column</td><td><span class="no">No</span> — the tag sends the URL as text</td></tr>
-  <tr><td>A <strong>different link target</strong> per person</td><td><span class="no">No</span> — same reason</td></tr>
-  <tr><td>Attachments that differ per person</td><td><span class="no">No</span></td></tr>
-  <tr><td>Cc or Bcc</td><td><span class="no">No</span> — both are disabled in merge mode</td></tr>
-  <tr><td>Scheduling the send</td><td><span class="no">No</span> — scheduling and merge cannot be combined</td></tr>
-  <tr><td>Removing the unsubscribe footer</td><td><span class="no">No</span></td></tr>
-</table>
-</div>
-<p>If you need per-person images, per-person links or attachments, Gmail is the wrong tool — that needs a script-based merge instead. Ask Tommy.</p>
-
-<h2>Quick troubleshooting</h2>
-<ul>
-  <li><strong>Toggle missing</strong> — see the checklist at the end of Step 2.</li>
-  <li><strong>Fewer recipients than expected</strong> — a blank row in the middle of the Sheet.</li>
-  <li><strong>Tag dropdown does not appear when typing @</strong> — you have not inserted the Sheet yet. Do Step 3 first.</li>
-  <li><strong>Email arrives with gaps, e.g. Hi ,</strong> — blank cells with no default value set. See Step 4.</li>
-  <li><strong>Send button refuses</strong> — you are over the 1,500 recipients for today. Split the list across two days.</li>
-  <li><strong>Tag shows as literal text like @First Name</strong> — you typed it by hand instead of picking it from the dropdown. Delete it and re-insert with <code>@</code>.</li>
-</ul>
+<p class="muted">Need per-person images or links? That needs a script instead — ask Tommy.</p>
 
 <footer>Internal guide · Master Concept</footer>
 

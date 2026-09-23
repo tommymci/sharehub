@@ -44,6 +44,29 @@ that protects the CSD crest and wording. Each of those costs a full render
 again, so the number of renders is always higher than the number of posters
 handed out.
 
+## Monthly API spend
+
+The booth has no subscription and no minimum — the API is billed purely on
+what is generated, so a month with no events costs nothing. These are monthly
+totals at different levels of use, in HKD.
+
+| Level of use | Posters / month | Fast · 1K | Fast · 2K | Best quality | **Budget (1K + 30%)** |
+|:---|---:|---:|---:|---:|---:|
+| Occasional — a few event days | 500 | $270 | $400 | $550 | **$350** |
+| Regular — roughly weekly | 2,000 | $1,080 | $1,600 | $2,200 | **$1,400** |
+| Busy — most weekdays | 5,000 | $2,690 | $4,020 | $5,500 | **$3,500** |
+| Continuous — a booth running daily | 10,000 | $5,380 | $8,030 | $11,000 | **$7,000** |
+| Peak campaign | 30,000 | $16,150 | $24,100 | $33,000 | **$21,000** |
+
+For scale: 10,000 posters a month is roughly 330 a day, every day — more than
+one staffed booth can physically serve at 22 seconds each. Realistic recurring
+use for a recruitment campaign sits in the first two rows, so **HK$300 to
+HK$1,400 a month** is the range to plan around.
+
+Two things that do not change with volume: there is **no standing cost** in a
+quiet month, and there are **no volume discounts** at these levels — the cost
+is simply linear in posters produced.
+
 ## Where the money goes
 
 | Item | Per poster | Share |

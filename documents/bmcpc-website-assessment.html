@@ -1,0 +1,497 @@
+---
+title: "BMCPC Website Consolidation – Pre-assessment"
+date: 2026-10-09
+access: private
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMCPC Website Consolidation – Pre-assessment</title>
+<style>
+  :root {
+    --bg: #f6f6f3; --surface: #ffffff; --surface-2: #f2f2ee; --text: #1d1d1b; --muted: #6b6b66;
+    --line: #e3e3dd; --accent: #1f4e79; --accent-soft: #e8eff7;
+    --ok: #2f6b3a; --ok-bg: #e5f1e7; --warn: #8a5a00; --warn-bg: #fbefd6;
+    --neutral: #55554f; --neutral-bg: #ecece7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #141413; --surface: #1c1c1a; --surface-2: #242421; --text: #ecece8; --muted: #9a9a93;
+      --line: #33332f; --accent: #8fb8e0; --accent-soft: #1f2a35;
+      --ok: #8fce9b; --ok-bg: #1e3123; --warn: #e9c06b; --warn-bg: #3a2f17;
+      --neutral: #c3c3bc; --neutral-bg: #2c2c29;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #141413; --surface: #1c1c1a; --surface-2: #242421; --text: #ecece8; --muted: #9a9a93;
+    --line: #33332f; --accent: #8fb8e0; --accent-soft: #1f2a35;
+    --ok: #8fce9b; --ok-bg: #1e3123; --warn: #e9c06b; --warn-bg: #3a2f17;
+    --neutral: #c3c3bc; --neutral-bg: #2c2c29;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", Arial, sans-serif;
+         font-size: 14.5px; line-height: 1.6; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .page { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 40px; }
+
+  nav.toc { position: sticky; top: 24px; align-self: start; font-size: 13px; }
+  nav.toc .label { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+  nav.toc ol { list-style: none; border-left: 2px solid var(--line); }
+  nav.toc li a { display: block; padding: 5px 0 5px 14px; margin-left: -2px; border-left: 2px solid transparent; color: var(--muted); }
+  nav.toc li a:hover { color: var(--text); text-decoration: none; border-left-color: var(--muted); }
+  nav.toc li a.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+
+  main { min-width: 0; }
+  header { margin-bottom: 8px; }
+  .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: 28px; line-height: 1.25; margin: 6px 0 10px; letter-spacing: -.01em; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 20px; color: var(--muted); font-size: 13px; }
+  .meta b { color: var(--text); font-weight: 600; margin-right: 4px; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+  .stat { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .stat .v { font-size: clamp(18px, 2vw, 23px); font-weight: 700; letter-spacing: -.01em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stat .k { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+  section { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 24px 26px; margin-top: 20px; }
+  h2 { font-size: 18px; margin-bottom: 4px; }
+  h2 .no { color: var(--muted); font-weight: 500; margin-right: 6px; }
+  h2 a.anchor { color: var(--muted); font-weight: 400; font-size: 15px; margin-left: 6px; opacity: 0; }
+  h2:hover a.anchor { opacity: 1; }
+  .lead { color: var(--muted); margin-bottom: 16px; font-size: 13.5px; }
+  h3 { font-size: 14px; margin: 22px 0 8px; }
+  ul.points { padding-left: 18px; margin-top: 12px; }
+  ul.points li { margin-bottom: 5px; }
+  ul.points li::marker { color: var(--muted); }
+
+  .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600;
+       padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface-2); }
+  td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  td.k { font-weight: 600; white-space: nowrap; }
+  td.idx { color: var(--muted); width: 32px; font-variant-numeric: tabular-nums; }
+  tr.total td { font-weight: 700; background: var(--surface-2); border-top: 1px solid var(--muted); }
+  .zh { font-weight: 600; }
+  .sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; font-weight: 400; }
+  code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; background: var(--surface-2); border: 1px solid var(--line); padding: 0 5px; border-radius: 4px; word-break: break-all; }
+
+  .pill { display: inline-block; font-size: 11.5px; font-weight: 600; padding: 2px 9px; border-radius: 999px; white-space: nowrap; line-height: 1.5; }
+  .p-ok { color: var(--ok); background: var(--ok-bg); }
+  .p-warn { color: var(--warn); background: var(--warn-bg); }
+  .p-n { color: var(--neutral); background: var(--neutral-bg); }
+  td.ref { white-space: nowrap; font-size: 12.5px; }
+
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 16px; font-size: 13.5px; }
+  .note { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 28px; }
+
+  @media (max-width: 900px) {
+    .page { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 24px 16px 60px; }
+    nav.toc { position: static; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    section { padding: 18px 16px; }
+    h1 { font-size: 23px; }
+  }
+  @media print {
+    body { background: #fff; } .page { display: block; padding: 0; } nav.toc { display: none; }
+    section { border: none; padding: 0; margin-top: 24px; } tr { break-inside: avoid; }
+  }
+  .ic { width: 16px; height: 16px; stroke-width: 1.75; vertical-align: -3px; flex-shrink: 0; }
+  .ic-sm { width: 13px; height: 13px; stroke-width: 2; vertical-align: -2px; }
+  nav.toc li a { display: flex; align-items: center; gap: 8px; }
+  nav.toc li a .ic { width: 15px; height: 15px; }
+  h2 .hic { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; background: var(--accent-soft); color: var(--accent); margin-right: 10px; vertical-align: -7px; }
+  h2 .hic .ic { width: 16px; height: 16px; vertical-align: 0; }
+  .stat .top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .stat .top .ic { color: var(--muted); width: 18px; height: 18px; }
+  td.k .ic { color: var(--muted); margin-right: 8px; }
+  a.ext { white-space: nowrap; font-weight: 600; }
+  a.ext .ic-sm { margin-left: 3px; opacity: .7; }
+  .scope-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .scope-col { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .scope-col ul.points { margin-top: 8px; }
+  .scope-h { margin-bottom: 2px; }
+  @media (max-width: 900px) { .scope-grid { grid-template-columns: 1fr; } }
+  .gantt-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  .gantt { display: grid; position: relative; min-width: 820px; font-size: 12.5px; row-gap: 0; }
+  .gantt > div { min-height: 40px; }
+  .g-line { border-left: 1px solid var(--line); min-height: 0 !important; }
+  .g-head { background: var(--surface-2); color: var(--muted); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; display: flex; align-items: center; justify-content: center; min-height: 34px !important; border-bottom: 1px solid var(--line); }
+  .g-label.g-head { justify-content: flex-start; padding-left: 12px; }
+  .g-wk.g-ms { color: var(--accent); }
+  .g-label { grid-column: 1; padding: 6px 12px; border-bottom: 1px solid var(--line); background: var(--surface); position: sticky; left: 0; z-index: 2; line-height: 1.3; display: flex; flex-direction: column; justify-content: center; }
+  .g-label .sub { font-size: 11.5px; }
+  .g-bar { align-self: center; height: 24px; letter-spacing: -.02em; min-height: 24px !important; border-radius: 6px; margin: 0 3px; display: flex; align-items: center; padding: 0 8px; font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; z-index: 1; }
+  .g-ours { background: var(--accent); color: var(--surface); }
+  .g-client { background: var(--warn-bg); color: var(--warn); border: 1px dashed var(--warn); }
+  .g-care { background: var(--neutral-bg); color: var(--neutral); }
+  .g-mile { align-self: center; justify-self: center; color: var(--accent); font-size: 16px; z-index: 1; }
+  .g-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  .g-legend .sw { display: inline-block; width: 14px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: 0; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+<div class="page">
+
+<nav class="toc" aria-label="Contents">
+  <div class="label">Contents</div>
+  <ol>
+    <li><a href="#summary"><i data-lucide="layout-dashboard" class="ic"></i>Summary</a></li>
+    <li><a href="#scope"><i data-lucide="list-checks" class="ic"></i>Scope at a glance</a></li>
+    <li><a href="#questions"><i data-lucide="circle-help" class="ic"></i>Questions for BMCPC</a></li>
+    <li><a href="#sites"><i data-lucide="server" class="ic"></i>1. Platforms</a></li>
+    <li><a href="#redirects"><i data-lucide="arrow-right-left" class="ic"></i>2. Redirect scope</a></li>
+    <li><a href="#seo"><i data-lucide="search" class="ic"></i>3. SEO findings</a></li>
+    <li><a href="#systems"><i data-lucide="plug" class="ic"></i>4. Systems checklist</a></li>
+    <li><a href="#approach"><i data-lucide="route" class="ic"></i>5. Platform</a></li>
+    <li><a href="#budget"><i data-lucide="calculator" class="ic"></i>6. Budget</a></li>
+    <li><a href="#timeline"><i data-lucide="calendar-range" class="ic"></i>7. Timeline</a></li>
+  </ol>
+</nav>
+
+<main>
+<header>
+  <div class="eyebrow">Pre-assessment · Draft v1</div>
+  <h1>BMCPC Website Consolidation</h1>
+  <div class="meta">
+    <span><b>Client</b>華人永遠墳場管理委員會 (BMCPC)</span>
+    <span><b>Scope</b>3 sites into 1 · 繁 / EN / 简</span>
+    <span><b>Date</b>9 Oct 2026</span>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="top"><div class="v">3 → 1</div><i data-lucide="layers" class="ic"></i></div><div class="k">websites to merge</div></div>
+    <div class="stat"><div class="top"><div class="v">~300</div><i data-lucide="file-text" class="ic"></i></div><div class="k">public pages</div></div>
+    <div class="stat"><div class="top"><div class="v">~200</div><i data-lucide="files" class="ic"></i></div><div class="k">PDF / DOC downloads</div></div>
+    <div class="stat"><div class="top"><div class="v">HK$310–495k</div><i data-lucide="wallet" class="ic"></i></div><div class="k">ballpark, all-in</div></div>
+  </div>
+</header>
+
+<section id="summary">
+  <h2><span class="hic"><i data-lucide="layout-dashboard" class="ic"></i></span>Summary<a class="anchor" href="#summary">#</a></h2>
+  <p class="lead">The 3 websites, then key points. Click a reference to jump to the detail.</p>
+  <div class="tbl"><table>
+    <tr><th>Website</th><th>Built with</th><th class="n">Pages</th><th class="n">Downloads</th><th>Languages</th></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc.org.hk/" target="_blank" rel="noopener">bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華人永遠墳場管理委員會</span></td><td>WordPress 7.1 + Elementor Pro<span class="sub">PHP, Apache on Ubuntu</span></td><td class="n">117</td><td class="n">120</td><td><span class="pill p-n">繁 only</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-info.org.hk/" target="_blank" rel="noopener">bmcpc-info.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · likely built by Freecomm</span></td><td class="n">83</td><td class="n">57</td><td><span class="pill p-n">繁 only</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-shine.org.hk/" target="_blank" rel="noopener">bmcpc-shine.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會善亮人生 BMCPC Shine</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · same build as Info</span></td><td class="n">102</td><td class="n">20</td><td><span class="pill p-n">繁 only</span></td></tr>
+    <tr class="total"><td>Total</td><td></td><td class="n">302</td><td class="n">197</td><td></td></tr>
+  </table></div>
+  <div class="tbl" style="margin-top:14px"><table>
+    <tr><th>Topic</th><th>Finding</th><th>Ref</th></tr>
+    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Languages</td><td>All 3 sites are 繁 only. Shine has an English / 简体中文 menu in its code, but it is switched off.</td><td class="ref"><a href="#sites">§1</a></td></tr>
+    <tr><td class="k"><i data-lucide="file-stack" class="ic"></i>Size</td><td>About 300 pages, plus about 200 PDF / DOC files (forms, terms, plans) moved as-is</td><td class="ref"><a href="#sites">§1</a></td></tr>
+    <tr><td class="k"><i data-lucide="arrow-right-left" class="ic"></i>Redirects</td><td>Every Info and Shine URL, plus any main-site pages we merge</td><td class="ref"><a href="#redirects">§2</a></td></tr>
+    <tr><td class="k"><i data-lucide="search" class="ic"></i>SEO</td><td>8 broken links on the main site; Info is reachable at two addresses; 4 separate GA4 properties</td><td class="ref"><a href="#seo">§3</a></td></tr>
+    <tr><td class="k"><i data-lucide="plug" class="ic"></i>Systems</td><td>Live chat, SMS-verified contact form, e-newsletter and 2 booking systems. No online payment, donation or shop on any site.</td><td class="ref"><a href="#systems">§4</a></td></tr>
+    <tr><td class="k"><i data-lucide="wallet" class="ic"></i>Budget</td><td><b>HK$310k – 495k</b> incl. AI-assisted translation; 3 months to launch (<a href="#timeline">§7</a>); other systems quoted separately (<a href="#scope">scope</a>)</td><td class="ref"><a href="#budget">§6</a></td></tr>
+  </table></div>
+</section>
+
+<section id="scope">
+  <h2><span class="hic"><i data-lucide="list-checks" class="ic"></i></span>Scope at a glance<a class="anchor" href="#scope">#</a></h2>
+  <p class="lead">What the website project covers, and what would be quoted separately.</p>
+  <div class="scope-grid">
+    <div class="scope-col">
+      <div class="scope-h"><span class="pill p-ok">Included</span></div>
+      <ul class="points">
+        <li>New sitemap and UI/UX design</li>
+        <li>Fresh WordPress on our build stack (no page builder, no WPML)</li>
+        <li><b>Staff self-service CMS:</b> BMCPC staff add and edit news, pages, notices and PDFs in 繁 / EN / 简, no developer needed</li>
+        <li>3 languages: 繁 / EN / 简</li>
+        <li>Content migration from all 3 sites</li>
+        <li>~200 PDF / DOC files moved as-is, with translated link titles</li>
+        <li>AI-assisted translation with human review</li>
+        <li>Site search, enquiry form, download library</li>
+        <li>301 redirects and SEO migration</li>
+        <li>One GA4 property, cookie banner</li>
+        <li>WCAG 2.1 AA, testing, CMS training</li>
+      </ul>
+    </div>
+    <div class="scope-col">
+      <div class="scope-h"><span class="pill p-warn">Connect existing</span></div>
+      <ul class="points">
+        <li>Live chat (Tawk.to)</li>
+        <li>E-newsletter sign-up → existing EDM</li>
+        <li>SMS verification → existing provider</li>
+        <li>Links to booking systems</li>
+        <li>YouTube, Google Forms, social links</li>
+      </ul>
+      <p class="note">BMCPC keeps the accounts and running costs.</p>
+    </div>
+    <div class="scope-col">
+      <div class="scope-h"><span class="pill p-n">Separate project</span></div>
+      <ul class="points">
+        <li>Booking / allocation system revamp</li>
+        <li>CRM / enquiry ticketing</li>
+        <li>EDM platform and campaigns</li>
+        <li>Customer service, chatbot, WhatsApp</li>
+        <li>Online payment or donation</li>
+        <li>Online applications with approval workflow</li>
+        <li>Member login / portal</li>
+        <li>Hosting and maintenance (annual)</li>
+        <li>Copywriting, photography, video</li>
+        <li>Translating, rewriting or converting official documents (forms, <span class="zh">條款及須知</span>) into pages; PDF accessibility fixes</li>
+        <li>Penetration test, third-party accessibility audit</li>
+        <li>Ongoing SEO / marketing</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="questions">
+  <h2><span class="hic"><i data-lucide="circle-help" class="ic"></i></span>Questions for BMCPC<a class="anchor" href="#questions">#</a></h2>
+  <p class="lead">The answers will turn this ballpark into a firm quotation.</p>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Question</th><th>Why we ask</th><th>Ref</th></tr>
+    <tr><td class="idx">1</td><td>Read-only <b>Google Search Console + GA4</b> access for all 3 domains?</td><td>Real indexed page count and top-traffic URLs to redirect</td><td class="ref"><a href="#redirects">§2</a></td></tr>
+    <tr><td class="idx">2</td><td><b>Content and translation approval:</b> we translate EN / 简. Who at BMCPC reviews and signs off the content and translations, how many review rounds, and does each later update need approval before going live?</td><td>Sets the project timeline and CMS approval workflow</td><td class="ref"><a href="#systems">§4</a></td></tr>
+    <tr><td class="idx">3</td><td>Do any <b>official documents</b> (forms, <span class="zh">條款及須知</span>, notices) already have English / 简 versions? We will move all documents as-is and not translate them.</td><td>Confirms the document scope (about 200 files)</td><td class="ref"><a href="#downloads">§1</a></td></tr>
+    <tr><td class="idx">4</td><td>Any <b>other BMCPC domains</b> to include? Shine's hidden code still links to <code>bmcpc-hotnews.org.hk</code>, now offline.</td><td>Old domains may still carry search traffic</td><td class="ref"><a href="#redirects">§2</a></td></tr>
+    <tr><td class="idx">5</td><td>Do you want the <b>booking systems</b> (<span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span>) revamped as well, e.g. new design or EN / 简?</td><td>Separate project. These systems likely connect to internal allocation workflow and records, so they need their own study.</td><td class="ref"><a href="#scope">Scope</a></td></tr>
+    <tr><td class="idx">6</td><td>Which <b>live chat, SMS and e-newsletter</b> accounts are in use today, and who owns them?</td><td>We connect existing accounts; a new platform is a separate project</td><td class="ref"><a href="#systems">§4</a></td></tr>
+    <tr><td class="idx">7</td><td>Any plans for <b>other systems</b>, e.g. CRM, online payment, member login or online applications with approval workflow (<span class="zh">年度慈善捐款計劃</span>, <span class="zh">服務申請</span>)?</td><td>Separate projects; knowing early lets the new site be ready for them</td><td class="ref"><a href="#scope">Scope</a></td></tr>
+    <tr><td class="idx">8</td><td><b>Design guidelines:</b> any brand / VI manual, logo rules, colours, fonts or other design standards we must follow?</td><td>Design starts from these; affects design effort</td><td class="ref"><a href="#budget">§6</a></td></tr>
+    <tr><td class="idx">9</td><td>Keep <b>bmcpc.org.hk</b> as the main domain?</td><td>Basis of the redirect plan</td><td class="ref"><a href="#redirects">§2</a></td></tr>
+    <tr><td class="idx">10</td><td>Target launch date; <b>quotation or tender</b>?</td><td>Timeline and proposal format</td><td class="ref">—</td></tr>
+  </table></div>
+</section>
+
+<section id="sites">
+  <h2><span class="hic"><i data-lucide="server" class="ic"></i></span><span class="no">1.</span>Platforms and linked systems<a class="anchor" href="#sites">#</a></h2>
+  <p class="lead">Everything the public sites run on or link to. From a crawl on 9 Oct 2026, with duplicate addresses removed.</p>
+  <div class="tbl"><table>
+    <tr><th>System</th><th>Built with</th><th>Server</th><th>In this project</th></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc.org.hk/" target="_blank" rel="noopener">bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Main website</span></td><td>WordPress 7.1, Elementor Pro<span class="sub">Leftover Divi theme code; WPForms installed</span></td><td>Apache, Ubuntu</td><td><span class="pill p-ok">Rebuild – new base</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-info.org.hk/" target="_blank" rel="noopener">bmcpc-info.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Corporate website</span></td><td>Custom PHP, Yii framework<span class="sub">Bootstrap front end; no export function</span></td><td>Apache</td><td><span class="pill p-ok">Migrate in, then retire</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-shine.org.hk/" target="_blank" rel="noopener">bmcpc-shine.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Charity website</span></td><td>Custom PHP, Yii framework<span class="sub">Same build as Info</span></td><td>Apache</td><td><span class="pill p-ok">Migrate in, then retire</span></td></tr>
+    <tr><td><a class="ext" href="https://iqbooking.bmcpc.org.hk:9443/" target="_blank" rel="noopener">iqbooking.bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">配售處服務預約系統</span></td><td>Custom PHP</td><td>Apache, port 9443</td><td><span class="pill p-n">Link only</span></td></tr>
+    <tr><td><a class="ext" href="https://booking.bmcpc.org.hk/public/Registration.aspx" target="_blank" rel="noopener">booking.bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">查詢登記及輪候情況 · 抽籤 · 配額</span></td><td>ASP.NET Web Forms</td><td>Microsoft IIS 10</td><td><span class="pill p-n">Link only</span></td></tr>
+  </table></div>
+  <ul class="points">
+    <li><b>Shine language menu:</b> the English / 繁體中文 / 简体中文 dropdown is commented out in the page code, so visitors never see it.</li>
+    <li><b>Biggest content groups:</b> 70 <span class="zh">慈善捐款項目分享</span> pages (Shine), 31 <span class="zh">最新資訊</span> articles (Info), 19 墳場資訊 posts (main).</li>
+    <li><b>Not counted:</b> 39 Shine page-number/filter URLs, links that already redirect, and broken links.</li>
+  </ul>
+
+  <h3 id="downloads">Downloads (PDF / DOC)</h3>
+  <div class="tbl"><table>
+    <tr><th>Type</th><th>Examples</th><th class="n">Files</th></tr>
+    <tr><td class="k"><i data-lucide="file-pen-line" class="ic"></i>Forms</td><td>Application, declaration and authorisation forms (<span class="zh">A001 登記墓地申請書</span>, <span class="zh">D005 宣誓</span>, <span class="zh">ST004 更換石碑</span>)</td><td class="n">42</td></tr>
+    <tr><td class="k"><i data-lucide="scale" class="ic"></i>Terms</td><td><span class="zh">條款及須知</span>, <span class="zh">預約須知</span> (<span class="zh">C013 墓地條款及須知</span>, <span class="zh">CM024 家族骨灰園預約須知</span>)</td><td class="n">29</td></tr>
+    <tr><td class="k"><i data-lucide="map" class="ic"></i>Plans and lists</td><td><span class="zh">平面圖</span>, <span class="zh">墳場地圖</span>, <span class="zh">配售名單</span>, <span class="zh">抽籤結果</span></td><td class="n">40</td></tr>
+    <tr><td class="k"><i data-lucide="megaphone" class="ic"></i>Notices</td><td><span class="zh">招標公告</span>, <span class="zh">辦事處搬遷啟示</span>, statutory fee schedule (Cap. 1112A)</td><td class="n">9</td></tr>
+    <tr><td class="k"><i data-lucide="newspaper" class="ic"></i>Info</td><td>News attachments, financial statements, job vacancies, press clippings</td><td class="n">57</td></tr>
+    <tr><td class="k"><i data-lucide="hand-coins" class="ic"></i>Shine</td><td><span class="zh">年度慈善捐款計劃</span> templates and reports (DOCX), booklets</td><td class="n">20</td></tr>
+    <tr class="total"><td>Total</td><td></td><td class="n">197</td></tr>
+  </table></div>
+  <ul class="points">
+    <li><b>Official documents are moved as-is.</b> We won't edit, translate or convert forms, terms or notices into web pages; they stay in their original language. Only the page text and link titles around them are translated.</li>
+    <li><b>English versions:</b> if BMCPC already has EN / 简 versions of any documents, we upload them to the matching language page.</li>
+    <li><b>Clean-up:</b> at least 22 outdated or duplicate files are still linked (e.g. <span class="zh">C013 墓地條款及須知</span> v1.1 and v2.0). We will list them for BMCPC to confirm which to retire.</li>
+  </ul>
+</section>
+
+<section id="redirects">
+  <h2><span class="hic"><i data-lucide="arrow-right-left" class="ic"></i></span><span class="no">2.</span>Redirect scope<a class="anchor" href="#redirects">#</a></h2>
+  <p class="lead">Every URL that moves needs a 301 redirect to keep its search ranking.</p>
+  <div class="tbl"><table>
+    <tr><th>Site</th><th>Approach</th><th>Effort</th></tr>
+    <tr><td class="k">bmcpc.org.hk</td><td>Stays as the main domain. Keep URLs where possible; redirect only merged pages.</td><td><span class="pill p-ok">Low</span></td></tr>
+    <tr><td class="k">bmcpc-info.org.hk</td><td>Whole domain moves. The 31 <span class="zh">最新資訊</span> articles (<code>/news/detail/{id}</code>) are covered by one pattern rule; the rest are mapped one by one.</td><td><span class="pill p-warn">Medium</span></td></tr>
+    <tr><td class="k">bmcpc-shine.org.hk</td><td>Whole domain moves. Project pages (<code>/pjshare</code>, <code>/dproject</code>, <code>/srproject</code>) use ID patterns.</td><td><span class="pill p-warn">Medium</span></td></tr>
+  </table></div>
+
+  <h3>Reducing page count</h3>
+  <ul class="points">
+    <li><b>Recommended.</b> Each facility on the main site is split into 4 pages (<span class="zh">簡介 / 認購詳情 / 注意事項 / 收費總表</span>), and these could become one page with tabs.</li>
+    <li>Fewer pages means less translation and less to maintain in 3 languages.</li>
+    <li>Each removed URL gets a 301 to its closest new page.</li>
+  </ul>
+
+  <div class="callout"><i data-lucide="info" class="ic"></i> <b>Why we need Search Console:</b> a crawl only finds pages that are linked. Search Console shows what Google has actually indexed, including old orphan pages, and which URLs bring traffic. Those are the redirects that matter most.</div>
+</section>
+
+<section id="seo">
+  <h2><span class="hic"><i data-lucide="search" class="ic"></i></span><span class="no">3.</span>SEO findings<a class="anchor" href="#seo">#</a></h2>
+  <p class="lead">To fix during the rebuild; none of these block the project.</p>
+  <div class="tbl"><table>
+    <tr><th>Finding</th><th>Site</th><th>Impact</th></tr>
+    <tr><td>Every page is reachable both with and without <code>www.</code>, with no redirect between them</td><td>Info</td><td><span class="pill p-warn">Medium</span><span class="sub">Duplicate pages in Google</span></td></tr>
+    <tr><td>4 GA4 properties (2 on main, 1 each on Info and Shine)</td><td>All</td><td><span class="pill p-warn">Medium</span><span class="sub">Traffic reporting is split</span></td></tr>
+    <tr><td>Chinese pages tagged as <code>lang="en-US"</code></td><td>Main, Info</td><td><span class="pill p-warn">Medium</span><span class="sub">Search targeting, screen readers</span></td></tr>
+    <tr><td>All news articles share the title <span class="zh">最新資訊 - 華永會</span></td><td>Info</td><td><span class="pill p-warn">Medium</span><span class="sub">News hard to find in Google</span></td></tr>
+    <tr><td>No canonical tags, meta descriptions or XML sitemap</td><td>Info, Shine</td><td><span class="pill p-n">Low</span><span class="sub">Weak search snippets, slower indexing</span></td></tr>
+    <tr><td>Test page still live: <span class="zh">test (Don)</span> at <code>/demo_page_don/</code></td><td>Main</td><td><span class="pill p-n">Low</span><span class="sub">Remove</span></td></tr>
+  </table></div>
+
+  <h3>Broken links visitors can click (main site)</h3>
+  <div class="tbl"><table>
+    <tr><th>Link text</th><th>Found on</th><th>Broken target</th></tr>
+    <tr><td class="zh">(image link, no text)</td><td>27 pages, e.g. <span class="zh">配售處服務網上預約系統</span></td><td><code>/mope</code></td></tr>
+    <tr><td class="zh">將軍澳華人永遠墳場</td><td>4 pages, e.g. <span class="zh">認購龕位 骨殖龕位簡介</span></td><td><code>/tko-chinese-permanent-cemetery</code></td></tr>
+    <tr><td class="zh">按此 / 配售處</td><td>3 pages, e.g. <span class="zh">認購設施 – 家族骨灰園</span></td><td><code>/sales-office-opening</code></td></tr>
+    <tr><td class="zh">柴灣華人永遠墳場</td><td>2 pages, e.g. <span class="zh">認購龕位 骨殖龕位簡介</span></td><td><code>/cw-chinese-permanent-ceemetery</code></td></tr>
+    <tr><td class="zh">荃灣華人永遠墳場</td><td><span class="zh">認購寧馨園 簡介</span></td><td><code>/tw-chinese-permanent-cemetery</code></td></tr>
+    <tr><td class="zh">查詢登記及輪候情況</td><td><span class="zh">配售處預約及查詢（配售處開放時間）</span></td><td><code>/sales-office-system/sales-office-query</code></td></tr>
+    <tr><td class="zh">遷出</td><td><span class="zh">服務申請 家族骨灰園 (遷出)</span></td><td><code>/application-family-2</code></td></tr>
+    <tr><td class="zh">授權</td><td><span class="zh">服務申請 金塔墓地 (金塔墓地加葬)</span></td><td><code>/facilities-urn/facilities-urn-remarks</code></td></tr>
+  </table></div>
+  <p class="note">Shine has 1 visible broken link, <span class="zh">「家晴大使」義工畢業禮</span>, on the <span class="zh">慈善捐款項目分享</span> list. Its other dead links (<code>/activity</code>, <code>/positive</code>, <code>bmcpc-hotnews.org.hk</code>) are only in hidden code and do not affect visitors.</p>
+</section>
+
+<section id="systems">
+  <h2><span class="hic"><i data-lucide="plug" class="ic"></i></span><span class="no">4.</span>Systems and integrations checklist<a class="anchor" href="#systems">#</a></h2>
+  <p class="lead">What runs behind the sites today, and whether it falls in the website project.</p>
+  <div class="tbl"><table>
+    <tr><th>Area</th><th>Found today</th><th>Our scope</th><th>To confirm</th></tr>
+    <tr><td class="k"><i data-lucide="database" class="ic"></i>CMS</td><td>Main: WordPress<br>Info, Shine: custom admin</td><td><span class="pill p-ok">Included</span><span class="sub">One CMS; staff update news and pages themselves</span></td><td>Editors, roles, approval workflow, training</td></tr>
+    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Multilingual</td><td>None</td><td><span class="pill p-ok">Included</span><span class="sub">繁 / EN / 简</span></td><td>Who keeps EN / 简 up to date</td></tr>
+    <tr><td class="k"><i data-lucide="search" class="ic"></i>Site search</td><td>Separate search on each site</td><td><span class="pill p-ok">Included</span></td><td>—</td></tr>
+    <tr><td class="k"><i data-lucide="file-input" class="ic"></i>Website forms</td><td><span class="zh">聯絡我們</span> form, Google Forms, ~200 PDF / DOC in <span class="zh">下載表格</span></td><td><span class="pill p-ok">Included</span><span class="sub">Enquiry form, download library</span></td><td>—</td></tr>
+    <tr><td class="k"><i data-lucide="chart-column" class="ic"></i>Analytics</td><td>4 GA4 properties</td><td><span class="pill p-ok">Included</span><span class="sub">Merge into one</span></td><td>Access; conversion goals</td></tr>
+    <tr><td class="k"><i data-lucide="mail" class="ic"></i>EDM</td><td>Newsletter sign-up form (main)</td><td><span class="pill p-warn">Connect existing</span></td><td>Platform and account</td></tr>
+    <tr><td class="k"><i data-lucide="message-circle" class="ic"></i>Live chat</td><td>Tawk.to (main)</td><td><span class="pill p-warn">Connect existing</span></td><td>Account owner; EN / 简 support</td></tr>
+    <tr><td class="k"><i data-lucide="smartphone" class="ic"></i>SMS verification</td><td>6-digit <span class="zh">SMS 驗証碼</span> on the contact form</td><td><span class="pill p-warn">Connect existing</span></td><td>SMS provider and account</td></tr>
+    <tr><td class="k"><i data-lucide="inbox" class="ic"></i>CRM / ticketing</td><td>None found; enquiries go by email</td><td><span class="pill p-n">Separate project</span></td><td>Any plan for one</td></tr>
+    <tr><td class="k"><i data-lucide="calendar-check" class="ic"></i>Booking</td><td><span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span></td><td><span class="pill p-n">Separate project</span><span class="sub">Website links only</span></td><td>Revamp wanted? Which internal systems it connects to</td></tr>
+    <tr><td class="k"><i data-lucide="credit-card" class="ic"></i>Payment</td><td>No online payment, donation or shop. Purchases paid offline: <span class="zh">轉數快</span>, <span class="zh">本票 / 劃線支票</span>, cash at bank<span class="sub">Shine gives grants; it does not collect donations</span></td><td><span class="pill p-n">Separate project</span><span class="sub">Nothing to connect today</span></td><td>Any plan for online payment</td></tr>
+    <tr><td class="k"><i data-lucide="server" class="ic"></i>Hosting / DNS</td><td>Apache on Ubuntu, Wordfence</td><td><span class="pill p-n">Separate (annual)</span></td><td>Who hosts; who controls DNS</td></tr>
+    <tr><td class="k"><i data-lucide="shield-check" class="ic"></i>Privacy</td><td><span class="zh">私隱政策聲明</span> page; no cookie banner</td><td><span class="pill p-ok">Included</span><span class="sub">Cookie banner if required</span></td><td>Cookie consent needed?</td></tr>
+    <tr><td class="k"><i data-lucide="accessibility" class="ic"></i>Accessibility</td><td><span class="zh">無障礙網頁瀏覽</span> statement on all 3 sites</td><td><span class="pill p-ok">Included</span><span class="sub">WCAG 2.1 AA</span></td><td>Third-party audit required?</td></tr>
+  </table></div>
+  <ul class="points">
+    <li><b>Included:</b> built as part of the website.</li>
+    <li><b>Connect existing:</b> we embed or connect BMCPC's current account; the account itself and its running costs stay with BMCPC.</li>
+    <li><b>Separate project:</b> quoted separately if needed. See <a href="#scope">Scope at a glance</a>.</li>
+  </ul>
+</section>
+
+<section id="approach">
+  <h2><span class="hic"><i data-lucide="route" class="ic"></i></span><span class="no">5.</span>Platform<a class="anchor" href="#approach">#</a></h2>
+  <p class="lead">A fresh WordPress build on our own lean stack: no page builder and no heavy multilingual plugin.</p>
+  <div class="tbl"><table>
+    <tr><th>Option</th><th>Pros</th><th>Cons</th><th>Cost</th></tr>
+    <tr><td class="k"><i data-lucide="circle-check" class="ic"></i>A. WordPress,<br>our build stack<span class="sub"><span class="pill p-ok">Recommended</span></span></td>
+      <td><ul class="points" style="margin:0">
+        <li>Built from our experience running a 3-language WordPress site with AI editing</li>
+        <li>Light, fast pages: no Elementor, no WPML</li>
+        <li>AI can update pages through approved actions; every change saved as a draft for approval</li>
+        <li>GEO built in: structured data, <code>llms.txt</code></li>
+        <li>Standard WordPress; all code in git and handed over</li></ul></td>
+      <td><ul class="points" style="margin:0">
+        <li>Our modules are newer than mainstream plugins; we maintain them</li>
+        <li>New layouts need a developer</li></ul></td>
+      <td>Base</td></tr>
+    <tr><td class="k"><i data-lucide="circle-minus" class="ic"></i>B. WordPress<br>+ Elementor + WPML<span class="sub">Typical agency build</span></td>
+      <td><ul class="points" style="margin:0">
+        <li>Quick to start</li>
+        <li>Editors can drag layouts</li></ul></td>
+      <td><ul class="points" style="margin:0">
+        <li>Heavy pages, slow on mobile</li>
+        <li>Layouts drift across 3 languages</li>
+        <li>Yearly licences; harder to keep accessible</li></ul></td>
+      <td style="white-space:nowrap">Similar</td></tr>
+    <tr><td class="k"><i data-lucide="circle-dot" class="ic"></i>C. Node.js<span class="sub">Next.js + headless CMS</span></td>
+      <td><ul class="points" style="margin:0">
+        <li>Fastest, smallest attack surface</li></ul></td>
+      <td><ul class="points" style="margin:0">
+        <li>Editor workflow and 3 languages built custom</li>
+        <li>Fewer vendors can maintain it; Node hosting</li></ul></td>
+      <td style="white-space:nowrap">+HK$80k – 150k</td></tr>
+  </table></div>
+
+  <h3>Building blocks</h3>
+  <div class="tbl"><table>
+    <tr><th>Part</th><th>What we build</th><th>Open-source option checked</th></tr>
+    <tr><td class="k"><i data-lucide="layout-template" class="ic"></i>Theme</td><td>Custom block theme; native header, footer and menus; reusable content blocks</td><td>Roots Sage / Bedrock</td></tr>
+    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Languages</td><td>Language per page, linked 繁 / EN / 简 versions, switcher, hreflang, language URLs</td><td>Polylang (free) – same model, kept as fallback</td></tr>
+    <tr><td class="k"><i data-lucide="search" class="ic"></i>SEO / GEO</td><td>Titles, descriptions, structured data, sitemap, <code>llms.txt</code></td><td>Slim SEO, The SEO Framework</td></tr>
+    <tr><td class="k"><i data-lucide="arrow-right-left" class="ic"></i>URLs</td><td>Clean URLs and automatic 301s when a URL changes</td><td>Redirection</td></tr>
+    <tr><td class="k"><i data-lucide="sparkles" class="ic"></i>AI editing</td><td>BMCPC-specific actions (update a notice, replace a PDF, publish in 3 languages) via WordPress's built-in AI interface, draft first</td><td>WordPress 7 Abilities API + MCP</td></tr>
+  </table></div>
+  <div class="callout"><i data-lucide="info" class="ic"></i> <b>Why our own modules:</b> BMCPC only needs language linking, not a translation-management suite, and lean SEO with structured data for AI search. Small, focused modules keep pages fast and easy to maintain. All code is GPL, in git and documented, so BMCPC is not locked in.</div>
+</section>
+
+<section id="budget">
+  <h2><span class="hic"><i data-lucide="calculator" class="ic"></i></span><span class="no">6.</span>Budget<a class="anchor" href="#budget">#</a></h2>
+  <p class="lead">Ballpark in HKD for option A, to be firmed up once the <a href="#questions">questions</a> are answered.</p>
+
+  <h3>Website project</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th class="n">Range (HKD)</th></tr>
+    <tr><td>Discovery, content audit, new sitemap</td><td class="n">25k – 40k</td></tr>
+    <tr><td>UI/UX design (about 12 templates)</td><td class="n">50k – 80k</td></tr>
+    <tr><td>Build on our stack<span class="sub">Theme, blocks, staff editing of news and pages, languages, SEO/GEO, search, enquiry form, download library, cookie banner, WCAG 2.1 AA</span></td><td class="n">100k – 150k</td></tr>
+    <tr><td>Connect existing tools<span class="sub">Live chat, EDM sign-up, SMS verification, GA4</span></td><td class="n">10k – 15k</td></tr>
+    <tr><td>Content migration from all 3 sites (scripted)</td><td class="n">30k – 50k</td></tr>
+    <tr><td>Trilingual setup and content loading</td><td class="n">15k – 25k</td></tr>
+    <tr><td>Redirect mapping, SEO and GEO migration</td><td class="n">15k – 25k</td></tr>
+    <tr><td>Testing, accessibility check, CMS training, launch</td><td class="n">20k – 35k</td></tr>
+    <tr class="total"><td>Website subtotal</td><td class="n">265k – 420k</td></tr>
+  </table></div>
+
+  <h3>Translation (by us, AI-assisted)</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th class="n">Range (HKD)</th></tr>
+    <tr><td>English – AI translation, reviewed by a professional editor<span class="sub">about 150k – 180k Chinese characters</span></td><td class="n">35k – 60k</td></tr>
+    <tr><td>Simplified Chinese – automated conversion and proofreading</td><td class="n">10k – 15k</td></tr>
+    <tr class="total"><td>Total with translation</td><td class="n">310k – 495k</td></tr>
+  </table></div>
+  <ul class="points">
+    <li><b>Fully human translation instead:</b> about 110k – 170k, total 375k – 590k. BMCPC reviews and approves all translated content.</li>
+    <li><b>No licence fees:</b> no Elementor or WPML subscriptions.</li>
+    <li><b>Not in this quotation:</b> see <a href="#scope">Scope at a glance</a>. Online applications with workflow are about 30k – 60k each.</li>
+  </ul>
+</section>
+
+<section id="timeline">
+  <h2><span class="hic"><i data-lucide="calendar-range" class="ic"></i></span><span class="no">7.</span>Timeline<a class="anchor" href="#timeline">#</a></h2>
+  <p class="lead"><b>3 months (12 weeks) to launch</b>, then 4 weeks of post-launch care. Design, build and content run in parallel. Assumes BMCPC replies to each review within 5 working days.</p>
+  <div class="gantt-wrap"><div class="gantt" style="grid-template-columns: 210px repeat(16, minmax(34px, 1fr));"><div class="g-line" style="grid-column:2;grid-row:1 / 13"></div><div class="g-line" style="grid-column:3;grid-row:1 / 13"></div><div class="g-line" style="grid-column:4;grid-row:1 / 13"></div><div class="g-line" style="grid-column:5;grid-row:1 / 13"></div><div class="g-line" style="grid-column:6;grid-row:1 / 13"></div><div class="g-line" style="grid-column:7;grid-row:1 / 13"></div><div class="g-line" style="grid-column:8;grid-row:1 / 13"></div><div class="g-line" style="grid-column:9;grid-row:1 / 13"></div><div class="g-line" style="grid-column:10;grid-row:1 / 13"></div><div class="g-line" style="grid-column:11;grid-row:1 / 13"></div><div class="g-line" style="grid-column:12;grid-row:1 / 13"></div><div class="g-line" style="grid-column:13;grid-row:1 / 13"></div><div class="g-line" style="grid-column:14;grid-row:1 / 13"></div><div class="g-line" style="grid-column:15;grid-row:1 / 13"></div><div class="g-line" style="grid-column:16;grid-row:1 / 13"></div><div class="g-line" style="grid-column:17;grid-row:1 / 13"></div><div class="g-label g-head" style="grid-row:1">Phase</div><div class="g-wk g-head" style="grid-row:1;grid-column:2">W1</div><div class="g-wk g-head g-ms" style="grid-row:1;grid-column:3">W2</div><div class="g-wk g-head" style="grid-row:1;grid-column:4">W3</div><div class="g-wk g-head" style="grid-row:1;grid-column:5">W4</div><div class="g-wk g-head" style="grid-row:1;grid-column:6">W5</div><div class="g-wk g-head g-ms" style="grid-row:1;grid-column:7">W6</div><div class="g-wk g-head" style="grid-row:1;grid-column:8">W7</div><div class="g-wk g-head" style="grid-row:1;grid-column:9">W8</div><div class="g-wk g-head g-ms" style="grid-row:1;grid-column:10">W9</div><div class="g-wk g-head" style="grid-row:1;grid-column:11">W10</div><div class="g-wk g-head g-ms" style="grid-row:1;grid-column:12">W11</div><div class="g-wk g-head g-ms" style="grid-row:1;grid-column:13">W12</div><div class="g-wk g-head" style="grid-row:1;grid-column:14">W13</div><div class="g-wk g-head" style="grid-row:1;grid-column:15">W14</div><div class="g-wk g-head" style="grid-row:1;grid-column:16">W15</div><div class="g-wk g-head" style="grid-row:1;grid-column:17">W16</div><div class="g-label" style="grid-row:2"><b>Discovery</b><span class="sub">Content audit, sitemap, redirect list</span></div><div class="g-bar g-ours" style="grid-row:2;grid-column:2 / 4" title="Discovery: W1–W2"><span>W1–W2</span></div><div class="g-label" style="grid-row:3"><b>Sitemap review</b><span class="sub">BMCPC</span></div><div class="g-bar g-client" style="grid-row:3;grid-column:3 / 4;padding:0;justify-content:center" title="Sitemap review: W2–W2"><span>W2</span></div><div class="g-label" style="grid-row:4"><b>UI/UX design</b><span class="sub">Design system, ~12 templates</span></div><div class="g-bar g-ours" style="grid-row:4;grid-column:3 / 7" title="UI/UX design: W2–W5"><span>W2–W5</span></div><div class="g-label" style="grid-row:5"><b>Design review</b><span class="sub">BMCPC, 2 rounds</span></div><div class="g-bar g-client" style="grid-row:5;grid-column:6 / 8" title="Design review: W5–W6"><span>W5–W6</span></div><div class="g-label" style="grid-row:6"><b>Build</b><span class="sub">Theme, blocks, staff CMS, languages, SEO/GEO</span></div><div class="g-bar g-ours" style="grid-row:6;grid-column:6 / 11" title="Build: W5–W9"><span>W5–W9</span></div><div class="g-label" style="grid-row:7"><b>Content migration</b><span class="sub">Scripted import, AI translation EN / 简</span></div><div class="g-bar g-ours" style="grid-row:7;grid-column:7 / 12" title="Content migration: W6–W10"><span>W6–W10</span></div><div class="g-label" style="grid-row:8"><b>Content approval</b><span class="sub">BMCPC reviews 繁 / EN / 简</span></div><div class="g-bar g-client" style="grid-row:8;grid-column:10 / 13" title="Content approval: W9–W11"><span>W9–W11</span></div><div class="g-label" style="grid-row:9"><b>Testing</b><span class="sub">WCAG 2.1 AA, browsers, redirects, UAT</span></div><div class="g-bar g-ours" style="grid-row:9;grid-column:11 / 13" title="Testing: W10–W11"><span>W10–W11</span></div><div class="g-label" style="grid-row:10"><b>Training + launch</b><span class="sub">Staff CMS training, go-live</span></div><div class="g-bar g-ours" style="grid-row:10;grid-column:13 / 14;padding:0;justify-content:center" title="Training + launch: W12–W12"><span>W12</span></div><div class="g-label" style="grid-row:11"><b>Post-launch care</b><span class="sub">Fixes, monitoring, Search Console</span></div><div class="g-bar g-care" style="grid-row:11;grid-column:14 / 18" title="Post-launch care: W13–W16"><span>W13–W16</span></div><div class="g-label" style="grid-row:12"><b>Milestones</b></div><div class="g-mile" style="grid-row:12;grid-column:3" title="W2: Sitemap signed off">◆</div><div class="g-mile" style="grid-row:12;grid-column:7" title="W6: Design signed off">◆</div><div class="g-mile" style="grid-row:12;grid-column:10" title="W9: Staging site ready">◆</div><div class="g-mile" style="grid-row:12;grid-column:12" title="W11: Content approved">◆</div><div class="g-mile" style="grid-row:12;grid-column:13" title="W12: Launch">◆</div></div></div>
+  <div class="g-legend"><span><i class="sw g-ours"></i>Our work</span><span><i class="sw g-client"></i>BMCPC review</span><span><i class="sw g-care"></i>Support</span><span>◆ Milestone</span></div>
+  <h3>Milestones</h3>
+  <div class="tbl"><table>
+    <tr><th>Week</th><th>Milestone</th><th>Sign-off by</th></tr>
+    <tr><td class="k">W2</td><td>Sitemap and page structure</td><td>BMCPC</td></tr>
+    <tr><td class="k">W6</td><td>Design (all templates)</td><td>BMCPC</td></tr>
+    <tr><td class="k">W9</td><td>Staging site ready for content review</td><td>—</td></tr>
+    <tr><td class="k">W11</td><td>Content and translations approved</td><td>BMCPC</td></tr>
+    <tr><td class="k">W12</td><td>Launch; old domains redirect to bmcpc.org.hk</td><td>BMCPC</td></tr>
+  </table></div>
+</section>
+
+<footer>Draft for discussion · Based on public pages only; figures to be confirmed with Search Console data.</footer>
+</main>
+</div>
+
+<script>
+  if (window.lucide) lucide.createIcons();
+  (function () {
+    var links = document.querySelectorAll('nav.toc a');
+    var map = {};
+    links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting && map[e.target.id]) {
+          links.forEach(function (a) { a.classList.remove('active'); });
+          map[e.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -75% 0px' });
+    document.querySelectorAll('main section[id]').forEach(function (s) { io.observe(s); });
+  })();
+</script>
+</body>
+</html>

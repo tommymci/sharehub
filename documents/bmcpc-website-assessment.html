@@ -1,7 +1,7 @@
 ---
 title: "BMCPC Website Consolidation – Pre-assessment"
 layout: null
-date: 2026-10-09
+date: 2026-10-12
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -9,24 +9,32 @@ date: 2026-10-09
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BMCPC Website Consolidation – Pre-assessment</title>
+<script>
+  (function () {
+    try { var m = localStorage.getItem('bmcpc-theme'); if (m === 'light' || m === 'dark') document.documentElement.setAttribute('data-theme', m); } catch (e) {}
+  })();
+</script>
 <style>
   :root {
     --bg: #f6f6f3; --surface: #ffffff; --surface-2: #f2f2ee; --text: #1d1d1b; --muted: #6b6b66;
-    --line: #e3e3dd; --accent: #1f4e79; --accent-soft: #e8eff7;
+    --line: #e3e3dd; --line-strong: #c9c9c1; --head-bg: #e9e9e3;
+    --m1: #1f4e79; --m2: #5f7f9e; --m3: #2f7d4a; --m4: #b07a12; --m5: #7a4e9c; --m6: #b0476a; --accent: #1f4e79; --accent-soft: #e8eff7;
     --ok: #2f6b3a; --ok-bg: #e5f1e7; --warn: #8a5a00; --warn-bg: #fbefd6;
     --neutral: #55554f; --neutral-bg: #ecece7;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       --bg: #141413; --surface: #1c1c1a; --surface-2: #242421; --text: #ecece8; --muted: #9a9a93;
-      --line: #33332f; --accent: #8fb8e0; --accent-soft: #1f2a35;
+      --line: #33332f; --line-strong: #4a4a44; --head-bg: #2a2a27;
+      --m1: #3d78b3; --m2: #6c8aa8; --m3: #3f9a5f; --m4: #c08a24; --m5: #9068b5; --m6: #c25d80; --accent: #8fb8e0; --accent-soft: #1f2a35;
       --ok: #8fce9b; --ok-bg: #1e3123; --warn: #e9c06b; --warn-bg: #3a2f17;
       --neutral: #c3c3bc; --neutral-bg: #2c2c29;
     }
   }
   :root[data-theme="dark"] {
     --bg: #141413; --surface: #1c1c1a; --surface-2: #242421; --text: #ecece8; --muted: #9a9a93;
-    --line: #33332f; --accent: #8fb8e0; --accent-soft: #1f2a35;
+    --line: #33332f; --line-strong: #4a4a44; --head-bg: #2a2a27;
+      --m1: #3d78b3; --m2: #6c8aa8; --m3: #3f9a5f; --m4: #c08a24; --m5: #9068b5; --m6: #c25d80; --accent: #8fb8e0; --accent-soft: #1f2a35;
     --ok: #8fce9b; --ok-bg: #1e3123; --warn: #e9c06b; --warn-bg: #3a2f17;
     --neutral: #c3c3bc; --neutral-bg: #2c2c29;
   }
@@ -72,8 +80,8 @@ date: 2026-10-09
 
   .tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
   table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  th { text-align: left; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600;
-       padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: var(--surface-2); }
+  th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--text); font-weight: 700;
+       padding: 11px 12px; border-bottom: 2px solid var(--line-strong); white-space: nowrap; background: var(--head-bg); }
   td { padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tr:last-child td { border-bottom: none; }
   td.n, th.n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -137,6 +145,59 @@ date: 2026-10-09
   .g-mile { align-self: center; justify-self: center; color: var(--accent); font-size: 16px; z-index: 1; }
   .g-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12.5px; color: var(--muted); margin-top: 10px; }
   .g-legend .sw { display: inline-block; width: 14px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: 0; }
+  td.lang { white-space: nowrap; }
+  .lg-row { display: flex; align-items: center; gap: 4px; margin-bottom: 4px; }
+  .lg-k { font-size: 11px; color: var(--muted); width: 38px; }
+  #summary td:nth-child(2) { min-width: 160px; }
+  #summary td, #summary th { padding-left: 10px; padding-right: 10px; }
+  .lg-k { width: 34px; }
+  tr.grp td { background: var(--surface-2); padding-top: 12px; padding-bottom: 12px; border-top: 1px solid var(--line-strong); }
+  .pill-lg { font-size: 13px; padding: 4px 12px; }
+  .grp-note { color: var(--muted); font-size: 13px; margin-left: 10px; }
+  td.grp-price { font-size: 14px; font-weight: 700; }
+  .muted { color: var(--muted); }
+  :root { color-scheme: light dark; }
+  :root[data-theme="light"] { color-scheme: light; }
+  :root[data-theme="dark"] { color-scheme: dark; }
+  .head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .theme-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--surface); }
+  .theme-switch button { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+  .theme-switch button:hover { color: var(--text); }
+  .theme-switch button[aria-pressed="true"] { background: var(--surface-2); color: var(--text); font-weight: 600; }
+  .theme-switch .ic { width: 14px; height: 14px; vertical-align: 0; }
+  @media print { .theme-switch { display: none; } }
+  .part1 { border: 2px solid var(--accent); }
+  .part-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+  .part-divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 4px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .part-divider::before, .part-divider::after { content: ""; flex: 1; height: 1px; background: var(--line-strong); }
+  .hero { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.4fr); gap: 24px; align-items: center; background: var(--accent-soft); border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+  .hero-k { font-size: 12.5px; color: var(--muted); }
+  .hero-v { font-size: 34px; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; margin: 4px 0; }
+  .hero-s { font-size: 13px; color: var(--muted); }
+  .bar { display: flex; height: 18px; border-radius: 6px; overflow: hidden; gap: 2px; }
+  .seg { display: block; height: 100%; }
+  .bar-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); margin-top: 10px; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 6px; }
+  .m1 { background: var(--m1); } .m2 { background: var(--m2); } .m3 { background: var(--m3); } .m4 { background: var(--m4); } .m5 { background: var(--m5); } .m6 { background: var(--m6); }
+  .mods { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+  .mod { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; background: var(--surface); }
+  .mod-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .mod-ic { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 9px; color: #fff; }
+  .mod-ic .ic { width: 18px; height: 18px; vertical-align: 0; }
+  .mod-name { font-weight: 700; font-size: 14.5px; }
+  .mod-price { font-size: 20px; font-weight: 800; margin: 2px 0 4px; font-variant-numeric: tabular-nums; }
+  .mod-line { font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+  .road { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+  .q { border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+  .q-h { font-weight: 800; font-size: 13px; color: var(--accent); margin-bottom: 6px; }
+  .q-i { font-size: 13px; display: flex; gap: 7px; align-items: center; margin-bottom: 4px; }
+  .q-i .ic { color: var(--muted); }
+  .notin { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 16px; font-size: 12.5px; }
+  .notin-k { color: var(--muted); font-weight: 600; display: inline-flex; gap: 6px; align-items: center; margin-right: 4px; }
+  .chip { border: 1px dashed var(--line-strong); border-radius: 999px; padding: 3px 10px; color: var(--muted); }
+  @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .mods { grid-template-columns: 1fr 1fr; } .road { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .mods { grid-template-columns: 1fr; } .hero-v { font-size: 28px; } }
+  nav.toc li.nav-sep { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 12px 0 4px 14px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
@@ -146,10 +207,12 @@ date: 2026-10-09
 <nav class="toc" aria-label="Contents">
   <div class="label">Contents</div>
   <ol>
+    <li><a href="#budget2027"><i data-lucide="wallet" class="ic"></i><b>2027 budget</b></a></li>
+    <li class="nav-sep">Detailed assessment</li>
     <li><a href="#summary"><i data-lucide="layout-dashboard" class="ic"></i>Summary</a></li>
     <li><a href="#scope"><i data-lucide="list-checks" class="ic"></i>Scope at a glance</a></li>
     <li><a href="#questions"><i data-lucide="circle-help" class="ic"></i>Questions for BMCPC</a></li>
-    <li><a href="#sites"><i data-lucide="server" class="ic"></i>1. Platforms</a></li>
+    <li><a href="#sites"><i data-lucide="files" class="ic"></i>1. Content</a></li>
     <li><a href="#redirects"><i data-lucide="arrow-right-left" class="ic"></i>2. Redirect scope</a></li>
     <li><a href="#seo"><i data-lucide="search" class="ic"></i>3. SEO findings</a></li>
     <li><a href="#systems"><i data-lucide="plug" class="ic"></i>4. Systems checklist</a></li>
@@ -161,7 +224,14 @@ date: 2026-10-09
 
 <main>
 <header>
-  <div class="eyebrow">Pre-assessment · Draft v1</div>
+  <div class="head-row">
+    <div class="eyebrow">Pre-assessment · Draft v1</div>
+    <div class="theme-switch" role="group" aria-label="Colour mode">
+      <button type="button" data-mode="auto" aria-pressed="true" title="Follow browser setting"><i data-lucide="monitor" class="ic"></i>Auto</button>
+      <button type="button" data-mode="light" aria-pressed="false" title="Light mode"><i data-lucide="sun" class="ic"></i>Light</button>
+      <button type="button" data-mode="dark" aria-pressed="false" title="Dark mode"><i data-lucide="moon" class="ic"></i>Dark</button>
+    </div>
+  </div>
   <h1>BMCPC Website Consolidation</h1>
   <div class="meta">
     <span><b>Client</b>華人永遠墳場管理委員會 (BMCPC)</span>
@@ -172,34 +242,135 @@ date: 2026-10-09
     <div class="stat"><div class="top"><div class="v">3 → 1</div><i data-lucide="layers" class="ic"></i></div><div class="k">websites to merge</div></div>
     <div class="stat"><div class="top"><div class="v">~300</div><i data-lucide="file-text" class="ic"></i></div><div class="k">public pages</div></div>
     <div class="stat"><div class="top"><div class="v">~200</div><i data-lucide="files" class="ic"></i></div><div class="k">PDF / DOC downloads</div></div>
-    <div class="stat"><div class="top"><div class="v">HK$310–495k</div><i data-lucide="wallet" class="ic"></i></div><div class="k">ballpark, all-in</div></div>
+    <div class="stat"><div class="top"><div class="v">≤ HK$1.0M</div><i data-lucide="wallet" class="ic"></i></div><div class="k">2027 budget, all modules</div></div>
   </div>
 </header>
 
+<section id="budget2027" class="part1">
+  <div class="part-tag">Part 1</div>
+  <h2><span class="hic"><i data-lucide="wallet" class="ic"></i></span>2027 budget at a glance<a class="anchor" href="#budget2027">#</a></h2>
+  <p class="lead">A ballpark for budget planning. Detailed quotations follow after requirements are confirmed.</p>
+
+  <div class="hero">
+    <div>
+      <div class="hero-k">Recommended 2027 budget · all modules</div>
+      <div class="hero-v">Up to HK$1.0M</div>
+      <div class="hero-s">Range HK$875k – 1.0M · benchmarked against our recent public-sector website projects</div>
+    </div>
+    <div class="hero-bar">
+      <div class="bar"><span class="seg m1" style="width:50.0%" title="Website revamp: HK$450k – 500k"></span><span class="seg m2" style="width:11.0%" title="Hosting & maintenance: HK$100k – 110k"></span><span class="seg m3" style="width:17.0%" title="Online donation & payment: HK$150k – 170k"></span><span class="seg m4" style="width:12.0%" title="Online applications: HK$100k – 120k"></span><span class="seg m5" style="width:3.0%" title="EDM platform: HK$25k – 30k"></span><span class="seg m6" style="width:7.0%" title="AI chatbot: HK$50k – 70k"></span></div>
+      <div class="bar-legend"><span><i class="dot m1"></i>Website revamp</span><span><i class="dot m2"></i>Hosting & maintenance</span><span><i class="dot m3"></i>Online donation & payment</span><span><i class="dot m4"></i>Online applications</span><span><i class="dot m5"></i>EDM platform</span><span><i class="dot m6"></i>AI chatbot</span></div>
+    </div>
+  </div>
+
+  <div class="mods">
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m1"><i data-lucide="globe" class="ic"></i></span><span class="pill p-n">Phase 1</span></div>
+        <div class="mod-name">Website revamp</div>
+        <div class="mod-price">HK$450k – 500k</div>
+        <div class="mod-line">3 sites → 1, TC / EN / SC, staff CMS, SEO</div>
+      </div>
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m2"><i data-lucide="server" class="ic"></i></span><span class="pill p-n">From launch</span></div>
+        <div class="mod-name">Hosting & maintenance</div>
+        <div class="mod-price">HK$100k – 110k</div>
+        <div class="mod-line">First year: hosting, updates, backups, support</div>
+      </div>
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m3"><i data-lucide="hand-coins" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
+        <div class="mod-name">Online donation & payment</div>
+        <div class="mod-price">HK$150k – 170k</div>
+        <div class="mod-line">Card, FPS, PayMe; receipts; reports</div>
+      </div>
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m4"><i data-lucide="file-pen-line" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
+        <div class="mod-name">Online applications</div>
+        <div class="mod-price">HK$100k – 120k</div>
+        <div class="mod-line">Forms with approval workflow, e.g. 年度慈善捐款計劃</div>
+      </div>
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m5"><i data-lucide="mail" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
+        <div class="mod-name">EDM platform</div>
+        <div class="mod-price">HK$25k – 30k</div>
+        <div class="mod-line">Templates, lists, campaigns</div>
+      </div>
+      <div class="mod">
+        <div class="mod-top"><span class="mod-ic m6"><i data-lucide="bot" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
+        <div class="mod-name">AI chatbot</div>
+        <div class="mod-price">HK$50k – 70k</div>
+        <div class="mod-line">24/7 answers in TC / EN / SC</div>
+      </div>
+  </div>
+
+  <h3>2027 roadmap</h3>
+  <div class="road">
+    <div class="q"><div class="q-h">Q1</div><div class="q-i"><i data-lucide="pencil-ruler" class="ic"></i>Discovery, design, build</div></div>
+    <div class="q"><div class="q-h">Q2</div><div class="q-i"><i data-lucide="rocket" class="ic"></i>New website live</div><div class="q-i"><i data-lucide="server" class="ic"></i>Maintenance starts</div></div>
+    <div class="q"><div class="q-h">Q3</div><div class="q-i"><i data-lucide="hand-coins" class="ic"></i>Donation & payment</div><div class="q-i"><i data-lucide="file-pen-line" class="ic"></i>Online applications</div></div>
+    <div class="q"><div class="q-h">Q4</div><div class="q-i"><i data-lucide="mail" class="ic"></i>EDM</div><div class="q-i"><i data-lucide="bot" class="ic"></i>AI chatbot</div></div>
+  </div>
+
+  <div class="notin">
+    <span class="notin-k"><i data-lucide="circle-dashed" class="ic"></i>Not in this budget</span>
+    <span class="chip">Booking system revamp – needs a separate study</span>
+    <span class="chip">CRM</span>
+    <span class="chip">Member portal</span>
+  </div>
+</section>
+
+<div class="part-divider" id="detail"><span>Part 2 · Detailed assessment</span></div>
+
 <section id="summary">
   <h2><span class="hic"><i data-lucide="layout-dashboard" class="ic"></i></span>Summary<a class="anchor" href="#summary">#</a></h2>
-  <p class="lead">The 3 websites, then key points. Click a reference to jump to the detail.</p>
+  <p class="lead">The 3 websites, the systems around them, then key points. Click a reference to jump to the detail.</p>
   <div class="tbl"><table>
-    <tr><th>Website</th><th>Built with</th><th class="n">Pages</th><th class="n">Downloads</th><th>Languages</th></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc.org.hk/" target="_blank" rel="noopener">bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華人永遠墳場管理委員會</span></td><td>WordPress 7.1 + Elementor Pro<span class="sub">PHP, Apache on Ubuntu</span></td><td class="n">117</td><td class="n">120</td><td><span class="pill p-n">繁 only</span></td></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc-info.org.hk/" target="_blank" rel="noopener">bmcpc-info.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · likely built by Freecomm</span></td><td class="n">83</td><td class="n">57</td><td><span class="pill p-n">繁 only</span></td></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc-shine.org.hk/" target="_blank" rel="noopener">bmcpc-shine.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會善亮人生 BMCPC Shine</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · same build as Info</span></td><td class="n">102</td><td class="n">20</td><td><span class="pill p-n">繁 only</span></td></tr>
-    <tr class="total"><td>Total</td><td></td><td class="n">302</td><td class="n">197</td><td></td></tr>
+    <tr><th>Website</th><th>Built with</th><th class="n">Pages</th><th class="n">Docs</th><th>Languages</th><th>In this project</th></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc.org.hk/" target="_blank" rel="noopener">bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華人永遠墳場管理委員會</span></td><td>WordPress 7.1 + Elementor Pro<span class="sub">Apache, Ubuntu</span></td><td class="n">117</td><td class="n">120</td><td class="lang"><span class="lg-row"><span class="lg-k">Today</span><span class="pill p-n">TC only</span></span><span class="lg-row"><span class="lg-k">New</span><span class="pill p-n">TC</span><span class="pill p-ok">+ EN</span><span class="pill p-ok">+ SC</span></span></td><td><span class="pill p-ok">Rebuild</span><span class="sub">The one new site</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-info.org.hk/" target="_blank" rel="noopener">bmcpc-info.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · likely built by Freecomm</span></td><td class="n">83</td><td class="n">57</td><td class="lang"><span class="lg-row"><span class="lg-k">Today</span><span class="pill p-n">TC only</span></span><span class="lg-row"><span class="lg-k">New</span><span class="pill p-n">TC</span><span class="pill p-ok">+ EN</span><span class="pill p-ok">+ SC</span></span></td><td><span class="pill p-ok">Merge in</span><span class="sub">Domain redirects</span></td></tr>
+    <tr><td><a class="ext" href="https://www.bmcpc-shine.org.hk/" target="_blank" rel="noopener">bmcpc-shine.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">華永會善亮人生 BMCPC Shine</span></td><td>Custom PHP, Yii framework<span class="sub">Apache · same build as Info</span></td><td class="n">102</td><td class="n">20</td><td class="lang"><span class="lg-row"><span class="lg-k">Today</span><span class="pill p-n">TC only</span></span><span class="lg-row"><span class="lg-k">New</span><span class="pill p-n">TC</span><span class="pill p-ok">+ EN</span><span class="pill p-ok">+ SC</span></span></td><td><span class="pill p-ok">Merge in</span><span class="sub">Domain redirects</span></td></tr>
+    <tr class="total"><td>Total</td><td></td><td class="n">302</td><td class="n">197</td><td></td><td></td></tr>
   </table></div>
+  <h3 id="systems-summary">Systems and services by phase</h3>
+  <div class="tbl"><table>
+    <tr><th>System</th><th>Current setup</th><th>Proposed</th><th class="n">Price (HKD)</th></tr>
+    <tr class="grp"><td colspan="3"><span class="pill pill-lg p-ok">Phase 1 – in this quotation</span><span class="grp-note">Built as part of the new website</span></td><td class="n grp-price">450k – 500k</td></tr>
+    <tr><td class="k"><i data-lucide="database" class="ic"></i>CMS (WordPress)</td><td>WordPress (main); custom admin (Info, Shine)</td><td>One CMS; staff update news, pages, notices and PDFs themselves</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Languages</td><td>TC only</td><td>TC / EN / SC with linked pages</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="search" class="ic"></i>Search, forms, downloads</td><td>Separate search per site; <span class="zh">聯絡我們</span> form; ~200 PDF / DOC</td><td>One search; enquiry form; download library</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="chart-column" class="ic"></i>SEO / GEO, analytics</td><td>4 GA4 properties; weak structured data</td><td>One GA4; structured data; redirects kept</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="message-circle" class="ic"></i>Live chat<span class="sub">Connect existing</span></td><td>Tawk.to</td><td>Embed BMCPC's existing account</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="mail" class="ic"></i>E-newsletter sign-up<span class="sub">Connect existing</span></td><td>Sign-up form</td><td>Connect to the existing EDM platform</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr><td class="k"><i data-lucide="smartphone" class="ic"></i>SMS verification<span class="sub">Connect existing</span></td><td>6-digit code on the contact form</td><td>Connect to the existing SMS provider</td><td class="n"><span class="muted">Included</span></td></tr>
+    <tr class="grp"><td colspan="3"><span class="pill pill-lg p-warn">Phase 1 – maintenance</span><span class="grp-note">Annual, starts after the 4-week post-launch care</span></td><td class="n grp-price">100k – 110k / yr</td></tr>
+    <tr><td class="k"><i data-lucide="server" class="ic"></i>Hosting and maintenance</td><td>Apache on Ubuntu; host TBC</td><td>Managed hosting, CDN, security and plugin updates, daily backups, monitoring, 6 support hours / month</td><td class="n">8.5k – 9k / month</td></tr>
+    <tr class="grp"><td colspan="3"><span class="pill pill-lg p-n">Phase 2 – quoted separately</span><span class="grp-note">Budget figures as in Part 1</span></td><td class="n grp-price">Per item</td></tr>
+    <tr><td class="k"><i data-lucide="calendar-check" class="ic"></i>Booking and allocation<span class="sub"><span class="zh">配售處服務預約系統</span> · <span class="zh">查詢登記及輪候情況</span></span></td><td>Separate PHP and ASP.NET systems</td><td>Revamp or add EN / SC; Phase 1 links to them</td><td class="n">After study</td></tr>
+    <tr><td class="k"><i data-lucide="hand-coins" class="ic"></i>Online donation / payment</td><td>None; paid by <span class="zh">轉數快</span>, cheque or bank</td><td>Payment gateway; card, FPS, PayMe; receipts</td><td class="n">150k – 170k</td></tr>
+    <tr><td class="k"><i data-lucide="file-pen-line" class="ic"></i>Online applications<span class="sub"><span class="zh">年度慈善捐款計劃</span> · <span class="zh">服務申請</span></span></td><td>PDF / DOC forms</td><td>Online forms with approval workflow</td><td class="n">100k – 120k</td></tr>
+    <tr><td class="k"><i data-lucide="inbox" class="ic"></i>CRM / enquiry ticketing</td><td>Enquiries by email</td><td>Track and assign enquiries</td><td class="n">50k – 120k</td></tr>
+    <tr><td class="k"><i data-lucide="send" class="ic"></i>EDM platform and campaigns</td><td>—</td><td>Templates, lists, campaigns</td><td class="n">25k – 30k + subscription</td></tr>
+    <tr><td class="k"><i data-lucide="user-round" class="ic"></i>Member login / portal</td><td>—</td><td>Accounts for lot / niche holders</td><td class="n">From 150k</td></tr>
+    <tr><td class="k"><i data-lucide="headset" class="ic"></i>Customer service / chatbot</td><td>Tawk.to</td><td>AI chatbot, WhatsApp Business</td><td class="n">50k – 70k + usage</td></tr>
+    <tr><td class="k"><i data-lucide="pen-tool" class="ic"></i>Content production</td><td>—</td><td>Copywriting, photography, video</td><td class="n">Per brief</td></tr>
+    <tr><td class="k"><i data-lucide="file-text" class="ic"></i>Official documents</td><td>~200 PDF / DOC, mostly Chinese</td><td>Translating, rewriting or converting to pages; PDF accessibility fixes</td><td class="n">Per document</td></tr>
+    <tr><td class="k"><i data-lucide="shield" class="ic"></i>Third-party audits</td><td>—</td><td>Penetration test, independent accessibility audit</td><td class="n">30k – 60k each</td></tr>
+    <tr><td class="k"><i data-lucide="trending-up" class="ic"></i>Ongoing SEO / marketing</td><td>—</td><td>After launch</td><td class="n">From 8k / month</td></tr>
+  </table></div>
+
   <div class="tbl" style="margin-top:14px"><table>
     <tr><th>Topic</th><th>Finding</th><th>Ref</th></tr>
-    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Languages</td><td>All 3 sites are 繁 only. Shine has an English / 简体中文 menu in its code, but it is switched off.</td><td class="ref"><a href="#sites">§1</a></td></tr>
+    <tr><td class="k"><i data-lucide="languages" class="ic"></i>Languages</td><td>All 3 sites are 繁 only today. The new site adds EN and 简.</td><td class="ref"><a href="#sites">§1</a></td></tr>
     <tr><td class="k"><i data-lucide="file-stack" class="ic"></i>Size</td><td>About 300 pages, plus about 200 PDF / DOC files (forms, terms, plans) moved as-is</td><td class="ref"><a href="#sites">§1</a></td></tr>
     <tr><td class="k"><i data-lucide="arrow-right-left" class="ic"></i>Redirects</td><td>Every Info and Shine URL, plus any main-site pages we merge</td><td class="ref"><a href="#redirects">§2</a></td></tr>
     <tr><td class="k"><i data-lucide="search" class="ic"></i>SEO</td><td>8 broken links on the main site; Info is reachable at two addresses; 4 separate GA4 properties</td><td class="ref"><a href="#seo">§3</a></td></tr>
     <tr><td class="k"><i data-lucide="plug" class="ic"></i>Systems</td><td>Live chat, SMS-verified contact form, e-newsletter and 2 booking systems. No online payment, donation or shop on any site.</td><td class="ref"><a href="#systems">§4</a></td></tr>
-    <tr><td class="k"><i data-lucide="wallet" class="ic"></i>Budget</td><td><b>HK$310k – 495k</b> incl. AI-assisted translation; 3 months to launch (<a href="#timeline">§7</a>); other systems quoted separately (<a href="#scope">scope</a>)</td><td class="ref"><a href="#budget">§6</a></td></tr>
+    <tr><td class="k"><i data-lucide="wallet" class="ic"></i>Budget</td><td>Website <b>HK$450k – 500k</b>; all modules up to <b>HK$1.0M</b> (<a href="#budget2027">Part 1</a>); 3 months to launch (<a href="#timeline">§7</a>); Phase 2 quoted separately (<a href="#systems-summary">systems</a>)</td><td class="ref"><a href="#budget">§6</a></td></tr>
   </table></div>
 </section>
 
 <section id="scope">
   <h2><span class="hic"><i data-lucide="list-checks" class="ic"></i></span>Scope at a glance<a class="anchor" href="#scope">#</a></h2>
-  <p class="lead">What the website project covers, and what would be quoted separately.</p>
+  <p class="lead">What Phase 1 (this quotation) covers, and what moves to Phase 2.</p>
   <div class="scope-grid">
     <div class="scope-col">
       <div class="scope-h"><span class="pill p-ok">Included</span></div>
@@ -215,6 +386,7 @@ date: 2026-10-09
         <li>301 redirects and SEO migration</li>
         <li>One GA4 property, cookie banner</li>
         <li>WCAG 2.1 AA, testing, CMS training</li>
+        <li>Hosting and maintenance (annual, priced separately)</li>
       </ul>
     </div>
     <div class="scope-col">
@@ -229,21 +401,14 @@ date: 2026-10-09
       <p class="note">BMCPC keeps the accounts and running costs.</p>
     </div>
     <div class="scope-col">
-      <div class="scope-h"><span class="pill p-n">Separate project</span></div>
+      <div class="scope-h"><span class="pill p-n">Phase 2 – quoted separately</span></div>
       <ul class="points">
         <li>Booking / allocation system revamp</li>
-        <li>CRM / enquiry ticketing</li>
-        <li>EDM platform and campaigns</li>
-        <li>Customer service, chatbot, WhatsApp</li>
-        <li>Online payment or donation</li>
-        <li>Online applications with approval workflow</li>
-        <li>Member login / portal</li>
-        <li>Hosting and maintenance (annual)</li>
-        <li>Copywriting, photography, video</li>
-        <li>Translating, rewriting or converting official documents (forms, <span class="zh">條款及須知</span>) into pages; PDF accessibility fixes</li>
-        <li>Penetration test, third-party accessibility audit</li>
-        <li>Ongoing SEO / marketing</li>
+        <li>Online donation / payment, online applications</li>
+        <li>CRM, EDM platform, member portal, chatbot</li>
+        <li>Content production, audits, ongoing SEO</li>
       </ul>
+      <p class="note">Full list in <a href="#systems-summary">Systems and services by phase</a>.</p>
     </div>
   </div>
 </section>
@@ -253,32 +418,22 @@ date: 2026-10-09
   <p class="lead">The answers will turn this ballpark into a firm quotation.</p>
   <div class="tbl"><table>
     <tr><th>#</th><th>Question</th><th>Why we ask</th><th>Ref</th></tr>
-    <tr><td class="idx">1</td><td>Read-only <b>Google Search Console + GA4</b> access for all 3 domains?</td><td>Real indexed page count and top-traffic URLs to redirect</td><td class="ref"><a href="#redirects">§2</a></td></tr>
-    <tr><td class="idx">2</td><td>Who at BMCPC will <b>review and approve</b> the website content and translations?</td><td>Sets review rounds in the timeline</td><td class="ref"><a href="#systems">§4</a></td></tr>
+    <tr><td class="idx">1</td><td>Could you <b>grant us read-only access</b> to Google Search Console and Google Analytics (GA4) for all 3 websites?</td><td>Shows which pages Google has indexed and which get traffic, so no important page is lost in the move</td><td class="ref"><a href="#redirects">§2</a></td></tr>
+    <tr><td class="idx">2</td><td>We plan to <b>translate the website into EN / 简</b> and have BMCPC staff review and approve it. Does that work, or would BMCPC prefer to <b>provide the translations</b>?</td><td>Sets who translates and the review steps in the timeline</td><td class="ref"><a href="#systems">§4</a></td></tr>
     <tr><td class="idx">3</td><td>We translate the <b>website pages</b> only; official documents (forms, <span class="zh">條款及須知</span>, notices) stay as they are. OK?</td><td>Confirms translation scope</td><td class="ref"><a href="#downloads">§1</a></td></tr>
-    <tr><td class="idx">4</td><td>Any <b>other BMCPC domains</b> to include? Shine's hidden code still links to <code>bmcpc-hotnews.org.hk</code>, now offline.</td><td>Old domains may still carry search traffic</td><td class="ref"><a href="#redirects">§2</a></td></tr>
-    <tr><td class="idx">5</td><td>Do you want the <b>booking systems</b> (<span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span>) revamped as well, e.g. new design or EN / 简?</td><td>Separate project. These systems likely connect to internal allocation workflow and records, so they need their own study.</td><td class="ref"><a href="#scope">Scope</a></td></tr>
-    <tr><td class="idx">6</td><td>Which <b>live chat, SMS and e-newsletter</b> accounts are in use today, and who owns them?</td><td>We connect existing accounts; a new platform is a separate project</td><td class="ref"><a href="#systems">§4</a></td></tr>
-    <tr><td class="idx">7</td><td>Any plans for <b>other systems</b>, e.g. CRM, online payment, member login or online applications with approval workflow (<span class="zh">年度慈善捐款計劃</span>, <span class="zh">服務申請</span>)?</td><td>Separate projects; knowing early lets the new site be ready for them</td><td class="ref"><a href="#scope">Scope</a></td></tr>
-    <tr><td class="idx">8</td><td><b>Design guidelines:</b> any brand / VI manual, logo rules, colours, fonts or other design standards we must follow?</td><td>Design starts from these; affects design effort</td><td class="ref"><a href="#budget">§6</a></td></tr>
-    <tr><td class="idx">9</td><td>Keep <b>bmcpc.org.hk</b> as the main domain?</td><td>Basis of the redirect plan</td><td class="ref"><a href="#redirects">§2</a></td></tr>
-    <tr><td class="idx">10</td><td>Target launch date; <b>quotation or tender</b>?</td><td>Timeline and proposal format</td><td class="ref">—</td></tr>
+    <tr><td class="idx">4</td><td>Do you want the <b>booking systems</b> (<span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span>) revamped as well, e.g. new design or EN / 简?</td><td>Phase 2; needs its own study. These systems likely connect to internal allocation workflow and records, so they need their own study.</td><td class="ref"><a href="#scope">Scope</a></td></tr>
+    <tr><td class="idx">5</td><td>Which <b>live chat, SMS and e-newsletter</b> accounts are in use today, and who owns them?</td><td>We connect existing accounts; a new platform is Phase 2</td><td class="ref"><a href="#systems">§4</a></td></tr>
+    <tr><td class="idx">6</td><td>Any plans for <b>other systems</b>, e.g. CRM, online payment, member login or online applications with approval workflow (<span class="zh">年度慈善捐款計劃</span>, <span class="zh">服務申請</span>)?</td><td>Phase 2; knowing early lets the new site be ready for them</td><td class="ref"><a href="#scope">Scope</a></td></tr>
+    <tr><td class="idx">7</td><td><b>Design guidelines:</b> any brand / VI manual, logo rules, colours, fonts or other design standards we must follow?</td><td>Design starts from these; affects design effort</td><td class="ref"><a href="#budget">§6</a></td></tr>
+    <tr><td class="idx">8</td><td>Keep <b>bmcpc.org.hk</b> as the main domain?</td><td>Basis of the redirect plan</td><td class="ref"><a href="#redirects">§2</a></td></tr>
   </table></div>
 </section>
 
 <section id="sites">
-  <h2><span class="hic"><i data-lucide="server" class="ic"></i></span><span class="no">1.</span>Platforms and linked systems<a class="anchor" href="#sites">#</a></h2>
-  <p class="lead">Everything the public sites run on or link to. From a crawl on 9 Oct 2026, with duplicate addresses removed.</p>
-  <div class="tbl"><table>
-    <tr><th>System</th><th>Built with</th><th>Server</th><th>In this project</th></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc.org.hk/" target="_blank" rel="noopener">bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Main website</span></td><td>WordPress 7.1, Elementor Pro<span class="sub">Leftover Divi theme code; WPForms installed</span></td><td>Apache, Ubuntu</td><td><span class="pill p-ok">Rebuild – new base</span></td></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc-info.org.hk/" target="_blank" rel="noopener">bmcpc-info.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Corporate website</span></td><td>Custom PHP, Yii framework<span class="sub">Bootstrap front end; no export function</span></td><td>Apache</td><td><span class="pill p-ok">Migrate in, then retire</span></td></tr>
-    <tr><td><a class="ext" href="https://www.bmcpc-shine.org.hk/" target="_blank" rel="noopener">bmcpc-shine.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub">Charity website</span></td><td>Custom PHP, Yii framework<span class="sub">Same build as Info</span></td><td>Apache</td><td><span class="pill p-ok">Migrate in, then retire</span></td></tr>
-    <tr><td><a class="ext" href="https://iqbooking.bmcpc.org.hk:9443/" target="_blank" rel="noopener">iqbooking.bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">配售處服務預約系統</span></td><td>Custom PHP</td><td>Apache, port 9443</td><td><span class="pill p-n">Link only</span></td></tr>
-    <tr><td><a class="ext" href="https://booking.bmcpc.org.hk/public/Registration.aspx" target="_blank" rel="noopener">booking.bmcpc.org.hk<i data-lucide="external-link" class="ic-sm"></i></a><span class="sub zh">查詢登記及輪候情況 · 抽籤 · 配額</span></td><td>ASP.NET Web Forms</td><td>Microsoft IIS 10</td><td><span class="pill p-n">Link only</span></td></tr>
-  </table></div>
+  <h2><span class="hic"><i data-lucide="files" class="ic"></i></span><span class="no">1.</span>Content and downloads<a class="anchor" href="#sites">#</a></h2>
+  <p class="lead">Where the content sits. From a crawl on 9 Oct 2026, with duplicate addresses removed.</p>
+  
   <ul class="points">
-    <li><b>Shine language menu:</b> the English / 繁體中文 / 简体中文 dropdown is commented out in the page code, so visitors never see it.</li>
     <li><b>Biggest content groups:</b> 70 <span class="zh">慈善捐款項目分享</span> pages (Shine), 31 <span class="zh">最新資訊</span> articles (Info), 19 墳場資訊 posts (main).</li>
     <li><b>Not counted:</b> 39 Shine page-number/filter URLs, links that already redirect, and broken links.</li>
   </ul>
@@ -362,17 +517,17 @@ date: 2026-10-09
     <tr><td class="k"><i data-lucide="mail" class="ic"></i>EDM</td><td>Newsletter sign-up form (main)</td><td><span class="pill p-warn">Connect existing</span></td><td>Platform and account</td></tr>
     <tr><td class="k"><i data-lucide="message-circle" class="ic"></i>Live chat</td><td>Tawk.to (main)</td><td><span class="pill p-warn">Connect existing</span></td><td>Account owner; EN / 简 support</td></tr>
     <tr><td class="k"><i data-lucide="smartphone" class="ic"></i>SMS verification</td><td>6-digit <span class="zh">SMS 驗証碼</span> on the contact form</td><td><span class="pill p-warn">Connect existing</span></td><td>SMS provider and account</td></tr>
-    <tr><td class="k"><i data-lucide="inbox" class="ic"></i>CRM / ticketing</td><td>None found; enquiries go by email</td><td><span class="pill p-n">Separate project</span></td><td>Any plan for one</td></tr>
-    <tr><td class="k"><i data-lucide="calendar-check" class="ic"></i>Booking</td><td><span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span></td><td><span class="pill p-n">Separate project</span><span class="sub">Website links only</span></td><td>Revamp wanted? Which internal systems it connects to</td></tr>
-    <tr><td class="k"><i data-lucide="credit-card" class="ic"></i>Payment</td><td>No online payment, donation or shop. Purchases paid offline: <span class="zh">轉數快</span>, <span class="zh">本票 / 劃線支票</span>, cash at bank<span class="sub">Shine gives grants; it does not collect donations</span></td><td><span class="pill p-n">Separate project</span><span class="sub">Nothing to connect today</span></td><td>Any plan for online payment</td></tr>
-    <tr><td class="k"><i data-lucide="server" class="ic"></i>Hosting / DNS</td><td>Apache on Ubuntu, Wordfence</td><td><span class="pill p-n">Separate (annual)</span></td><td>Who hosts; who controls DNS</td></tr>
+    <tr><td class="k"><i data-lucide="inbox" class="ic"></i>CRM / ticketing</td><td>None found; enquiries go by email</td><td><span class="pill p-n">Phase 2</span></td><td>Any plan for one</td></tr>
+    <tr><td class="k"><i data-lucide="calendar-check" class="ic"></i>Booking</td><td><span class="zh">配售處服務預約系統</span>, <span class="zh">查詢登記及輪候情況</span></td><td><span class="pill p-n">Phase 2</span><span class="sub">Website links only</span></td><td>Revamp wanted? Which internal systems it connects to</td></tr>
+    <tr><td class="k"><i data-lucide="credit-card" class="ic"></i>Payment</td><td>No online payment, donation or shop. Purchases paid offline: <span class="zh">轉數快</span>, <span class="zh">本票 / 劃線支票</span>, cash at bank<span class="sub">Shine gives grants; it does not collect donations</span></td><td><span class="pill p-n">Phase 2</span><span class="sub">Nothing to connect today</span></td><td>Any plan for online payment</td></tr>
+    <tr><td class="k"><i data-lucide="server" class="ic"></i>Hosting / DNS</td><td>Apache on Ubuntu, Wordfence</td><td><span class="pill p-ok">Phase 1 (annual)</span></td><td>Who hosts; who controls DNS</td></tr>
     <tr><td class="k"><i data-lucide="shield-check" class="ic"></i>Privacy</td><td><span class="zh">私隱政策聲明</span> page; no cookie banner</td><td><span class="pill p-ok">Included</span><span class="sub">Cookie banner if required</span></td><td>Cookie consent needed?</td></tr>
     <tr><td class="k"><i data-lucide="accessibility" class="ic"></i>Accessibility</td><td><span class="zh">無障礙網頁瀏覽</span> statement on all 3 sites</td><td><span class="pill p-ok">Included</span><span class="sub">WCAG 2.1 AA</span></td><td>Third-party audit required?</td></tr>
   </table></div>
   <ul class="points">
     <li><b>Included:</b> built as part of the website.</li>
     <li><b>Connect existing:</b> we embed or connect BMCPC's current account; the account itself and its running costs stay with BMCPC.</li>
-    <li><b>Separate project:</b> quoted separately if needed. See <a href="#scope">Scope at a glance</a>.</li>
+    <li><b>Phase 2:</b> budgeted in Part 1; quoted separately. See <a href="#scope">Scope at a glance</a>.</li>
   </ul>
 </section>
 
@@ -423,34 +578,42 @@ date: 2026-10-09
 </section>
 
 <section id="budget">
-  <h2><span class="hic"><i data-lucide="calculator" class="ic"></i></span><span class="no">6.</span>Budget<a class="anchor" href="#budget">#</a></h2>
+  <h2><span class="hic"><i data-lucide="calculator" class="ic"></i></span><span class="no">6.</span>Website budget<a class="anchor" href="#budget">#</a></h2>
   <p class="lead">Ballpark in HKD for option A, to be firmed up once the <a href="#questions">questions</a> are answered.</p>
 
   <h3>Website project</h3>
   <div class="tbl"><table>
     <tr><th>Item</th><th class="n">Range (HKD)</th></tr>
-    <tr><td>Discovery, content audit, new sitemap</td><td class="n">25k – 40k</td></tr>
-    <tr><td>UI/UX design (about 12 templates)</td><td class="n">50k – 80k</td></tr>
-    <tr><td>Build on our stack<span class="sub">Theme, blocks, staff editing of news and pages, languages, SEO/GEO, search, enquiry form, download library, cookie banner, WCAG 2.1 AA</span></td><td class="n">100k – 150k</td></tr>
+    <tr><td>Discovery, content audit, new sitemap</td><td class="n">30k – 35k</td></tr>
+    <tr><td>UI/UX design (about 12 templates)</td><td class="n">65k – 70k</td></tr>
+    <tr><td>Build on our stack<span class="sub">Theme, blocks, staff editing of news and pages, languages, SEO/GEO, search, enquiry form, download library, cookie banner, WCAG 2.1 AA</span></td><td class="n">160k – 170k</td></tr>
     <tr><td>Connect existing tools<span class="sub">Live chat, EDM sign-up, SMS verification, GA4</span></td><td class="n">10k – 15k</td></tr>
-    <tr><td>Content migration from all 3 sites (scripted)</td><td class="n">30k – 50k</td></tr>
-    <tr><td>Trilingual setup and content loading</td><td class="n">15k – 25k</td></tr>
-    <tr><td>Redirect mapping, SEO and GEO migration</td><td class="n">15k – 25k</td></tr>
-    <tr><td>Testing, accessibility check, CMS training, launch</td><td class="n">20k – 35k</td></tr>
-    <tr class="total"><td>Website subtotal</td><td class="n">265k – 420k</td></tr>
+    <tr><td>Content migration from all 3 sites (scripted)</td><td class="n">60k – 65k</td></tr>
+    <tr><td>Trilingual setup and content loading</td><td class="n">30k</td></tr>
+    <tr><td>Redirect mapping, SEO and GEO migration</td><td class="n">25k – 30k</td></tr>
+    <tr><td>Testing, accessibility check, CMS training, launch</td><td class="n">30k</td></tr>
+    <tr class="total"><td>Website subtotal</td><td class="n">410k – 445k</td></tr>
   </table></div>
 
   <h3>Translation (by us, AI-assisted)</h3>
   <div class="tbl"><table>
     <tr><th>Item</th><th class="n">Range (HKD)</th></tr>
-    <tr><td>English – AI translation, reviewed by a professional editor<span class="sub">about 150k – 180k Chinese characters</span></td><td class="n">35k – 60k</td></tr>
-    <tr><td>Simplified Chinese – automated conversion and proofreading</td><td class="n">10k – 15k</td></tr>
-    <tr class="total"><td>Total with translation</td><td class="n">310k – 495k</td></tr>
+    <tr><td>English – AI translation, reviewed by a professional editor<span class="sub">about 150k – 180k Chinese characters</span></td><td class="n">30k – 45k</td></tr>
+    <tr><td>Simplified Chinese – automated conversion and proofreading</td><td class="n">10k</td></tr>
+    <tr class="total"><td>Total with translation</td><td class="n">450k – 500k</td></tr>
+  </table></div>
+
+  <h3>Maintenance (annual)</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th class="n">Range (HKD)</th></tr>
+    <tr><td>Managed hosting and CDN, security and plugin updates, daily backups, uptime monitoring, 6 support hours / month<span class="sub">Starts after the 4-week post-launch care</span></td><td class="n">8.5k – 9k / month</td></tr>
+    <tr class="total"><td>Per year</td><td class="n">100k – 110k</td></tr>
   </table></div>
   <ul class="points">
-    <li><b>Fully human translation instead:</b> about 110k – 170k, total 375k – 590k. BMCPC reviews and approves all translated content.</li>
+    <li><b>Fully human translation instead:</b> about 110k – 170k, total 520k – 615k. BMCPC reviews and approves all translated content.</li>
     <li><b>No licence fees:</b> no Elementor or WPML subscriptions.</li>
-    <li><b>Not in this quotation:</b> see <a href="#scope">Scope at a glance</a>. Online applications with workflow are about 30k – 60k each.</li>
+    <li><b>Phase 2 prices</b> are indicative; see <a href="#systems-summary">Systems and services by phase</a>.</li>
+    <li><b>Phase 2:</b> budget figures in <a href="#budget2027">Part 1</a>; quoted separately.</li>
   </ul>
 </section>
 
@@ -475,6 +638,20 @@ date: 2026-10-09
 </div>
 
 <script>
+  (function () {
+    var root = document.documentElement, btns = document.querySelectorAll('.theme-switch button');
+    function current() { var m = root.getAttribute('data-theme'); return m === 'light' || m === 'dark' ? m : 'auto'; }
+    function mark() { var c = current(); btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mode === c ? 'true' : 'false'); }); }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var m = b.dataset.mode;
+        if (m === 'auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', m);
+        try { if (m === 'auto') localStorage.removeItem('bmcpc-theme'); else localStorage.setItem('bmcpc-theme', m); } catch (e) {}
+        mark();
+      });
+    });
+    mark();
+  })();
   if (window.lucide) lucide.createIcons();
   (function () {
     var links = document.querySelectorAll('nav.toc a');

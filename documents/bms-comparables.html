@@ -199,6 +199,15 @@ date: 2026-10-12
   @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .mods { grid-template-columns: 1fr 1fr; } .road { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .mods { grid-template-columns: 1fr; } .hero-v { font-size: 28px; } }
   nav.toc li.nav-sep { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 12px 0 4px 14px; }
+  .stats-p2 { margin: 16px 0 0; }
+  .part1 { padding-top: 18px; padding-bottom: 18px; margin-top: 16px; }
+  .part1 .hero { padding: 16px 20px; margin-bottom: 12px; }
+  .part1 .mods { gap: 10px; }
+  .part1 .mod { padding: 12px 14px; }
+  .part1 .mod-top { margin-bottom: 6px; }
+  .part1 .mod-ic { width: 30px; height: 30px; }
+  .part1 .mod-price { font-size: 19px; }
+  header { margin-bottom: 0; }
 
   .page { grid-template-columns: minmax(0,1fr); max-width: 1400px; }
   td.nw { white-space: nowrap; }
@@ -207,13 +216,11 @@ date: 2026-10-12
   .more { font-family: inherit; color: var(--accent); cursor: help; border-bottom: 1px dotted var(--accent); }
   .conf { display:inline-flex; gap:6px; align-items:center; font-size:12px; font-weight:700; color: var(--warn); background: var(--warn-bg); border-radius:999px; padding:3px 10px; }
   .conf .ic { width:14px; height:14px; vertical-align:0; }
-  /* inside ShareHub universal layout */
   body { background: var(--bg) !important; color: var(--text); }
   #content .bg-white { background: var(--bg) !important; box-shadow: none !important; padding: 0 !important; }
   #content .container { max-width: 1440px; }
   #content .page { padding-top: 8px; }
   #content table { margin-bottom: 0; }
-  #content a.btn-secondary { margin-bottom: 24px; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
@@ -257,11 +264,11 @@ date: 2026-10-12
   <h2><span class="hic"><i data-lucide="target" class="ic"></i></span>What it means for the BMCPC budget</h2>
   <div class="tbl"><table>
     <tr><th>BMCPC module</th><th class="n">Our estimate</th><th>Closest comparables</th><th>Read</th></tr>
-    <tr><td class="k"><i data-lucide="globe" class="ic"></i>Website revamp</td><td class="n strong">450k – 500k</td><td>Harbourfront 313k · Breast Cancer Screening 597k · Youth Portal 869k · HA Go 861k</td><td>Mid-range; BMCPC is 3 sites → 1 with 3 languages</td></tr>
-    <tr><td class="k"><i data-lucide="server" class="ic"></i>Maintenance / year</td><td class="n strong">100k – 110k</td><td>Parkway ~100k · StartmeupHK ~135k · Academy of Finance ~208k – 290k</td><td>Low end; room to add content-update hours</td></tr>
-    <tr><td class="k"><i data-lucide="hand-coins" class="ic"></i>Donation & payment</td><td class="n strong">150k – 170k</td><td>Shave for Hope 250k · AsiaPay integration 675k · HKBU portal 1.0M</td><td>Below Shave for Hope; fine for a simple donate flow without peer-to-peer</td></tr>
-    <tr><td class="k"><i data-lucide="file-pen-line" class="ic"></i>Online applications</td><td class="n strong">100k – 120k</td><td>CIC enrolment platform 1.58M (4 orders)</td><td>Only for 2–3 forms with a simple approval flow</td></tr>
-    <tr><td class="k"><i data-lucide="bot" class="ic"></i>AI chatbot</td><td class="n strong">50k – 70k</td><td>DH website AI chatbot 66k (HKO20240521-1270)</td><td>In line</td></tr>
+    <tr><td class="k"><i data-lucide="globe" class="ic"></i>Website revamp</td><td class="n strong">600k – 750k</td><td>Harbourfront 313k · Breast Cancer Screening 597k · HA Go 861k · Youth Portal 869k</td><td>Mid-range; BMCPC is 3 sites → 1 with 3 languages</td></tr>
+    <tr><td class="k"><i data-lucide="server" class="ic"></i>Maintenance / year</td><td class="n strong">150k – 200k</td><td>Parkway ~100k · StartmeupHK ~135k · HA PPP ~163k · Academy of Finance ~208k – 290k</td><td>Middle of our range; includes 10 content-update hours / month</td></tr>
+    <tr><td class="k"><i data-lucide="hand-coins" class="ic"></i>Donation & payment</td><td class="n strong">250k – 350k</td><td>Shave for Hope 250k · AsiaPay integration 675k · HKBU portal 1.0M</td><td>In line with Shave for Hope</td></tr>
+    <tr><td class="k"><i data-lucide="file-pen-line" class="ic"></i>Online applications</td><td class="n strong">300k – 450k</td><td>CIC enrolment platform 749k (first order) · CIC training-scheme system 491k</td><td>Below CIC; scoped to 2–3 forms with approval flow</td></tr>
+    <tr><td class="k"><i data-lucide="bot" class="ic"></i>AI chatbot</td><td class="n strong">60k – 90k</td><td>DH website AI chatbot 66k (HKO20240521-1270)</td><td>In line</td></tr>
   </table></div>
 </section>
 

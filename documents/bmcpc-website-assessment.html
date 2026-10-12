@@ -207,6 +207,11 @@ date: 2026-10-12
   .part1 .mod-ic { width: 30px; height: 30px; }
   .part1 .mod-price { font-size: 19px; }
   header { margin-bottom: 0; }
+  .mod-dep { font-size: 11.5px; color: var(--muted); margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); display: flex; gap: 5px; align-items: flex-start; }
+  .mod-dep .ic-sm { margin-top: 2px; flex-shrink: 0; }
+  .prelim { margin-top: 8px; font-size: 12.5px; font-weight: 600; color: var(--warn); display: flex; gap: 6px; align-items: center; }
+  .mods .mod:first-child { grid-column: span 2; }
+  @media (max-width: 520px) { .mods .mod:first-child { grid-column: auto; } }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 </head>
@@ -256,11 +261,12 @@ date: 2026-10-12
     <div>
       <div class="hero-k">2027 budget at a glance · ballpark, detailed quotation to follow</div>
       <div class="hero-v">HK$1.4M – 1.9M</div>
-      <div class="hero-s">All six modules · benchmarked against our recent public-sector projects</div>
+      <div class="hero-s">All five modules · benchmarked against our recent public-sector projects</div>
+      <div class="prelim"><i data-lucide="triangle-alert" class="ic-sm"></i>Preliminary figures. We need to review BMCPC's current systems before quoting.</div>
     </div>
     <div class="hero-bar">
-      <div class="bar"><span class="seg m1" style="width:39.7%" title="Website revamp: HK$600k – 750k"></span><span class="seg m2" style="width:10.6%" title="Hosting & maintenance: HK$150k – 200k"></span><span class="seg m3" style="width:18.5%" title="Online donation & payment: HK$250k – 350k"></span><span class="seg m4" style="width:23.8%" title="Online applications: HK$300k – 450k"></span><span class="seg m5" style="width:2.6%" title="EDM platform: HK$30k – 50k"></span><span class="seg m6" style="width:4.8%" title="AI chatbot: HK$60k – 90k"></span></div>
-      <div class="bar-legend"><span><i class="dot m1"></i>Website revamp</span><span><i class="dot m2"></i>Hosting & maintenance</span><span><i class="dot m3"></i>Online donation & payment</span><span><i class="dot m4"></i>Online applications</span><span><i class="dot m5"></i>EDM platform</span><span><i class="dot m6"></i>AI chatbot</span></div>
+      <div class="bar"><span class="seg m1" style="width:50.3%" title="Website revamp: HK$750k – 950k"></span><span class="seg m3" style="width:18.5%" title="Online donation & payment: HK$250k – 350k"></span><span class="seg m4" style="width:23.8%" title="Online applications: HK$300k – 450k"></span><span class="seg m5" style="width:2.6%" title="EDM / CRM improvements: HK$30k – 50k"></span><span class="seg m6" style="width:4.8%" title="AI chatbot: HK$60k – 90k"></span></div>
+      <div class="bar-legend"><span><i class="dot m1"></i>Website revamp</span><span><i class="dot m3"></i>Online donation & payment</span><span><i class="dot m4"></i>Online applications</span><span><i class="dot m5"></i>EDM / CRM improvements</span><span><i class="dot m6"></i>AI chatbot</span></div>
     </div>
   </div>
 
@@ -268,38 +274,37 @@ date: 2026-10-12
       <div class="mod">
         <div class="mod-top"><span class="mod-ic m1"><i data-lucide="globe" class="ic"></i></span><span class="pill p-n">Phase 1</span></div>
         <div class="mod-name">Website revamp</div>
-        <div class="mod-price">HK$600k – 750k</div>
-        <div class="mod-line">3 sites → 1, TC / EN / SC, staff CMS, SEO</div>
-      </div>
-      <div class="mod">
-        <div class="mod-top"><span class="mod-ic m2"><i data-lucide="server" class="ic"></i></span><span class="pill p-n">From launch</span></div>
-        <div class="mod-name">Hosting & maintenance</div>
-        <div class="mod-price">HK$150k – 200k</div>
-        <div class="mod-line">First year: hosting, updates, backups, support, content help</div>
+        <div class="mod-price">HK$750k – 950k</div>
+        <div class="mod-line">3 sites → 1, TC / EN / SC, staff CMS, SEO; incl. 1st-year hosting & maintenance</div>
+        <div class="mod-dep"><i data-lucide="info" class="ic-sm"></i>Depends on: Final page count, content and review rounds, support hours</div>
       </div>
       <div class="mod">
         <div class="mod-top"><span class="mod-ic m3"><i data-lucide="hand-coins" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
         <div class="mod-name">Online donation & payment</div>
         <div class="mod-price">HK$250k – 350k</div>
         <div class="mod-line">Card, FPS, PayMe; receipts; reports</div>
+        <div class="mod-dep"><i data-lucide="info" class="ic-sm"></i>Depends on: Payment methods, receipts, link to finance system</div>
       </div>
       <div class="mod">
         <div class="mod-top"><span class="mod-ic m4"><i data-lucide="file-pen-line" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
         <div class="mod-name">Online applications</div>
         <div class="mod-price">HK$300k – 450k</div>
         <div class="mod-line">Forms with approval workflow, e.g. 年度慈善捐款計劃</div>
+        <div class="mod-dep"><i data-lucide="info" class="ic-sm"></i>Depends on: Number of forms, approval steps, back-office links</div>
       </div>
       <div class="mod">
         <div class="mod-top"><span class="mod-ic m5"><i data-lucide="mail" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
-        <div class="mod-name">EDM platform</div>
+        <div class="mod-name">EDM / CRM improvements</div>
         <div class="mod-price">HK$30k – 50k</div>
-        <div class="mod-line">Templates, lists, campaigns</div>
+        <div class="mod-line">Automation and workflow on BMCPC's existing platform. Migration to a new platform quoted separately</div>
+        <div class="mod-dep"><i data-lucide="info" class="ic-sm"></i>Depends on: Current platform, list size, integrations</div>
       </div>
       <div class="mod">
         <div class="mod-top"><span class="mod-ic m6"><i data-lucide="bot" class="ic"></i></span><span class="pill p-n">Phase 2</span></div>
         <div class="mod-name">AI chatbot</div>
         <div class="mod-price">HK$60k – 90k</div>
         <div class="mod-line">24/7 answers in TC / EN / SC</div>
+        <div class="mod-dep"><i data-lucide="info" class="ic-sm"></i>Depends on: Knowledge sources and channels (web, WhatsApp)</div>
       </div>
   </div>
 
@@ -314,7 +319,7 @@ date: 2026-10-12
   <div class="notin">
     <span class="notin-k"><i data-lucide="circle-dashed" class="ic"></i>Not in this budget</span>
     <span class="chip">Booking system revamp – needs a separate study</span>
-    <span class="chip">CRM</span>
+    <span class="chip">EDM / CRM migration to a new platform</span>
     <span class="chip">Member portal</span>
   </div>
 </section>
@@ -355,7 +360,7 @@ date: 2026-10-12
     <tr><td class="k"><i data-lucide="hand-coins" class="ic"></i>Online donation / payment</td><td>None; paid by <span class="zh">轉數快</span>, cheque or bank</td><td>Payment gateway; card, FPS, PayMe; receipts</td><td class="n">250k – 350k</td></tr>
     <tr><td class="k"><i data-lucide="file-pen-line" class="ic"></i>Online applications<span class="sub"><span class="zh">年度慈善捐款計劃</span> · <span class="zh">服務申請</span></span></td><td>PDF / DOC forms</td><td>Online forms with approval workflow</td><td class="n">300k – 450k</td></tr>
     <tr><td class="k"><i data-lucide="inbox" class="ic"></i>CRM / enquiry ticketing</td><td>Enquiries by email</td><td>Track and assign enquiries</td><td class="n">50k – 120k</td></tr>
-    <tr><td class="k"><i data-lucide="send" class="ic"></i>EDM platform and campaigns</td><td>—</td><td>Templates, lists, campaigns</td><td class="n">30k – 50k + subscription</td></tr>
+    <tr><td class="k"><i data-lucide="send" class="ic"></i>EDM / CRM improvements</td><td>Sign-up form; platform not yet known</td><td>Automation and workflow on the existing platform. Migration to a new platform quoted separately</td><td class="n">30k – 50k</td></tr>
     <tr><td class="k"><i data-lucide="user-round" class="ic"></i>Member login / portal</td><td>—</td><td>Accounts for lot / niche holders</td><td class="n">From 150k</td></tr>
     <tr><td class="k"><i data-lucide="headset" class="ic"></i>Customer service / chatbot</td><td>Tawk.to</td><td>AI chatbot, WhatsApp Business</td><td class="n">60k – 90k + usage</td></tr>
     <tr><td class="k"><i data-lucide="pen-tool" class="ic"></i>Content production</td><td>—</td><td>Copywriting, photography, video</td><td class="n">Per brief</td></tr>
@@ -371,7 +376,7 @@ date: 2026-10-12
     <tr><td class="k"><i data-lucide="arrow-right-left" class="ic"></i>Redirects</td><td>Every Info and Shine URL, plus any main-site pages we merge</td><td class="ref"><a href="#redirects">§2</a></td></tr>
     <tr><td class="k"><i data-lucide="search" class="ic"></i>SEO</td><td>8 broken links on the main site; Info is reachable at two addresses; 4 separate GA4 properties</td><td class="ref"><a href="#seo">§3</a></td></tr>
     <tr><td class="k"><i data-lucide="plug" class="ic"></i>Systems</td><td>Live chat, SMS-verified contact form, e-newsletter and 2 booking systems. No online payment, donation or shop on any site.</td><td class="ref"><a href="#systems">§4</a></td></tr>
-    <tr><td class="k"><i data-lucide="wallet" class="ic"></i>Budget</td><td>Website <b>HK$600k – 750k</b>; all modules <b>HK$1.4M – 1.9M</b> (<a href="#budget2027">Part 1</a>); 3 months to launch (<a href="#timeline">§7</a>); Phase 2 quoted separately (<a href="#systems-summary">systems</a>)</td><td class="ref"><a href="#budget">§6</a></td></tr>
+    <tr><td class="k"><i data-lucide="wallet" class="ic"></i>Budget</td><td>Website <b>HK$750k – 950k</b> incl. 1st-year maintenance; all modules <b>HK$1.4M – 1.9M</b> (preliminary) (<a href="#budget2027">Part 1</a>); 3 months to launch (<a href="#timeline">§7</a>); Phase 2 quoted separately (<a href="#systems-summary">systems</a>)</td><td class="ref"><a href="#budget">§6</a></td></tr>
   </table></div>
 </section>
 
@@ -412,7 +417,7 @@ date: 2026-10-12
       <ul class="points">
         <li>Booking / allocation system revamp</li>
         <li>Online donation / payment, online applications</li>
-        <li>CRM, EDM platform, member portal, chatbot</li>
+        <li>EDM / CRM, member portal, chatbot</li>
         <li>Content production, audits, ongoing SEO</li>
       </ul>
       <p class="note">Full list in <a href="#systems-summary">Systems and services by phase</a>.</p>

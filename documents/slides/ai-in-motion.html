@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>AI in Motion — 我們用 AI 做日常工作</title>
+<link rel="icon" type="image/png" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+<style>
+  /* Palette and artwork come from the MCSD_TW_AIinMotion deck itself; the layout
+     vocabulary (slide-head, lanes, nodes, pain/fix rows, chips) is the one used in
+     the Master Album go-to-market deck.
+
+     Lime is this event's accent and does the job MC orange does elsewhere. The
+     orange survives as a FILL only — its ink is navy — and navy is lifted to
+     #8FB3E0 anywhere it has to read as text on this near-black ground. */
+  :root{
+    color-scheme: dark;
+    --bg:#0B0B0C; --panel:#17181C; --panel-2:#121316; --line-s:#2A2D33;
+    --text:#F5F5F2; --soft:#C9C9C4; --muted:#9AA3AD;
+    --lime:#E1E78F; --lime-deep:#C3CB5E; --orange:#FF9E1B; --navy:#10294F; --lift:#8FB3E0;
+    --on-lime:#0B0B0C; --track:#23262C;
+    --ok:#34D399; --warn:#FBBF24; --dim:#8A94A0;
+  }
+  /* Light theme. The artwork panels stay dark on purpose — the PNG has black
+     baked in, and a dark artwork column against a light page is exactly how the
+     template itself is laid out. The accents are not reused as-is: lime on white
+     is 1.3:1 and the greens/ambers are far too pale, so each one darkens to a
+     value that actually reads. */
+  html.light{
+    --bg:#FFFFFF; --panel:#F4F5F7; --panel-2:#FAFAFA; --line-s:#E2E5EA;
+    --text:#0B0B0C; --soft:#3C4048; --muted:#6B7280;
+    --lime:#6F7A1F; --lime-deep:#8E9A33; --lift:#10294F;
+    --on-lime:#FFFFFF; --track:#E6E8EC;
+    --ok:#0F9D63; --warn:#B45309; --dim:#6B7280;
+  }
+  html.light .reveal-viewport{ background:#FFFFFF; }
+  /* the lime chip behind the section head needs its ink flipped too */
+  html.light .slide-head .hicon iconify-icon{ color:#FFFFFF; }
+  *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .reveal-viewport{ background:var(--bg); }
+  .reveal{ font-family:'Raleway','Noto Sans TC',system-ui,sans-serif; color:var(--text); font-size:26px; }
+  .reveal h1,.reveal h2,.reveal h3{ font-family:'Raleway','Noto Sans TC',sans-serif; color:var(--text); text-transform:none; letter-spacing:-.4px; margin:0; }
+  .reveal h1{ font-size:2.9em; font-weight:900; line-height:1.04; }
+  .reveal h2{ font-size:1.5em; font-weight:800; line-height:1.1; }
+  .reveal h3{ font-size:.8em; font-weight:700; }
+  .reveal p{ line-height:1.5; margin:.3em 0; }
+  .reveal strong{ color:var(--lime); font-weight:800; }
+  .lead{ color:var(--soft); font-size:.78em; } .muted{ color:var(--muted); } .small{ font-size:.6em; }
+  .reveal .slides{ text-align:left; }
+  .reveal .slides > section{ box-sizing:border-box; width:100%; padding:0 72px;
+                             display:flex; flex-direction:column; justify-content:center; }
+  .reveal .progress{ color:var(--lime); height:3px; }
+  .reveal .controls{ display:none; }
+  .reveal .controls .controls-arrow{ opacity:.3; } .reveal .controls .controls-arrow:hover{ opacity:1; }
+  .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; top:24px; right:28px; bottom:auto; }
+
+  /* the event's signature strip + mark, on every slide */
+  .bar{ position:fixed; left:0; right:0; bottom:0; height:6px; z-index:70;
+        background:linear-gradient(90deg,#E8467C,#F5A623,#E1E78F,#49C6E5,#2E6FD9,#9B5DE5,#E8467C); }
+  .mark{ position:fixed; right:26px; bottom:20px; z-index:70; height:26px; opacity:.95; }
+  .theme-btn{ position:fixed; top:18px; right:74px; z-index:80; width:34px; height:34px;
+              display:flex; align-items:center; justify-content:center; cursor:pointer;
+              border:1px solid var(--line-s); border-radius:10px; background:var(--panel);
+              color:var(--muted); transition:color .2s, border-color .2s; }
+  .theme-btn:hover{ color:var(--lime); border-color:var(--lime); }
+  .theme-btn iconify-icon{ font-size:18px; }
+
+  /* ---------- artwork, lifted straight out of the template ---------- */
+  .row{ display:flex; align-items:center; gap:54px; }
+  .row.rev{ flex-direction:row-reverse; }
+  .row .copy{ flex:1; min-width:0; }
+  /* In the template the artwork bleeds to the slide edge; the negative margin
+     cancels the section's 72px padding so it reaches it here too. */
+  .art{ flex:none; width:430px; height:720px; overflow:hidden; }
+  .art img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .row .art{ margin-left:-72px; }
+  .row.rev .art{ margin-left:0; margin-right:-72px; }
+
+  /* ---------- slide head ---------- */
+  .slide-head{ display:flex; align-items:center; gap:16px; margin:0 0 .75em;
+               padding-bottom:.5em; border-bottom:1px solid var(--line-s); }
+  .slide-head .hicon{ flex:none; width:54px; height:54px; border-radius:15px; display:flex;
+                      align-items:center; justify-content:center;
+                      background:linear-gradient(135deg,var(--lime),var(--lime-deep));
+                      box-shadow:0 10px 26px rgba(225,231,143,.22); }
+  .slide-head .hicon iconify-icon{ font-size:29px; color:#0B0B0C; }
+  .kicker{ color:var(--lime); font-weight:800; letter-spacing:2.6px; text-transform:uppercase;
+           font-size:.58em; margin:0 0 6px; }
+  .kicker .cn{ letter-spacing:.5px; margin-left:8px; }
+
+  /* ---------- workflow graph ---------- */
+  .flow{ display:flex; align-items:center; margin:.25em 0 0; }
+  .doors{ display:flex; flex-direction:column; gap:30px; }
+  .node{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s);
+         border-radius:14px; padding:15px 17px; width:268px; box-sizing:border-box;
+         display:flex; align-items:center; gap:11px; }
+  .node iconify-icon,.node img{ flex:none; font-size:28px; width:28px; height:28px; object-fit:contain; color:var(--lime); }
+  .node .t b{ display:block; color:var(--text); font-weight:800; font-size:.6em; line-height:1.3; }
+  .node .t span{ color:var(--muted); font-size:.48em; line-height:1.35; }
+  .tool{ color:var(--muted); font-size:.4em; letter-spacing:.3px; margin:6px 0 0 4px; }
+  /* the engine is the only orange on the page, because it is the thing that is new */
+  .node.engine{ background:var(--orange); border-color:var(--orange); }
+  .node.engine .t b{ color:var(--navy); } .node.engine .t span{ color:#3C4A63; }
+  .node.engine iconify-icon{ color:var(--navy); }
+  .node.result .t b{ color:var(--lift); }
+
+  .merge{ width:40px; align-self:stretch; position:relative; margin-left:12px; }
+  .merge::before{ content:''; position:absolute; left:0; right:12px; top:38px; bottom:38px;
+                  border:1.5px solid var(--lift); border-left:none; border-radius:0 14px 14px 0; }
+  .arrow{ flex:none; width:84px; height:1.5px; background:var(--lift); position:relative; }
+  .arrow::after{ content:''; position:absolute; right:-1px; top:-4.5px;
+                 border-left:9px solid var(--lift); border-top:5px solid transparent; border-bottom:5px solid transparent; }
+  .stem{ flex:none; width:26px; height:1.5px; background:var(--lift); }
+  .punch{ margin-top:.8em; font-weight:800; font-size:.66em; }
+
+  /* ---------- pain -> fix ---------- */
+  .ps{ display:grid; grid-template-columns:104px 1fr 52px 1.15fr; align-items:center; gap:14px 0; }
+  .ps-hd{ text-transform:uppercase; letter-spacing:1.6px; font-weight:800; font-size:12px; text-align:center; }
+  .ps-hd.p{ color:var(--muted); } .ps-hd.f{ color:var(--lime); }
+  .ps-job{ font-weight:800; font-size:.58em; }
+  .ps-pain,.ps-fix{ display:flex; align-items:center; gap:13px; border:1px solid var(--line-s);
+                    border-radius:14px; padding:14px 16px;
+                    background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+  .ps-fix{ border-color:var(--lime); background:rgba(225,231,143,.06); }
+  .ps-pain iconify-icon{ color:var(--dim); font-size:25px; flex:none; }
+  .ps-fix iconify-icon{ color:var(--lime); font-size:25px; flex:none; }
+  .ps-pain b,.ps-fix b{ display:block; color:var(--text); font-weight:700; font-size:16px; }
+  .ps-fix b{ color:var(--lime); }
+  .ps-pain span,.ps-fix span{ color:var(--muted); font-size:13px; }
+  .ps-ar{ display:flex; justify-content:center; }
+
+  /* ---------- screenshot drop zone ---------- */
+  /* An explicit height: the section is auto-height, so `flex:1` had nothing to
+     flex against and a large screenshot simply overflowed the slide. */
+  .shot{ border:1px solid var(--line-s); border-radius:18px; background:var(--panel-2);
+         height:420px; padding:10px; box-sizing:border-box; overflow:hidden;
+         display:flex; align-items:center; justify-content:center; }
+  .shot.empty{ border:2px dashed var(--line-s); }
+  .shot img{ max-width:100%; max-height:100%; width:auto; height:auto;
+             object-fit:contain; border-radius:10px; display:block; }
+  .shot .hint{ color:var(--muted); font-size:.56em; text-align:center; line-height:1.6; }
+  .cap{ text-align:center; color:var(--soft); font-size:.56em; margin-top:.6em; }
+
+
+  /* ---------- CV scorecard (mock of what Careers actually returns) ---------- */
+  .job-line{ color:var(--muted); font-size:.46em; margin:0 0 14px 2px; }
+  .job-line b{ color:var(--text); font-weight:700; }
+  .cand{ display:grid; grid-template-columns:168px 1fr 112px; gap:0 18px; align-items:center;
+         border:1px solid var(--line-s); border-radius:14px; padding:14px 18px;
+         background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+  .cand + .cand{ margin-top:11px; }
+  .cand .nm b{ display:block; color:var(--text); font-weight:800; font-size:.56em; line-height:1.25; }
+  .cand .nm span{ display:block; color:var(--muted); font-size:.4em; margin-top:2px; }
+  .cand .sc{ display:flex; align-items:center; gap:12px; }
+  .cand .sc .n{ font-weight:900; font-size:.74em; width:54px; letter-spacing:-1px; }
+  .sbar{ flex:1; height:9px; border-radius:999px; background:var(--track); overflow:hidden; }
+  .sbar i{ display:block; height:100%; border-radius:999px; }
+  .tier{ border-radius:999px; padding:5px 0; font-size:.38em; font-weight:800;
+         text-align:center; letter-spacing:.4px; }
+  .why{ grid-column:2 / span 2; display:flex; gap:22px; margin-top:9px; font-size:.4em; }
+  .why .ok{ color:var(--ok); } .why .no{ color:var(--dim); }
+  .s-strong{ color:var(--ok); } .s-part{ color:var(--warn); } .s-weak{ color:var(--dim); }
+  .b-strong{ background:var(--ok); } .b-part{ background:var(--warn); } .b-weak{ background:var(--dim); }
+  .t-strong{ background:rgba(52,211,153,.14); color:#34D399; border:1px solid rgba(52,211,153,.4); }
+  .t-part{ background:rgba(251,191,36,.12); color:#FBBF24; border:1px solid rgba(251,191,36,.38); }
+  .t-weak{ background:rgba(138,148,160,.10); color:#8A94A0; border:1px solid rgba(138,148,160,.33); }
+
+  .chip{ display:inline-block; background:var(--panel); border:1px solid var(--line-s);
+         border-radius:999px; padding:4px 13px; margin:5px 4px 0 0; font-size:13px; color:var(--text); }
+  .chip iconify-icon{ color:var(--lime); vertical-align:-2px; margin-right:5px; font-size:15px; }
+  .dv-title{ font-size:2.5em; line-height:1.05; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- 1 · title -->
+<section>
+  <div class="row rev">
+  <div class="art"><img src="assets/burst.png" alt=""></div>
+  <div class="copy">
+    <p class="kicker">AI in Motion · Solution Day 2026</p>
+    <h1>我們用 AI<br>做日常工作</h1>
+    <p class="lead" style="margin-top:.75em">市場部 × 人力資源部 — 日常在用的流程</p>
+  </div>
+</div>
+</section>
+
+<!-- 2 · divider -->
+<section>
+  <div class="row">
+  <div class="art"><img src="assets/burst.png" alt=""></div>
+  <div class="copy">
+    <p class="kicker">Case 1 · Marketing <span class="cn">市場部</span></p>
+    <h2 class="dv-title">更新網站</h2>
+    <p class="lead" style="margin-top:.55em">由設計稿到上線，全程自動。</p>
+  </div>
+</div>
+</section>
+
+<!-- 3 · marketing flow -->
+<section>
+  <div class="slide-head">
+    <div class="hicon"><iconify-icon icon="material-symbols:design-services-rounded"></iconify-icon></div>
+    <div><p class="kicker">Case 1 · Marketing <span class="cn">市場部</span></p><h2>兩種情況，同一個做法</h2></div>
+  </div>
+  <div class="flow">
+    <div class="doors">
+      <div>
+        <div class="node">
+          <iconify-icon icon="logos:figma"></iconify-icon>
+          <div class="t"><b>新頁面</b><span>提供 Figma 連結</span></div>
+        </div><div class="tool">Figma</div>
+      </div>
+      <div>
+        <div class="node">
+          <iconify-icon icon="material-symbols:add-comment-rounded"></iconify-icon>
+          <div class="t"><b>現有頁面</b><span>點一下，寫下要改的地方</span></div>
+        </div><div class="tool">Wilco</div>
+      </div>
+    </div>
+    <div class="merge"></div><div class="stem"></div>
+    <div>
+      <div class="node engine">
+        <iconify-icon icon="material-symbols:auto-awesome-rounded"></iconify-icon>
+        <div class="t"><b>AI Agent</b><span>建立 · 修改</span></div>
+      </div><div class="tool">WP Buddy</div>
+    </div>
+    <div class="arrow"></div>
+    <div>
+      <div class="node result">
+        <img src="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png" alt="">
+        <div class="t"><b>網站上線</b><span>經同事確認</span></div>
+      </div><div class="tool">masterconcept.ai</div>
+    </div>
+  </div>
+  <p class="punch">不用開工單。交設計稿，或者直接在頁面上指出來。</p>
+</section>
+
+<!-- 4 · wilco screenshot -->
+<section>
+  <div class="slide-head">
+    <div class="hicon"><iconify-icon icon="material-symbols:ads-click-rounded"></iconify-icon></div>
+    <div><p class="kicker">Wilco</p><h2>直接在網頁上指出要改的地方</h2></div>
+  </div>
+  <div class="shot">
+    <img src="shots/wilco.png" alt=""
+         onerror="this.parentNode.classList.add('empty');this.remove();this.parentNode.querySelector('.hint').hidden=false">
+    <div class="hint" hidden>請在此貼上 Wilco 截圖<br><span class="small">shots/wilco.png</span></div>
+  </div>
+  <p class="cap">在網站上點一下，寫下要改的內容 — AI Agent 收到後直接改。</p>
+</section>
+
+<!-- 5 · divider -->
+<section>
+  <div class="row">
+  <div class="art"><img src="assets/burst.png" alt=""></div>
+  <div class="copy">
+    <p class="kicker">Case 2 · Recruitment <span class="cn">招聘</span></p>
+    <h2 class="dv-title">招聘篩選</h2>
+    <p class="lead" style="margin-top:.55em">每一份 CV 都讀過，再交到你手上。</p>
+  </div>
+</div>
+</section>
+
+<!-- 6 · hr flow -->
+<section>
+  <div class="slide-head">
+    <div class="hicon"><iconify-icon icon="material-symbols:person-search-rounded"></iconify-icon></div>
+    <div><p class="kicker">Case 2 · Recruitment <span class="cn">招聘</span></p><h2>讀 CV，對照職位要求，評分</h2></div>
+  </div>
+  <div class="flow">
+    <div class="doors">
+      <div>
+        <div class="node">
+          <iconify-icon icon="material-symbols:checklist-rounded"></iconify-icon>
+          <div class="t"><b>職位要求</b><span>這個職位需要什麼</span></div>
+        </div><div class="tool">Job criteria</div>
+      </div>
+      <div>
+        <div class="node">
+          <iconify-icon icon="material-symbols:description-rounded"></iconify-icon>
+          <div class="t"><b>候選人 CV</b><span>來自不同招聘渠道</span></div>
+        </div><div class="tool">CV</div>
+      </div>
+    </div>
+    <div class="merge"></div><div class="stem"></div>
+    <div>
+      <div class="node engine">
+        <iconify-icon icon="material-symbols:neurology-rounded"></iconify-icon>
+        <div class="t"><b>AI Agent</b><span>閱讀 · 比對 · 評分</span></div>
+      </div><div class="tool">Careers</div>
+    </div>
+    <div class="arrow"></div>
+    <div>
+      <div class="node result">
+        <iconify-icon icon="material-symbols:social-leaderboard-rounded" style="color:var(--lift)"></iconify-icon>
+        <div class="t"><b>Fit Score</b><span>0 – 100 分</span></div>
+      </div><div class="tool">75 分以上 = Strong fit</div>
+    </div>
+  </div>
+  <p class="punch">每一份 CV 都看過。打開名單之前，已經排好序。</p>
+</section>
+
+<!-- 7 · careers screenshot -->
+<section>
+  <div class="slide-head">
+    <div class="hicon"><iconify-icon icon="material-symbols:award-star-rounded"></iconify-icon></div>
+    <div><p class="kicker">Careers</p><h2>AI 評分、強項與不足</h2></div>
+  </div>
+  <p class="job-line">職位：<b>Cloud Solutions Engineer</b> — AI 逐份讀 CV，對照這個職位的要求評分</p>
+    <div class="cand">
+      <div class="nm"><b>陳大文</b><span>8 年雲端架構</span></div>
+      <div class="sc"><span class="n s-strong">88</span>
+        <span class="sbar"><i class="b-strong" style="width:88%"></i></span></div>
+      <div class="tier t-strong">Strong fit</div>
+      <div class="why"><span class="ok">✓ GCP 專業認證 · 大型遷移項目</span><span class="no">✗ 未用過 Terraform</span></div>
+    </div>
+    <div class="cand">
+      <div class="nm"><b>李小明</b><span>網絡工程背景</span></div>
+      <div class="sc"><span class="n s-part">64</span>
+        <span class="sbar"><i class="b-part" style="width:64%"></i></span></div>
+      <div class="tier t-part">Partial fit</div>
+      <div class="why"><span class="ok">✓ 網絡與保安紮實</span><span class="no">✗ 缺公有雲實戰經驗</span></div>
+    </div>
+    <div class="cand">
+      <div class="nm"><b>黃美儀</b><span>IT 支援轉職</span></div>
+      <div class="sc"><span class="n s-weak">37</span>
+        <span class="sbar"><i class="b-weak" style="width:37%"></i></span></div>
+      <div class="tier t-weak">Weak fit</div>
+      <div class="why"><span class="ok">✓ 溝通能力強</span><span class="no">✗ 未符合主要技術要求</span></div>
+    </div>
+  <p class="cap" style="margin-top:14px">分數只是用來排序，決定見哪一位的仍然是人。</p>
+</section>
+
+<!-- 8 · before / after -->
+<section>
+  <div class="slide-head">
+    <div class="hicon"><iconify-icon icon="material-symbols:change-circle-rounded"></iconify-icon></div>
+    <div><p class="kicker">New AI workflow</p><h2>新的 AI 工作流程</h2></div>
+  </div>
+  <div class="ps">
+    <div></div><div class="ps-hd p">以前</div><div></div><div class="ps-hd f">現在</div>
+
+    <div class="ps-job">網站更新</div>
+    <div class="ps-pain">
+      <iconify-icon icon="material-symbols:hourglass-top-rounded"></iconify-icon>
+      <div><b>排期、等開發</b><span>靠截圖來回確認</span></div>
+    </div>
+    <div class="ps-ar"><div class="arrow"></div></div>
+    <div class="ps-fix">
+      <iconify-icon icon="material-symbols:bolt-rounded"></iconify-icon>
+      <div><b>在頁面上指一下</b><span>AI Agent 直接改</span></div>
+    </div>
+
+    <div class="ps-job">招聘篩選</div>
+    <div class="ps-pain">
+      <iconify-icon icon="material-symbols:docs-rounded"></iconify-icon>
+      <div><b>數以千計的 CV</b><span>來自不同渠道，逐份打開、逐份對照職位要求</span></div>
+    </div>
+    <div class="ps-ar"><div class="arrow"></div></div>
+    <div class="ps-fix">
+      <iconify-icon icon="material-symbols:sort-rounded"></iconify-icon>
+      <div><b>AI 評分，自動排序</b><span>更快找到合適的人</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · close -->
+<section>
+  <div class="row rev">
+  <div class="art"><img src="assets/burst.png" alt=""></div>
+  <div class="copy">
+    <p class="kicker">Your turn</p>
+    <h1 style="font-size:2.3em">你的流程<br>可以是下一個</h1>
+    <p class="lead" style="margin-top:.75em">只要工作中有等待和重複，就可以這樣做。</p>
+  </div>
+</div>
+</section>
+
+</div></div>
+
+<button class="theme-btn" id="themeBtn" title="切換深色 / 淺色" aria-label="切換深色或淺色">
+  <iconify-icon icon="material-symbols:light-mode-rounded"></iconify-icon>
+</button>
+<div class="bar"></div>
+<img class="mark" src="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png" alt="Master Concept">
+
+<script>
+  // The choice is per viewer and has to survive a reload, which is all
+  // localStorage is for here; the deck renders correctly without it.
+  (function () {
+    var KEY = 'aim-theme', root = document.documentElement;
+    function apply(mode) {
+      root.classList.toggle('light', mode === 'light');
+      var ic = document.querySelector('#themeBtn iconify-icon');
+      if (ic) ic.setAttribute('icon', mode === 'light'
+        ? 'material-symbols:dark-mode-rounded' : 'material-symbols:light-mode-rounded');
+    }
+    // ?theme=light wins over the stored choice, so a light link can be shared.
+    var forced = new URLSearchParams(location.search).get('theme');
+    var saved;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    apply(forced || saved || 'dark');
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#themeBtn')) return;
+      var next = root.classList.contains('light') ? 'dark' : 'light';
+      apply(next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+    });
+  })();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+<script>
+  Reveal.initialize({ hash:true, slideNumber:'c/t', controls:true, progress:true,
+                      width:1280, height:720, margin:0, transition:'slide' });
+</script>
+</body>
+</html>

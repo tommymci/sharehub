@@ -57,8 +57,6 @@
   .reveal .slides > section{ box-sizing:border-box; width:100%; padding:0 72px;
                              display:flex; flex-direction:column; justify-content:center; }
   .reveal .progress{ color:var(--lime); height:3px; }
-  .reveal .controls{ display:none; }
-  .reveal .controls .controls-arrow{ opacity:.3; } .reveal .controls .controls-arrow:hover{ opacity:1; }
   .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; top:24px; right:28px; bottom:auto; }
 
   /* the event's signature strip + mark, on every slide */
@@ -209,7 +207,7 @@
 <section>
   <div class="slide-head">
     <div class="hicon"><iconify-icon icon="material-symbols:design-services-rounded"></iconify-icon></div>
-    <div><p class="kicker">Case 1 · Marketing <span class="cn">市場部</span></p><h2>兩種情況，同一個做法</h2></div>
+    <div><p class="kicker">Case 1 · Marketing <span class="cn">市場部</span></p><h2>日常網站更新自動化流程</h2></div>
   </div>
   <div class="flow">
     <div class="doors">
@@ -263,7 +261,7 @@
   <div class="row">
   <div class="art"><img src="assets/burst.png" alt=""></div>
   <div class="copy">
-    <p class="kicker">Case 2 · Recruitment <span class="cn">招聘</span></p>
+    <p class="kicker">Case 2 · Human Resources <span class="cn">人力資源部</span></p>
     <h2 class="dv-title">招聘篩選</h2>
     <p class="lead" style="margin-top:.55em">每一份 CV 都讀過，再交到你手上。</p>
   </div>
@@ -274,7 +272,7 @@
 <section>
   <div class="slide-head">
     <div class="hicon"><iconify-icon icon="material-symbols:person-search-rounded"></iconify-icon></div>
-    <div><p class="kicker">Case 2 · Recruitment <span class="cn">招聘</span></p><h2>讀 CV，對照職位要求，評分</h2></div>
+    <div><p class="kicker">Case 2 · Human Resources <span class="cn">人力資源部</span></p><h2>讀 CV，對照職位要求，評分</h2></div>
   </div>
   <div class="flow">
     <div class="doors">
@@ -419,7 +417,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
 <script>
-  Reveal.initialize({ hash:true, slideNumber:'c/t', controls:true, progress:true,
+  Reveal.initialize({ hash:true, slideNumber:'c/t', controls:false, progress:true,
                       width:1280, height:720, margin:0, transition:'slide' });
 </script>
 </body>

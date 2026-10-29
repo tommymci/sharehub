@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI &amp; Training Team — FDE Business Development</title>
+  <link rel="icon" type="image/png" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
+  <link rel="apple-touch-icon" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <style>
+    :root{ --mc-orange:#FF9E1B; --mc-orange-deep:#E8890B; --bg:#0A1726; --panel:#13283D; --panel-2:#0F2236; --line:#26496530; --line-s:#2B5170; --text:#EAF1F8; --muted:#9FB4C8; }
+    *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+    .reveal-viewport{ background: radial-gradient(1100px 760px at 86% -12%, rgba(255,158,27,.10), transparent 58%), var(--bg); }
+    .reveal{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:26px; font-weight:400; }
+    .reveal h1,.reveal h2,.reveal h3{ font-family:'Inter',sans-serif; color:#fff; text-transform:none; letter-spacing:-.6px; margin:0; }
+    .reveal h1{ font-size:3.1em; font-weight:900; line-height:1.02; }
+    .reveal h2{ font-size:1.55em; font-weight:800; line-height:1.08; }
+    .reveal h3{ font-size:.82em; font-weight:700; }
+    .reveal strong, .reveal .accent{ color:var(--mc-orange); font-weight:700; }
+    .reveal p{ line-height:1.45; margin:.35em 0; }
+    .reveal a{ color:var(--mc-orange); }
+    .reveal ul{ margin:0; }
+    .reveal li{ margin:.45em 0; list-style:none; position:relative; padding-left:1.65em; line-height:1.4; }
+    .reveal li iconify-icon{ position:absolute; left:0; top:.12em; color:var(--mc-orange); font-size:1.05em; }
+    .reveal .progress{ color:var(--mc-orange); height:3px; }
+    .reveal .controls{ color:var(--mc-orange); }
+    .reveal .controls .controls-arrow{ opacity:.4; transition:opacity .2s, transform .2s; }
+    .reveal .controls .controls-arrow:hover{ opacity:1; }
+    .reveal .slide-number{ background:transparent; color:var(--muted); font-size:13px; top:33px; right:80px; bottom:auto; text-shadow:0 1px 8px rgba(0,0,0,.7); }
+    .lead{ color:var(--muted); font-size:.82em; } .muted{ color:var(--muted); } .small{ font-size:.66em; }
+
+    .reveal .slides{ text-align:left; }
+    .reveal .slides > section{ box-sizing:border-box; width:100%; padding:0 84px; display:flex; flex-direction:column; justify-content:center; }
+    .reveal .slides > section.hero{ align-items:center; text-align:center; }
+
+    /* running header */
+    .brandbar{ position:fixed; top:22px; left:28px; z-index:60; display:flex; align-items:center; gap:10px; font-family:'Inter',system-ui,sans-serif;
+      background:rgba(8,18,30,.55); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.09); border-radius:13px; padding:8px 15px 8px 11px;
+      box-shadow:0 6px 22px rgba(0,0,0,.28); }
+    .brandbar img{ height:24px; display:block; }
+    .brandbar .nm{ color:#fff; font-weight:700; font-size:15px; letter-spacing:.2px; line-height:1; }
+    .brandbar .nm span{ color:#fff; font-weight:600; opacity:.92; }
+    .footer-note{ position:fixed; bottom:16px; left:28px; color:#fff; opacity:.82; font-size:12px; z-index:60; letter-spacing:.2px; font-family:'Inter',system-ui,sans-serif;
+      background:rgba(8,18,30,.5); backdrop-filter:blur(10px); border-radius:9px; padding:5px 12px; }
+    .fs-btn{ position:fixed; top:22px; right:24px; z-index:61; width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+      background:rgba(8,18,30,.55); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.10); border-radius:11px; color:#fff; cursor:pointer;
+      box-shadow:0 6px 22px rgba(0,0,0,.28); transition:color .2s, border-color .2s; }
+    .fs-btn:hover{ border-color:var(--mc-orange); color:var(--mc-orange); }
+    .fs-btn iconify-icon{ font-size:21px; }
+
+    /* section header */
+    .slide-head{ display:flex; align-items:center; gap:18px; margin:0 0 .85em; padding-bottom:.55em; border-bottom:1px solid var(--line-s); }
+    .slide-head .hicon{ flex:none; width:60px; height:60px; border-radius:16px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--mc-orange),var(--mc-orange-deep)); box-shadow:0 10px 26px rgba(255,158,27,.30); }
+    .slide-head .hicon iconify-icon{ font-size:32px; color:#0A1726; }
+    /* the Agenda names two halves; this is how each page says which it is in */
+    .sec{ display:inline-block; border-radius:999px; padding:1px 9px 2px;
+          margin-right:10px; font-size:.92em; letter-spacing:1.3px; }
+    .sec.in{ color:#6FC3F7; background:rgba(111,195,247,.13);
+             border:1px solid rgba(111,195,247,.45); }
+    .sec.cl{ color:var(--mc-orange); background:rgba(255,158,27,.13);
+             border:1px solid rgba(255,158,27,.5); }
+    .slide-head .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px; text-transform:uppercase; font-size:.5em; margin:0 0 4px; }
+    .slide-head h2{ line-height:1.05; }
+
+    /* title slide */
+    .title-sub{ color:var(--mc-orange); font-weight:800; font-size:1.05em; letter-spacing:5px; text-transform:uppercase; margin:.35em 0 .55em; }
+    .kicker-c{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px; text-transform:uppercase; font-size:.52em; margin:0 0 .6em; display:flex; align-items:center; gap:.5em; justify-content:center; }
+    /* light-background section (for divider/title pages) */
+    .reveal section.light h1,.reveal section.light h2,.reveal section.light h3{ color:#0A1726; }
+    .reveal section.light .lead{ color:#52606D; }
+    .reveal section.light .kicker-c,.reveal section.light .title-sub{ color:var(--mc-orange-deep); }
+
+    /* section divider */
+    .reveal .slides > section.divider{ }
+    .dv{ display:flex; align-items:center; gap:56px; }
+    .dv-num{ font-size:13em; font-weight:900; line-height:.74; color:transparent; -webkit-text-stroke:3px var(--mc-orange); flex:none; }
+    .dv .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:3px; text-transform:uppercase; font-size:.5em; margin:0 0 .5em; }
+    .dv-title{ font-size:2.7em; line-height:1.02; }
+    .dv .lead{ margin-top:.6em; max-width:13em; }
+
+    /* team structure page */
+    /* no photo and no name for the part-time trainer — a placeholder that
+       does not pretend to be a specific person */
+    .ghost{ width:86px; height:86px; border-radius:50%; margin:0 auto 9px;
+            border:2px dashed var(--line-s); display:flex; align-items:center;
+            justify-content:center; color:var(--muted); }
+    .ghost iconify-icon{ font-size:38px; }    .lead-ring .person .pn{ font-size:24px; }    /* a title being proposed, not held: the old one stays visible, struck. */
+    .pt-new .tag{ display:inline-block; border:1px solid var(--mc-orange);
+                  border-radius:999px; padding:0 6px; font-size:9.5px;
+                  font-weight:700; margin-left:4px; vertical-align:1px; }
+
+    /* the app wall — 24 tiles, icon-led */
+    /* Teams differ wildly in size (8, 8, 4, 2, 2). A flat 8-across grid left the
+       last three rows nearly empty, so each team is its own box and the boxes
+       are sized to fill the row instead. */
+    .appwall{ display:grid; grid-template-columns:repeat(8,1fr); gap:12px 14px;
+              width:100%; align-items:stretch; }
+    .tgroup{ min-width:0; border:1px solid var(--line-s); border-radius:18px;
+             padding:10px 14px 13px; background:var(--panel-2); }
+    .tiles{ display:grid; gap:12px 8px; margin-top:9px; }
+    .app{ text-align:center; min-width:0; display:block; color:inherit;
+           text-decoration:none; transition:transform .15s; }
+    a.app:hover{ transform:translateY(-3px); }
+    a.app:hover .appicon{ border-color:var(--mc-orange); }
+    /* the two singled out on this page — same breathing tempo as the
+       funding slide, so the deck has one idea of "look here". */
+    .app.shine .appicon{ border-color:var(--mc-orange);
+                         animation:tileglow 2.2s ease-in-out infinite; }
+    @keyframes tileglow{
+      0%,100%{ background:rgba(255,158,27,.08);
+               border-color:rgba(255,158,27,.40);
+               box-shadow:0 0 0 0 rgba(255,158,27,0); }
+      50%    { background:rgba(255,158,27,.34);
+               border-color:rgba(255,158,27,1);
+               box-shadow:0 0 22px 4px rgba(255,158,27,.5); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .app.shine .appicon{ animation:none; background:rgba(255,158,27,.22);
+                           box-shadow:0 0 14px 2px rgba(255,158,27,.4); }
+    }
+    .appicon{ position:relative; width:62px; height:62px; margin:0 auto 8px;
+              border-radius:17px; background:var(--panel); border:1px solid var(--line-s);
+              display:flex; align-items:center; justify-content:center; }
+    .appicon img{ width:42px; height:42px; object-fit:contain; display:block; }
+    /* status reads off the tile corner, so the dot never competes with the name */
+    .sdot{ display:inline-block; width:12px; height:12px; border-radius:50%; background:#5F7891; }
+    .appicon .sdot{ position:absolute; right:-3px; top:-3px; border:2px solid var(--bg); }
+    .sdot.live{ background:#46D39A; } .sdot.building{ background:var(--mc-orange); }
+    .sdot.planning{ background:#5F7891; }
+    .appname{ color:#fff; font-weight:700; font-size:.54em; line-height:1.25; }
+    /* the team is named once per band, not on all 24 tiles */
+    .band{ display:flex; align-items:center; gap:8px;
+           color:var(--mc-orange); font-weight:800; font-size:.62em;
+           letter-spacing:1.5px; text-transform:uppercase;
+           margin:0; }
+    .band span{ color:var(--muted); font-weight:700; letter-spacing:0; }
+    .legend{ display:flex; align-items:center; gap:20px; margin-top:1em; font-size:.52em; color:var(--text); }
+    .legend span{ display:inline-flex; align-items:center; gap:6px; }
+    /* the four-card money page needs to fit one screen */
+    .grid.g2 .card{ padding:14px 18px 15px; }
+    .grid.g2 .card h3{ font-size:.74em; }
+    .grid.g2 .card p{ font-size:.6em; line-height:1.4; }
+    .grid.g2 .ico{ width:32px; height:32px; margin-bottom:.3em; }
+    .grid.g2 .ico iconify-icon{ font-size:17px; }
+
+  /* ---- light theme -------------------------------------------------------
+     Same switch as the AI in Motion deck. The MC orange is a FILL, not an ink:
+     #FF9E1B on white is 1.9:1, so in light mode the token darkens to a value
+     that can actually carry text, and anything sitting ON an orange fill flips
+     to white. Every hard-coded #fff in this deck is listed below — on a light
+     ground they would otherwise vanish. */
+  html.light{
+    --bg:#FFFFFF; --panel:#F3F6FA; --panel-2:#FAFBFD;
+    --line:#D8E2EC80; --line-s:#D8E2EC;
+    --text:#0A1726; --muted:#5A6B82;
+    --mc-orange:#B45309; --mc-orange-deep:#92400E;
+  }
+  html.light .reveal-viewport{ background:#FFFFFF; }
+  html.light .reveal h1, html.light .reveal h2, html.light .reveal h3,
+  html.light .card h3, html.light .appname, html.light .person .pn,
+  html.light .node .t b, html.light .ps-fix b, html.light .ps-pain b,
+  html.light .ptier h3, html.light .revcol h3, html.light .gp-note b,
+  html.light .group.data .group-hd, html.light .tokmeter .plan,
+  html.light .tokmeter .used b{ color:var(--text); }
+  /* ink that sits on an orange fill */
+  html.light .slide-head .hicon iconify-icon, html.light .pill{ color:#FFFFFF; }
+  html.light .brandbar{ background:rgba(255,255,255,.72); border-color:rgba(10,23,38,.10); }
+  html.light .brandbar .nm, html.light .brandbar .nm span{ color:var(--text); }
+  html.light .fs-btn, html.light .theme-btn{ background:rgba(255,255,255,.72);
+    border-color:rgba(10,23,38,.12); color:var(--text); }
+  html.light .footer-note{ background:rgba(255,255,255,.6); color:var(--text); }
+  html.light .appicon .sdot{ border-color:#FFFFFF; }
+  /* the title slide sits on a photo, so its panel keeps dark ink of its own */
+  html.light .hero-panel h1, html.light .hero-panel .lead{ color:#FFFFFF; }
+
+  /* which half of the Agenda this page belongs to — parked bottom-right,
+     out of the way of the title */
+  .secmark{ position:fixed; right:26px; bottom:18px; z-index:61;
+            font-family:'Inter',system-ui,sans-serif;
+            display:flex; align-items:baseline; gap:8px; }
+  .secmark b{ font-size:22px; font-weight:900; line-height:1; }
+  .secmark span{ font-size:10px; font-weight:800; letter-spacing:1.6px;
+                 text-transform:uppercase; color:var(--muted); }
+  .secmark.in b{ color:#6FC3F7; }
+  .secmark.cl b{ color:var(--mc-orange); }
+  .theme-btn{ position:fixed; top:22px; right:76px; z-index:61; width:40px; height:40px;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    background:rgba(8,18,30,.55); backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.10); border-radius:11px; color:#fff;
+    box-shadow:0 6px 22px rgba(0,0,0,.28); transition:color .2s, border-color .2s; }
+  .theme-btn:hover{ border-color:var(--mc-orange); color:var(--mc-orange); }
+  .theme-btn iconify-icon{ font-size:20px; }
+
+    /* two-sided role page */
+    .twoside{ display:grid; grid-template-columns:1fr .78fr 1fr; gap:14px; align-items:stretch; }
+    .side{ padding:16px 18px; }
+    .sidehd{ display:flex; align-items:center; gap:8px; color:var(--mc-orange);
+             font-weight:800; font-size:.56em; letter-spacing:.4px; margin-bottom:.5em; }
+    .sidehd iconify-icon{ font-size:19px; }
+    .side .who{ color:var(--muted); font-size:.5em; margin:0 0 .7em; line-height:1.4; }
+    .side ul{ margin:0; padding:0; }
+    .side li{ list-style:none; padding:0 0 0 14px; margin:.4em 0; font-size:.56em;
+              line-height:1.45; position:relative; }
+    .side li::before{ content:"·"; position:absolute; left:2px; color:var(--mc-orange);
+                      font-weight:900; }
+    .side li b{ color:#fff; }
+    .side.core{ align-items:center; text-align:center; justify-content:center;
+                border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+    .side.core h3{ margin:.1em 0 .2em; }
+    .arrows{ display:flex; justify-content:space-between; width:100%; margin-top:.8em;
+             color:var(--mc-orange); font-size:.8em; }
+    .mandate{ margin-top:1.1em; font-size:.58em; line-height:1.5; color:var(--text); }
+    .mandate b{ color:var(--mc-orange); }
+
+    /* team page — two groups under the director, each with its duties */
+    .twogroup{ display:grid; grid-template-columns:2fr 5fr; gap:14px; align-items:stretch; }
+    .grp{ padding:13px 16px 15px; }
+    .grphd{ display:flex; align-items:center; gap:8px; color:var(--mc-orange);
+            font-weight:800; font-size:.52em; letter-spacing:.4px; margin-bottom:.6em; }
+    .grphd iconify-icon{ font-size:18px; }
+    .grp.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.06); }
+    .grprow{ display:grid; gap:8px; align-items:start; }
+    .twogroup .person img, .twogroup .ghost{ width:62px; height:62px; }
+    .twogroup .ghost iconify-icon{ font-size:28px; }
+    .twogroup .person .pn{ font-size:14px; }
+    .twogroup .person .pt{ font-size:10.5px; margin-top:2px; }
+    .twogroup .pt-new{ font-size:11px; }
+
+    /* where this came from — three steps */
+    .journey{ display:grid; grid-template-columns:1fr 34px 1fr 34px 1fr; gap:0;
+              align-items:stretch; margin-top:.3em; }
+    .jstep{ padding:20px 22px; }
+    .jnum{ font-size:1.6em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    .jwhen{ color:var(--muted); font-size:.5em; letter-spacing:1.4px;
+            text-transform:uppercase; font-weight:800; margin:.5em 0 .3em; }
+    .jstep h3{ margin:0 0 .4em; }
+    .jstep p{ font-size:.58em; line-height:1.5; margin:0; }
+    .jstep p b{ color:var(--mc-orange); }
+    .jstep.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+    .jarrow{ display:flex; align-items:center; justify-content:center;
+             color:var(--mc-orange); }
+    .jarrow iconify-icon{ font-size:26px; }
+
+    /* duty strip — a labelled caption cell, not a loose bullet list */
+    .dstrip{ display:grid; border-top:1px solid var(--line-s); margin-top:11px; }
+    .dstrip.one{ grid-template-columns:1fr; }
+    .dstrip.two{ grid-template-columns:1fr 1fr; }
+    .dstrip.two .dcell + .dcell{ border-left:1px solid var(--line-s); }
+    .dcell{ padding:10px 14px 2px; }
+    .dcell:first-child{ padding-left:0; }
+    .dlabel{ display:flex; align-items:center; gap:6px; font-weight:800; font-size:.4em;
+             letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.45em; }
+    .dlabel iconify-icon{ font-size:13px; }
+    .dlabel.inhouse{ color:#6FC3F7; } .dlabel.client{ color:var(--mc-orange); }
+    .dcell ul{ margin:0; padding:0; }
+    .dcell li{ list-style:none; position:relative; padding-left:12px; margin:.22em 0;
+               font-size:.44em; line-height:1.4; color:var(--text); }
+    .dcell li::before{ content:"·"; position:absolute; left:2px; font-weight:900;
+                       color:var(--muted); }
+
+    /* ---- team page ----
+       Zorro sits in a compact inline row rather than a hero portrait: the slide
+       has to carry seven faces AND seven duty lines, and the duty text is the
+       part people actually read from the back of a room. */
+    .lead-row{ display:flex; align-items:center; gap:13px; justify-content:center;
+               margin:.1em 0 .5em; }
+    .lead-row img{ width:64px; height:64px; border-radius:50%; object-fit:cover;
+                   border:2px solid var(--mc-orange); }
+    .lead-row .pn{ color:#fff; font-weight:800; font-size:21px; line-height:1.2; }
+    .lead-row .pt{ color:var(--mc-orange); font-weight:700; font-size:15px; margin-top:2px; }
+
+    .twogroup{ display:grid; grid-template-columns:2fr 5fr; gap:14px; align-items:stretch; }
+    .grp{ padding:14px 18px 16px; }
+    .grphd{ display:flex; align-items:center; gap:8px; color:var(--mc-orange);
+            font-weight:800; font-size:14px; letter-spacing:.3px; margin-bottom:.85em; }
+    .grphd iconify-icon{ font-size:18px; }
+    .grp.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.06); }
+    .grprow{ display:grid; gap:10px; align-items:start; }
+
+    .person{ text-align:center; min-width:0; }
+    .person img{ width:58px; height:58px; border-radius:50%; object-fit:cover;
+                 display:block; margin:0 auto 7px; border:2px solid var(--line-s);
+                 background:var(--panel); }
+    .ghost{ width:58px; height:58px; border-radius:50%; margin:0 auto 7px;
+            border:2px dashed var(--line-s); display:flex; align-items:center;
+            justify-content:center; color:var(--muted); }
+    .ghost iconify-icon{ font-size:26px; }
+    .person .pn{ color:#fff; font-weight:800; font-size:13px; line-height:1.25; }
+    .person .pt{ color:var(--muted); font-size:10.5px; line-height:1.3; margin-top:2px; }
+    .person .pt s{ color:var(--muted); opacity:.55; }
+    .pt-new{ color:var(--mc-orange); font-weight:800; font-size:10.5px;
+             line-height:1.3; margin-top:2px; }
+
+    /* duty strip — the text that has to stay readable */
+    .dstrip{ display:grid; border-top:1px solid var(--line-s); margin-top:13px; }
+    .dstrip.one{ grid-template-columns:1fr; }
+    .dstrip.two{ grid-template-columns:1fr 1fr; }
+    .dstrip.two .dcell + .dcell{ border-left:1px solid var(--line-s); padding-left:16px; }
+    .dcell{ padding:11px 0 0; }
+    .dlabel{ display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px;
+             letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.6em; }
+    .dlabel iconify-icon{ font-size:13px; }
+    .dlabel.inhouse{ color:#6FC3F7; } .dlabel.client{ color:var(--mc-orange); }
+    .dcell ul{ margin:0; padding:0; }
+    .dcell li{ list-style:none; position:relative; padding-left:13px; margin:.35em 0;
+               font-size:12.5px; line-height:1.45; color:var(--muted); }
+    .dcell li::before{ content:"\2022"; position:absolute; left:0; color:var(--line-s); }
+    .dcell li b{ color:var(--text); font-weight:700; }
+    /* The two new FDE duties. Green is distinct from the orange labels above
+       them, and the bold weight carries the same meaning in greyscale — the
+       colour is a second channel, never the only one. */
+    .dcell li strong{ color:#46D39A; font-weight:800; }
+
+    /* in-house demand page */
+    .dem{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:stretch; }
+    .demand{ padding:18px 22px 20px; }
+    .dhd{ color:var(--mc-orange); font-weight:800; font-size:16px; letter-spacing:.3px;
+          display:flex; align-items:center; gap:8px; }
+    .hdi{ width:17px; height:17px; display:block; }
+    .dhd .up{ font-size:11px; vertical-align:1px; }
+    .dsub{ color:var(--muted); font-size:11.5px; margin:.25em 0 .7em; }
+    /* reveal styles every ul as inline-block with higher specificity than a
+       bare class, so the grid has to out-rank it. */
+    .reveal ul.reqs{ margin:0; padding:0; display:grid;
+                     grid-template-columns:1fr 1fr; gap:12px 16px; }
+    .reqs li{ list-style:none; display:flex; align-items:center; gap:10px; margin:0; }
+    .rq{ flex:none; width:42px; height:42px; border-radius:11px; background:var(--panel);
+         border:1px solid var(--line-s); display:flex; align-items:center; justify-content:center; }
+    .rq img{ width:28px; height:28px; object-fit:contain; display:block; }
+    /* iconify-icon is inline and has no box until it resolves, so it escapes
+       the flex tile; give it a block box of its own. */
+    .rq{ overflow:hidden; }
+    .rt{ font-size:13.5px; line-height:1.4; color:var(--muted); min-width:0; }
+    .rt b{ display:block; color:var(--text); font-weight:700; font-size:14.5px; }
+    .growrow{ display:flex; align-items:center; gap:18px; margin:.15em 0 .1em; }
+    .grow{ font-size:2.4em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    /* the five, beside the number that counts them */
+    .faces{ display:flex; }
+    .faces img{ width:44px; height:44px; border-radius:50%; object-fit:cover;
+                border:2px solid var(--panel); margin-left:-9px; }
+    .faces img:first-child{ margin-left:0; }
+    .grow span{ color:var(--muted); font-weight:700; }
+    .dstrip.tight{ margin-top:10px; }
+    .dstrip.tight .dcell li{ font-size:13.5px; }
+
+    .ask{ margin-top:46px; border:1px solid var(--mc-orange); border-radius:18px;
+          background:rgba(255,158,27,.07); padding:20px 30px 22px;
+          animation:fundglow 2.2s ease-in-out infinite; }
+    .askleft{ min-width:0; }
+    .askright{ flex:none; text-align:right; }
+    .frlab{ color:var(--muted); font-size:12px; font-weight:700; letter-spacing:1.4px;
+            text-transform:uppercase; margin-bottom:.5em; }
+    .frchips{ display:flex; gap:10px; }
+    .frchip{ display:inline-flex; align-items:center; gap:7px; font-size:15px;
+             font-weight:800; color:var(--text); border:1px solid var(--mc-orange);
+             border-radius:999px; padding:7px 16px; background:rgba(255,158,27,.10); }
+    .frchip img{ width:16px; height:16px; display:block; }
+    .askhd{ color:var(--mc-orange); font-weight:800; font-size:12.5px; letter-spacing:1.8px;
+            text-transform:uppercase; }
+    .asklead{ font-size:18px; line-height:1.45; margin:0; color:var(--muted); }
+    .asklead b{ color:#fff; font-weight:700; }
+    .askgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+    .askgrid h4{ margin:0 0 .35em; color:var(--mc-orange); font-weight:800; font-size:14px; }
+    .askgrid p{ margin:0; font-size:13.5px; line-height:1.5; color:var(--muted); }
+
+    /* The in-house cell is what the retainer actually pays for, so it glows and
+       the ask below points straight at it. The pulse is a slow 3s breath, not a
+       flash: anything near 3Hz is a seizure risk and unreadable besides. */
+    /* Same border and fill as the retaining-fee band, so the eye pairs them
+       as one idea. Only the outer glow breathes — animating the fill would
+       break the colour match it is there to make. */
+    .dcell.funded{ border:1px solid var(--mc-orange); background:rgba(255,158,27,.07);
+                   border-radius:12px; padding:9px 12px 4px; margin:-2px -4px 0;
+                   animation:fundglow 2.2s ease-in-out infinite; }
+    /* Both boxes run this same keyframe at the same time, so the fill, the
+       border and the halo move together and the pair stays matched at every
+       frame. 2.2s is one cycle every 2.2 seconds — well under the ~3Hz that
+       makes flashing a seizure risk, while still reading as movement. */
+    @keyframes fundglow{
+      0%,100%{ background:rgba(255,158,27,.05);
+               border-color:rgba(255,158,27,.40);
+               box-shadow:0 0 0 0 rgba(255,158,27,0); }
+      50%    { background:rgba(255,158,27,.22);
+               border-color:rgba(255,158,27,1);
+               box-shadow:0 0 36px 5px rgba(255,158,27,.42); }
+    }
+    @media (prefers-reduced-motion: reduce){ .dcell.funded{ animation:none; } }
+    .ask{ position:relative; }
+    /* Elbow from the fee text itself across to the in-house cell it pays for.
+       A straight stem under that cell read as unrelated to the money, which
+       sits at the far left of the band. */
+    .conn{ position:absolute; left:0; right:0; top:-46px; height:46px; pointer-events:none;
+           animation:connglow 2.2s ease-in-out infinite; }
+    @keyframes connglow{ 0%,100%{ opacity:.55; } 50%{ opacity:1; } }
+    .conn i{ position:absolute; background:var(--mc-orange); display:block; }
+    .conn .v1{ left:11%; bottom:0; width:3px; height:26px; }
+    .conn .h { left:11%; width:50%; top:20px; height:3px; }
+    .conn .v2{ left:61%; top:0; width:3px; height:23px; }
+    .conn .v2::before{ content:""; position:absolute; left:50%; top:-11px;
+                       transform:translateX(-50%); border-left:9px solid transparent;
+                       border-right:9px solid transparent;
+                       border-bottom:11px solid var(--mc-orange);
+                       filter:drop-shadow(0 0 7px rgba(255,158,27,.55)); }
+    .asksub{ margin:0 0 .35em; }
+    /* the one number on the page — it is what Derek is being asked to approve */
+    /* one heading, one weight, one colour — the label and the figure are the
+       same sentence and were reading as two different things. */
+    .felab, .fig{ font-size:31px; font-weight:800; color:var(--mc-orange);
+                  line-height:1.15; }
+
+    /* money-model cards — equal height, brand marks pinned to the foot so the
+       four rows of logos line up however long the copy runs */
+    .mcard{ display:flex; flex-direction:column; }
+    .mcard h3{ margin:0; }
+    .mhead{ display:flex; align-items:center; gap:12px; margin-bottom:.5em; }
+    .mhead .ico{ flex:none; margin:0; }
+    .mtitle{ min-width:0; }
+    .msub{ color:var(--muted); font-size:.6em; margin:.1em 0 0; }
+    .mcard > p:not(.msub){ margin:0; }
+    .brands{ display:flex; align-items:center; gap:16px; margin-top:9px;
+             padding-top:8px; border-top:1px solid var(--line-s); }
+    .brands img{ height:16px; width:auto; display:block; opacity:.9; }
+    /* the mark alone is unreadable at this size for anyone who does not
+       already know it, so each carries its name */
+    /* ours, set apart from the reference companies beside it */
+    .brand.us{ color:var(--mc-orange); }
+    .brand.us img{ opacity:1; }
+    .brand{ display:inline-flex; align-items:center; gap:7px;
+            color:var(--muted); font-size:.52em; font-weight:700;
+            letter-spacing:.2px; }
+
+    /* Role & package review — a badge that opens its own reasoning on click, so
+       the justification is to hand when asked for and invisible when not. No
+       figure anywhere: the number belongs in the conversation, not on a slide
+       that can be forwarded. */
+    .rpr{ position:relative; display:inline-block; margin-top:-3px; }
+    .rpr > summary{ list-style:none; cursor:pointer; display:inline-flex;
+                    align-items:center; gap:5px; border:1px solid var(--mc-orange);
+                    border-radius:999px; padding:2px 9px; font-size:9.5px;
+                    font-weight:800; color:var(--mc-orange); white-space:nowrap; }
+    .rpr > summary::-webkit-details-marker{ display:none; }
+    .rpr > summary::after{ content:"\25BE"; font-size:8px; }
+    .rpr[open] > summary::after{ content:"\25B4"; }
+    .rpr > summary:hover{ background:rgba(255,158,27,.14); }
+    .rprbody{ position:absolute; z-index:60; top:calc(100% + 7px); left:50%;
+              transform:translateX(-50%); width:430px; text-align:left;
+              background:var(--panel); border:1px solid var(--mc-orange);
+              border-radius:14px; padding:12px 15px 13px;
+              box-shadow:0 18px 44px rgba(0,0,0,.55); }
+    .rprhd{ color:var(--mc-orange); font-weight:800; font-size:9.5px;
+            letter-spacing:1.6px; text-transform:uppercase; margin-bottom:.55em; }
+    .reveal ul.rprlist, .rprbody ul{ margin:0; padding:0; }
+    .rprbody li{ list-style:none; position:relative; padding-left:13px;
+                 margin:.3em 0; font-size:11.5px; line-height:1.42;
+                 color:var(--muted); }
+    .rprbody li::before{ content:"\2022"; position:absolute; left:0; color:var(--mc-orange); }
+    .rprbody li b{ color:#fff; font-weight:700; }
+
+    /* section divider — the deck has two halves and this is where they are named */
+    .sects{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
+    .sect{ padding:24px 28px 26px; }
+    .sect.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+    .snum{ font-size:2.1em; font-weight:900; color:var(--mc-orange); line-height:1;
+           margin-bottom:.22em; }
+    .sect .dlabel{ margin-bottom:.5em; }
+    .sect h3{ margin:0 0 .55em; font-size:1.05em; }
+    .reveal ul.sectlist, .sect ul{ margin:0; padding:0; }
+    .sect li{ list-style:none; position:relative; padding-left:15px; margin:.34em 0;
+              font-size:.62em; line-height:1.45; color:var(--muted); }
+    .sect li::before{ content:"\2022"; position:absolute; left:0; color:var(--mc-orange); }
+
+    .journey.four{ grid-template-columns:1fr 26px 1fr 26px 1fr 26px 1fr; }
+    .journey.four .jstep{ padding:16px 17px; }
+    .journey.four .jwhen{ margin:.45em 0 .35em; }
+    .journey.four .jstep p{ font-size:.54em; }
+    .jwhen{ color:var(--text); font-weight:800; font-size:.62em; letter-spacing:0;
+            text-transform:none; }
+    .punchline{ margin-top:1.1em; font-size:.68em; font-weight:800; color:var(--text); }
+    .jstep p b{ color:var(--mc-orange); }
+
+    /* open questions */
+    .qcard{ padding:16px 20px 17px; }
+    .qhead{ display:flex; align-items:center; gap:11px; margin-bottom:.45em; }
+    .qn{ font-size:1.25em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    .qhead .ico{ width:30px; height:30px; margin:0; flex:none; }
+    .qhead .ico iconify-icon{ font-size:16px; }
+    .qcard h3{ margin:0; font-size:.82em; }
+    .qcard p{ margin:0; font-size:.6em; line-height:1.45; }
+    .qcard p b{ color:var(--mc-orange); }
+    /* the one the room will actually argue about */
+    .qcard.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+
+    /* cards / grids */
+    .body{ display:flex; flex-direction:column; justify-content:center; gap:.5em; }
+    .grid{ display:grid; gap:13px; width:100%; }
+    .g3{ grid-template-columns:repeat(3,1fr); } .g2{ grid-template-columns:repeat(2,1fr); } .g4{ grid-template-columns:repeat(4,1fr); }
+    .card{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:18px; padding:24px; display:flex; flex-direction:column; }
+    .card .ico{ width:50px; height:50px; border-radius:13px; display:flex; align-items:center; justify-content:center; background:rgba(255,158,27,.13); margin-bottom:.6em; }
+    .card .ico iconify-icon{ font-size:27px; color:var(--mc-orange); }
+    .card h3{ margin:0 0 .35em; color:#fff; } .card p{ margin:0; }
+    .card.center{ align-items:center; text-align:center; } .card.center .ico{ margin:0 auto .55em; }
+    .card .big{ font-size:1.85em; font-weight:900; color:var(--mc-orange); line-height:1; margin-bottom:.18em; }
+    .pill{ display:inline-block; background:var(--mc-orange); color:#0A1726; border-radius:999px; padding:3px 14px; font-size:.52em; font-weight:800; margin-bottom:.45em; }
+    .tiers .card.feat{ border-color:var(--mc-orange); box-shadow:0 20px 50px rgba(255,158,27,.16); }
+    .pnum{ width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--mc-orange),var(--mc-orange-deep)); color:#0A1726; font-weight:900; display:flex; align-items:center; justify-content:center; font-size:17px; margin-bottom:9px; }
+    .ph-date{ color:var(--mc-orange) !important; font-weight:700; font-size:.62em; margin:0 0 .5em !important; }
+    .decisions{ gap:14px; } .decisions .card{ padding:14px 16px; }
+    .decisions .card .ico{ width:38px; height:38px; border-radius:11px; margin-bottom:7px; }
+    .decisions .card .ico iconify-icon{ font-size:21px; }
+    .decisions .card h3{ font-size:15.5px; } .decisions .card p{ font-size:12px; }
+    /* token usage meter (Claude/ChatGPT-style) */
+    .tokmeter{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:20px 26px; }
+    .tokmeter .row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:11px; }
+    .tokmeter .plan{ color:#fff; font-weight:700; font-size:18px; } .tokmeter .plan b{ color:var(--mc-orange); }
+    .tokmeter .used{ color:var(--muted); font-size:15px; } .tokmeter .used b{ color:#fff; font-size:26px; font-weight:900; }
+    .tokbar{ height:26px; background:#0A1726; border:1px solid var(--line-s); border-radius:999px; overflow:hidden; }
+    .tokbar .fill{ height:100%; background:linear-gradient(90deg,var(--mc-orange-deep),var(--mc-orange)); border-radius:999px; display:flex; align-items:center; justify-content:flex-end; padding-right:11px; color:#0A1726; font-weight:800; font-size:12px; }
+    .tokmeter .sub{ display:flex; justify-content:space-between; color:var(--muted); font-size:13px; margin-top:9px; }
+    .tokcols .card h3{ display:flex; align-items:center; gap:7px; }
+    .tokcols .card li b{ color:var(--mc-orange); }
+
+    /* big stats row */
+    .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px; text-align:center; }
+    .stat .n{ font-size:3.4em; font-weight:900; color:var(--mc-orange); line-height:1; letter-spacing:-1px; }
+    .stat .l{ color:var(--muted); font-size:.72em; margin-top:.6em; line-height:1.35; }
+
+    /* big-number comparison */
+    .compare{ display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:30px; text-align:center; }
+    .compare .n{ font-size:3.6em; font-weight:900; line-height:1; letter-spacing:-1px; }
+    .compare .n small{ font-size:.3em; font-weight:700; color:var(--muted); }
+    .compare .win .n{ color:var(--mc-orange); } .compare .lose .n{ color:#7C93A8; }
+    .compare .l{ color:var(--muted); font-size:.7em; margin-top:.5em; }
+    .compare .vs{ color:var(--mc-orange); font-weight:800; font-size:1.1em; border:2px solid var(--line-s); border-radius:50%; width:64px; height:64px; display:flex; align-items:center; justify-content:center; }
+
+    /* horizontal flow */
+    .flow{ display:flex; align-items:stretch; justify-content:center; gap:6px; }
+    .flow .step{ flex:1; text-align:center; padding:18px 14px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; }
+    .flow .step .num{ width:42px; height:42px; border-radius:50%; background:var(--mc-orange); color:#0A1726; font-weight:900; display:flex; align-items:center; justify-content:center; margin:0 auto .55em; }
+    .flow .step h3{ margin:.1em 0 .3em; } .flow .step p{ font-size:.62em; }
+    .flow .arrow{ display:flex; align-items:center; color:var(--mc-orange); font-size:1.5em; }
+
+    /* timeline */
+    .timeline{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; position:relative; padding-top:8px; }
+    .timeline::before{ content:''; position:absolute; top:21px; left:14%; right:14%; height:2px; background:var(--line-s); }
+    .tl{ text-align:center; position:relative; }
+    .tl .dot{ width:28px; height:28px; border-radius:50%; background:var(--mc-orange); border:5px solid var(--bg); margin:0 auto 16px; box-shadow:0 0 0 1px var(--mc-orange); }
+    .tl h3{ color:var(--mc-orange); font-size:.95em; margin-bottom:.4em; }
+    .tl p{ font-size:.66em; color:var(--muted); }
+
+    .funnel span{ display:flex; align-items:center; gap:.7em; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-left:4px solid var(--mc-orange); border-radius:12px; margin:11px auto; padding:14px 20px; }
+    .funnel iconify-icon{ color:var(--mc-orange); font-size:1.15em; }
+    .tbl{ border-radius:16px; overflow:hidden; border:1px solid var(--line-s); box-shadow:0 18px 50px rgba(0,0,0,.35); }
+    table{ width:100%; border-collapse:collapse; font-size:.64em; background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+    th,td{ padding:24px 26px; text-align:left; border-bottom:1px solid var(--line-s); }
+    tr:last-child td{ border-bottom:none; }
+    th{ color:#fff; font-weight:800; background:rgba(255,255,255,.04); letter-spacing:.2px; }
+    th:not(:first-child), td:not(:first-child){ text-align:center; }
+    td:first-child{ color:var(--text); font-weight:600; }
+    .compete th:nth-child(2), .compete td:nth-child(2){ background:rgba(255,158,27,.11); }
+    .compete th:nth-child(2){ color:var(--mc-orange); }
+    .tbl tr.hl td{ background:rgba(255,158,27,.12); }
+    .tbl tr.hl td:first-child{ color:var(--mc-orange); font-weight:800; }
+    .tbl .yes{ color:#46D39A; font-weight:800; font-size:1.15em; }
+    .tbl .no{ color:#5F7891; font-size:1.05em; }
+    .tbl .mut{ color:var(--muted); }
+    .tbl .hi{ color:var(--mc-orange); font-weight:800; }
+    .pricetbl th, .pricetbl td{ padding:13px 14px; }
+    .pricetbl th{ vertical-align:bottom; }
+    .pricetbl th .pr{ display:block; color:var(--mc-orange); font-weight:900; font-size:1.15em; margin-top:4px; letter-spacing:0; }
+    .pricetbl td:first-child{ font-weight:600; }
+    .pricetbl td:nth-child(4), .pricetbl th:nth-child(4){ background:rgba(255,158,27,.12); }
+    .pricetbl th:nth-child(4){ color:var(--mc-orange); }
+    /* pricing cards with aligned feature rows */
+    .ptiers2{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:stretch; width:100%; }
+    .ptier{ position:relative; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:18px 16px 14px; display:flex; flex-direction:column; }
+    .ptier.feat{ border-color:var(--mc-orange); box-shadow:0 18px 50px rgba(255,158,27,.16); }
+    .ptier > .pill{ position:absolute; top:-11px; left:50%; transform:translateX(-50%); margin:0; }
+    .ptier .ico{ width:44px; height:44px; border-radius:12px; background:rgba(255,158,27,.14); display:flex; align-items:center; justify-content:center; margin:0 auto .4em; }
+    .ptier .ico iconify-icon{ font-size:24px; color:var(--mc-orange); }
+    .ptier h3{ text-align:center; color:#fff; font-size:.82em; margin-bottom:.05em; }
+    .ptier .big{ text-align:center; font-size:1.65em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    .ptier .big small{ font-size:.34em; color:var(--muted); font-weight:700; }
+    .ptier .bundle{ text-align:center; color:var(--text); font-weight:700; font-size:.6em; margin:.45em 0 .65em; padding-bottom:.7em; border-bottom:1px solid var(--line-s); }
+    .pf{ display:flex; align-items:center; gap:9px; font-size:.58em; color:var(--text); padding:5px 2px; }
+    .pf iconify-icon{ flex:none; font-size:1.3em; color:var(--mc-orange); }
+    .pf .y{ color:#46D39A; } .pf .n{ color:#5F7891; }
+    .pf.off{ color:var(--muted); }
+    /* timeline + revenue ramp */
+    .revtl{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch; width:100%; }
+    .revcol{ display:flex; flex-direction:column; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:16px; padding:16px 14px 14px; }
+    .revcol.feat{ border-color:var(--mc-orange); box-shadow:0 18px 50px rgba(255,158,27,.16); }
+    .revcol .ph{ flex:1; }
+    .revcol .q{ color:var(--mc-orange); font-weight:800; font-size:13px; letter-spacing:1px; }
+    .revcol h3{ color:#fff; margin:3px 0 4px; font-size:17px; }
+    .revcol .ph p{ color:var(--muted); font-size:12px; line-height:1.4; margin:0; }
+    .revcol .barbox{ height:120px; display:flex; align-items:flex-end; margin:12px 0 9px; }
+    .revcol .fill{ width:100%; background:linear-gradient(180deg,var(--mc-orange),var(--mc-orange-deep)); border-radius:8px 8px 0 0; min-height:5px; }
+    .revcol .mrr{ text-align:center; color:var(--mc-orange); font-weight:900; font-size:22px; line-height:1; }
+    .revcol .mrr small{ display:block; color:var(--muted); font-weight:600; font-size:10px; margin-top:3px; letter-spacing:.5px; }
+    .frame{ border-radius:16px; border:1px solid var(--line-s); box-shadow:0 20px 50px rgba(0,0,0,.45); width:100%; object-fit:cover; max-height:430px; }
+    .hero-panel{ background:rgba(8,18,30,.70); backdrop-filter:blur(7px); border:1px solid rgba(255,255,255,.09); border-radius:24px; padding:48px 58px; display:inline-block; }
+    .tag{ display:inline-block; font-size:.5em; color:var(--mc-orange); border:1px solid var(--mc-orange); border-radius:6px; padding:1px 8px; margin-left:.45em; vertical-align:middle; font-weight:700; }
+    /* pain -> fix mapping */
+    .ps{ display:grid; grid-template-columns:1fr 46px 1fr; gap:14px 0; align-items:center; width:100%; }
+    .ps-hd{ text-transform:uppercase; letter-spacing:1.6px; font-weight:800; font-size:12px; padding:0 4px 2px; }
+    .ps-hd.p{ color:var(--muted); } .ps-hd.f{ color:var(--mc-orange); }
+    .ps-pain,.ps-fix{ display:flex; align-items:center; gap:13px; border:1px solid var(--line-s); border-radius:14px; padding:14px 16px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); }
+    .ps-fix{ border-color:var(--mc-orange); background:rgba(255,158,27,.06); }
+    .ps-pain iconify-icon{ color:#7C93A8; font-size:26px; flex:none; }
+    .ps-fix iconify-icon{ color:var(--mc-orange); font-size:26px; flex:none; }
+    .ps-pain b,.ps-fix b{ display:block; color:#fff; font-weight:700; font-size:17px; }
+    .ps-pain span,.ps-fix span{ color:var(--muted); font-size:13px; }
+    .ps-arrow{ text-align:center; color:var(--mc-orange); font-size:26px; font-weight:800; }
+    .chip{ display:inline-block; background:var(--panel); border:1px solid var(--line-s); border-radius:999px; padding:4px 12px; margin:4px 3px 0; font-size:13px; color:var(--text); }
+    .chip iconify-icon{ color:var(--mc-orange); vertical-align:-2px; margin-right:5px; font-size:15px; }
+    .gp-note{ display:flex; align-items:center; gap:16px; margin-top:18px; background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-left:4px solid var(--mc-orange); border-radius:14px; padding:16px 20px; }
+    .gp-note img{ width:42px; height:42px; flex:none; }
+    .gp-note b{ display:block; color:#fff; font-weight:800; font-size:18px; margin-bottom:3px; }
+    .gp-note span{ color:var(--muted); font-size:14px; line-height:1.45; }
+    /* hand-built architecture diagram */
+    .arch{ display:flex; align-items:stretch; justify-content:center; gap:6px; width:100%; }
+    .lane{ flex:1; display:flex; flex-direction:column; gap:8px; min-width:0; }
+    .lane.core{ flex:1.18; }
+    .lane-hd{ text-align:center; color:var(--mc-orange); font-weight:800; letter-spacing:1.3px; text-transform:uppercase; font-size:11px; }
+    .node{ background:linear-gradient(180deg,var(--panel),var(--panel-2)); border:1px solid var(--line-s); border-radius:11px; padding:8px 11px; display:flex; align-items:center; gap:9px; }
+    .node img{ width:22px; height:22px; flex:none; object-fit:contain; }
+    .node iconify-icon{ font-size:21px; color:var(--mc-orange); flex:none; }
+    .node .t{ font-size:13.5px; line-height:1.22; min-width:0; }
+    .node .t b{ color:#fff; font-weight:700; display:block; }
+    .node .t span{ color:var(--muted); font-size:11.5px; }
+    .arrow-d{ text-align:center; color:var(--mc-orange); font-size:13px; line-height:.5; letter-spacing:.5px; font-weight:700; }
+    .group{ background:rgba(255,255,255,.03); border:1px solid var(--line-s); border-radius:14px; padding:10px; display:flex; flex-direction:column; gap:8px; }
+    .group.data{ background:rgba(255,255,255,.03); border-color:var(--line-s); }
+    .group-hd{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; display:flex; align-items:center; justify-content:center; gap:5px; line-height:1; flex:0 0 auto; height:16px; margin:0; }
+    .group-hd img{ display:inline-block; }
+    .group{ justify-content:flex-start; }
+    .arch.compact .node{ flex:none; }
+    .group.data .group-hd{ color:#fff; }
+    .zonearrow{ display:flex; flex-direction:column; align-items:center; justify-content:center; flex:none; padding:0 1px; }
+    .zonearrow b{ color:var(--mc-orange); font-size:24px; line-height:1; }
+    .zonearrow span{ font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; margin-top:4px; }
+    .orsep{ text-align:center; color:var(--muted); font-size:10px; text-transform:uppercase; letter-spacing:1.5px; }
+    .lane-note{ color:var(--muted); font-size:11px; line-height:1.35; margin-top:3px; }
+    .dgroup{ border:1.5px dashed var(--line-s); border-radius:14px; padding:9px 9px 10px; display:flex; flex-direction:column; gap:7px; background:rgba(255,255,255,.03); }
+    .dgroup-lbl{ color:var(--muted); font-size:9.5px; text-transform:uppercase; letter-spacing:1px; margin:1px 0 -1px 3px; }
+    .dgroup .sub{ margin-left:0; }
+    .lane-hd iconify-icon{ font-size:15px; vertical-align:-2px; margin-right:5px; }
+    .sublabel{ color:var(--mc-orange); font-weight:800; font-size:10.5px; text-transform:uppercase; letter-spacing:.6px; text-align:center; }
+    .sublabel iconify-icon{ font-size:13px; vertical-align:-2px; margin-right:4px; }
+    .subhd{ color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:1.2px; font-weight:700; text-align:left; margin:2px 0 -2px 3px; }
+    .arch.compact{ gap:5px; }
+    .arch.compact .lane{ gap:4px; }
+    .arch.compact .node{ padding:4px 10px; gap:8px; border-radius:10px; min-height:40px; box-sizing:border-box; align-items:center; }
+    .arch.compact .node img{ width:18px; height:18px; }
+    .arch.compact .node iconify-icon{ font-size:18px; }
+    .arch.compact .node .t{ font-size:11.5px; line-height:1.18; }
+    .arch.compact .node .t span{ font-size:9.5px; }
+    .arch.compact .group, .arch.compact .dgroup{ padding:6px; gap:4px; flex:none; }
+    .arch.compact .subhd{ font-size:8.5px; margin:1px 0 -3px 3px; }
+    .arch.compact .lane-hd{ font-size:12.5px; margin-bottom:4px; }
+    .arch.compact .sublabel{ font-size:12.5px; margin:4px 0 5px; }
+    .arch.compact .arrow-d{ font-size:22px; }
+    .arch.compact .orsep{ font-size:9px; }
+    .arch.compact .group-hd{ font-size:9.5px; }
+    .storageband{ flex-direction:column; align-items:stretch; margin-top:-6px; }
+    .storage-row{ display:flex; gap:6px; }
+    .storage-row .node{ flex:1; min-width:0; }
+    .node.planned{ border:1.5px dashed var(--mc-orange); }
+    .node.planned .t b{ color:var(--muted); }
+    .soon{ display:inline-block; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.4px; color:#0A1726 !important; background:var(--muted); border-radius:5px; padding:1px 6px; margin-left:6px; vertical-align:middle; }
+  </style>
+</head>
+<body>
+  <div class="brandbar"><img src="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png" alt="Master Concept"><span class="nm">AI &amp; Training Team <span>· FDE Business Development</span></span></div>
+  <div class="secmark" id="secmark" hidden><b></b><span></span></div>
+  <button class="theme-btn" id="themeBtn" title="Light / dark" aria-label="Toggle light or dark">
+    <iconify-icon icon="lucide:sun"></iconify-icon>
+  </button>
+  <button class="fs-btn" onclick="toggleFs()" title="Full screen (or press F)"><iconify-icon icon="lucide:maximize"></iconify-icon></button>
+
+  <div class="reveal"><div class="slides">
+
+    <!-- 1 · Title -->
+    <section class="hero" data-background-image="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <img src="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png" alt="Master Concept" style="height:96px; margin-bottom:16px; filter:drop-shadow(0 12px 30px rgba(0,0,0,.45));">
+        <h1 style="font-size:2.5em">AI &amp; Training Team</h1>
+        <p class="title-sub">FDE Business Development</p>
+        <p class="lead">&nbsp;</p>
+        <p class="muted small" style="margin-top:1.3em;">By Tommy Shum · Master Concept · 30 October 2026</p>
+      </div>
+    </section>
+
+    <!-- 2 · Two sections -->
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:layout-list"></iconify-icon></span><div><p class="kicker">What we will cover</p><h2>Agenda</h2></div></div>
+      <div class="sects">
+        <div class="card sect">
+          <div class="snum">01</div>
+          <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
+          <h3>Internal delivery &amp; funding</h3>
+          <ul>
+            <li>AI &amp; Training Team Structure</li>
+            <li>Every team now runs on something we built</li>
+            <li>Funding for growing team</li>
+          </ul>
+        </div>
+        <div class="card sect core">
+          <div class="snum">02</div>
+          <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
+          <h3>Go to market</h3>
+          <ul>
+            <li>The customers are already ours</li>
+            <li>How a company makes money from FDE</li>
+            <li>The decisions ahead</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Team -->
+    <section data-sec="01">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:users"></iconify-icon></span><div><p class="kicker">Who we are</p><h2>AI &amp; Training Team Structure</h2></div></div>
+      <div class="lead-row">
+        <img src="assets/team/zorro-cheng.jpg" alt="">
+        <div><div class="pn">Zorro Cheng</div>
+        <div class="pt">Business Development Director</div></div>
+      </div>
+      <div class="twogroup">
+        <div class="card grp">
+          <div class="grphd"><iconify-icon icon="lucide:presentation"></iconify-icon>Training &amp; Sales</div>
+          <div class="grprow" style="grid-template-columns:repeat(2,1fr)">
+            <div class="person">
+              <img src="assets/team/jane-cheung.jpg" alt="">
+              <div class="pn">Jane Cheung</div>
+              <div class="pt">Business Development Trainee</div>
+            </div>
+            <div class="person">
+              <div class="ghost"><iconify-icon icon="lucide:user-round"></iconify-icon></div>
+              <div class="pn">Part-time Trainer</div>
+              <div class="pt">Delivers training</div>
+            </div>
+          </div>
+          <div class="dstrip one">
+              <div class="dcell">
+                <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
+                <ul>
+                <li><b>Training Delivery</b> — AI &amp; Google</li>
+                <li><b>Training Sales &amp; Administration</b></li>
+                <li><strong>FDE Business Development</strong></li>
+                </ul>
+              </div>
+          </div>
+        </div>
+        <div class="card grp core">
+          <div class="grphd"><iconify-icon icon="lucide:code-2"></iconify-icon>AI-Native Development</div>
+          <div class="grprow" style="grid-template-columns:repeat(5,1fr)">
+            <div class="person">
+              <img src="assets/team/tommy-shum.jpg" alt="">
+              <div class="pn">Tommy Shum</div>
+              <div class="pt"><s>Digital Marketing Specialist</s></div>
+              <div class="pt-new">AI-Native Development Team Lead</div>
+              <details class="rpr">
+                <summary>Role &amp; package review</summary>
+                <div class="rprbody">
+                  <div class="rprhd">Justification</div>
+                  <ul>
+                  <li><b>Scope</b> &mdash; hired for marketing; now leading 4 people and the apps 5 teams run on</li>
+                  <li><b>Cost Saving</b> &mdash; F&amp;O cashflow problem resolved; in-house CRM replaces HubSpot (<b>~US$180k / year</b>)</li>
+                  <li><b>Revenue</b> &mdash; building the FDE offer, and packaging our in-house apps for sale</li>
+                  <li><b>Proven productivity</b> &mdash; delivering what more than 2 staff would</li>
+                  <li><b>Market</b> &mdash; benchmarked to an AI engineering team lead, not the original role</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+            <div class="person">
+              <img src="assets/team/alfred-lau.jpg" alt="">
+              <div class="pn">Alfred Lau</div>
+              <div class="pt">Agent Builder Trainee</div>
+            </div>
+            <div class="person">
+              <img src="assets/team/cathy-zhong.jpg" alt="">
+              <div class="pn">Cathy Zhong</div>
+              <div class="pt">Agent Builder Trainee</div>
+            </div>
+            <div class="person">
+              <img src="assets/team/daniel-choy.jpg" alt="">
+              <div class="pn">Daniel Choy</div>
+              <div class="pt">Agent Builder Trainee</div>
+            </div>
+            <div class="person">
+              <img src="assets/team/esther-wan.jpg" alt="">
+              <div class="pn">Esther Wan</div>
+              <div class="pt">Agent Builder Trainee</div>
+            </div>
+          </div>
+          <div class="dstrip two">
+              <div class="dcell">
+                <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
+                <ul>
+                <li><b>AI Enablement</b> — empowering teams to adopt AI and improve productivity</li>
+                <li><b>Internal Solution Development</b> — solving real problems with AI</li>
+                </ul>
+              </div>
+              <div class="dcell">
+                <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
+                <ul>
+                <li><b>Technical Support</b> — training material and demo</li>
+                <li><strong>FDE Solution Development &amp; Delivery</strong></li>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- 5 · What we have already built -->
+    <section data-sec="01">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:layout-grid"></iconify-icon></span><div><p class="kicker">Internal delivery</p><h2>Every team now runs on something we built</h2></div></div>
+      <div class="appwall">
+        <div class="tgroup" style="grid-column:span 8">
+          <div class="band">Marketing <span>8</span></div>
+          <div class="tiles" style="grid-template-columns:repeat(8,1fr)">
+            <a class="app" href="https://mcai.dev/eventmaster/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/event-master.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Event Master</div>
+            </a>
+            <a class="app" href="https://album.masterconcept.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/master-album.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Album</div>
+            </a>
+            <a class="app" href="https://masterconcept.ai/form/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/master-form.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Form</div>
+            </a>
+            <a class="app" href="https://mcai.dev/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-mark.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Link</div>
+            </a>
+            <a class="app" href="https://prize.masterconcept.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/master-prize.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Prize</div>
+            </a>
+            <a class="app" href="https://mcq.mcai.dev/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mcq.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">MCQ</div>
+            </a>
+            <a class="app" href="https://social.mcai.dev/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/social-feed.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Social Feed</div>
+            </a>
+            <a class="app" href="https://masterconcept.ai/malimalihome" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/wpbuddy.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">WP Buddy</div>
+            </a>
+          </div>
+        </div>
+        <div class="tgroup" style="grid-column:span 8">
+          <div class="band">Project <span>8</span></div>
+          <div class="tiles" style="grid-template-columns:repeat(8,1fr)">
+            <a class="app" href="https://masterconcept.ai/link/ai-usage-monitor/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/ai-usage.png" alt=""><span class="sdot planning"></span></div>
+              <div class="appname">AI Usage Monitor</div>
+            </a>
+            <div class="app">
+              <div class="appicon"><img src="assets/apps/maco-lookout.png" alt=""><span class="sdot planning"></span></div>
+              <div class="appname">Lookout</div>
+            </div>
+            <a class="app" href="https://magic.aimwork.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/magic-login.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Magic Login</div>
+            </a>
+            <a class="app" href="https://apps.masterconcept.ai/skills" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/master-skill.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Skill</div>
+            </a>
+            <a class="app" href="https://agent.mcai.dev" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-agent.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">MC Agent</div>
+            </a>
+            <a class="app" href="https://academy.mcai.dev/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-ai-academy.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">MC AI Academy</div>
+            </a>
+            <a class="app shine" href="https://plane.hkmci.net/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/plane.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">Plane</div>
+            </a>
+            <a class="app shine" href="https://wilco.mcai.dev" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/wilco.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">Wilco</div>
+            </a>
+          </div>
+        </div>
+        <div class="tgroup" style="grid-column:span 4">
+          <div class="band">HR <span>4</span></div>
+          <div class="tiles" style="grid-template-columns:repeat(4,1fr)">
+            <a class="app" href="https://apt.masterconcept.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mcapt.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">Aptitude Test</div>
+            </a>
+            <a class="app" href="https://careers.masterconcept.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-mark.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">Careers</div>
+            </a>
+            <a class="app" href="https://els.mcai.dev" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-els.png" alt=""><span class="sdot planning"></span></div>
+              <div class="appname">ELS</div>
+            </a>
+            <a class="app" href="https://script.google.com/a/macros/hkmci.com/s/AKfycbzV7HRjTBdTgPYtH2oj1F_ZpQl58au4qMqktmAcLexXCWWIJs3QWPKhaeqbjJu_2Tdp/exec" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-mark.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">MC Contact</div>
+            </a>
+          </div>
+        </div>
+        <div class="tgroup" style="grid-column:span 2">
+          <div class="band">Finance <span>2</span></div>
+          <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
+            <a class="app" href="https://mcbms.aimwork.ai/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mcbms.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">MCBMS</div>
+            </a>
+            <a class="app" href="https://mcp.mcai.dev" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-mcp.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">MCP</div>
+            </a>
+          </div>
+        </div>
+        <div class="tgroup" style="grid-column:span 2">
+          <div class="band">Admin <span>2</span></div>
+          <div class="tiles" style="grid-template-columns:repeat(2,1fr)">
+            <a class="app" href="https://eip.mcai.dev" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/mc-eip.png" alt=""><span class="sdot building"></span></div>
+              <div class="appname">EIP</div>
+            </a>
+            <a class="app" href="https://mcai.dev/reminder/" target="_blank" rel="noopener">
+              <div class="appicon"><img src="assets/apps/master-reminder.png" alt=""><span class="sdot live"></span></div>
+              <div class="appname">Master Reminder</div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><span class="sdot live"></span>Live</span>
+        <span><span class="sdot building"></span>Building</span>
+        <span><span class="sdot planning"></span>Planning</span>
+      </div>
+    </section>
+
+    <!-- 4 · In-house demand and the ask -->
+    <section data-sec="01">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:trending-up"></iconify-icon></span><div><p class="kicker">Funding</p><h2>Funding for growing team</h2></div></div>
+
+      <div class="dem">
+        <div class="card demand">
+          <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/inbox.svg?color=%23FF9E1B" alt="">Demand <span class="up">&#9650;</span></div>
+          <ul class="reqs">
+            <li>
+              <span class="rq"><img src="assets/apps/mcbms.png" alt=""></span>
+              <span class="rt"><b>MCBMS</b>GWS renewal pipeline &amp; billing tracking</span>
+            </li>
+            <li>
+              <span class="rq"><img src="assets/apps/findacloud.png" alt=""></span>
+              <span class="rt"><b>Finda Cloud</b>Freshworks invoice reconciliation from MC</span>
+            </li>
+            <li>
+              <span class="rq"><img src="assets/apps/mc-els.png" alt=""></span>
+              <span class="rt"><b>ELS</b>Employee Lifecycle System</span>
+            </li>
+            <li>
+              <span class="rq"><img src="assets/apps/mc-eip.png" alt=""></span>
+              <span class="rt"><b>EIP</b>Employee Information Portal</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card demand">
+          <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/users-round.svg?color=%23FF9E1B" alt="">AI-Native Development Team <span class="up">&#9650;</span></div>
+          <div class="growrow">
+            <div class="grow">3 <span>&rarr;</span> 5</div>
+            <div class="faces">
+              <img src="assets/team/tommy-shum.jpg" alt="">
+              <img src="assets/team/alfred-lau.jpg" alt="">
+              <img src="assets/team/cathy-zhong.jpg" alt="">
+              <img src="assets/team/daniel-choy.jpg" alt="">
+              <img src="assets/team/esther-wan.jpg" alt="">
+            </div>
+          </div>
+          <div class="dstrip two tight">
+            <div class="dcell funded">
+              <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
+              <ul>
+                <li><b>Support &amp; Maintenance</b></li>
+                <li><b>New Solution Development</b></li>
+              </ul>
+            </div>
+            <div class="dcell">
+              <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
+              <ul><li>FDE — now prepare for <strong>go-to-market</strong></li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ask">
+        <div class="conn"><i class="v1"></i><i class="h"></i><i class="v2"></i></div>
+        <div class="askleft">
+          <p class="asksub"><span class="felab">Retaining fee</span> <span class="fig">(~HK$100k / m)</span></p>
+          <p class="asklead">An internal retainer <b>reserves our capacity for the in-house work</b>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · The pipeline we already have -->
+    <section data-sec="02">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:route"></iconify-icon></span><div><p class="kicker">Pipeline</p><h2>The customers are already ours</h2></div></div>
+      <div class="journey four">
+        <div class="card jstep">
+          <div class="jnum">01</div>
+          <div class="jwhen">They train with us</div>
+          <p>Zorro delivers AI and Google training. We are already in the room, and already trusted.</p>
+        </div>
+        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="card jstep">
+          <div class="jnum">02</div>
+          <div class="jwhen">They leave wanting more</div>
+          <p>Their people now see what is possible &mdash; and have <b>nobody to build it</b>.</p>
+        </div>
+        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="card jstep">
+          <div class="jnum">03</div>
+          <div class="jwhen">We deploy</div>
+          <p>An engineer embeds and ships a working system into their environment, not a report.</p>
+        </div>
+        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="card jstep core">
+          <div class="jnum">04</div>
+          <div class="jwhen">Consumption grows</div>
+          <p>On the Google Cloud and Workspace we <b>already resell</b>. Their usage is our revenue.</p>
+        </div>
+      </div>
+      <p class="punchline">Every training customer is a qualified lead we have already met.</p>
+    </section>
+
+    <!-- 3 · FDE monetisation -->
+    <section data-sec="02">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:coins"></iconify-icon></span><div><p class="kicker">Business model</p><h2>How a company makes money from FDE</h2></div></div>
+      <p class="lead" style="margin:-.3em 0 .5em">FDE is not man-month consulting. It is the lever that moves high-value software contracts and usage.</p>
+      <div class="grid g2">
+        <div class="card mcard">
+          <div class="mhead">
+            <div class="ico"><iconify-icon icon="lucide:badge-dollar-sign"></iconify-icon></div>
+            <div class="mtitle"><h3>Drives enterprise subscriptions</h3><p class="msub">License / ARR Driver</p></div>
+          </div>
+          <p>Early on-site work is treated as investment, sometimes delivered at cost. Breaking open the client&rsquo;s data buys <strong>multi-million-dollar annual subscriptions</strong>.</p>
+          <div class="brands">
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/palantir.svg?color=%23C8D4E2" alt="">Palantir</span>
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/salesforce.svg?color=%23C8D4E2" alt="">Salesforce</span>
+            <span class="brand us"><img src="assets/apps/mc-mark.png" alt="">Master Concept</span>
+          </div>
+        </div>
+        <div class="card mcard">
+          <div class="mhead">
+            <div class="ico"><iconify-icon icon="lucide:activity"></iconify-icon></div>
+            <div class="mtitle"><h3>Grows API and cloud consumption</h3><p class="msub">Usage-based Revenue</p></div>
+          </div>
+          <p>A pilot burns almost no tokens. Once the system reaches production, agents running every day drive <strong>exponential API and compute spend</strong>.</p>
+          <div class="brands">
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/openai.svg?color=%23C8D4E2" alt="">OpenAI</span>
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/anthropic.svg?color=%23C8D4E2" alt="">Anthropic</span>
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/googlecloud.svg?color=%23C8D4E2" alt="">Google Cloud</span>
+            <span class="brand us"><img src="assets/apps/mc-mark.png" alt="">Master Concept</span>
+          </div>
+        </div>
+        <div class="card mcard">
+          <div class="mhead">
+            <div class="ico"><iconify-icon icon="lucide:target"></iconify-icon></div>
+            <div class="mtitle"><h3>Deployment fees and outcome share</h3><p class="msub">Deployment &amp; Outcome-based</p></div>
+          </div>
+          <p>A substantial fee up front, or pricing tied to results &mdash; <strong>a share of the cost saved</strong> or the revenue added by the work.</p>
+          <div class="brands">
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/palantir.svg?color=%23C8D4E2" alt="">Palantir</span>
+            <span class="brand us"><img src="assets/apps/mc-mark.png" alt="">Master Concept</span>
+          </div>
+        </div>
+        <div class="card mcard">
+          <div class="mhead">
+            <div class="ico"><iconify-icon icon="lucide:recycle"></iconify-icon></div>
+            <div class="mtitle"><h3>Feeds the product and the models</h3><p class="msub">R&amp;D Leverage</p></div>
+          </div>
+          <p>Real edge cases return to product and research. Once one becomes a standard feature it sells to every later client at <strong>near-zero cost</strong>.</p>
+          <div class="brands">
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/anthropic.svg?color=%23C8D4E2" alt="">Anthropic</span>
+            <span class="brand"><img src="https://api.iconify.design/simple-icons/openai.svg?color=%23C8D4E2" alt="">OpenAI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Discussion -->
+    <section data-sec="02">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:message-circle-question"></iconify-icon></span><div><p class="kicker">On the table today</p><h2>The decisions ahead</h2></div></div>
+      <p class="lead" style="margin:-.3em 0 .7em">Everything before this is settled. These are not.</p>
+      <div class="grid g3">
+        <div class="card qcard">
+          <div class="qhead">
+            <span class="qn">01</span>
+            <span class="ico"><iconify-icon icon="lucide:package"></iconify-icon></span>
+            <h3>What do we sell?</h3>
+          </div>
+          <p>The engagement itself, or the consumption behind it? The price, the contract and the headcount all follow from this one answer.</p>
+        </div>
+        <div class="card qcard">
+          <div class="qhead">
+            <span class="qn">02</span>
+            <span class="ico"><iconify-icon icon="lucide:receipt"></iconify-icon></span>
+            <h3>How do we price it?</h3>
+          </div>
+          <p>A deployment fee, a share of the outcome, or enter at cost and trade that for the consumption that follows.</p>
+        </div>
+        <div class="card qcard">
+          <div class="qhead">
+            <span class="qn">03</span>
+            <span class="ico"><iconify-icon icon="lucide:wallet"></iconify-icon></span>
+            <h3>How are FDEs compensated?</h3>
+          </div>
+          <p>Base salary alone, or <b>base plus a share of what the engagement generates</b>? An FDE drives the deployment fee and the consumption behind it &mdash; the model should reflect that.</p>
+        </div>
+      </div>
+    </section>
+  </div></div>
+
+  <script>
+    // Per-viewer choice, kept in localStorage; ?theme=light shares a light link.
+    // The deck renders correctly if storage is unavailable.
+    (function () {
+      var KEY = 'fde-theme', root = document.documentElement;
+      function apply(mode) {
+        root.classList.toggle('light', mode === 'light');
+        var ic = document.querySelector('#themeBtn iconify-icon');
+        if (ic) ic.setAttribute('icon', mode === 'light' ? 'lucide:moon' : 'lucide:sun');
+      }
+      var forced = new URLSearchParams(location.search).get('theme'), saved;
+      try { saved = localStorage.getItem(KEY); } catch (e) {}
+      apply(forced || saved || 'dark');
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('#themeBtn')) return;
+        var next = root.classList.contains('light') ? 'dark' : 'light';
+        apply(next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+      });
+    })();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+  <script>
+    var isNarrow = window.matchMedia('(max-width: 768px)').matches;
+    var isTouch  = window.matchMedia('(pointer: coarse)').matches;
+    Reveal.initialize({
+      width:1280, height:720, margin:0.06, center:true,
+      hash:true, slideNumber:'c/t', transition:'slide', transitionSpeed:'fast', backgroundTransition:'fade',
+      controls:true, controlsLayout:'edges', controlsBackArrows:'visible', progress:true,
+      // On phones, switch to reveal's vertical scroll view so the deck reads/scrolls naturally
+      view: isNarrow ? 'scroll' : null, scrollProgress: true
+    });
+
+    // Which half of the Agenda the current page sits in. Registered AFTER
+    // initialize, because a handler added before it never receives 'ready'.
+    (function () {
+      var el = document.getElementById('secmark');
+      function paint() {
+        var cur = Reveal.getCurrentSlide();
+        var sec = cur && cur.dataset ? cur.dataset.sec : null;
+        if (!sec) { el.hidden = true; return; }
+        el.hidden = false;
+        el.className = 'secmark ' + (sec === '01' ? 'in' : 'cl');
+        el.querySelector('b').textContent = sec;
+        el.querySelector('span').textContent = sec === '01' ? 'In-house' : 'Client-facing';
+      }
+      Reveal.on('slidechanged', paint);
+      paint();
+    })();
+    // Click-anywhere-to-advance: desktop (fine pointer) only — leave touch devices to swipe/scroll
+    if (!isTouch) {
+      document.querySelector('.reveal').addEventListener('click', function(e){
+        // .rpr is the role-review disclosure: clicking it must open the panel,
+        // not advance the deck.
+        if (e.target.closest('a, button, input, textarea, select, .controls, details, summary, .rpr')) return;
+        if (window.getSelection && String(window.getSelection())) return;
+        Reveal.next();
+      });
+    }
+    function toggleFs(){
+      try{
+        if(!document.fullscreenElement){ (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen).call(document.documentElement); }
+        else { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+      }catch(e){}
+    }
+    document.addEventListener('fullscreenchange', function(){
+      var b=document.querySelector('.fs-btn iconify-icon');
+      if(b) b.setAttribute('icon', document.fullscreenElement ? 'lucide:minimize' : 'lucide:maximize');
+    });
+
+    // Revenue forecast combo chart — rendered when its slide is shown (so the canvas has a real size)
+    var revChart=null;
+    function renderRev(){
+      var el=document.getElementById('revChart');
+      if(!el || revChart) return;
+      revChart=new Chart(el,{
+        data:{ labels:[['Jul 26','Go live'],['Q4 26','Public launch'],['Q1 27','Grow'],['Q2 27','Scale']],
+          datasets:[
+            { type:'bar', label:'Free users', data:[200,1200,4000,9000], backgroundColor:'rgba(159,180,200,.45)', stack:'u', yAxisID:'y', borderRadius:4 },
+            { type:'bar', label:'Paid users', data:[10,100,300,650], backgroundColor:'#FF9E1B', stack:'u', yAxisID:'y', borderRadius:4 },
+            { type:'line', label:'MRR (US$)', data:[500,4000,11000,20000], borderColor:'#46D39A', backgroundColor:'rgba(70,211,154,.15)', yAxisID:'y1', tension:.35, borderWidth:3, pointRadius:4, pointBackgroundColor:'#46D39A', fill:false }
+          ]},
+        options:{ responsive:true, maintainAspectRatio:false, interaction:{ intersect:false, mode:'index' },
+          plugins:{ legend:{ labels:{ color:'#EAF1F8', usePointStyle:true, boxWidth:9, padding:18 } } },
+          scales:{
+            x:{ stacked:true, ticks:{ color:'#9FB4C8', font:{ size:12 } }, grid:{ color:'#2B517040' } },
+            y:{ stacked:true, position:'left', title:{ display:true, text:'Users', color:'#9FB4C8' }, ticks:{ color:'#9FB4C8' }, grid:{ color:'#2B517040' } },
+            y1:{ position:'right', title:{ display:true, text:'MRR (US$)', color:'#46D39A' }, ticks:{ color:'#46D39A', callback:function(v){ return '$'+(v/1000)+'k'; } }, grid:{ drawOnChartArea:false } }
+          }
+        }
+      });
+    }
+    Reveal.on('ready', function(e){ if(e.currentSlide && e.currentSlide.querySelector('#revChart')) renderRev(); });
+    Reveal.on('slidechanged', function(e){ if(e.currentSlide && e.currentSlide.querySelector('#revChart')) renderRev(); });
+  </script>
+</body>
+</html>

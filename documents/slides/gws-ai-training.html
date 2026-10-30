@@ -173,7 +173,7 @@
 
   .ways{ flex:none; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
   .way{ background:linear-gradient(180deg,var(--panel),var(--panel-2));
-        border:1px solid var(--line-s); border-radius:18px; padding:20px 22px 18px; }
+        border:1px solid var(--line-s); border-radius:18px; padding:18px 22px 16px; }
   /* one mark per tier, in that tier's colour — the badge says the name,
      the icon makes it recognisable from the back of the room */
   .wico{ width:70px; height:70px; border-radius:16px; display:flex;
@@ -193,10 +193,11 @@
   .way.gem{ border-color:rgba(111,195,247,.5); }
   .way.studio{ border-color:rgba(255,158,27,.5); }
   .way.script{ border-color:rgba(70,211,154,.5); }
-  .teams{ display:flex; gap:12px; margin-top:auto; padding-top:18px; }
+  .teams{ display:flex; gap:12px; margin-top:auto; padding-top:13px; }
+  .ways + .note{ margin-top:13px; font-size:.56em; line-height:1.4; }
   .tm{ flex:1; display:flex; align-items:center; justify-content:center; gap:9px;
        background:linear-gradient(180deg,var(--panel),var(--panel-2));
-       border:1px solid var(--line-s); border-radius:13px; padding:12px 10px;
+       border:1px solid var(--line-s); border-radius:13px; padding:10px 10px;
        font-size:.56em; font-weight:700; color:var(--text); white-space:nowrap; }
   .tm iconify-icon{ font-size:23px; color:var(--mc-orange); }
 
@@ -276,9 +277,9 @@
       <div class="ways">
         <div class="way gem">
           <div class="wico gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""></div>
-          <span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span>
+          <span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span>
           <h3>Your expert, on call</h3>
-          <p>Teach Gemini one job once &mdash; your tone, your format, your handbook. You still press go.</p>
+          <p>Teach Gemini one job once &mdash; your tone, your format, your handbook. Stack several in one prompt, or let Gemini pick the right one.</p>
         </div>
         <div class="way studio">
           <div class="wico studio"><i class="smk big"></i></div>
@@ -293,6 +294,7 @@
           <p>Any API, any schedule, any logic. Also what Studio&rsquo;s own custom steps are written in.</p>
         </div>
       </div>
+      <p class="note"><b>Gems are becoming skills.</b> From 17 Nov Gems move to Settings; they keep working until at least March 2027, then convert to <b>draft</b> skills each creator must activate. &ldquo;Ask a Gem&rdquo; can no longer be added to new Studio flows.</p>
       <div class="teams">
         <span class="tm"><iconify-icon icon="lucide:megaphone"></iconify-icon>Marketing</span>
         <span class="tm"><iconify-icon icon="lucide:handshake"></iconify-icon>Sales &amp; BD</span>
@@ -306,7 +308,7 @@
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:megaphone"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Marketing</h2></div></div>
       <div class="ucs">
         <div class="uc">
-          <div class="uc-top"><h3>Brand voice</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <div class="uc-top"><h3>Brand voice</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
           <p>Trained on your own published work, so nobody re-explains tone in a prompt again.</p>
           <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt="">Tone</div><div class="pv-row pv-ok">&check; Plain, direct, no jargon</div><div class="pv-row pv-ok">&check; Short sentences</div><div class="pv-row pv-no">&times; &ldquo;leverage&rdquo;, &ldquo;synergy&rdquo;</div></div>
           <div class="chain">
@@ -346,7 +348,7 @@
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:handshake"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Sales &amp; BD</h2></div></div>
       <div class="ucs">
         <div class="uc">
-          <div class="uc-top"><h3>Proposal drafting</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <div class="uc-top"><h3>Proposal drafting</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
           <p>Trained on the proposals you actually won, not a blank page.</p>
           <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt="">Outline</div><div class="pv-row"><b>1</b> Problem &nbsp; <b>2</b> Approach</div><div class="pv-row"><b>3</b> Scope &nbsp;&nbsp; <b>4</b> Price</div><div class="pv-row pv-ok">Drawn from 12 proposals you won</div></div>
           <div class="chain">
@@ -430,7 +432,7 @@
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:users-round"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>HR</h2></div></div>
       <div class="ucs">
         <div class="uc">
-          <div class="uc-top"><h3>Policy answers</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <div class="uc-top"><h3>Policy answers</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
           <p>Staff ask in plain language; your own handbook answers.</p>
           <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt="">Asked</div><div class="pv-row">&ldquo;How many days annual leave?&rdquo;</div><div class="pv-row pv-ok">&rarr; 14 days, +1 per year of service</div></div>
           <div class="chain">
@@ -514,7 +516,7 @@
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:flag"></iconify-icon></span><div><p class="kicker">Wrap up</p><h2>Pick one. Build it today.</h2></div></div>
       <div class="wrap">
         <div class="rule">
-          <div class="rl gem"><span class="rn">01</span><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""><div><h3>Gem</h3><p>You press go. Your tone, your format, your handbook.</p></div></div>
+          <div class="rl gem"><span class="rn">01</span><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""><div><h3>Skill</h3><p>Your tone, your format, your handbook. Several can stack in one prompt.</p></div></div>
           <div class="rl studio"><span class="rn">02</span><i class="smk"></i><div><h3>Studio</h3><p>It runs without you, and every system is on the connector list.</p></div></div>
           <div class="rl script"><span class="rn">03</span><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt=""><div><h3>Apps Script</h3><p>Anything else. Any API, any schedule, any logic &mdash; under six minutes.</p></div></div>
         </div>

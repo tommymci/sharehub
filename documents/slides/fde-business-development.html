@@ -218,7 +218,7 @@
     .mandate b{ color:var(--mc-orange); }
 
     /* team page — two groups under the director, each with its duties */
-    .twogroup{ display:grid; grid-template-columns:2fr 5fr; gap:14px; align-items:stretch; }
+    .twogroup{ display:grid; grid-template-columns:2.5fr 5fr; gap:14px; align-items:stretch; }
     .grp{ padding:13px 16px 15px; }
     .grphd{ display:flex; align-items:center; gap:8px; color:var(--mc-orange);
             font-weight:800; font-size:.52em; letter-spacing:.4px; margin-bottom:.6em; }
@@ -267,48 +267,70 @@
        Zorro sits in a compact inline row rather than a hero portrait: the slide
        has to carry seven faces AND seven duty lines, and the duty text is the
        part people actually read from the back of a room. */
-    .lead-row{ display:flex; align-items:center; gap:13px; justify-content:center;
-               margin:.1em 0 .5em; }
-    .lead-row img{ width:64px; height:64px; border-radius:50%; object-fit:cover;
+    .lead-row{ display:flex; align-items:center; gap:12px; justify-content:center;
+               margin:0 0 .35em; }
+    .lead-row img{ width:56px; height:56px; border-radius:50%; object-fit:cover;
                    border:2px solid var(--mc-orange); }
     .lead-row .pn{ color:#fff; font-weight:800; font-size:21px; line-height:1.2; }
     .lead-row .pt{ color:var(--mc-orange); font-weight:700; font-size:15px; margin-top:2px; }
 
-    .twogroup{ display:grid; grid-template-columns:2fr 5fr; gap:14px; align-items:stretch; }
-    .grp{ padding:14px 18px 16px; }
+    .twogroup{ display:grid; grid-template-columns:2.5fr 5fr; gap:14px; align-items:stretch; }
+    .grp{ padding:10px 16px 12px; }
     .grphd{ display:flex; align-items:center; gap:8px; color:var(--mc-orange);
-            font-weight:800; font-size:14px; letter-spacing:.3px; margin-bottom:.85em; }
+            font-weight:800; font-size:15px; letter-spacing:.3px; margin-bottom:.65em; }
+    /* the fee is the second title on this row, not a block beneath it */
+    /* the fee is a filled badge, not more orange text — orange is the fill
+       and navy the ink, which also sets it apart from the team name beside it */
+    /* One badge style for the fees and the role review, so the three things
+       worth noticing on this deck look like the same kind of thing. The glow
+       is a slow breath — enough to catch the eye, not enough to nag. */
+    /* Same treatment as the Plane and Wilco tiles on the apps page: a
+       translucent orange fill that breathes, orange border and orange ink —
+       not a solid pill. One idea of "look here" across the whole deck. */
+    .gfee, .rpr > summary{ display:inline-flex; align-items:center; gap:6px;
+           height:24px; box-sizing:border-box; padding:0 11px;
+           background:rgba(255,158,27,.08); color:var(--mc-orange);
+           border:1px solid rgba(255,158,27,.40); border-radius:999px;
+           font-size:12px; font-weight:800; letter-spacing:.2px;
+           line-height:1; white-space:nowrap;
+           animation:tileglow 2.2s ease-in-out infinite; }
+    .gfee{ margin-left:auto; }
+    .gfee img{ width:13px; height:13px; display:block; flex:none; }
+    @media (prefers-reduced-motion: reduce){
+      .gfee, .rpr > summary{ animation:none;
+        background:rgba(255,158,27,.22); border-color:var(--mc-orange); }
+    }
     .grphd iconify-icon{ font-size:18px; }
     .grp.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.06); }
-    .grprow{ display:grid; gap:10px; align-items:start; }
+    .grprow{ display:grid; gap:9px; align-items:start; }
 
     .person{ text-align:center; min-width:0; }
-    .person img{ width:58px; height:58px; border-radius:50%; object-fit:cover;
+    .person img{ width:52px; height:52px; border-radius:50%; object-fit:cover;
                  display:block; margin:0 auto 7px; border:2px solid var(--line-s);
                  background:var(--panel); }
-    .ghost{ width:58px; height:58px; border-radius:50%; margin:0 auto 7px;
+    .ghost{ width:52px; height:52px; border-radius:50%; margin:0 auto 7px;
             border:2px dashed var(--line-s); display:flex; align-items:center;
             justify-content:center; color:var(--muted); }
     .ghost iconify-icon{ font-size:26px; }
-    .person .pn{ color:#fff; font-weight:800; font-size:13px; line-height:1.25; }
-    .person .pt{ color:var(--muted); font-size:10.5px; line-height:1.3; margin-top:2px; }
+    .person .pn{ color:#fff; font-weight:800; font-size:14px; line-height:1.25; }
+    .person .pt{ color:var(--muted); font-size:11px; line-height:1.3; margin-top:2px; }
     .person .pt s{ color:var(--muted); opacity:.55; }
     .pt-new{ color:var(--mc-orange); font-weight:800; font-size:10.5px;
              line-height:1.3; margin-top:2px; }
 
     /* duty strip — the text that has to stay readable */
-    .dstrip{ display:grid; border-top:1px solid var(--line-s); margin-top:13px; }
+    .dstrip{ display:grid; border-top:1px solid var(--line-s); margin-top:11px; }
     .dstrip.one{ grid-template-columns:1fr; }
     .dstrip.two{ grid-template-columns:1fr 1fr; }
     .dstrip.two .dcell + .dcell{ border-left:1px solid var(--line-s); padding-left:16px; }
-    .dcell{ padding:11px 0 0; }
+    .dcell{ padding:9px 0 0; }
     .dlabel{ display:flex; align-items:center; gap:6px; font-weight:800; font-size:12px;
              letter-spacing:1.5px; text-transform:uppercase; margin-bottom:.6em; }
     .dlabel iconify-icon{ font-size:13px; }
     .dlabel.inhouse{ color:#6FC3F7; } .dlabel.client{ color:var(--mc-orange); }
     .dcell ul{ margin:0; padding:0; }
-    .dcell li{ list-style:none; position:relative; padding-left:13px; margin:.35em 0;
-               font-size:12.5px; line-height:1.45; color:var(--muted); }
+    .dcell li{ list-style:none; position:relative; padding-left:13px; margin:.3em 0;
+               font-size:14px; line-height:1.4; color:var(--muted); }
     .dcell li::before{ content:"\2022"; position:absolute; left:0; color:var(--line-s); }
     .dcell li b{ color:var(--text); font-weight:700; }
     /* The two new FDE duties. Green is distinct from the orange labels above
@@ -340,8 +362,8 @@
     .growrow{ display:flex; align-items:center; gap:18px; margin:.15em 0 .1em; }
     .grow{ font-size:2.4em; font-weight:900; color:var(--mc-orange); line-height:1; }
     /* the five, beside the number that counts them */
-    .faces{ display:flex; }
-    .faces img{ width:44px; height:44px; border-radius:50%; object-fit:cover;
+    .faces{ display:flex; align-items:center; }
+    .faces img{ width:44px; height:44px; box-sizing:border-box; border-radius:50%; object-fit:cover;
                 border:2px solid var(--panel); margin-left:-9px; }
     .faces img:first-child{ margin-left:0; }
     .grow span{ color:var(--muted); font-weight:700; }
@@ -439,14 +461,11 @@
        figure anywhere: the number belongs in the conversation, not on a slide
        that can be forwarded. */
     .rpr{ position:relative; display:inline-block; margin-top:-3px; }
-    .rpr > summary{ list-style:none; cursor:pointer; display:inline-flex;
-                    align-items:center; gap:5px; border:1px solid var(--mc-orange);
-                    border-radius:999px; padding:2px 9px; font-size:9.5px;
-                    font-weight:800; color:var(--mc-orange); white-space:nowrap; }
+    .rpr > summary{ list-style:none; cursor:pointer; }
     .rpr > summary::-webkit-details-marker{ display:none; }
-    .rpr > summary::after{ content:"\25BE"; font-size:8px; }
+    .rpr > summary::after{ content:"\25BE"; font-size:9px; }
     .rpr[open] > summary::after{ content:"\25B4"; }
-    .rpr > summary:hover{ background:rgba(255,158,27,.14); }
+    .rpr > summary:hover{ filter:brightness(1.08); }
     .rprbody{ position:absolute; z-index:60; top:calc(100% + 7px); left:50%;
               transform:translateX(-50%); width:430px; text-align:left;
               background:var(--panel); border:1px solid var(--mc-orange);
@@ -484,16 +503,133 @@
     .jstep p b{ color:var(--mc-orange); }
 
     /* open questions */
-    .qcard{ padding:16px 20px 17px; }
-    .qhead{ display:flex; align-items:center; gap:11px; margin-bottom:.45em; }
-    .qn{ font-size:1.25em; font-weight:900; color:var(--mc-orange); line-height:1; }
+    .qcard{ padding:18px 22px 19px; }
+    .qhead{ display:flex; align-items:center; gap:12px; margin-bottom:.6em; }
+    .qn{ font-size:1.3em; font-weight:900; color:var(--mc-orange); line-height:1; }
     .qhead .ico{ width:30px; height:30px; margin:0; flex:none; }
     .qhead .ico iconify-icon{ font-size:16px; }
-    .qcard h3{ margin:0; font-size:.82em; }
-    .qcard p{ margin:0; font-size:.6em; line-height:1.45; }
+    .qcard h3{ margin:0; font-size:.84em; line-height:1.25; }
+    .qcard p{ margin:0; font-size:.64em; line-height:1.5; }
     .qcard p b{ color:var(--mc-orange); }
     /* the one the room will actually argue about */
     .qcard.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+
+    /* the two internal charges, stated as a pair */
+    .reveal ul.reqs.one{ grid-template-columns:1fr; gap:11px; }
+    /* this page's funded cell sits in the right-hand card */
+    .conn.right .v1{ left:11%; }
+    .conn.right .h { left:11%; width:60%; }
+    .conn.right .v2{ left:71%; }
+    .pairbox{ margin-top:16px; border:1px solid var(--line-s); border-radius:16px;
+              padding:14px 20px 16px; background:var(--panel-2); }
+    .pairhd{ color:var(--muted); font-size:11px; font-weight:800; letter-spacing:1.6px;
+             text-transform:uppercase; margin-bottom:.7em; }
+    .pairrow{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+    .term{ display:block; color:var(--mc-orange); font-weight:800; font-size:17px; }
+    .from{ display:block; color:var(--muted); font-size:12.5px; margin-top:2px; }
+    /* where each group's money comes from, on the team page */
+    /* where each group's money comes from — same shape in both boxes, with a
+       note icon so it reads as money at a glance rather than as another duty */
+    .fundbar{ border:1px solid rgba(255,158,27,.4); background:rgba(255,158,27,.07);
+              border-radius:10px; padding:5px 10px 6px; margin:0 0 9px; }
+    .flab{ display:block; color:var(--muted); font-size:9px; font-weight:800;
+           letter-spacing:1.5px; text-transform:uppercase; }
+    .fval{ display:flex; align-items:center; gap:6px; margin-top:2px;
+           font-size:12px; color:var(--muted); line-height:1.3; }
+    .fval img{ width:14px; height:14px; flex:none; display:block; }
+    .fval b{ color:var(--mc-orange); font-weight:800; }
+
+    /* funding the team — two sources, one team */
+    .srcs{ display:grid; grid-template-columns:1fr 1fr; gap:14px; align-items:stretch; }
+    .src{ padding:11px 20px 12px; display:flex; flex-direction:column; }
+    .src .dlabel{ margin:.5em 0 .45em; }
+    .reveal ul.srcl{ margin:0; padding:0; }
+    .srcl li{ list-style:none; position:relative; padding-left:14px; margin:.26em 0;
+              font-size:14px; line-height:1.4; color:var(--muted); }
+    .srcl li::before{ content:"\2022"; position:absolute; left:0; color:var(--line-s); }
+    .srcl li b{ color:var(--text); font-weight:700; }
+    .evid{ color:var(--muted); font-size:11px; font-weight:800; letter-spacing:1.5px;
+           text-transform:uppercase; margin:.8em 0 .5em; }
+    /* the four live requests, named with their own icons */
+    .note{ color:var(--muted); font-size:12.5px; line-height:1.45;
+           margin:.7em 0 14px; }
+    /* the card is a flex column, so the grid stretches unless told not to */
+    .rqts{ display:flex; flex-wrap:wrap; gap:10px 14px; flex:none;
+           margin-bottom:14px; }
+    .rqt{ display:flex; align-items:center; gap:9px; width:calc(50% - 7px);
+          height:28px; font-size:13px; line-height:1.2; font-weight:700;
+          color:var(--text); min-width:0; box-sizing:border-box; }
+    .rqt img{ width:26px; height:26px; object-fit:contain; flex:none;
+              display:block; border-radius:7px; }
+    /* the system each request is about, trailing the app it lands in */
+    .rqt .rfor{ width:17px; height:17px; border-radius:4px; opacity:.95; }
+    .rarrow{ color:var(--muted); font-size:12px; margin:0 6px 0 7px;
+             flex:none; line-height:1; }
+    /* the two fees breathe on the same beat as the badges and the Plane and
+       Wilco tiles, so the whole deck has one signal for "look here" */
+    .feebar{ margin-top:auto; display:flex; align-items:baseline; gap:9px;
+             flex:none;
+             padding:9px 14px 10px;
+             border:1px solid rgba(255,158,27,.40); border-radius:12px;
+             background:rgba(255,158,27,.08);
+             animation:tileglow 2.2s ease-in-out infinite; }
+    .feebar .felab, .feebar .fig{ font-size:21px; }
+
+    .fflow{ position:relative; height:30px; }
+    .fflow i{ position:absolute; background:var(--mc-orange); display:block; }
+    .fflow .s1{ left:29%; top:0; width:3px; height:18px; }
+    .fflow .s2{ left:71%; top:0; width:3px; height:18px; }
+    .fflow .hb{ left:29%; width:42%; top:16px; height:3px; }
+    .fflow .dn{ left:50%; top:16px; width:3px; height:15px; }
+    /* each source funds its own people, so the arrows run straight down
+       rather than converging on one box */
+    .fflow.two i{ width:3px; height:20px; top:0; }
+    .fflow.two .d1{ left:29%; }
+    .fflow.two .d2{ left:71%; }
+    .fflow.two i::after{ content:""; position:absolute; left:50%;
+           bottom:-11px; transform:translateX(-50%);
+           border-left:9px solid transparent;
+           border-right:9px solid transparent;
+           border-top:11px solid var(--mc-orange);
+           filter:drop-shadow(0 0 7px rgba(255,158,27,.55)); }
+    .dests{ display:grid; grid-template-columns:1fr 1fr; gap:14px;
+            align-items:stretch; }
+    .ghostmini{ width:44px; height:44px; box-sizing:border-box; border-radius:50%;
+                border:2px dashed var(--line-s); display:flex;
+                align-items:center; justify-content:center;
+                color:var(--muted); margin-left:-9px; }
+    .ghostmini iconify-icon{ font-size:20px; }
+    .fflow .dn::after{ content:""; position:absolute; left:50%; bottom:-11px;
+                       transform:translateX(-50%); border-left:9px solid transparent;
+                       border-right:9px solid transparent; border-top:11px solid var(--mc-orange);
+                       filter:drop-shadow(0 0 7px rgba(255,158,27,.55)); }
+
+    /* .card sets a column flex and its own gradient, and it is declared after
+       this block — so the row direction and the orange have to out-rank it. */
+    .card.teamcard{ display:flex; flex-direction:row; align-items:center;
+                    justify-content:center; gap:15px; padding:9px 18px 10px;
+                    border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+    .card.teamcard .dhd{ margin:0; font-size:15.5px; white-space:nowrap; }
+    .card.teamcard .grow{ font-size:1.7em; margin:0; white-space:nowrap; }
+    .tcleft{ display:flex; align-items:center; gap:14px; }
+    .card.teamcard .faces img, .card.teamcard .ghostmini{ width:40px; height:40px; }
+    .card.teamcard .ghostmini iconify-icon{ font-size:18px; }
+
+    /* the pipeline, compressed to a strip above the decisions it leads to */
+    .pipehd{ margin:0 0 .5em; }
+    .pipestrip{ display:flex; align-items:stretch; }
+    .pstep{ flex:1; min-width:0; border:1px solid var(--line-s); border-radius:13px;
+            background:linear-gradient(180deg,var(--panel),var(--panel-2));
+            padding:11px 16px 12px; }
+    .pstep.last{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
+    .pnum{ display:block; color:var(--mc-orange); font-weight:900; font-size:17px; line-height:1; }
+    .ptitle{ display:block; color:var(--text); font-weight:700; font-size:14.5px;
+             line-height:1.3; margin-top:5px; }
+    .parrow{ flex:none; width:26px; display:flex; align-items:center; justify-content:center;
+             color:var(--mc-orange); }
+    .parrow iconify-icon{ font-size:21px; }
+    .pipenote{ margin:.7em 0 0; font-size:14px; font-weight:800; color:var(--text); }
+    .decsplit{ height:1px; background:var(--line-s); margin:1.1em 0 1em; }
 
     /* cards / grids */
     .body{ display:flex; flex-direction:column; justify-content:center; gap:.5em; }
@@ -733,7 +869,7 @@
       </div>
       <div class="twogroup">
         <div class="card grp">
-          <div class="grphd"><iconify-icon icon="lucide:presentation"></iconify-icon>Training &amp; Sales</div>
+          <div class="grphd"><iconify-icon icon="lucide:presentation"></iconify-icon>Training &amp; Sales<span class="gfee"><img src="https://api.iconify.design/lucide/banknote.svg?color=%23FF9E1B" alt="">Delivery fee</span></div>
           <div class="grprow" style="grid-template-columns:repeat(2,1fr)">
             <div class="person">
               <img src="assets/team/jane-cheung.jpg" alt="">
@@ -758,7 +894,7 @@
           </div>
         </div>
         <div class="card grp core">
-          <div class="grphd"><iconify-icon icon="lucide:code-2"></iconify-icon>AI-Native Development</div>
+          <div class="grphd"><iconify-icon icon="lucide:code-2"></iconify-icon>AI-Native Development<span class="gfee"><img src="https://api.iconify.design/lucide/banknote.svg?color=%23FF9E1B" alt="">Retaining fee</span></div>
           <div class="grprow" style="grid-template-columns:repeat(5,1fr)">
             <div class="person">
               <img src="assets/team/tommy-shum.jpg" alt="">
@@ -804,8 +940,8 @@
               <div class="dcell">
                 <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
                 <ul>
-                <li><b>AI Enablement</b> — empowering teams to adopt AI and improve productivity</li>
-                <li><b>Internal Solution Development</b> — solving real problems with AI</li>
+                <li><b>AI Enablement</b> — adopt AI, improve productivity</li>
+                <li><b>Internal Solution Development</b> — solving real problems</li>
                 </ul>
               </div>
               <div class="dcell">
@@ -952,99 +1088,67 @@
       </div>
     </section>
 
-    <!-- 4 · In-house demand and the ask -->
+    <!-- 4 · Funding the team -->
     <section data-sec="01">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:trending-up"></iconify-icon></span><div><p class="kicker">Funding</p><h2>Funding for growing team</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:hand-coins"></iconify-icon></span><div><p class="kicker">Funding model</p><h2>Funding the team</h2></div></div>
 
-      <div class="dem">
-        <div class="card demand">
-          <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/inbox.svg?color=%23FF9E1B" alt="">Demand <span class="up">&#9650;</span></div>
-          <ul class="reqs">
-            <li>
-              <span class="rq"><img src="assets/apps/mcbms.png" alt=""></span>
-              <span class="rt"><b>MCBMS</b>GWS renewal pipeline &amp; billing tracking</span>
-            </li>
-            <li>
-              <span class="rq"><img src="assets/apps/findacloud.png" alt=""></span>
-              <span class="rt"><b>Finda Cloud</b>Freshworks invoice reconciliation from MC</span>
-            </li>
-            <li>
-              <span class="rq"><img src="assets/apps/mc-els.png" alt=""></span>
-              <span class="rt"><b>ELS</b>Employee Lifecycle System</span>
-            </li>
-            <li>
-              <span class="rq"><img src="assets/apps/mc-eip.png" alt=""></span>
-              <span class="rt"><b>EIP</b>Employee Information Portal</span>
-            </li>
+      <div class="srcs">
+        <div class="card src">
+          <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/building-2.svg?color=%23FF9E1B" alt="">F&amp;O</div>
+          <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house development</div>
+          <ul class="srcl">
+            <li><b>Support &amp; Maintenance</b></li>
+            <li><b>New Solution Development</b></li>
           </ul>
+          <p class="evid">Live requests</p>
+          <div class="rqts">
+            <span class="rqt"><img src="assets/apps/mcbms.png" alt="">MCBMS<span class="rarrow">→</span><img class="rfor" src="https://api.iconify.design/logos/google-drive.svg" alt="Google Workspace" title="Google Workspace"></span>
+            <span class="rqt"><img src="assets/apps/findacloud.png" alt="">Finda Cloud<span class="rarrow">→</span><img class="rfor" src="assets/apps/freshworks.png" alt="Freshworks" title="Freshworks"></span>
+            <span class="rqt"><img src="assets/apps/mc-els.png" alt="">ELS</span>
+            <span class="rqt"><img src="assets/apps/mc-eip.png" alt="">EIP</span>
+          </div>
+          <div class="feebar"><span class="felab">Retaining fee</span><span class="fig">~HK$100k / m</span></div>
         </div>
 
-        <div class="card demand">
-          <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/users-round.svg?color=%23FF9E1B" alt="">AI-Native Development Team <span class="up">&#9650;</span></div>
-          <div class="growrow">
+        <div class="card src">
+          <div class="dhd"><img class="hdi" src="https://api.iconify.design/simple-icons/googlecloud.svg?color=%23FF9E1B" alt="">Google Team</div>
+          <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Sales &amp; training</div>
+          <ul class="srcl">
+            <li><b>Sales support</b></li>
+            <li><b>Training delivery, material &amp; demo</b></li>
+          </ul>
+          <p class="note">They hold the customer contract &mdash; we deliver under it</p>
+          <div class="feebar"><span class="felab">Delivery fee</span><span class="fig">rate to agree</span></div>
+        </div>
+      </div>
+
+      <div class="fflow two"><i class="d1"></i><i class="d2"></i></div>
+
+      <div class="dests">
+        <div class="card teamcard">
+          <div class="tcleft">
+            <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/code-2.svg?color=%23FF9E1B" alt="">AI-Native Development</div>
             <div class="grow">3 <span>&rarr;</span> 5</div>
-            <div class="faces">
-              <img src="assets/team/tommy-shum.jpg" alt="">
-              <img src="assets/team/alfred-lau.jpg" alt="">
-              <img src="assets/team/cathy-zhong.jpg" alt="">
-              <img src="assets/team/daniel-choy.jpg" alt="">
-              <img src="assets/team/esther-wan.jpg" alt="">
-            </div>
           </div>
-          <div class="dstrip two tight">
-            <div class="dcell funded">
-              <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
-              <ul>
-                <li><b>Support &amp; Maintenance</b></li>
-                <li><b>New Solution Development</b></li>
-              </ul>
-            </div>
-            <div class="dcell">
-              <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
-              <ul><li>FDE — now prepare for <strong>go-to-market</strong></li></ul>
-            </div>
+          <div class="faces">
+            <img src="assets/team/tommy-shum.jpg" alt="">
+            <img src="assets/team/alfred-lau.jpg" alt="">
+            <img src="assets/team/cathy-zhong.jpg" alt="">
+            <img src="assets/team/daniel-choy.jpg" alt="">
+            <img src="assets/team/esther-wan.jpg" alt="">
+          </div>
+        </div>
+        <div class="card teamcard">
+          <div class="tcleft">
+            <div class="dhd"><img class="hdi" src="https://api.iconify.design/lucide/presentation.svg?color=%23FF9E1B" alt="">Training &amp; Sales</div>
+          </div>
+          <div class="faces">
+            <img src="assets/team/zorro-cheng.jpg" alt="">
+            <img src="assets/team/jane-cheung.jpg" alt="">
+            <span class="ghostmini"><iconify-icon icon="lucide:user-round"></iconify-icon></span>
           </div>
         </div>
       </div>
-
-      <div class="ask">
-        <div class="conn"><i class="v1"></i><i class="h"></i><i class="v2"></i></div>
-        <div class="askleft">
-          <p class="asksub"><span class="felab">Retaining fee</span> <span class="fig">(~HK$100k / m)</span></p>
-          <p class="asklead">An internal retainer <b>reserves our capacity for the in-house work</b>.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6 · The pipeline we already have -->
-    <section data-sec="02">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:route"></iconify-icon></span><div><p class="kicker">Pipeline</p><h2>The customers are already ours</h2></div></div>
-      <div class="journey four">
-        <div class="card jstep">
-          <div class="jnum">01</div>
-          <div class="jwhen">They train with us</div>
-          <p>Zorro delivers AI and Google training. We are already in the room, and already trusted.</p>
-        </div>
-        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
-        <div class="card jstep">
-          <div class="jnum">02</div>
-          <div class="jwhen">They leave wanting more</div>
-          <p>Their people now see what is possible &mdash; and have <b>nobody to build it</b>.</p>
-        </div>
-        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
-        <div class="card jstep">
-          <div class="jnum">03</div>
-          <div class="jwhen">We deploy</div>
-          <p>An engineer embeds and ships a working system into their environment, not a report.</p>
-        </div>
-        <div class="jarrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
-        <div class="card jstep core">
-          <div class="jnum">04</div>
-          <div class="jwhen">Consumption grows</div>
-          <p>On the Google Cloud and Workspace we <b>already resell</b>. Their usage is our revenue.</p>
-        </div>
-      </div>
-      <p class="punchline">Every training customer is a qualified lead we have already met.</p>
     </section>
 
     <!-- 3 · FDE monetisation -->
@@ -1105,7 +1209,18 @@
     <!-- 8 · Discussion -->
     <section data-sec="02">
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:message-circle-question"></iconify-icon></span><div><p class="kicker">On the table today</p><h2>The decisions ahead</h2></div></div>
-      <p class="lead" style="margin:-.3em 0 .7em">Everything before this is settled. These are not.</p>
+      <div class="dlabel client pipehd"><iconify-icon icon="lucide:route"></iconify-icon>FDE pipeline</div>
+      <div class="pipestrip">
+        <div class="pstep"><span class="pnum">01</span><span class="ptitle">They train with us</span></div>
+        <div class="parrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="pstep"><span class="pnum">02</span><span class="ptitle">They leave wanting more</span></div>
+        <div class="parrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="pstep"><span class="pnum">03</span><span class="ptitle">We deploy</span></div>
+        <div class="parrow"><iconify-icon icon="lucide:chevron-right"></iconify-icon></div>
+        <div class="pstep last"><span class="pnum">04</span><span class="ptitle">Consumption grows</span></div>
+      </div>
+      <p class="pipenote">Every training customer is a qualified lead we have already met.</p>
+      <div class="decsplit"></div>
       <div class="grid g3">
         <div class="card qcard">
           <div class="qhead">
@@ -1127,9 +1242,9 @@
           <div class="qhead">
             <span class="qn">03</span>
             <span class="ico"><iconify-icon icon="lucide:wallet"></iconify-icon></span>
-            <h3>How are FDEs compensated?</h3>
+            <h3>How is reward structured?</h3>
           </div>
-          <p>Base salary alone, or <b>base plus a share of what the engagement generates</b>? An FDE drives the deployment fee and the consumption behind it &mdash; the model should reflect that.</p>
+          <p>Fixed salary, or <b>partly linked to outcomes</b> &mdash; and how is that balanced across sales and delivery?</p>
         </div>
       </div>
     </section>

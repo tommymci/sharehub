@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<title>GWS AI — What your team can automate</title>
+<link rel="icon" type="image/png" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+<style>
+  :root{ --mc-orange:#FF9E1B; --mc-orange-deep:#E8890B; --bg:#0A1726; --panel:#13283D;
+         --panel-2:#0F2236; --line-s:#2B5170; --text:#EAF1F8; --muted:#9FB4C8;
+         --gem:#6FC3F7; --studio:#FF9E1B; --script:#46D39A; }
+  *{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .reveal section img{ margin:0; background:none; border:0; box-shadow:none; }
+  .reveal-viewport{ background:radial-gradient(1100px 760px at 86% -12%, rgba(255,158,27,.10), transparent 58%), var(--bg); }
+  .reveal{ font-family:'Inter',system-ui,sans-serif; color:var(--text); font-size:30px; }
+  .reveal h1,.reveal h2,.reveal h3{ font-family:'Inter',sans-serif; color:#fff;
+      text-transform:none; letter-spacing:-.5px; margin:0; }
+  .reveal h1{ font-size:2.8em; font-weight:900; line-height:1.03; }
+  .reveal h2{ font-size:1.5em; font-weight:800; line-height:1.1; }
+  .reveal p{ line-height:1.45; margin:.3em 0; }
+  .lead{ color:var(--muted); font-size:.8em; } .muted{ color:var(--muted); }
+  .reveal .slides{ text-align:left; }
+  .reveal .slides > section{ box-sizing:border-box; width:100%; height:700px;
+      padding:58px 54px 26px; display:flex; flex-direction:column; justify-content:flex-start; }
+  .reveal .slides > section.present{ display:flex !important; }
+  .reveal .slides > section.hero{ height:auto; padding:0 54px; justify-content:center; }
+  .reveal .slides > section.hero{ align-items:center; text-align:center; }
+  .reveal .progress{ color:var(--mc-orange); height:3px; }
+  .reveal .slide-number{ background:transparent; color:var(--muted); font-size:14px;
+      top:auto; bottom:16px; right:26px; }
+
+  .brandbar{ position:fixed; top:22px; left:28px; z-index:60; display:flex; align-items:center;
+    gap:10px; background:rgba(8,18,30,.55); backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.09); border-radius:13px; padding:8px 15px 8px 11px; }
+  .brandbar img{ height:22px; display:block; }
+  .brandbar .nm{ color:#fff; font-weight:700; font-size:14px; line-height:1; }
+  .brandbar .nm span{ font-weight:600; opacity:.9; }
+  .btn-f{ position:fixed; top:22px; right:24px; z-index:61; width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center; background:rgba(8,18,30,.55);
+    backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.10); border-radius:11px;
+    color:#fff; cursor:pointer; }
+  .btn-f:hover{ color:var(--mc-orange); border-color:var(--mc-orange); }
+
+  .hero-panel .kicker.gws{ display:flex; align-items:center; gap:13px;
+    font-size:.8em; letter-spacing:1.6px; margin:0 0 .8em; }
+  .hero-panel .kicker.gws img{ width:36px; height:36px; display:block; }
+  .hero-panel{ background:rgba(8,18,30,.72); backdrop-filter:blur(7px);
+    border:1px solid rgba(255,255,255,.09); border-radius:24px; padding:42px 54px 36px;
+    display:inline-block; text-align:left; }
+  .tgrid{ display:flex; flex-wrap:wrap; gap:16px 26px; margin-top:1.4em;
+          padding-top:1.2em; border-top:1px solid rgba(255,255,255,.12); }
+  .tnode{ display:flex; flex-direction:column; align-items:center; gap:7px; width:72px; }
+  .tnode img{ width:38px; height:38px; display:block; object-fit:contain; }
+  .tnode span{ font-size:11.5px; color:var(--muted); font-weight:600; text-align:center; line-height:1.2; }
+
+  /* ---- light theme ---- */
+  html.light{ --bg:#FFFFFF; --panel:#F3F6FA; --panel-2:#FAFBFD; --line-s:#D8E2EC;
+              --text:#0A1726; --muted:#5A6B82; --mc-orange:#B45309; --mc-orange-deep:#92400E;
+              --gem:#1A6FA8; --script:#0F9D63; --studio:#B45309; }
+  html.light .reveal-viewport{ background:#FFFFFF; }
+  html.light .reveal h1, html.light .reveal h2, html.light .reveal h3,
+  html.light .pv-row b, html.light .pv-kv b, html.light .proof td:first-child,
+  html.light .note b, html.light .q p b{ color:var(--text); }
+  html.light .slide-head .hicon iconify-icon{ color:#FFFFFF; }
+  html.light .brandbar{ background:rgba(255,255,255,.75); border-color:rgba(10,23,38,.10); }
+  html.light .brandbar .nm, html.light .brandbar .nm span{ color:var(--text); }
+  html.light .btn-f, html.light .btn-t{ background:rgba(255,255,255,.75);
+    border-color:rgba(10,23,38,.12); color:var(--text); }
+  html.light .pv{ background:#FFFFFF; border-color:#D2DEEA;
+    box-shadow:0 10px 24px rgba(10,23,38,.12), inset 0 1px 0 #fff; }
+  html.light .pv-hd{ background:#F2F6FB; border-bottom-color:#E2E9F2; }
+  html.light .hero-panel{ background:rgba(255,255,255,.90); border-color:rgba(10,23,38,.14);
+    box-shadow:0 22px 60px rgba(10,23,38,.22); }
+  html.light .hero-panel h1{ color:var(--text); }
+  html.light .hero-panel .lead{ color:var(--muted); }
+  html.light .tgrid{ border-top-color:rgba(10,23,38,.14); }
+
+  .btn-t{ position:fixed; top:22px; right:74px; z-index:61; width:38px; height:38px;
+    display:flex; align-items:center; justify-content:center; background:rgba(8,18,30,.55);
+    backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.10); border-radius:11px;
+    color:#fff; cursor:pointer; }
+  .btn-t:hover{ color:var(--mc-orange); border-color:var(--mc-orange); }
+
+  .slide-head{ display:flex; align-items:center; gap:18px; margin:0 0 .6em;
+    padding-bottom:.45em; border-bottom:1px solid var(--line-s); }
+  .slide-head .hicon{ flex:none; width:66px; height:66px; border-radius:15px; display:flex;
+    align-items:center; justify-content:center;
+    background:linear-gradient(135deg,var(--mc-orange),var(--mc-orange-deep));
+    box-shadow:0 10px 26px rgba(255,158,27,.28); }
+  .slide-head .hicon iconify-icon{ font-size:36px; color:#0A1726; }
+  .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px;
+    text-transform:uppercase; font-size:.5em; margin:0 0 4px; }
+
+  /* ---- use-case cards ---- */
+  .ucs{ flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:stretch; }
+  .uc{ background:linear-gradient(180deg,var(--panel),var(--panel-2));
+       border:1px solid var(--line-s); border-radius:18px; padding:17px 18px 15px;
+       display:flex; flex-direction:column; }
+  .uc-top{ display:flex; flex-direction:column-reverse; align-items:flex-start;
+           gap:9px; margin-bottom:.45em; }
+  .uc h3{ font-size:.9em; line-height:1.2; flex:none; }
+  .uc p{ margin:0; font-size:.67em; line-height:1.45; color:var(--muted); }
+  /* the badge column is the teaching payload: colour AND word, so it survives
+     greyscale and a bad projector */
+  .bdg{ flex:none; display:inline-flex; align-items:center; gap:6px;
+        font-size:13.5px; font-weight:800; letter-spacing:.7px;
+        text-transform:uppercase; border-radius:999px; padding:4px 11px 4px 8px;
+        border:1px solid currentColor; }
+  /* the mark is the second channel the badge word already is — product first,
+     tier colour second, so a bad projector still leaves one of them standing */
+  .bdg img, .bdg .smk{ width:19px; height:19px; display:block; flex:none; }
+  .smk{ background:url("data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2024%2024%22%3E%3Cpath%20d=%22M8.5%206.9%2015.7%2011.1M8.5%2017.1%2015.7%2012.9%22%20fill=%22none%22%20stroke=%22%23FBBC04%22%20stroke-width=%222%22%20stroke-linecap=%22round%22/%3E%3Ccircle%20cx=%225.4%22%20cy=%226%22%20r=%222.9%22%20fill=%22%234285F4%22/%3E%3Ccircle%20cx=%225.4%22%20cy=%2218%22%20r=%222.9%22%20fill=%22%23EA4335%22/%3E%3Ccircle%20cx=%2218.6%22%20cy=%2212%22%20r=%222.9%22%20fill=%22%2334A853%22/%3E%3C/svg%3E") center/contain no-repeat; }
+  .bdg.gem{ color:var(--gem); background:rgba(111,195,247,.12); }
+  .bdg.studio{ color:var(--studio); background:rgba(255,158,27,.12); }
+  .bdg.script{ color:var(--script); background:rgba(70,211,154,.12); }
+
+  .chain{ display:flex; align-items:flex-start; justify-content:flex-start;
+          gap:2px; margin-top:auto; padding-top:11px;
+          border-top:1px solid var(--line-s); }
+  .node{ display:flex; flex-direction:column; align-items:center; gap:7px;
+         width:72px; flex:none; }
+  .node img{ width:41px; height:41px; display:block; object-fit:contain; }
+  .node span{ font-size:12px; color:var(--muted); font-weight:600; line-height:1.15;
+              text-align:center; letter-spacing:.2px; }
+  /* an SVG rather than the rsaquo character: the glyph sits high in its own
+     line box, so centring the box did not centre the mark */
+  /* nudged rather than box-centred: the product logos sit lower inside
+     their own 28px boxes than a bare chevron does */
+  .flow{ flex:none; width:20px; display:flex; justify-content:center;
+         margin-top:13px; }
+  .flow img{ width:20px; height:20px; display:block; opacity:.85; }
+
+  /* ---- outcome preview: what the user actually ends up looking at ---- */
+  .pv{ flex:1; margin-top:13px; border:1px solid #27496B; border-radius:12px;
+       background:#07192C; padding:0 0 11px; overflow:hidden;
+       box-shadow:0 12px 26px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.05); }
+  .pv-row, .pv-kv, .pv-sc{ padding-left:12px; padding-right:12px; }
+  .pv-hd{ display:flex; align-items:center; gap:7px; color:var(--muted);
+          font-size:12px; font-weight:800; letter-spacing:1.3px; text-transform:uppercase;
+          background:rgba(255,255,255,.055); border-bottom:1px solid #27496B;
+          padding:8px 12px; margin:0 0 10px; }
+  .pv-hd img{ width:16px; height:16px; display:block; }
+  .pv-row{ font-size:14px; line-height:1.45; color:var(--muted); }
+  .pv-row b{ color:#fff; font-weight:700; }
+  .pv-ok{ color:var(--script); }
+  .pv-no{ color:#E8795A; }
+  .pv-kv{ display:flex; justify-content:space-between; gap:10px; font-size:14px;
+          line-height:1.55; color:var(--muted); }
+  .pv-kv b{ color:#fff; font-weight:700; }
+  .pv-sc{ display:grid; grid-template-columns:1fr 54px 22px; align-items:center;
+          gap:8px; font-size:14px; color:var(--muted); line-height:1.65; }
+  .pv-sc b{ text-align:right; font-weight:800; }
+  .b1,.b2,.b3{ height:5px; border-radius:999px; display:block; background:#1B3550; position:relative; }
+  .b1::after,.b2::after,.b3::after{ content:""; position:absolute; left:0; top:0; bottom:0;
+                                    border-radius:999px; }
+  .b1::after{ width:88%; background:var(--script); }
+  .b2::after{ width:64%; background:var(--mc-orange); }
+  .b3::after{ width:37%; background:#5F7891; }
+  .s1{ color:var(--script); } .s2{ color:var(--mc-orange); } .s3{ color:#5F7891; }
+
+  /* ---- how it is built ---- */
+  /* the cards already run easy to complex left to right; the rail says so out
+     loud, because left-to-right alone is not a claim anyone reads */
+  .rail{ display:flex; align-items:center; gap:12px; margin:0 2px .7em;
+         font-size:.5em; font-weight:700; letter-spacing:.4px; color:var(--muted); }
+  .rail i{ flex:1; height:4px; border-radius:999px;
+           background:linear-gradient(90deg,var(--gem),var(--studio),var(--script)); }
+
+  .ways{ flex:none; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .way{ background:linear-gradient(180deg,var(--panel),var(--panel-2));
+        border:1px solid var(--line-s); border-radius:18px; padding:20px 22px 18px; }
+  /* one mark per tier, in that tier's colour — the badge says the name,
+     the icon makes it recognisable from the back of the room */
+  .wico{ width:70px; height:70px; border-radius:16px; display:flex;
+         align-items:center; justify-content:center; margin-bottom:.7em; }
+  .wico img, .wico .smk{ width:42px; height:42px; display:block; object-fit:contain; }
+  .smk.big{ width:42px; height:42px; }
+  .wico.gem{ background:rgba(111,195,247,.14); color:var(--gem);
+             border:1px solid rgba(111,195,247,.45); }
+  .wico.studio{ background:rgba(255,158,27,.14); color:var(--studio);
+                border:1px solid rgba(255,158,27,.45); }
+  .wico.script{ background:rgba(70,211,154,.14); color:var(--script);
+                border:1px solid rgba(70,211,154,.45); }
+  .way .bdg{ font-size:15px; padding:5px 14px 5px; letter-spacing:1.1px; }
+  .way .bdg img, .way .bdg .smk{ display:none; }
+  .way h3{ font-size:1.12em; margin:.5em 0 .3em; }
+  .way p{ margin:0; font-size:.67em; line-height:1.45; color:var(--muted); }
+  .way.gem{ border-color:rgba(111,195,247,.5); }
+  .way.studio{ border-color:rgba(255,158,27,.5); }
+  .way.script{ border-color:rgba(70,211,154,.5); }
+  .teams{ display:flex; gap:12px; margin-top:auto; padding-top:18px; }
+  .tm{ flex:1; display:flex; align-items:center; justify-content:center; gap:9px;
+       background:linear-gradient(180deg,var(--panel),var(--panel-2));
+       border:1px solid var(--line-s); border-radius:13px; padding:12px 10px;
+       font-size:.56em; font-weight:700; color:var(--text); white-space:nowrap; }
+  .tm iconify-icon{ font-size:23px; color:var(--mc-orange); }
+
+  .note{ margin-top:.9em; font-size:.65em; color:var(--muted); }
+  .note b{ color:var(--text); }
+
+  /* ---- decision line ---- */
+  .ask{ flex:1; display:grid; grid-template-columns:1fr 34px 1fr 34px 1fr; align-items:stretch; }
+  .q{ background:linear-gradient(180deg,var(--panel),var(--panel-2));
+      border:1px solid var(--line-s); border-radius:16px; padding:18px 20px; }
+  .q .qn{ color:var(--mc-orange); font-weight:900; font-size:1.3em; line-height:1; }
+  .q h3{ font-size:.94em; margin:.4em 0 .3em; }
+  .q p{ margin:0; font-size:.65em; line-height:1.45; color:var(--muted); }
+  .q p b{ color:var(--text); }
+  .arr{ display:flex; align-items:center; justify-content:center; color:var(--mc-orange); }
+  .arr iconify-icon{ font-size:27px; }
+
+  /* ---- wrap up ---- */
+  .wrap{ flex:1; display:grid; grid-template-columns:1.55fr 1fr; gap:18px; }
+  .rule{ display:flex; flex-direction:column; gap:14px; }
+  .rl{ flex:1; display:flex; align-items:center; gap:16px;
+       background:linear-gradient(180deg,var(--panel),var(--panel-2));
+       border:1px solid var(--line-s); border-left-width:5px; border-radius:16px;
+       padding:16px 20px; }
+  .rl.gem{ border-left-color:var(--gem); } .rl.studio{ border-left-color:var(--studio); }
+  .rl.script{ border-left-color:var(--script); }
+  .rl .rn{ flex:none; font-weight:900; font-size:1.1em; line-height:1; color:var(--mc-orange); }
+  .rl img, .rl .smk{ flex:none; width:38px; height:38px; display:block; object-fit:contain; }
+  .rl h3{ font-size:.82em; margin:0 0 .15em; }
+  .rl p{ margin:0; font-size:.56em; line-height:1.4; color:var(--muted); }
+  .cta{ display:flex; flex-direction:column; justify-content:center;
+        background:linear-gradient(160deg,rgba(255,158,27,.16),rgba(255,158,27,.05));
+        border:1px solid rgba(255,158,27,.55); border-radius:18px; padding:24px 26px; }
+  .cta iconify-icon{ font-size:40px; color:var(--mc-orange); margin-bottom:.35em; }
+  .cta h3{ font-size:1.05em; line-height:1.15; }
+  .cta p{ margin:.5em 0 0; font-size:.58em; line-height:1.45; color:var(--muted); }
+
+  /* ---- proof table ---- */
+  .proof{ width:100%; border-collapse:collapse; font-size:.74em; }
+  .proof th{ text-align:left; color:var(--mc-orange); font-weight:800; font-size:.8em;
+             letter-spacing:1.4px; text-transform:uppercase; padding:0 14px 10px 0; }
+  .proof td{ padding:13px 14px 13px 0; border-top:1px solid var(--line-s); color:var(--muted); }
+  .proof td:first-child{ color:#fff; font-weight:700; white-space:nowrap; }
+  .proof td img{ width:23px; height:23px; vertical-align:-4px; margin-right:8px; }
+</style>
+</head>
+<body>
+  <div class="brandbar"><img src="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png" alt=""><span class="nm">Master Concept <span>· GWS AI Training</span></span></div>
+  <button class="btn-t" id="themeBtn" title="Light / dark"><iconify-icon icon="lucide:sun"></iconify-icon></button>
+  <button class="btn-f" onclick="toggleFs()" title="Full screen (F)"><iconify-icon icon="lucide:maximize"></iconify-icon></button>
+
+  <div class="reveal"><div class="slides">
+
+    <section class="hero" data-background-image="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1920&q=80" data-background-size="cover">
+      <div class="hero-panel">
+        <p class="kicker gws"><img src="https://api.iconify.design/logos/google-icon.svg" alt="">Google Workspace AI</p>
+        <h1 style="font-size:2em; white-space:nowrap">Empower Daily Workflow with AI</h1>
+        <p class="lead" style="margin-top:.7em">Real use cases, by department &mdash; and which tool builds each one.</p>
+        <div class="tgrid">
+          <div class="tnode"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt=""><span>Sheets</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt=""><span>Docs</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/simple-icons/googleforms.svg?color=%237248B9" alt=""><span>Forms</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/logos/google-meet.svg" alt=""><span>Meet</span></div>
+          <div class="tnode"><img src="https://api.iconify.design/logos/google-calendar.svg" alt=""><span>Calendar</span></div>
+          <div class="tnode"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""><span>Gemini</span></div>
+          <div class="tnode"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt=""><span>Apps Script</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:layers"></iconify-icon></span><div><p class="kicker">Three ways to build</p><h2 style="font-size:1.32em">Empower your workflow with Google Workspace AI</h2></div></div>
+      <div class="rail"><span>Easiest to build</span><i></i><span>Most powerful</span></div>
+      <div class="ways">
+        <div class="way gem">
+          <div class="wico gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""></div>
+          <span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span>
+          <h3>Your expert, on call</h3>
+          <p>Teach Gemini one job once &mdash; your tone, your format, your handbook. You still press go.</p>
+        </div>
+        <div class="way studio">
+          <div class="wico studio"><i class="smk big"></i></div>
+          <span class="bdg studio"><i class="smk"></i>Studio</span>
+          <h3>Work that runs itself</h3>
+          <p>Describe it in plain language. Triggers on Gmail, Drive, Forms, Chat &mdash; and now Slack, HubSpot, Jira and webhooks.</p>
+        </div>
+        <div class="way script">
+          <div class="wico script"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt=""></div>
+          <span class="bdg script"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt="">Apps Script</span>
+          <h3>Build anything, your way</h3>
+          <p>Any API, any schedule, any logic. Also what Studio&rsquo;s own custom steps are written in.</p>
+        </div>
+      </div>
+      <div class="teams">
+        <span class="tm"><iconify-icon icon="lucide:megaphone"></iconify-icon>Marketing</span>
+        <span class="tm"><iconify-icon icon="lucide:handshake"></iconify-icon>Sales &amp; BD</span>
+        <span class="tm"><iconify-icon icon="lucide:calculator"></iconify-icon>Finance</span>
+        <span class="tm"><iconify-icon icon="lucide:users-round"></iconify-icon>HR</span>
+        <span class="tm"><iconify-icon icon="lucide:settings-2"></iconify-icon>Admin &amp; Ops</span>
+      </div>
+    </section>
+
+    <section data-team="1">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:megaphone"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Marketing</h2></div></div>
+      <div class="ucs">
+        <div class="uc">
+          <div class="uc-top"><h3>Brand voice</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <p>Trained on your own published work, so nobody re-explains tone in a prompt again.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt="">Tone</div><div class="pv-row pv-ok">&check; Plain, direct, no jargon</div><div class="pv-row pv-ok">&check; Short sentences</div><div class="pv-row pv-no">&times; &ldquo;leverage&rdquo;, &ldquo;synergy&rdquo;</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Lead triage</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>A mail arrives, Gemini reads and classifies it, the right team gets it in seconds.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt="">Chat</div><div class="pv-row"><b>New lead &middot; Enterprise</b></div><div class="pv-row">Acme Corp &mdash; 500 seats, renewal Q3</div><div class="pv-row pv-ok">&rarr; routed to Sales</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Event follow-up</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini writes a personalised note to every attendee from what they signed up for.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/logos/google-gmail.svg" alt="">Draft</div><div class="pv-kv"><span>To</span><b>attendee@acme.com</b></div><div class="pv-row">&ldquo;Thanks for joining &mdash; here is the flow we demoed, and the template.&rdquo;</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googleforms.svg?color=%237248B9" alt=""><span>Forms</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-team="1">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:handshake"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Sales &amp; BD</h2></div></div>
+      <div class="ucs">
+        <div class="uc">
+          <div class="uc-top"><h3>Proposal drafting</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <p>Trained on the proposals you actually won, not a blank page.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt="">Outline</div><div class="pv-row"><b>1</b> Problem &nbsp; <b>2</b> Approach</div><div class="pv-row"><b>3</b> Scope &nbsp;&nbsp; <b>4</b> Price</div><div class="pv-row pv-ok">Drawn from 12 proposals you won</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Meeting notes into CRM</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini summarises the call and writes it straight onto the deal record.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/logos/hubspot.svg" alt="">Deal record</div><div class="pv-row"><b>Acme &mdash; renewal</b></div><div class="pv-row">Wants a 3-year term; budget confirmed Q2</div><div class="pv-row pv-ok">Next: send pricing by Friday</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-meet.svg" alt=""><span>Meet</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/logos/hubspot.svg" alt=""><span>HubSpot</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Quote chasing</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Five days of silence and a context-aware follow-up is already drafted for you.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/logos/google-gmail.svg" alt="">Draft &middot; day 5</div><div class="pv-row">&ldquo;Following up on the 500-seat quote &mdash; happy to walk through the renewal terms this week.&rdquo;</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-team="1">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:calculator"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Finance</h2></div></div>
+      <div class="ucs">
+        <div class="uc">
+          <div class="uc-top"><h3>Renewal alerts</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini writes the context so the owner gets a decision, not a date.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt="">Chat</div><div class="pv-row"><b>Acme renewal in 30 days</b></div><div class="pv-row">Usage down 12% since January</div><div class="pv-row pv-no">Risk flagged &mdash; owner notified</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt=""><span>Sheets</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Expense checks</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini flags what breaks policy before a human ever sees the claim.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/logos/google-gmail.svg" alt="">Flagged</div><div class="pv-kv"><span>Claim #882</span><b>HK$2,400</b></div><div class="pv-row pv-no">&times; Over the per-diem limit</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googleforms.svg?color=%237248B9" alt=""><span>Forms</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Invoice extraction</h3><span class="bdg script"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt="">Apps Script</span></div>
+          <p>Gemini reads the PDF, pulls the amounts, matches them against the system.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt="">Extracted</div><div class="pv-kv"><span>Vendor</span><b>Freshworks</b></div><div class="pv-kv"><span>Amount</span><b>USD 12,480</b></div><div class="pv-kv"><span>Match</span><b class="pv-ok">PO-2291 &check;</b></div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt=""><span>Sheets</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/lucide/server.svg?color=%239FB4C8" alt=""><span>Finance System</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-team="1">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:users-round"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>HR</h2></div></div>
+      <div class="ucs">
+        <div class="uc">
+          <div class="uc-top"><h3>Policy answers</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Gem</span></div>
+          <p>Staff ask in plain language; your own handbook answers.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt="">Asked</div><div class="pv-row">&ldquo;How many days annual leave?&rdquo;</div><div class="pv-row pv-ok">&rarr; 14 days, +1 per year of service</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/lucide/folder-open.svg?color=%239FB4C8" alt=""><span>Handbook</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Onboarding</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>One hire triggers the accounts, the checklist and a welcome written for them.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt="">Checklist</div><div class="pv-row pv-ok">&#9745; Workspace account created</div><div class="pv-row pv-ok">&#9745; Equipment requested</div><div class="pv-row">&#9744; Buddy to assign</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googleforms.svg?color=%237248B9" alt=""><span>Forms</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt=""><span>Docs</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>CV screening</h3><span class="bdg script"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt="">Apps Script</span></div>
+          <p>Every CV scored against the job criteria, ranked before anyone opens one.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt="">Ranked</div><div class="pv-sc"><span>Candidate A</span><i class="b1"></i><b class="s1">88</b></div><div class="pv-sc"><span>Candidate B</span><i class="b2"></i><b class="s2">64</b></div><div class="pv-sc"><span>Candidate C</span><i class="b3"></i><b class="s3">37</b></div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt=""><span>Sheets</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-team="1">
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:settings-2"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Admin &amp; Ops</h2></div></div>
+      <div class="ucs">
+        <div class="uc">
+          <div class="uc-top"><h3>Minutes into actions</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini pulls the actions out of the meeting and assigns them.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt="">Actions</div><div class="pv-row">&#9744; Send revised quote &mdash; <b>Jane</b>, Fri</div><div class="pv-row">&#9744; Book follow-up &mdash; <b>Tommy</b>, Mon</div><div class="pv-row">&#9744; Update forecast &mdash; <b>Zorro</b></div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-meet.svg" alt=""><span>Meet</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Document approval</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
+          <p>Gemini says what changed, so the approver reads a line not a file.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googledocs.svg?color=%234285F4" alt="">What changed</div><div class="pv-row">Clause 4 &mdash; payment <b>30 &rarr; 45 days</b></div><div class="pv-row">Clause 9 &mdash; liability cap added</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
+          </div>
+        </div>
+        <div class="uc">
+          <div class="uc-top"><h3>Staff lookup</h3><span class="bdg script"><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt="">Apps Script</span></div>
+          <p>Ask in Chat, get the answer from the directory. No one opens a sheet.</p>
+          <div class="pv"><div class="pv-hd"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt="">Answer</div><div class="pv-row"><b>Esther Wan</b> &mdash; AI-Native Development</div><div class="pv-row">AI &amp; Training Team &middot; ext. 2841</div></div>
+          <div class="chain">
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlechat.svg?color=%2300AC47" alt=""><span>Chat</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlegemini.svg?color=%234285F4" alt=""><span>Gemini</span></div>
+              <div class="flow"><img src="https://api.iconify.design/lucide/chevron-right.svg?color=%23FF9E1B" alt=""></div>
+              <div class="node"><img src="https://api.iconify.design/simple-icons/googlesheets.svg?color=%2334A853" alt=""><span>Sheets</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:flag"></iconify-icon></span><div><p class="kicker">Wrap up</p><h2>Pick one. Build it today.</h2></div></div>
+      <div class="wrap">
+        <div class="rule">
+          <div class="rl gem"><span class="rn">01</span><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt=""><div><h3>Gem</h3><p>You press go. Your tone, your format, your handbook.</p></div></div>
+          <div class="rl studio"><span class="rn">02</span><i class="smk"></i><div><h3>Studio</h3><p>It runs without you, and every system is on the connector list.</p></div></div>
+          <div class="rl script"><span class="rn">03</span><img src="https://www.gstatic.com/images/branding/product/2x/apps_script_96dp.png" alt=""><div><h3>Apps Script</h3><p>Anything else. Any API, any schedule, any logic &mdash; under six minutes.</p></div></div>
+        </div>
+        <div class="cta">
+          <iconify-icon icon="lucide:rocket"></iconify-icon>
+          <h3>Build one flow<br>before you leave</h3>
+          <p>Pick a card from your team&rsquo;s slide. Build it. Then try to break it.</p>
+        </div>
+      </div>
+      <p class="note">Admins must switch on third-party connectors and webhooks &mdash; they are off by default, and the connectors are still Beta.</p>
+    </section>
+
+  </div></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script>
+    var isNarrow = window.matchMedia('(max-width: 768px)').matches;
+    Reveal.initialize({ width:1280, height:720, margin:0.02, center:true, hash:true,
+      slideNumber:'c/t', controls:false, progress:true, transition:'slide',
+      transitionSpeed:'fast', view: isNarrow ? 'scroll' : null });
+    (function () {
+      var KEY = 'gws-theme', root = document.documentElement;
+      function apply(m){ root.classList.toggle('light', m === 'light');
+        var i = document.querySelector('#themeBtn iconify-icon');
+        if (i) i.setAttribute('icon', m === 'light' ? 'lucide:moon' : 'lucide:sun'); }
+      var forced = new URLSearchParams(location.search).get('theme'), saved;
+      try { saved = localStorage.getItem(KEY); } catch(e){}
+      apply(forced || saved || 'dark');
+      document.addEventListener('click', function(e){
+        if (!e.target.closest('#themeBtn')) return;
+        var n = root.classList.contains('light') ? 'dark' : 'light';
+        apply(n); try { localStorage.setItem(KEY, n); } catch(e){}
+      });
+    })();
+    function toggleFs(){
+      if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); }
+      else { document.exitFullscreen(); }
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'f' || e.key === 'F'){ toggleFs(); }
+    });
+  </script>
+</body>
+</html>

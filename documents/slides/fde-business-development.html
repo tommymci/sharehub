@@ -484,9 +484,11 @@
     .sects{ display:grid; grid-template-columns:1fr 1fr; gap:18px; align-items:stretch; }
     .sect{ padding:24px 28px 26px; }
     .sect.core{ border-color:var(--mc-orange); background:rgba(255,158,27,.07); }
-    .snum{ font-size:2.1em; font-weight:900; color:var(--mc-orange); line-height:1;
-           margin-bottom:.22em; }
-    .sect .dlabel{ margin-bottom:.5em; }
+    .snum{ font-size:2.1em; font-weight:900; line-height:1; margin-bottom:.22em; }
+    /* the numbers take their section's colour, as the corner marker does */
+    .sect.in .snum{ color:#6FC3F7; }
+    .sect.cl .snum{ color:var(--mc-orange); }
+    .sect .dlabel{ margin-bottom:.55em; font-size:15px; letter-spacing:1.2px; }
     .sect h3{ margin:0 0 .55em; font-size:1.05em; }
     .reveal ul.sectlist, .sect ul{ margin:0; padding:0; }
     .sect li{ list-style:none; position:relative; padding-left:15px; margin:.34em 0;
@@ -836,22 +838,21 @@
     <section>
       <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:layout-list"></iconify-icon></span><div><p class="kicker">What we will cover</p><h2>Agenda</h2></div></div>
       <div class="sects">
-        <div class="card sect">
+        <div class="card sect in">
           <div class="snum">01</div>
           <div class="dlabel inhouse"><iconify-icon icon="lucide:home"></iconify-icon>In-house</div>
           <h3>Internal delivery &amp; funding</h3>
           <ul>
             <li>AI &amp; Training Team Structure</li>
             <li>Every team now runs on something we built</li>
-            <li>Funding for growing team</li>
+            <li>Funding the team</li>
           </ul>
         </div>
-        <div class="card sect core">
+        <div class="card sect core cl">
           <div class="snum">02</div>
           <div class="dlabel client"><iconify-icon icon="lucide:send"></iconify-icon>Client-facing</div>
           <h3>Go to market</h3>
           <ul>
-            <li>The customers are already ours</li>
             <li>How a company makes money from FDE</li>
             <li>The decisions ahead</li>
           </ul>

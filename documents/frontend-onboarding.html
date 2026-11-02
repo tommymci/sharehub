@@ -57,6 +57,22 @@ date: 2026-11-02
 html{scroll-behavior:smooth;scroll-padding-top:24px}
 body{margin:0;background:var(--c-bg);color:var(--c-body);font:15px/1.6 var(--ff);-webkit-font-smoothing:antialiased}
 
+/* When this page is embedded in a host shell (ShareHub serves it inside
+   <div id="content"><div class="container mt-4"><div class="bg-white p-4 rounded shadow-sm">),
+   Bootstrap's .bg-white paints a white card under everything — invisible in light
+   mode, glaring in dark — and .container boxes the layout at Bootstrap's width.
+   Neutralise the wrapper so the page owns its own background and full width.
+   These selectors match nothing when the page is opened directly. */
+html,body{background:var(--c-bg)!important}
+#content,
+#content > .container,
+#content > .container > div{
+  max-width:none!important;width:100%!important;
+  margin:0!important;padding:0!important;
+  background:var(--c-bg)!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+
 /* Scrollbars: thin and themed. Without this the sidebar's overflow renders as a
    bright native slab that reads as a page element in dark mode. */
 *{scrollbar-width:thin;scrollbar-color:var(--c-border-strong) transparent}

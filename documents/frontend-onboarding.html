@@ -1,0 +1,1119 @@
+---
+title: "Frontend Onboarding — masterconcept.ai"
+date: 2026-11-02
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frontend Onboarding</title>
+<style>
+:root{
+  --c-navy:#1B365D; --c-navy-soft:rgba(27,54,93,.06);
+  --c-orange:#FF9E1B; --c-orange-soft:rgba(255,158,27,.12);
+  --c-body:#4D4D4D; --c-muted:#888888;
+  --c-bg:#f4f5f7; --c-card:#ffffff;
+  --c-border:#e5e7eb; --c-border-strong:#d1d5db;
+  --c-ok:#137333; --c-ok-bg:#e6f4ea;
+  --c-error:#b3261e; --c-error-bg:#fdecec;
+  --nav-bg:#1B365D;
+  --code-bg:#f2f4f7;
+  --r:10px;
+  --ff:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --c-navy:#8fb3e0; --c-navy-soft:rgba(143,179,224,.12);
+    --c-orange:#FF9E1B; --c-orange-soft:rgba(255,158,27,.16);
+    --c-body:#c7ccd4; --c-muted:#8792a3;
+    --c-bg:#14181f; --c-card:#1b212a;
+    --c-border:#2b3340; --c-border-strong:#3d4756;
+    --c-ok:#4ade80; --c-ok-bg:rgba(74,222,128,.12);
+    --c-error:#ef6b6e; --c-error-bg:rgba(239,107,110,.12);
+    --nav-bg:#161d29;
+    --code-bg:#121820;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --c-navy:#8fb3e0; --c-navy-soft:rgba(143,179,224,.12);
+  --c-orange:#FF9E1B; --c-orange-soft:rgba(255,158,27,.16);
+  --c-body:#c7ccd4; --c-muted:#8792a3;
+  --c-bg:#14181f; --c-card:#1b212a;
+  --c-border:#2b3340; --c-border-strong:#3d4756;
+  --c-ok:#4ade80; --c-ok-bg:rgba(74,222,128,.12);
+  --c-error:#ef6b6e; --c-error-bg:rgba(239,107,110,.12);
+  --nav-bg:#161d29;
+  --code-bg:#121820;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--c-bg);color:var(--c-body);font:15px/1.6 var(--ff);-webkit-font-smoothing:antialiased}
+
+/* Scrollbars: thin and themed. Without this the sidebar's overflow renders as a
+   bright native slab that reads as a page element in dark mode. */
+*{scrollbar-width:thin;scrollbar-color:var(--c-border-strong) transparent}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--c-border-strong);border:3px solid transparent;background-clip:content-box;border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--c-muted);border:3px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-corner{background:transparent}
+
+/* ---------- icons ---------- */
+.ico{width:1em;height:1em;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sprite{display:none}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:272px minmax(0,1fr);gap:40px;max-width:1240px;margin:0 auto;padding:0 32px 96px}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--nav-bg);color:#fff;padding:40px 32px 36px;margin-bottom:40px}
+.masthead .in{max-width:1240px;margin:0 auto}
+.kicker{display:inline-flex;align-items:center;gap:6px;background:var(--c-orange);color:#1B365D;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+.kicker .ico{width:13px;height:13px;stroke-width:2.4}
+.masthead h1{margin:14px 0 8px;font-size:clamp(1.6rem,3.4vw,2.2rem);font-weight:700;line-height:1.2;color:#fff}
+.masthead p{margin:0;max-width:62ch;color:#c9d4e4;font-size:15.5px}
+.meta{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:#9fb0c9}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.meta .ico{width:14px;height:14px;color:#FF9E1B}
+.meta b{color:#e4ebf4;font-weight:600}
+
+/* ---------- table of contents ---------- */
+.toc{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding-right:6px}
+.toc h2{font-size:.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--c-muted);margin:0 0 12px}
+.toc ul{list-style:none;margin:0;padding:0}
+.toc a{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:7px;text-decoration:none;color:var(--c-body);font-size:13.5px;line-height:1.3;border-left:2px solid transparent}
+.toc a .ico{width:15px;height:15px;color:var(--c-muted)}
+.toc a:hover{background:var(--c-navy-soft);color:var(--c-navy)}
+.toc a:hover .ico{color:var(--c-navy)}
+.toc a.active{background:var(--c-navy-soft);color:var(--c-navy);font-weight:600;border-left-color:var(--c-orange)}
+.toc a.active .ico{color:var(--c-orange)}
+.toc .grp{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--c-muted);padding:16px 10px 5px}
+.toc .grp:first-child{padding-top:0}
+
+/* ---------- sections ---------- */
+section{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--r);padding:28px 30px;margin-bottom:22px;box-shadow:var(--shadow-sm);scroll-margin-top:24px}
+section > h2{display:flex;align-items:center;gap:11px;margin:0 0 6px;font-size:1.25rem;font-weight:700;color:var(--c-navy);line-height:1.3}
+section > h2 .ico{width:21px;height:21px;color:var(--c-orange)}
+section > h2 .num{font-variant-numeric:tabular-nums;color:var(--c-muted);font-weight:600;font-size:.95rem}
+.standfirst{margin:0 0 22px;color:var(--c-muted);font-size:14px;max-width:70ch}
+h3{display:flex;align-items:center;gap:8px;margin:26px 0 10px;font-size:1rem;font-weight:600;color:var(--c-navy)}
+h3 .ico{width:16px;height:16px;color:var(--c-muted)}
+h3:first-of-type{margin-top:18px}
+h4{margin:18px 0 8px;font-size:14px;font-weight:600;color:var(--c-body)}
+p{max-width:70ch;margin:0 0 12px}
+ul,ol{max-width:70ch;padding-left:22px;margin:0 0 14px}
+li{margin:5px 0}
+a{color:var(--c-navy)}
+strong{color:var(--c-navy);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--code-bg);border:1px solid var(--c-border);border-radius:5px;padding:1.5px 5px;color:var(--c-body);word-break:break-word}
+pre{background:var(--code-bg);border:1px solid var(--c-border);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:0 0 14px;font-size:12.8px;line-height:1.55}
+pre code{background:none;border:0;padding:0;font-size:inherit}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto;margin:0 0 16px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;min-width:480px;font-size:13.6px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--c-border);vertical-align:top}
+th{font-size:.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--c-muted);border-bottom:1px solid var(--c-border-strong);white-space:nowrap}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:0}
+
+/* ---------- callouts ---------- */
+.note{display:flex;gap:11px;border-left:3px solid var(--c-orange);background:var(--c-orange-soft);padding:13px 16px;border-radius:0 8px 8px 0;margin:0 0 16px;font-size:14px}
+.note > .ico{width:17px;height:17px;margin-top:2px;color:var(--c-orange)}
+.note .bd{min-width:0}
+.note p:last-child,.note ul:last-child{margin-bottom:0}
+.note.warn{border-left-color:var(--c-error);background:var(--c-error-bg)}
+.note.warn > .ico{color:var(--c-error)}
+.note.ok{border-left-color:var(--c-ok);background:var(--c-ok-bg)}
+.note.ok > .ico{color:var(--c-ok)}
+.note .lbl{display:block;font-weight:700;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px;color:var(--c-navy)}
+.note.warn .lbl{color:var(--c-error)}
+.note.ok .lbl{color:var(--c-ok)}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;padding:0;max-width:none}
+.check li{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--c-border);margin:0}
+.check li:last-child{border-bottom:0}
+.check input{margin:3px 0 0;width:15px;height:15px;accent-color:var(--c-navy);flex:0 0 auto}
+.check .what{display:flex;align-items:center;gap:7px;font-weight:600;color:var(--c-navy);font-size:14px}
+.check .what .ico{width:15px;height:15px;color:var(--c-orange)}
+.check .why{color:var(--c-muted);font-size:13px;display:block;margin-top:2px}
+
+/* ---------- misc ---------- */
+.pill{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--c-navy-soft);color:var(--c-navy);white-space:nowrap}
+.pill.todo{background:var(--c-orange-soft);color:var(--c-navy)}
+.pill.gap{background:var(--c-error-bg);color:var(--c-error)}
+.pill.done{background:var(--c-ok-bg);color:var(--c-ok)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:0 0 16px}
+.box{border:1px solid var(--c-border);border-radius:8px;padding:15px 17px}
+.box h4{display:flex;align-items:center;gap:7px;margin:0 0 7px}
+.box h4 .ico{width:16px;height:16px;color:var(--c-orange)}
+.box p{font-size:13.5px}
+.box p:last-child{margin-bottom:0}
+.slot{border:2px dashed var(--c-border-strong);border-radius:var(--r);padding:26px;text-align:center;color:var(--c-muted);font-size:14px}
+.slot .ico{width:26px;height:26px;color:var(--c-border-strong);margin-bottom:8px}
+.slot b{display:block;color:var(--c-navy);font-size:15px;margin-bottom:6px}
+.btnlink{display:inline-flex;align-items:center;gap:8px;background:var(--c-orange);color:#1B365D;font-weight:600;font-size:13.5px;text-decoration:none;padding:9px 15px;border-radius:8px;margin:0 8px 14px 0}
+.btnlink .ico{width:16px;height:16px}
+.btnlink:hover{filter:brightness(.94)}
+
+/* ---------- sitemap tree ---------- */
+details.tree{border:1px solid var(--c-border);border-radius:8px;margin:0 0 12px;background:var(--code-bg)}
+details.tree > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;padding:11px 15px;font-size:14px;font-weight:600;color:var(--c-navy)}
+details.tree > summary::-webkit-details-marker{display:none}
+details.tree > summary .ico{width:16px;height:16px;color:var(--c-orange)}
+details.tree > summary .chev{margin-left:auto;color:var(--c-muted);transition:transform .15s}
+details.tree[open] > summary .chev{transform:rotate(90deg)}
+details.tree .bd{padding:0 15px 14px}
+.tree ul{list-style:none;padding-left:16px;margin:0;max-width:none;border-left:1px solid var(--c-border-strong)}
+.tree > .bd > ul{padding-left:4px;border-left:0}
+.tree li{margin:3px 0;font-size:13.4px;display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+.tree li > .ico{width:13px;height:13px;color:var(--c-muted);align-self:center}
+.tree .nm{color:var(--c-body)}
+.tree .pth{font-family:var(--mono);font-size:11.8px;color:var(--c-muted)}
+.tree .ct{font-size:11px;color:var(--c-muted);font-variant-numeric:tabular-nums}
+.tree li.branch > .nm{font-weight:600;color:var(--c-navy)}
+
+footer{max-width:1240px;margin:0 auto;padding:0 32px 60px;color:var(--c-muted);font-size:13px}
+
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;gap:0;padding:0 18px 70px}
+  .toc{position:static;max-height:none;margin-bottom:26px;border:1px solid var(--c-border);background:var(--c-card);border-radius:var(--r);padding:18px 16px}
+  .masthead{padding:30px 18px 28px;margin-bottom:24px}
+  section{padding:22px 18px}
+  footer{padding:0 18px 50px}
+}
+</style>
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true">
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></symbol>
+  <symbol id="i-sitemap" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h12"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></symbol>
+  <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 22a10 10 0 1 1 10-10c0 2-1.5 3-3 3h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22Z"/><circle cx="7.5" cy="11.5" r=".6"/><circle cx="12" cy="7.5" r=".6"/><circle cx="16.5" cy="11.5" r=".6"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></symbol>
+  <symbol id="i-deploy" viewBox="0 0 24 24"><path d="M12 13v8"/><path d="m8 17 4-4 4 4"/><path d="M20.9 18.4A5 5 0 0 0 18 9h-1.3A8 8 0 1 0 4 16.3"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-rules" viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></symbol>
+  <symbol id="i-tasks" viewBox="0 0 24 24"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m3 17 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4 12 14.01l-3-3"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></symbol>
+  <symbol id="i-post" viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9h4"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></symbol>
+  <symbol id="i-dot" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-figma" viewBox="0 0 24 24"><path d="M5 5.5A3.5 3.5 0 0 1 8.5 2H12v7H8.5A3.5 3.5 0 0 1 5 5.5Z"/><path d="M12 2h3.5a3.5 3.5 0 1 1 0 7H12V2Z"/><path d="M12 12.5a3.5 3.5 0 1 1 7 0 3.5 3.5 0 1 1-7 0Z"/><path d="M5 19.5A3.5 3.5 0 0 1 8.5 16H12v3.5a3.5 3.5 0 1 1-7 0Z"/><path d="M5 12.5A3.5 3.5 0 0 1 8.5 9H12v7H8.5A3.5 3.5 0 0 1 5 12.5Z"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M6 9v12"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+</svg>
+
+<div class="masthead">
+  <div class="in">
+    <span class="kicker"><svg class="ico"><use href="#i-sparkles"/></svg>Frontend onboarding</span>
+    <h1>masterconcept.ai — how this site is actually built</h1>
+    <p>Everything you need to make your first safe change to the Master Concept website, and the list of traps that cost us time so they don't cost you any. Read sections 1–4 on day one; the rest is reference you'll come back to.</p>
+    <div class="meta">
+      <span><svg class="ico"><use href="#i-globe"/></svg><b>Site</b> masterconcept.ai</span>
+      <span><svg class="ico"><use href="#i-layers"/></svg><b>Stack</b> WordPress · Elementor · WPML · SiteGround</span>
+      <span><svg class="ico"><use href="#i-sitemap"/></svg><b>Languages</b> 4</span>
+      <span><svg class="ico"><use href="#i-user"/></svg><b>Maintainer</b> Tommy</span>
+    </div>
+  </div>
+</div>
+
+<div class="shell">
+
+  <nav class="toc" aria-label="Contents">
+    <h2>Contents</h2>
+    <div class="grp">Day one</div>
+    <ul>
+      <li><a href="#orientation"><svg class="ico"><use href="#i-compass"/></svg>1 · What this site is</a></li>
+      <li><a href="#access"><svg class="ico"><use href="#i-key"/></svg>2 · Access you need</a></li>
+      <li><a href="#stack"><svg class="ico"><use href="#i-layers"/></svg>3 · The stack</a></li>
+      <li><a href="#where"><svg class="ico"><use href="#i-box"/></svg>4 · Where each thing lives</a></li>
+    </ul>
+    <div class="grp">Week one</div>
+    <ul>
+      <li><a href="#sitemap"><svg class="ico"><use href="#i-sitemap"/></svg>5 · Sitemap</a></li>
+      <li><a href="#languages"><svg class="ico"><use href="#i-globe"/></svg>6 · Languages &amp; WPML</a></li>
+      <li><a href="#menus"><svg class="ico"><use href="#i-menu"/></svg>7 · Menus &amp; navigation</a></li>
+      <li><a href="#pages"><svg class="ico"><use href="#i-code"/></svg>8 · Building a page</a></li>
+      <li><a href="#design"><svg class="ico"><use href="#i-palette"/></svg>9 · Design system</a></li>
+      <li><a href="#ai"><svg class="ico"><use href="#i-sparkles"/></svg>10 · Figma &amp; Claude → WP</a></li>
+    </ul>
+    <div class="grp">Reference</div>
+    <ul>
+      <li><a href="#deploy"><svg class="ico"><use href="#i-deploy"/></svg>11 · Deploy &amp; verify</a></li>
+      <li><a href="#gotchas"><svg class="ico"><use href="#i-warn"/></svg>12 · Gotchas</a></li>
+      <li><a href="#conventions"><svg class="ico"><use href="#i-rules"/></svg>13 · House rules</a></li>
+      <li><a href="#tasks"><svg class="ico"><use href="#i-tasks"/></svg>14 · Your task list</a></li>
+      <li><a href="#glossary"><svg class="ico"><use href="#i-book"/></svg>15 · Glossary &amp; contacts</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- 1 -->
+    <section id="orientation">
+      <h2><svg class="ico"><use href="#i-compass"/></svg><span class="num">01</span>What this site is</h2>
+      <p class="standfirst">The five-minute mental model. If you only remember one thing, make it the last paragraph.</p>
+
+      <p><strong>masterconcept.ai</strong> is Master Concept's public marketing site: a WordPress install on SiteGround, fronted by Cloudflare, running the <strong>Hello Elementor</strong> theme with <strong>Elementor Pro</strong> and <strong>ElementsKit</strong> on top, translated into four languages by <strong>WPML</strong>.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>Language</th><th>Code</th><th>URL prefix</th><th class="num">Pages</th><th class="num">Posts</th></tr></thead>
+        <tbody>
+          <tr><td>English <span class="pill">default</span></td><td><code>en</code></td><td><code>/</code></td><td class="num">152</td><td class="num">537</td></tr>
+          <tr><td>繁體中文 (Taiwan)</td><td><code>zh-hant</code></td><td><code>/zh-hant/</code></td><td class="num">99</td><td class="num">614</td></tr>
+          <tr><td>繁體中文 (Hong Kong)</td><td><code>zh-hk</code></td><td><code>/zh-hk/</code></td><td class="num">13</td><td class="num">22</td></tr>
+          <tr><td>简体中文</td><td><code>zh-cn</code></td><td><code>/zh-cn/</code></td><td class="num">28</td><td class="num">24</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:13px;color:var(--c-muted)">Counts taken from the REST API, Nov 2026. Note how thin zh-hk and zh-cn are — that imbalance drives a lot of section 6.</p>
+
+      <h3><svg class="ico"><use href="#i-file"/></svg>Three kinds of page live here</h3>
+      <div class="cols">
+        <div class="box">
+          <h4><svg class="ico"><use href="#i-palette"/></svg>Elementor pages <span class="pill todo">legacy</span></h4>
+          <p>Still the majority, and still what the live header and footer run on. Built visually; the layout is JSON in the database. You'll maintain these — you won't start new ones.</p>
+        </div>
+        <div class="box">
+          <h4><svg class="ico"><use href="#i-code"/></svg>Native HTML <span class="pill done">the direction</span></h4>
+          <p>Hand-written HTML + CSS in the page content, no Elementor, built from Figma with the skill. Exact, fast, reviewable. Section 8 and section 10.</p>
+        </div>
+        <div class="box">
+          <h4><svg class="ico"><use href="#i-box"/></svg>Plugin-rendered</h4>
+          <p>Lists, author pages and nav columns rendered by our own <strong>WP&nbsp;Buddy</strong> plugin through <code>wpb_</code> shortcodes. Content comes from the database, not from markup.</p>
+        </div>
+      </div>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-sparkles"/></svg>
+        <div class="bd">
+          <span class="lbl">Where we're heading — read this before you build anything</span>
+          <p>We are moving <strong>off Elementor and onto our own hand-built HTML</strong>, produced from the Figma design with the <code>figma-to-wp</code> skill. That is the direction for all new work.</p>
+          <p>So: <strong>new pages are native HTML, not Elementor.</strong> Elementor stays for the hundreds of pages already built in it, and it is still what the live header and footer run on — but it isn't where you start. If you're about to open the Elementor editor to build something new, check first.</p>
+          <p>Why we're moving: Elementor layouts live as JSON in the database, so they can't be reviewed, diffed or version-controlled, they're slow to load, and matching a Figma design inside a visual builder is guesswork. Native HTML is exact, fast, and reviewable before it ships. Sections 8 and 10 are the how.</p>
+        </div>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">The one thing to remember</span>
+          <p><strong>There is no staging site.</strong> Every change you make is on production, visible to the public the moment the cache clears. Work locally, review locally, then push — and always know which of the four languages you are editing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="access">
+      <h2><svg class="ico"><use href="#i-key"/></svg><span class="num">02</span>Access you need</h2>
+      <p class="standfirst">Ask Tommy for these on day one. They're granted individually, so say what you need and why.</p>
+
+      <ul class="check">
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-lock"/></svg>WordPress login (wp-admin)</span><span class="why">Your own account — never a shared one. The login URL is <em>not</em> <code>/wp-login.php</code>; the site hides it. Ask for the real URL.</span></span></li>
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-key"/></svg>Application Password</span><span class="why">Generated inside your WP profile. Needed for any script or tool that talks to the REST API as you.</span></span></li>
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-git"/></svg>GitHub — <a href="https://github.com/mcailab/wpbuddy">mcailab/wpbuddy</a></span><span class="why">Pushing to <code>main</code> deploys the plugin to the live site, so this is a production credential.</span></span></li>
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-figma"/></svg>Figma</span><span class="why">Designs come from Figma; page builds read measurements straight out of the file.</span></span></li>
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-sparkles"/></svg>Claude — via <a href="https://magic.mcai.dev">Magic Login</a></span><span class="why">The shared <strong>mc-marketing</strong> account. Section 10 has the full flow.</span></span></li>
+        <li><input type="checkbox"><span><span class="what"><svg class="ico"><use href="#i-lock"/></svg>A password manager of your own</span><span class="why">For <em>your</em> credentials — WP login, application password, GitHub. See the box below.</span></span></li>
+      </ul>
+
+      <div class="note ok">
+        <svg class="ico"><use href="#i-ok"/></svg>
+        <div class="bd">
+          <span class="lbl">No FTP, no server access</span>
+          <p>You won't need either. <strong>The repo deploys itself</strong> — push to <code>main</code> and GitHub Actions syncs your WP Buddy change onto the live site. That's the whole deployment story for plugin code, and it's why repo access is the one credential that reaches production.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-lock"/></svg>Where passwords go</h3>
+      <p>Two different things, and it's worth keeping them straight:</p>
+      <div class="cols">
+        <div class="box">
+          <h4><svg class="ico"><use href="#i-sparkles"/></svg>Shared team logins</h4>
+          <p><a href="https://magic.mcai.dev">Magic Login</a>. You sign in as yourself and it hands you the shared account — Claude's mc-marketing among them. You never see or store the password.</p>
+        </div>
+        <div class="box">
+          <h4><svg class="ico"><use href="#i-key"/></svg>Your own credentials</h4>
+          <p>Keep them in a <strong>password manager</strong>, never a text file or a note. The company runs <strong>1Password</strong> — ask Tommy whether you get a seat. <a href="https://bitwarden.com">Bitwarden</a> is a solid free alternative if you'd rather run your own.</p>
+        </div>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Credential rules — no exceptions</span>
+          <ul>
+            <li>A password lives in a password manager and nowhere else. Never in code, never in a commit, never in a ticket, never pasted into a chat.</li>
+            <li>The plugin reads every key it needs from the WordPress database at runtime — so there is never a reason to hardcode one.</li>
+            <li>If you think you need a credential in a file, ask first. There's almost always an existing helper.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-ext"/></svg>Bookmark these</h3>
+      <div class="tw">
+      <table>
+        <thead><tr><th>What</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr><td>The site</td><td><a href="https://masterconcept.ai/">masterconcept.ai</a></td></tr>
+          <tr><td>Plugin repo</td><td><a href="https://github.com/mcailab/wpbuddy">github.com/mcailab/wpbuddy</a></td></tr>
+          <tr><td>Shared logins</td><td><a href="https://magic.mcai.dev">magic.mcai.dev</a></td></tr>
+          <tr><td>Live sitemap</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-content-tree">WP Buddy → Content Tree</a></td></tr>
+          <tr><td>Menus</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php">Appearance → Menus</a></td></tr>
+          <tr><td>Brand tokens</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-design-system">WP Buddy → Brand Kit</a></td></tr>
+          <tr><td>Shortcode reference</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-shortcode">WP Buddy → Shortcode</a></td></tr>
+          <tr><td>Audit log</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=simple_history_admin_menu_page">Simple History</a></td></tr>
+          <tr><td>PHP snippets</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=snippets">Code Snippets</a></td></tr>
+          <tr><td>Media library</td><td><a href="https://masterconcept.ai/wp-admin/upload.php">Media</a></td></tr>
+          <tr><td>Guide colleagues use</td><td><a href="https://claude.ai/artifact/3aDz4FtAdpcC7F1hoWpExd">Claude Design to WordPress</a></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p style="font-size:13px;color:var(--c-muted)">wp-admin links need you signed in — and the sign-in URL isn't <code>/wp-login.php</code>, so get that from Tommy first.</p>
+    </section>
+
+    <!-- 3 -->
+    <section id="stack">
+      <h2><svg class="ico"><use href="#i-layers"/></svg><span class="num">03</span>The stack</h2>
+      <p class="standfirst">39 plugins are active. These are the dozen that will actually affect your work.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>What</th><th>Why it matters to you</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Hello Elementor</strong> <span class="pill">theme</span></td><td>Deliberately minimal. It does almost nothing — which is why native HTML pages need the full-bleed override in section 8.</td></tr>
+          <tr><td><strong>Elementor</strong> + <strong>Elementor Pro</strong></td><td>The visual page builder. Layout lives in the DB as JSON, not in files.</td></tr>
+          <tr><td><strong>ElementsKit Lite/Pro</strong></td><td>Supplies the header, the nav bar and the <strong>mega menu</strong>. Section 7.</td></tr>
+          <tr><td><strong>WPML</strong> (+ String, Media, SEO)</td><td>All four languages. The single biggest source of surprises — read section 6 before touching anything multilingual.</td></tr>
+          <tr><td><strong>Permalink Manager Pro</strong></td><td>URLs are <em>not</em> derived from the page slug. It stores a URI per post. Change a slug and you must regenerate the permalink.</td></tr>
+          <tr><td><strong>WP Buddy</strong> <span class="pill done">ours</span></td><td>Our own plugin — the only part of the site that lives in git. Section 4.</td></tr>
+          <tr><td><strong>Code Snippets</strong></td><td>~17 PHP snippets (GTM, Amplitude, assorted fixes) stored <em>in the database</em>. Not in git. Check here when behaviour has no visible source.</td></tr>
+          <tr><td><strong>Speed Optimizer</strong> (SiteGround)</td><td>Combines + minifies CSS/JS and full-page-caches for logged-out visitors. The reason your change "didn't work". Section 11.</td></tr>
+          <tr><td><strong>Safe SVG</strong></td><td>SVG uploads to the media library are allowed and sanitised. Icons can be real SVG.</td></tr>
+          <tr><td><strong>All in One SEO</strong>, <strong>Redirection</strong>, <strong>IndexNow</strong></td><td>Meta, redirects, search-engine pings. Don't change URLs without checking Redirection.</td></tr>
+          <tr><td><strong>Security Optimizer</strong>, <strong>AIOS</strong>, <strong>WPS Hide Login</strong></td><td>A WAF sits in front of the site, and the login URL is hidden. Both will bite you — see Gotchas.</td></tr>
+          <tr><td><strong>Simple History</strong></td><td>Audit log. When you need to know who changed what and when, look here first.</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-info"/></svg>
+        <div class="bd">
+          <span class="lbl">Current</span>
+          <p>Hello Elementor 3.5.1 · Elementor 4.3.5 / Pro 4.3.2 · ElementsKit Lite 4.0.9 / Pro 4.5.0 · WPML 5.1.0 · WP Buddy 4.14. Verified Nov 2026.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="where">
+      <h2><svg class="ico"><use href="#i-box"/></svg><span class="num">04</span>Where each thing lives</h2>
+      <p class="standfirst">The most useful table on this page. Before you change anything, find its row — editing in the wrong place is the most common way to lose work here.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>Customisation</th><th>Lives in</th><th>In git?</th><th>How you change it</th></tr></thead>
+        <tbody>
+          <tr><td><strong>WP Buddy plugin</strong></td><td><code>wp-content/plugins/wp-buddy/</code></td><td><span class="pill done">Yes</span> <a href="https://github.com/mcailab/wpbuddy">repo</a></td><td>Edit locally → push to <code>main</code> → CI deploys</td></tr>
+          <tr><td><strong>Code Snippets</strong> (~17)</td><td>Database</td><td><span class="pill gap">No</span></td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=snippets">wp-admin → Snippets</a></td></tr>
+          <tr><td><strong>Child theme / functions.php</strong></td><td><code>wp-content/themes/…</code></td><td><span class="pill gap">No</span></td><td>No deploy path exists for the theme — ask Tommy</td></tr>
+          <tr><td><strong>Pages &amp; Elementor layouts</strong></td><td>Database (<code>post_content</code>, <code>_elementor_data</code>)</td><td><span class="pill gap">No</span></td><td>Elementor editor, or REST <code>POST /wp/v2/pages/{id}</code></td></tr>
+          <tr><td><strong>Menus</strong></td><td>Database (<code>nav_menu</code> terms)</td><td><span class="pill gap">No</span></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php">Appearance → Menus</a></td></tr>
+          <tr><td><strong>Settings, WPML config, permalink URIs</strong></td><td>Database</td><td><span class="pill gap">No</span></td><td>wp-admin</td></tr>
+          <tr><td><strong>Images, SVG, PDFs</strong></td><td>Media library (files + DB)</td><td><span class="pill gap">No</span></td><td><a href="https://masterconcept.ai/wp-admin/upload.php">Media</a> → Add New, or REST upload</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Consequence</span>
+          <p>Only one row is version-controlled. Everything else is <strong>live state with no undo</strong> — and <strong>post revisions are disabled</strong> site-wide. Before you overwrite a page, save a copy of its current HTML locally. Every time.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-git"/></svg>The WP Buddy repo — <a href="https://github.com/mcailab/wpbuddy">github.com/mcailab/wpbuddy</a></h3>
+      <pre><code>wp-buddy/
+├── plugin/                 ← this is what deploys
+│   ├── wp-buddy.php         ← main file, version + include list + changelog
+│   ├── includes/            ← one file per feature
+│   └── assets/              ← enqueued CSS/JS
+├── docs/                    ← design + implementation notes (read these)
+├── .github/workflows/       ← auto-deploy to the live site
+└── README.md</code></pre>
+      <p>No build step — plain PHP, vanilla JS and CSS. Nothing to compile, nothing to install.</p>
+
+      <h4>Shortcodes it provides</h4>
+      <p><code>[wpb_post_list]</code> · <code>[wpb_authors]</code> · <code>[wpb_hs_form]</code> · <code>[wpb_zoom]</code> · <code>[wpbuddy_nav]</code> · <code>[wpbuddy_menu]</code></p>
+      <p>House rule: reusable dynamic content goes through a shortcode, <strong>never</strong> hardcoded markup. If you find yourself pasting the same list of links into four language versions of a page, stop — that's a shortcode.</p>
+
+      <h4>Its admin screens</h4>
+      <p>wp-admin → <strong>WP Buddy</strong>:
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy">Tools</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-analytics">Analytics Dashboard</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-tags">Tags Management</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-content-tree"><strong>Content Tree</strong></a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-ai-builder">AI Builder (Beta)</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-design-system">Brand Kit</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-shortcode">Shortcode</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-pagespeed">PageSpeed</a> ·
+        <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-toolkit">Toolkit</a>.</p>
+    </section>
+
+    <!-- 5 -->
+    <section id="sitemap">
+      <h2><svg class="ico"><use href="#i-sitemap"/></svg><span class="num">05</span>Sitemap</h2>
+      <p class="standfirst">The shape of the site at a glance. English structure shown — the other three languages mirror it, minus what hasn't been translated.</p>
+
+      <a class="btnlink" href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-content-tree"><svg class="ico"><use href="#i-sitemap"/></svg>Open the live sitemap — WP Buddy → Content Tree<svg class="ico"><use href="#i-ext"/></svg></a>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-info"/></svg>
+        <div class="bd">
+          <span class="lbl">Use the Content Tree for anything real</span>
+          <p>The list below is a static snapshot for orientation. <strong>WP Buddy → Content Tree</strong> is the authoritative one: pages, posts and templates as an expandable tree, filtered per language, with translation status and quick edit / duplicate / trash on every row. Bookmark it.</p>
+          <p>There's also a public <a href="https://masterconcept.ai/site-map/">/site-map/</a> page for visitors — don't confuse the two.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-file"/></svg>Pages — top level (English)</h3>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Page</th><th>Path</th><th class="num">Children</th></tr></thead>
+        <tbody>
+          <tr><td>Home</td><td><code>/</code></td><td class="num">—</td></tr>
+          <tr><td><strong>Solutions</strong></td><td><a href="https://masterconcept.ai/solutions/"><code>/solutions/</code></a></td><td class="num">26</td></tr>
+          <tr><td><strong>Partners</strong></td><td><a href="https://masterconcept.ai/partners/"><code>/partners/</code></a></td><td class="num">6 groups</td></tr>
+          <tr><td><strong>AI Academy</strong></td><td><a href="https://masterconcept.ai/aiacademy/"><code>/aiacademy/</code></a></td><td class="num">11</td></tr>
+          <tr><td>How To Use Google Meet</td><td><a href="https://masterconcept.ai/how-to-use-google-meet/"><code>/how-to-use-google-meet/</code></a></td><td class="num">16</td></tr>
+          <tr><td>Resources</td><td><a href="https://masterconcept.ai/resources/"><code>/resources/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Success Stories</td><td><a href="https://masterconcept.ai/success-stories/"><code>/success-stories/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Learning Articles</td><td><a href="https://masterconcept.ai/learning-articles/"><code>/learning-articles/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Download</td><td><a href="https://masterconcept.ai/download/"><code>/download/</code></a></td><td class="num">—</td></tr>
+          <tr><td>About Master Concept</td><td><a href="https://masterconcept.ai/about-master-concept/"><code>/about-master-concept/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Why Master Concept</td><td><a href="https://masterconcept.ai/why-master-concept/"><code>/why-master-concept/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Contact Us</td><td><a href="https://masterconcept.ai/contact-us/"><code>/contact-us/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Media Relations</td><td><a href="https://masterconcept.ai/media-relations/"><code>/media-relations/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Privacy Policy</td><td><a href="https://masterconcept.ai/website-privacy/"><code>/website-privacy/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Event Privacy</td><td><a href="https://masterconcept.ai/event-privacy/"><code>/event-privacy/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Information Security Statement</td><td><a href="https://masterconcept.ai/information-security-statement/"><code>/information-security-statement/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Thank You (Contact / Download)</td><td><a href="https://masterconcept.ai/thank-you/"><code>/thank-you/</code></a>, <a href="https://masterconcept.ai/thank-you-download/"><code>/thank-you-download/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Site Map</td><td><a href="https://masterconcept.ai/site-map/"><code>/site-map/</code></a></td><td class="num">—</td></tr>
+          <tr><td>Previews &amp; test <span class="pill todo">not public nav</span></td><td><a href="https://masterconcept.ai/footer-preview/"><code>/footer-preview/</code></a>, <a href="https://masterconcept.ai/mega-solutions-preview/"><code>/mega-solutions-preview/</code></a>, <a href="https://masterconcept.ai/stylekit-ml/"><code>/stylekit-ml/</code></a>, <a href="https://masterconcept.ai/test/"><code>/test/</code></a></td><td class="num">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <details class="tree">
+        <summary><svg class="ico"><use href="#i-folder"/></svg>Solutions — all 26 children<svg class="ico chev"><use href="#i-chev"/></svg></summary>
+        <div class="bd">
+        <ul>
+          <li class="branch"><svg class="ico"><use href="#i-dot"/></svg><span class="nm">AI &amp; productivity</span></li>
+          <ul>
+            <li><span class="nm">Generative AI and Machine Learning</span> <a class="pth" href="https://masterconcept.ai/solutions/generative-ai-and-machine-learning/">/solutions/generative-ai-and-machine-learning/</a></li>
+            <li><span class="nm">Maco Chat</span> <a class="pth" href="https://masterconcept.ai/solutions/maco-chat/">/solutions/maco-chat/</a></li>
+            <li><span class="nm">Productivity and Collaboration</span> <a class="pth" href="https://masterconcept.ai/solutions/productivity-and-collaboration/">/solutions/productivity-and-collaboration/</a></li>
+            <li><span class="nm">Remote Office</span> <a class="pth" href="https://masterconcept.ai/solutions/remote-office/">/solutions/remote-office/</a></li>
+            <li><span class="nm">AI Governance</span> <a class="pth" href="https://masterconcept.ai/solutions/ai-governance/">/solutions/ai-governance/</a></li>
+            <li><span class="nm">AI for Enterprise — knowledge base &amp; chatbots</span> <span class="pth">/solutions/ai-solutions-for-enterprise…/</span></li>
+          </ul>
+          <li class="branch"><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Geospatial</span></li>
+          <ul>
+            <li><span class="nm">Geospatial Solutions Overview</span> <a class="pth" href="https://masterconcept.ai/solutions/geospatial/">/solutions/geospatial/</a></li>
+            <li><span class="nm">Geographical Information System</span> <a class="pth" href="https://masterconcept.ai/solutions/geographical-information-system/">/solutions/geographical-information-system/</a></li>
+            <li><span class="nm">Master Planner</span> <a class="pth" href="https://masterconcept.ai/solutions/master-planner/">/solutions/master-planner/</a></li>
+            <li><span class="nm">MasterPulse</span> <a class="pth" href="https://masterconcept.ai/solutions/masterpulse/">/solutions/masterpulse/</a></li>
+            <li><span class="nm">MasterScape AI</span> <a class="pth" href="https://masterconcept.ai/solutions/masterscape-ai/">/solutions/masterscape-ai/</a></li>
+            <li><span class="nm">Google Maps Geospatial Analytics</span> <a class="pth" href="https://masterconcept.ai/solutions/google-maps-geospatial-analytics/">/solutions/google-maps-geospatial-analytics/</a></li>
+            <li><span class="nm">Last Mile Fleet Solution (LMFS)</span> <a class="pth" href="https://masterconcept.ai/solutions/lmfs-solutions/">/solutions/lmfs-solutions/</a></li>
+            <li><span class="nm">ODRD Solutions</span> <a class="pth" href="https://masterconcept.ai/solutions/odrd-solutions/">/solutions/odrd-solutions/</a></li>
+          </ul>
+          <li class="branch"><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Cloud &amp; DevOps</span></li>
+          <ul>
+            <li><span class="nm">DevOps</span> <a class="pth" href="https://masterconcept.ai/solutions/devops/">/solutions/devops/</a></li>
+            <li><span class="nm">App &amp; Web Development</span> <a class="pth" href="https://masterconcept.ai/solutions/app-web-development/">/solutions/app-web-development/</a></li>
+            <li><span class="nm">Cloud Solutions</span> <a class="pth" href="https://masterconcept.ai/solutions/enterprise-cloud-solutions/">/solutions/enterprise-cloud-solutions/</a></li>
+            <li><span class="nm">Managed Service Provider</span> <a class="pth" href="https://masterconcept.ai/solutions/managed-service-provider/">/solutions/managed-service-provider/</a></li>
+            <li><span class="nm">Cloud Migration</span> <a class="pth" href="https://masterconcept.ai/solutions/cloud-migration/">/solutions/cloud-migration/</a></li>
+          </ul>
+          <li class="branch"><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Cybersecurity</span></li>
+          <ul>
+            <li><span class="nm">Zero Trust Security Model</span> <a class="pth" href="https://masterconcept.ai/solutions/zero-trust-security-model/">/solutions/zero-trust-security-model/</a></li>
+            <li><span class="nm">ISO Compliance</span> <a class="pth" href="https://masterconcept.ai/solutions/iso-compliance/">/solutions/iso-compliance/</a></li>
+            <li><span class="nm">Unified Endpoint Management</span> <a class="pth" href="https://masterconcept.ai/solutions/unified-endpoint-management/">/solutions/unified-endpoint-management/</a></li>
+            <li><span class="nm">Identity and Access Management</span> <a class="pth" href="https://masterconcept.ai/solutions/identity-and-access-management/">/solutions/identity-and-access-management/</a></li>
+            <li><span class="nm">Secure Access Service Edge</span> <a class="pth" href="https://masterconcept.ai/solutions/secure-access-service-edge/">/solutions/secure-access-service-edge/</a></li>
+            <li><span class="nm">IoT Security</span> <a class="pth" href="https://masterconcept.ai/solutions/iot-security/">/solutions/iot-security/</a></li>
+          </ul>
+          <li class="branch"><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Analytics &amp; marketing</span></li>
+          <ul>
+            <li><span class="nm">Digital Action Lab</span> <a class="pth" href="https://masterconcept.ai/solutions/digital-ai-lab/">/solutions/digital-ai-lab/</a> <span class="ct">6 children</span></li>
+          </ul>
+        </ul>
+        <p style="font-size:12.5px;color:var(--c-muted);margin:12px 0 0">The five groupings above are how the mega menu presents them — WordPress itself stores all 26 as flat children of <a href="https://masterconcept.ai/solutions/"><code>/solutions/</code></a>.</p>
+        </div>
+      </details>
+
+      <details class="tree">
+        <summary><svg class="ico"><use href="#i-folder"/></svg>Partners — 6 groups<svg class="ico chev"><use href="#i-chev"/></svg></summary>
+        <div class="bd">
+        <ul>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Google &amp; Cloud</span> <a class="pth" href="https://masterconcept.ai/partners/google-cloud/">/partners/google-cloud/</a> <span class="ct">8</span></li>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">DevOps &amp; Security</span> <a class="pth" href="https://masterconcept.ai/partners/devops-security/">/partners/devops-security/</a> <span class="ct">14</span></li>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Work &amp; Collaboration</span> <a class="pth" href="https://masterconcept.ai/partners/work-collaboration/">/partners/work-collaboration/</a> <span class="ct">7</span></li>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Analytics &amp; Marketing</span> <a class="pth" href="https://masterconcept.ai/partners/analytics-marketing/">/partners/analytics-marketing/</a> <span class="ct">6</span></li>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Geotab</span> <a class="pth" href="https://masterconcept.ai/partners/geotab/">/partners/geotab/</a> <span class="ct">2</span></li>
+          <li><svg class="ico"><use href="#i-dot"/></svg><span class="nm">Bright Data</span> <a class="pth" href="https://masterconcept.ai/partners/bright-data/">/partners/bright-data/</a></li>
+        </ul>
+        <p style="font-size:12.5px;color:var(--c-muted);margin:12px 0 0">~40 partner pages in total. This is the branch behind the Partners mega menu, still to be rebuilt.</p>
+        </div>
+      </details>
+
+      <h3><svg class="ico"><use href="#i-post"/></svg>Posts — by category</h3>
+      <p>Posts are organised by <strong>category</strong>, not by parent. The category decides where a post appears in a listing, and getting it wrong makes a post vanish from a page while looking perfectly fine in wp-admin.</p>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Category</th><th>Slug</th><th class="num">Posts</th><th>Sub-categories</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Blog</strong></td><td><a href="https://masterconcept.ai/blog/"><code>/blog/</code></a></td><td class="num">247</td><td>—</td></tr>
+          <tr><td><strong>News</strong></td><td><a href="https://masterconcept.ai/news/"><code>/news/</code></a></td><td class="num">61</td><td>—</td></tr>
+          <tr><td><strong>Event</strong></td><td><a href="https://masterconcept.ai/event/"><code>/event/</code></a></td><td class="num">54</td><td>—</td></tr>
+          <tr><td><strong>Webinar</strong></td><td><a href="https://masterconcept.ai/webinar/"><code>/webinar/</code></a></td><td class="num">44</td><td>—</td></tr>
+          <tr><td><strong>Success Stories</strong></td><td><a href="https://masterconcept.ai/success-stories/"><code>/success-stories/</code></a></td><td class="num">33</td><td>by partner — Google Workspace, Google Cloud, Asana, Google Maps Platform, Freshworks, OKTA, HubSpot, monday.com, Amplitude, Docusign</td></tr>
+          <tr><td><strong>Learning Articles</strong></td><td><a href="https://masterconcept.ai/learning-articles/"><code>/learning-articles/</code></a></td><td class="num">27</td><td>Google Workspace, Google Maps Platform, Work Management, Google Cloud, Information Security, Martech</td></tr>
+          <tr><td><strong>Cloud Computing Academy</strong></td><td><a href="https://masterconcept.ai/cloud-computing-academy/"><code>/cloud-computing-academy/</code></a></td><td class="num">26</td><td>Google Cloud, Professions Training</td></tr>
+          <tr><td><strong>Download</strong></td><td><a href="https://masterconcept.ai/download/"><code>/download/</code></a></td><td class="num">22</td><td>—</td></tr>
+          <tr><td><strong>MCTV</strong></td><td><a href="https://masterconcept.ai/mctv/"><code>/mctv/</code></a></td><td class="num">9</td><td>—</td></tr>
+          <tr><td><strong>Digital Action Lab</strong></td><td><a href="https://masterconcept.ai/digital-action-lab/"><code>/digital-action-lab/</code></a></td><td class="num">6</td><td>Data Analytics</td></tr>
+          <tr><td><strong>Whitepaper</strong></td><td><a href="https://masterconcept.ai/whitepaper/"><code>/whitepaper/</code></a></td><td class="num">4</td><td>—</td></tr>
+          <tr><td><strong>Data &amp; AI Lab</strong></td><td><a href="https://masterconcept.ai/data-ai-lab/"><code>/data-ai-lab/</code></a></td><td class="num">3</td><td>—</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Two things that bite on posts</span>
+          <ul>
+            <li>Posts also carry a <strong>region</strong> — Hong Kong · Taiwan · Singapore · Malaysia · China · All. The wrong region makes a post disappear from that region's listing while looking perfectly correct in WordPress.</li>
+            <li>No <strong>cover image</strong> means a <strong>blank tile</strong> in every listing it appears in.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="languages">
+      <h2><svg class="ico"><use href="#i-globe"/></svg><span class="num">06</span>Languages &amp; WPML</h2>
+      <p class="standfirst">Four languages, uneven content, and a translation layer with sharp edges. This section exists because each of these cost us a day.</p>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Trap 1 — fallback goes to English only</span>
+          <p>WPML falls back to the <strong>default language</strong> and nowhere else. There is no chain. A missing zh-hk page does <em>not</em> fall back to zh-hant, which is what a Hong Kong reader would actually want — it falls back to English.</p>
+          <p>Where we need 香港 → 繁中 → English, we build that chain ourselves in the menu. Don't assume WPML did it.</p>
+        </div>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Trap 2 — menus created over the API land in the wrong language</span>
+          <p>Create a <code>nav_menu</code> term via REST and it is born in the <strong>default</strong> language. WPML then <em>silently strips</em> every item in it that points at another language's page. The menu saves, the API lists the items back to you, and the front end renders <strong>nothing</strong>.</p>
+          <p>Fix: set the term's language <em>before</em> filling it. We added a route for exactly this:</p>
+          <pre><code>POST /wp-json/wpbuddy/v1/set-term-language
+{ "term_id": 1091, "taxonomy": "nav_menu", "language": "zh-hant" }</code></pre>
+          <p>Menus created by hand in wp-admin already carry the right language and are unaffected.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-warn"/></svg>Content gaps you'll run into</h3>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Area</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Solution pages</td><td>EN 24 of 24 · 繁中 17 · 简中 4 · <strong>香港 0</strong> <span class="pill gap">gap</span></td></tr>
+          <tr><td>隱私政策 (privacy policy)</td><td>English only <span class="pill gap">gap</span></td></tr>
+          <tr><td>简中 About dropdown</td><td>Missing from the SC mega menu <span class="pill gap">gap</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>So zh-hk and zh-cn menus are mostly showing fallback links today. That is known, not a bug you need to fix on sight — but it's why those languages look thin.</p>
+
+      <h3><svg class="ico"><use href="#i-rules"/></svg>Rules of thumb</h3>
+      <ul>
+        <li>Always know which language you're editing. The URL prefix tells you.</li>
+        <li>A page is not "translated" until WPML links it to its original — a standalone page in another language is invisible to the switcher.</li>
+        <li>English copy runs ~30–40% longer than Chinese for the same meaning. Type sizes are tuned <em>down</em> for EN. Check both.</li>
+        <li>If a language renders empty where another renders fine, suspect the cache first (section 11), then WPML.</li>
+      </ul>
+    </section>
+
+    <!-- 7 -->
+    <section id="menus">
+      <h2><svg class="ico"><use href="#i-menu"/></svg><span class="num">07</span>Menus &amp; navigation</h2>
+      <p class="standfirst">The header is a WordPress menu wearing an ElementsKit costume. Once that clicks, the mega menu stops being mysterious.</p>
+
+      <h3><svg class="ico"><use href="#i-code"/></svg>How the mega menu is actually built</h3>
+      <p>The header is a normal WP menu. ElementsKit marks a top-level item as a mega-menu parent and attaches a <strong>separate Elementor document</strong> to it, which renders as the dropdown panel:</p>
+      <pre><code>&lt;li class="… elementskit-megamenu-has"&gt;
+  &lt;a&gt;Solutions&lt;/a&gt;
+  &lt;div class="elementskit-megamenu-panel" id="ekit-megamenu-panel-{itemID}"&gt;
+      ← a whole Elementor post (type: elementskit_content)
+  &lt;/div&gt;
+&lt;/li&gt;</code></pre>
+      <p>So "edit the mega menu" means two different jobs: the <em>item</em> is in Appearance&nbsp;→&nbsp;Menus, the <em>panel</em> is an Elementor template.</p>
+
+      <h3><svg class="ico"><use href="#i-sparkles"/></svg>The newer, menu-driven approach</h3>
+      <p>Hardcoding 24 links into a panel × 4 languages doesn't scale. New preview pages render navigation from a real WP menu with one shortcode:</p>
+      <pre><code>[wpbuddy_nav menu="mega-solutions"   depth="2" icons="label"]
+[wpbuddy_nav menu="footer-resources" depth="1"]
+[wpbuddy_nav menu="footer-social"    depth="1" icons="1"]</code></pre>
+      <p>You give it the <strong>base slug</strong>; it appends the language suffix automatically — <code>-zh</code>, <code>-hk</code>, <code>-cn</code> — so one page template serves all four languages. If a language has no menu it renders <strong>nothing</strong>, on purpose: an empty column is an honest signal that a menu still needs building, whereas a silent English fallback is how zh-hk once shipped an English header.</p>
+
+      <h4>Icons come from the menu item</h4>
+      <p>In Appearance → Menus, switch on <strong>CSS Classes</strong> under Screen Options, then put one of these on the item:</p>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Class</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td><code>fas fa-brain</code></td><td>A Font Awesome glyph (already loaded site-wide)</td></tr>
+          <tr><td><code>wpb-icon-media-81842</code></td><td>An uploaded SVG/PNG by attachment ID</td></tr>
+          <tr><td><em>nothing</em></td><td>For a social link, the icon is guessed from the URL's domain</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-menu"/></svg>Current menus</h3>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Menu</th><th>繁中</th><th>EN</th><th>HK</th><th>CN</th><th>Used by</th></tr></thead>
+        <tbody>
+          <tr><td>Mega Solutions</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1091">1091</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1090">1090</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1092">1092</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1093">1093</a></td><td>header + mega preview</td></tr>
+          <tr><td>Footer Resources</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1061">1061</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1059">1059</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1063">1063</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1065">1065</a></td><td>footer column 1</td></tr>
+          <tr><td>Footer Index</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1062">1062</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1060">1060</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1064">1064</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1066">1066</a></td><td>footer column 2</td></tr>
+          <tr><td>Footer Social</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1087">1087</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1086">1086</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1088">1088</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=1089">1089</a></td><td>footer icon grid</td></tr>
+          <tr><td>Mega Menu (live site)</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=344">344</a></td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=343">343</a></td><td>—</td><td><a href="https://masterconcept.ai/wp-admin/nav-menus.php?action=edit&amp;menu=165">165</a> (SC)</td><td>the production header</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Edit any of them at <code>/wp-admin/nav-menus.php?action=edit&amp;menu=&lt;ID&gt;</code>.</p>
+
+      <h3><svg class="ico"><use href="#i-file"/></svg>Preview pages</h3>
+      <p>Redesigns live as real pages before they replace anything. These are the current ones:</p>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Preview</th><th>URL</th></tr></thead>
+        <tbody>
+          <tr><td>Header (hover mega menu)</td><td><a href="https://masterconcept.ai/zh-hant/header-preview/"><code>/zh-hant/header-preview/</code></a> <span class="pill todo">繁中 only</span></td></tr>
+          <tr><td>Solutions panel</td><td><a href="https://masterconcept.ai/mega-solutions-preview/"><code>/mega-solutions-preview/</code></a> + <a href="https://masterconcept.ai/zh-hant/mega-solutions-preview/"><a href="https://masterconcept.ai/zh-hant/footer-preview/"><code>/zh-hant/</code></a></a> <a href="https://masterconcept.ai/zh-hk/mega-solutions-preview/"><a href="https://masterconcept.ai/zh-hk/footer-preview/"><code>/zh-hk/</code></a></a> <a href="https://masterconcept.ai/zh-cn/mega-solutions-preview/"><a href="https://masterconcept.ai/zh-cn/footer-preview/"><code>/zh-cn/</code></a></a></td></tr>
+          <tr><td>Footer</td><td><a href="https://masterconcept.ai/footer-preview/"><code>/footer-preview/</code></a> + <code>/zh-hant/</code> <code>/zh-hk/</code> <code>/zh-cn/</code></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>None of these are linked from the site. They are not live navigation — the production header still runs on the ElementsKit menus above.</p>
+    </section>
+
+    <!-- 8 -->
+    <section id="pages">
+      <h2><svg class="ico"><use href="#i-code"/></svg><span class="num">08</span>Building a page</h2>
+      <p class="standfirst">The native-HTML route, where most of your frontend work will happen. These patterns are battle-tested — use them before inventing your own.</p>
+
+      <h3><svg class="ico"><use href="#i-warn"/></svg>Full-bleed layout — the #1 recurring issue</h3>
+      <p>With Elementor off, the page renders through Hello Elementor, whose <code>main.site-main</code> boxes content to 1140px and adds a top gap. Elementor sections used to break out of that; raw HTML doesn't, so you get grey strips down both sides.</p>
+      <p>Every native page carries a page-specific, <strong>unscoped</strong> override. Inline <code>&lt;style&gt;</code> only loads on that page, so it's safe:</p>
+      <pre><code>main.site-main{max-width:none!important;margin:0!important;padding:0!important;width:100%!important}
+main.site-main>.page-content{max-width:none!important;margin:0!important;padding:0!important}
+.page-content>p:empty{display:none!important;margin:0!important;height:0!important}</code></pre>
+      <p>That last rule kills the empty paragraph <code>wpautop</code> inserts at the top. Also strip the content and collapse whitespace between tags before pushing, so wpautop has nothing to chew on.</p>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-info"/></svg>
+        <div class="bd">
+          <span class="lbl">Backgrounds</span>
+          <p>A section background goes on the <strong>full-width <code>&lt;section&gt;</code></strong>, never on an inner max-width <code>.wrap</code> — otherwise white strips show at both edges. Pattern: <code>section</code> carries the background, inner <code>.wrap</code> (max-width 1180, <code>margin:0 auto</code>, <code>padding:0 28px</code>) centres the content.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-palette"/></svg>Centring a button</h3>
+      <p>Use a <code>text-align:center</code> <strong>wrapper</strong>. The theme overrides both <code>align-self:center</code> and auto-margins on flex children — both failed silently in production.</p>
+      <pre><code>&lt;div class="cta"&gt;&lt;a class="btn"&gt;了解更多&lt;/a&gt;&lt;/div&gt;
+
+.cta{text-align:center;margin-top:auto}  /* centre + pin to bottom of flex column */
+.btn{display:inline-block}               /* stays inline-block so text-align works */</code></pre>
+      <p>That <code>margin-top:auto</code> also gives you Elementor-style equal-height cards: image at the top, button pinned to the bottom, regardless of how long the copy is.</p>
+
+      <h3><svg class="ico"><use href="#i-figma"/></svg>Figma-exported pages</h3>
+      <p>Some pages come straight out of Figma as a fixed 1440px canvas with every element absolutely positioned. They scale down with a <code>--hp-scale</code> variable.</p>
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">Known failure mode</span>
+          <p>The stylesheet reads <code>--hp-scale</code> but nothing sets it, so below 1440px the canvas gets <strong>clipped at the right edge</strong>. Any such page needs a small script that measures the container and sets the variable. If a design page is cut off on your laptop, this is why.</p>
+        </div>
+      </div>
+      <p>And a judgement call worth internalising: a Figma design with 20 fixed slots cannot hold 24 real items. When real content outgrows a fixed layout, convert it to a flowing one (grid + shortcode) rather than squeezing or dropping items. We did exactly that to the Solutions panel.</p>
+
+      <h3><svg class="ico"><use href="#i-folder"/></svg>Images and assets</h3>
+      <ul>
+        <li>Deduplicate Figma images by <code>fills[].imageRef</code>, <strong>not</strong> by layer name — designers reuse names while each fill is a distinct image.</li>
+        <li>Upload to the media library with <code>curl</code>. Python's urllib gets 403'd by the WAF unless you send a browser/curl <code>User-Agent</code>.</li>
+        <li>A reused filename gets a <code>-1</code> suffix — check the URL you got back, don't assume.</li>
+      </ul>
+    </section>
+
+    <!-- 9 -->
+    <section id="design">
+      <h2><svg class="ico"><use href="#i-palette"/></svg><span class="num">09</span>Design system</h2>
+      <p class="standfirst">Navy and orange. The contrast rules below are computed, not opinions — please don't quietly break them.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>Token</th><th>Hex</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Navy</td><td><code>#1B365D</code></td><td>Headings, dark sections, ink</td></tr>
+          <tr><td>Orange</td><td><code>#FF9E1B</code></td><td>Primary CTA fill, accents</td></tr>
+          <tr><td>Green</td><td><code>#12BF6D</code></td><td>Hover, success</td></tr>
+          <tr><td>Body gray</td><td><code>#4D4D4D</code></td><td>Body copy</td></tr>
+          <tr><td>Blue</td><td><code>#4285F4</code> / <code>#1A73E8</code></td><td>Links, card titles</td></tr>
+          <tr><td>Border</td><td><code>#EAEDF2</code></td><td>Card borders, dividers</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">The orange is a fill, not an ink</span>
+          <p>Orange text on a light background is <strong>1.90:1</strong> — unreadable. Never use it for text, a thin line, or an icon on white. <strong>Navy on an orange fill is 5.86:1</strong> and is the correct usage. White on orange is 2.07:1 and is never correct.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-file"/></svg>Type</h3>
+      <p><strong>Raleway</strong> across the site, Arial fallback. Hero H1 50px desktop / 32px mobile at weight 900; H2 36/24 at 800; body 16–18px. Sizes come from clamp-based tokens in <code>:root</code> — <code>--fs-h1</code>, <code>--fs-h2</code>, <code>--fs-lead</code>, <code>--fs-body</code> — so set the token, don't hardcode a px value in a rule.</p>
+
+      <h3><svg class="ico"><use href="#i-box"/></svg>Cards</h3>
+      <p>Floating white cards, not flat-bordered: 12px radius, 24–32px padding, soft shadow (<code>0 6px 24px rgba(16,40,80,.10)</code>) that deepens and lifts 4px on hover. The image sits <em>inset</em> on a light-blue panel with its own 10px radius — not bleeding to the card edge. Title centred and brand-blue, body left-aligned and grey.</p>
+
+      <h3><svg class="ico"><use href="#i-layers"/></svg>Layout</h3>
+      <ul>
+        <li>Container <code>max-width:1140px</code>, <code>padding:0 20px</code></li>
+        <li>Section padding 80px desktop / 60px mobile</li>
+        <li>Fixed transparent header, 90px desktop / ~70px mobile — <strong>every hero needs a dark background or overlay</strong>, or the white header text vanishes</li>
+      </ul>
+      <p>The live tokens also sit in wp-admin under <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-design-system"><strong>WP Buddy → Brand Kit</strong></a>.</p>
+
+      <h3><svg class="ico"><use href="#i-ok"/></svg>Accessibility we hold ourselves to</h3>
+      <ul>
+        <li>Never encode meaning by colour alone — add a shape, a glyph, or a label. Roughly one man in twelve has a red–green deficiency.</li>
+        <li>Anything clickable shows a pointer cursor, including the little arrow glyphs beside menu text. They're separate elements and are easy to miss.</li>
+        <li>Check desktop <em>and</em> mobile on every change. Not optional.</li>
+      </ul>
+    </section>
+
+    <!-- 10 -->
+    <section id="ai">
+      <h2><svg class="ico"><use href="#i-sparkles"/></svg><span class="num">10</span>Figma &amp; Claude → WordPress</h2>
+      <p class="standfirst">A lot of pages here are built with Claude rather than by hand. This is how you get in, and which of the two routes you're on.</p>
+
+      <h3><svg class="ico"><use href="#i-key"/></svg>Signing in to Claude</h3>
+      <p>We use a shared <strong>mc-marketing</strong> Claude account for this work — not a personal one, so that projects, skills and history stay with the team.</p>
+      <ol>
+        <li>Go to <a href="https://magic.mcai.dev">magic.mcai.dev</a> and sign in with your Master Concept Google account.</li>
+        <li>Find the <strong>mc-marketing</strong> tile and use it to sign in to Claude. Magic Login holds the password and the one-time code.</li>
+        <li>That's it — no password ever gets copied into a file, a note, or a chat.</li>
+      </ol>
+      <div class="note">
+        <svg class="ico"><use href="#i-info"/></svg>
+        <div class="bd">
+          <span class="lbl">What Magic Login is</span>
+          <p>An internal single page that reads the team's shared logins out of 1Password at the moment you open it. Sign-in is your own Workspace identity, so access can be granted and revoked per person. If a tile is missing, ask Tommy to add it rather than looking for the password elsewhere.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-figma"/></svg>Route A — Figma → WordPress <span class="pill">yours</span></h3>
+      <p>This is the technical route, and the one you'll live in. The <strong><code>figma-to-wp</code></strong> skill drives it:</p>
+      <ul>
+        <li>Pulls the frame's render, its copy <em>verbatim</em>, its colour and type tokens, its box geometry and its images out of Figma.</li>
+        <li>You then write the HTML against those real numbers, one section at a time — the skill does not generate the page for you.</li>
+        <li><code>verify</code> confirms every string survived and the site's hard rules hold · <code>audit</code> names which element is wrong and by how much · <code>diff</code> screenshots the result and scores each section against the Figma render · <code>mobile</code> runs the phone checks the frame can't answer.</li>
+        <li>Then it uploads the media and creates the page as a <strong>draft</strong>, with the right slug and Permalink Manager URI.</li>
+        <li><code>pull</code> goes the other way — start from a page that already exists in WordPress.</li>
+      </ul>
+      <p>Figma is read through its API with a <strong>read-only</strong> token — ask Tommy to set it up for you rather than minting your own. Nothing publishes itself; a draft is always the end state until someone says otherwise.</p>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-sparkles"/></svg>
+        <div class="bd">
+          <span class="lbl">This is the route, not an option</span>
+          <p>New pages are built this way now — see the direction note in section 1. If a design arrives and your instinct is to rebuild it in Elementor, that's the habit we're moving away from.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-user"/></svg>Route B — Claude Design → WordPress <span class="pill todo">colleagues</span></h3>
+      <p>Non-technical colleagues build a page in <strong>Claude Design</strong> and hand over a link; Claude publishes it. You should know this route exists because <em>you will be the one who fixes it</em> when the result needs a human.</p>
+      <a class="btnlink" href="https://claude.ai/artifact/3aDz4FtAdpcC7F1hoWpExd"><svg class="ico"><use href="#i-book"/></svg>Read the guide we give colleagues<svg class="ico"><use href="#i-ext"/></svg></a>
+      <p>It's one page covering what they send, page vs post, which language, category and region, cover image and SEO, the web address, and where it sits in the menu. Worth ten minutes — it's the shared vocabulary everyone here uses when they ask for a page.</p>
+
+      <div class="note ok">
+        <svg class="ico"><use href="#i-ok"/></svg>
+        <div class="bd">
+          <span class="lbl">Same rules either way</span>
+          <p>Both routes end in the same WordPress, with the same cache, the same four languages and the same no-revisions rule. Nothing about using Claude changes sections 4, 6 or 11.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section id="deploy">
+      <h2><svg class="ico"><use href="#i-deploy"/></svg><span class="num">11</span>Deploy &amp; verify</h2>
+      <p class="standfirst">Two different pipelines depending on what you changed — and one cache that will lie to you.</p>
+
+      <h3><svg class="ico"><use href="#i-git"/></svg>Plugin code → git</h3>
+      <ol>
+        <li>Edit under <code>plugin/</code></li>
+        <li><code>php -l &lt;file&gt;</code> — CI doesn't lint yet</li>
+        <li>Bump <code>WPBUDDY_VERSION</code> and add a changelog line in <code>wp-buddy.php</code> for anything user-facing</li>
+        <li>Commit → push to <code>main</code></li>
+        <li><a href="https://github.com/mcailab/wpbuddy/actions">GitHub Actions</a> syncs <code>plugin/</code> → <code>wp-content/plugins/wp-buddy/</code> on the live site</li>
+      </ol>
+      <p>Watch it land: <code>gh run list --repo mcailab/wpbuddy</code> — or the <a href="https://github.com/mcailab/wpbuddy/actions">Actions tab</a>. No FTP, no server login; the push <em>is</em> the deploy.</p>
+
+      <h3><svg class="ico"><use href="#i-file"/></svg>Page content → REST</h3>
+      <p>Pages are pushed as raw HTML via the REST API using a dedicated user that holds <code>unfiltered_html</code>. The plugin exposes named abilities for the fiddly parts:</p>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Ability</th><th>Does</th></tr></thead>
+        <tbody>
+          <tr><td><code>mc/set-post-html</code></td><td>Write raw HTML into a post without KSES stripping it</td></tr>
+          <tr><td><code>mc/create-localized-page</code></td><td>Create a page in a given WPML language, optionally linked as a translation</td></tr>
+          <tr><td><code>mc/regenerate-permalink</code></td><td>Rebuild the Permalink Manager URI after a slug change</td></tr>
+          <tr><td><code>mc/find-posts</code></td><td>Search posts/pages across languages</td></tr>
+          <tr><td><code>mc/set-language</code> · <code>mc/set-terms</code> · <code>mc/get-meta</code> · <code>mc/brand-guide</code></td><td>Language assignment, taxonomy, metadata, brand tokens</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="note warn">
+        <svg class="ico"><use href="#i-warn"/></svg>
+        <div class="bd">
+          <span class="lbl">The cache will lie to you</span>
+          <p>SiteGround full-page-caches for logged-out visitors and Cloudflare sits in front of that. A change can be live and still invisible in an incognito window for minutes.</p>
+          <ul>
+            <li><strong>Query strings do not bust the SiteGround page cache.</strong> <code>?bust=1</code> is not a test.</li>
+            <li>Logged-in (admin) views bypass the cache — which is why it "works for you" and not for anyone else.</li>
+            <li>Clear it properly with <strong>清除 SG 快取</strong> in the admin bar. Re-saving a page also purges that page.</li>
+            <li>Check response headers <code>x-proxy-cache</code> and <code>cf-cache-status</code> to see which layer served you.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note ok">
+        <svg class="ico"><use href="#i-ok"/></svg>
+        <div class="bd">
+          <span class="lbl">Verify by DOM, not by eyeball</span>
+          <p>Screenshots show stale renders. To confirm a change truly landed, read the live DOM or computed style — fetch the page and grep for your markup, or use <code>getBoundingClientRect</code> / computed CSS in the console. Pixels can be cached; the parsed DOM you just fetched cannot.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-clock"/></svg>Preferred workflow</h3>
+      <p><strong>Edit local → review local → push to prod → verify via DOM.</strong> Reviewing locally first avoids the entire cache problem, which is why we do it that way round.</p>
+    </section>
+
+    <!-- 12 -->
+    <section id="gotchas">
+      <h2><svg class="ico"><use href="#i-warn"/></svg><span class="num">12</span>Gotchas</h2>
+      <p class="standfirst">Every one of these has already cost someone here real time. Skim now; come back when something behaves impossibly.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>Symptom</th><th>Cause &amp; fix</th></tr></thead>
+        <tbody>
+          <tr><td>REST response isn't valid JSON</td><td><strong>Elementor injects <code>&lt;style&gt;</code> blocks into REST responses.</strong> Parse from after the last <code>&lt;/style&gt;</code>.</td></tr>
+          <tr><td>Python HTTP call returns 403, curl works</td><td>The WAF blocks the default urllib user-agent. Send a browser or <code>curl/8</code> <code>User-Agent</code>.</td></tr>
+          <tr><td>Menu saves, API lists items, front end is empty</td><td>WPML stripped cross-language items from a menu created in the wrong language. Section 6, trap 2.</td></tr>
+          <tr><td>One language looks broken, the others are fine</td><td>Almost always the page cache. Confirm before debugging anything else.</td></tr>
+          <tr><td>Your inline <code>&lt;script&gt;</code> never runs</td><td><strong>Inline scripts in post content are stripped on output.</strong> Enqueue through <code>assets/wpbuddy-page.js</code> instead.</td></tr>
+          <tr><td>A CSS-only "fix" that nobody can see</td><td>Check the element is actually in the DOM and the rule isn't overridden in the combined stylesheet — and ask whether the page has the JS it needs at all. A panel with no JavaScript can't open no matter how good its styles are.</td></tr>
+          <tr><td>An Elementor popup link breaks</td><td><code>esc_url()</code> mangles <code>#elementor-action</code> hrefs — they're already percent-encoded. Use <code>esc_attr()</code>.</td></tr>
+          <tr><td>A URL 404s after you changed the slug</td><td>Permalink Manager stores URIs separately. Regenerate the permalink.</td></tr>
+          <tr><td>Design page clipped on the right</td><td><code>--hp-scale</code> never set. Section 8.</td></tr>
+          <tr><td>A post is missing from a listing page</td><td>Wrong region, or wrong category. Section 5.</td></tr>
+          <tr><td>Blank tile in a listing</td><td>No cover image on the post.</td></tr>
+          <tr><td>You can't find <code>/wp-login.php</code></td><td>WPS Hide Login. Get the real URL from Tommy.</td></tr>
+          <tr><td>You overwrote a page and want it back</td><td><strong>Post revisions are disabled.</strong> There is no undo. Check Simple History for what changed, and your own local backup for the content.</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section id="conventions">
+      <h2><svg class="ico"><use href="#i-rules"/></svg><span class="num">13</span>House rules</h2>
+      <p class="standfirst">Short list. Mostly about not surprising the next person.</p>
+
+      <h3><svg class="ico"><use href="#i-code"/></svg>Code</h3>
+      <ul>
+        <li>Match the surrounding code — its naming, its comment density, its idiom. Don't import a different house style into one file.</li>
+        <li>Names are canonical and domain-free: no leaking one customer's or one page's vocabulary into shared code.</li>
+        <li>Reusable dynamic content → a shortcode. Never four hardcoded copies, one per language.</li>
+        <li><code>php -l</code> before you commit.</li>
+        <li>Bump the version and write the changelog line for anything user-facing.</li>
+      </ul>
+
+      <h3><svg class="ico"><use href="#i-warn"/></svg>Working on production</h3>
+      <ul>
+        <li>Back up the current HTML of any page before you overwrite it.</li>
+        <li>Review locally first.</li>
+        <li>Verify by DOM after pushing.</li>
+        <li>If you changed something and can't see it, suspect cache before you suspect your code — then suspect your code.</li>
+      </ul>
+
+      <h3><svg class="ico"><use href="#i-user"/></svg>Asking</h3>
+      <p>Ask early about: anything touching the live header or footer, anything that changes a URL, anything multilingual you're unsure about, and anything that needs a credential. None of those are things to figure out quietly on production.</p>
+    </section>
+
+    <!-- 14 -->
+    <section id="tasks">
+      <h2><svg class="ico"><use href="#i-tasks"/></svg><span class="num">14</span>Your work &amp; how it reaches you</h2>
+      <p class="standfirst">Three places, and they're in transition. Start with the sheet; learn the other two in your first fortnight.</p>
+
+      <h3><svg class="ico"><use href="#i-tasks"/></svg>1 · Your task list <span class="pill done">start here</span></h3>
+      <a class="btnlink" href="https://docs.google.com/spreadsheets/d/1VcCj8sD2iUTxuqR4vlfOOdgPH2i5F-KwC6ifky4RUSo/edit?gid=370362146#gid=370362146"><svg class="ico"><use href="#i-tasks"/></svg>Open your task list<svg class="ico"><use href="#i-ext"/></svg></a>
+      <p>The sheet is the live list — work from it, tick things off there, and ask Tommy if a row isn't clear. Everything you need in order to do those tasks is somewhere on this page; the sections above are in roughly the order you'll need them.</p>
+
+      <h3><svg class="ico"><use href="#i-menu"/></svg>2 · Asana — the team board <span class="pill">today</span></h3>
+      <a class="btnlink" href="https://app.asana.com/1/9811672847608/project/1193839356417761/board/1205105526607663"><svg class="ico"><use href="#i-menu"/></svg>Open the Asana board<svg class="ico"><use href="#i-ext"/></svg></a>
+      <p>Where the wider team's work is tracked today. Requests from the business arrive through <strong>Asana Forms</strong> rather than as ad-hoc messages — someone fills in the form, it lands on the board as a card with the details already structured. If a colleague asks you for something in chat, the right answer is usually "put it through the form", so it's tracked and nobody loses it.</p>
+
+      <h3><svg class="ico"><use href="#i-sparkles"/></svg>3 · Wilco → Plane — where we're heading <span class="pill todo">the goal</span></h3>
+      <p>This is the workflow automation we're building toward, and it's already running on this site. It removes the retyping step entirely:</p>
+      <ol>
+        <li>Someone spots a problem on a live page and <strong>pins feedback directly on it</strong> — on the page itself, not in a ticket describing the page.</li>
+        <li><a href="https://wilco.mcai.dev/projects/masterconcept">Wilco</a> captures the pin with its page, its position, the device, the author and any screenshot.</li>
+        <li>One action turns it into a work item in <a href="https://plane.hkmci.net/ai-team/">Plane</a> — <code>MC-1</code>, <code>MC-4</code>, <code>MC-5</code> and so on — tracked, assignable, closable.</li>
+        <li>Any pin reopens the real page with the pin in place via <code>?fb=&lt;id&gt;</code>, so you see exactly what they saw.</li>
+      </ol>
+      <p>Four projects are wired up: <a href="https://wilco.mcai.dev/projects/masterconcept">Master Concept Website</a>, <a href="https://wilco.mcai.dev/projects/careers">ATS</a> (careers), <a href="https://wilco.mcai.dev/projects/eip">EIP</a> and <a href="https://wilco.mcai.dev/projects/apt">Aptitude Test</a>. The website currently has <strong>3 open pins</strong>, all already linked to Plane items.</p>
+
+      <div class="note">
+        <svg class="ico"><use href="#i-info"/></svg>
+        <div class="bd">
+          <span class="lbl">Same story as Elementor → HTML</span>
+          <p>Asana is what we use today; <strong>Wilco + Plane is the end state</strong>. Don't treat the overlap as confusion — it's a migration in progress, the same as section 1's. When in doubt about where something belongs, ask rather than opening a fourth place to track work.</p>
+        </div>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-clock"/></svg>Known open work on the site</h3>
+      <p>Independent of the sheet, these are live and unfinished today:</p>
+      <ul>
+        <li>Header preview exists in <strong>繁中 only</strong> — the other three need their top-bar labels translated.</li>
+        <li>Mobile design for the header: hamburger + tap-to-expand accordion, deliberately different from the desktop hover mega menu.</li>
+        <li>Partners mega menu — ~40 items, needs the brand logos uploaded first.</li>
+        <li>The 24 solution pages don't exist in zh-hk at all, and only 4 of 24 exist in 简中.</li>
+        <li>Swap the live ElementsKit Solutions panels over to render from the <code>mega-solutions</code> menu.</li>
+        <li>12 unused footer menus (Footer Solutions / Company / Customers × 4) left over from a dropped layout — pending a decision to delete.</li>
+      </ul>
+    </section>
+
+    <!-- 15 -->
+    <section id="glossary">
+      <h2><svg class="ico"><use href="#i-book"/></svg><span class="num">15</span>Glossary &amp; contacts</h2>
+      <p class="standfirst">Terms that get used around here as if everyone already knows them.</p>
+
+      <div class="tw">
+      <table>
+        <thead><tr><th>Term</th><th>Means</th></tr></thead>
+        <tbody>
+          <tr><td><strong>AI page</strong></td><td>A page built as hand-written native HTML + CSS, with Elementor switched off. Not generated at runtime.</td></tr>
+          <tr><td><strong>WP Buddy</strong></td><td>Our own WordPress plugin — the only version-controlled part of the site.</td></tr>
+          <tr><td><strong>Ability</strong></td><td>A named operation the plugin exposes over the API, e.g. <code>mc/set-post-html</code>.</td></tr>
+          <tr><td><strong>Content Tree</strong></td><td>WP Buddy's live sitemap screen — pages, posts and templates as a tree.</td></tr>
+          <tr><td><strong>Magic Login</strong></td><td>Our shared-login page at <a href="https://magic.mcai.dev">magic.mcai.dev</a>. Reads team credentials out of 1Password; you sign in as yourself.</td></tr>
+          <tr><td><strong>mc-marketing</strong></td><td>The shared Claude account used for site work.</td></tr>
+          <tr><td><strong>hp-page</strong></td><td>A Figma-exported page: fixed 1440px canvas, absolutely positioned elements.</td></tr>
+          <tr><td><strong>ElementsKit</strong></td><td>The Elementor add-on that provides the header, nav and mega menu.</td></tr>
+          <tr><td><strong>Mega panel</strong></td><td>The dropdown of a mega-menu item — a separate Elementor document.</td></tr>
+          <tr><td><strong>Code Snippets</strong></td><td>PHP snippets stored in the database, managed in wp-admin, not in git.</td></tr>
+          <tr><td><strong>SG cache</strong></td><td>SiteGround's full-page cache. Clear it from the admin bar.</td></tr>
+          <tr><td><strong>繁中 / 简中 / 香港</strong></td><td>zh-hant (Taiwan) / zh-cn (Simplified) / zh-hk (Hong Kong).</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3><svg class="ico"><use href="#i-book"/></svg>Where to look things up</h3>
+      <div class="tw">
+      <table>
+        <thead><tr><th>For</th><th>Go to</th></tr></thead>
+        <tbody>
+          <tr><td>Plugin architecture, deployment, access</td><td><a href="https://github.com/mcailab/wpbuddy/blob/main/README.md"><code>wp-buddy/README.md</code></a></td></tr>
+          <tr><td>Page layout patterns and fixes</td><td><code>AI-PAGE-PATTERNS.md</code> (in the WordPress project folder)</td></tr>
+          <tr><td>Colours, type, buttons, spacing</td><td><code>wp-buddy/docs/WP-Buddy-Design-Guide.md</code> · <a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-design-system">Brand Kit</a></td></tr>
+          <tr><td>The live sitemap</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=wp-buddy-content-tree">WP Buddy → Content Tree</a></td></tr>
+          <tr><td>Deploy status</td><td><a href="https://github.com/mcailab/wpbuddy/actions">GitHub Actions</a></td></tr>
+          <tr><td>How colleagues ask for a page</td><td><a href="https://claude.ai/artifact/3aDz4FtAdpcC7F1hoWpExd">Claude Design to WordPress</a></td></tr>
+          <tr><td>Who changed what on the live site</td><td><a href="https://masterconcept.ai/wp-admin/admin.php?page=simple_history_admin_menu_page">Simple History</a></td></tr>
+          <tr><td>Shared team logins</td><td><a href="https://magic.mcai.dev">Magic Login</a></td></tr>
+          <tr><td>Everything else</td><td>Tommy</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  Internal onboarding reference for masterconcept.ai · facts verified against the live site, November 2026 · when something here turns out to be wrong, fix the page rather than telling one person.
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a'));
+  var map = {};
+  links.forEach(function(a){
+    var el = document.querySelector(a.getAttribute('href'));
+    if (el) map[el.id] = a;
+  });
+  var visible = {};
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ visible[e.target.id] = e.isIntersecting; });
+    var current = null;
+    Object.keys(map).forEach(function(id){ if (!current && visible[id]) current = id; });
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if (current && map[current]) map[current].classList.add('active');
+  }, { rootMargin: '-10% 0px -70% 0px', threshold: 0 });
+  Object.keys(map).forEach(function(id){ obs.observe(document.getElementById(id)); });
+})();
+</script>
+
+</body>
+</html>

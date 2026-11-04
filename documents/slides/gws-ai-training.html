@@ -96,6 +96,39 @@
   .kicker{ color:var(--mc-orange); font-weight:800; letter-spacing:2.6px;
     text-transform:uppercase; font-size:.5em; margin:0 0 4px; }
 
+  /* "To be confirmed" — these use cases are proposals, not commitments, and a
+     reader who misses that will quote one back as a promise. Loud on purpose:
+     a solid fill, not the tinted pill .bdg uses, which would have read as one
+     more tool badge among the Gemini/Studio/Script ones.
+     The fill is #FF9E1B literally, NOT var(--mc-orange): that token is an INK
+     in light mode (#B45309) and navy on it would be unreadable. Navy on the
+     real orange is 5.86:1 and is the one usage of the brand orange that is
+     allowed to carry text. The orange deliberately does not move between
+     themes, so the badge means the same thing on a projector and a laptop.
+     The word and the icon are the second and third channels, so it survives
+     greyscale and a colourblind reader. */
+  .tbc{ margin-left:auto; flex:none; align-self:center;
+        display:inline-flex; align-items:center; gap:10px;
+        background:#FF9E1B; color:#0A1726;
+        font-size:.58em; font-weight:800; letter-spacing:2px;
+        text-transform:uppercase; border-radius:999px;
+        padding:10px 24px 10px 19px; white-space:nowrap;
+        box-shadow:0 10px 30px rgba(255,158,27,.42); }
+  .tbc iconify-icon{ font-size:1.25em; }
+
+  /* The second channel, for the reader who is across the room or is sent one
+     screenshot with no deck around it. Sits ABOVE the cards, not behind them:
+     the cards carry their own panel background, so a watermark underneath
+     would only show through the gaps and read as a rendering fault. At 13%
+     it tints rather than obscures, and pointer-events:none keeps it out of
+     the way of anything clickable. */
+  .tbc-wm{ position:absolute; inset:0; z-index:5; pointer-events:none;
+           display:flex; align-items:center; justify-content:center;
+           font-size:2.45em; font-weight:800; letter-spacing:.06em;
+           text-transform:uppercase; white-space:nowrap;
+           color:rgba(255,158,27,.13);
+           transform:rotate(-13deg); overflow:hidden; }
+
   /* ---- use-case cards ---- */
   .ucs{ flex:1; display:grid; grid-template-columns:repeat(3,1fr); gap:14px; align-items:stretch; }
   .uc{ background:linear-gradient(180deg,var(--panel),var(--panel-2));
@@ -255,7 +288,7 @@
       <div class="hero-panel">
         <p class="kicker gws"><img src="https://api.iconify.design/logos/google-icon.svg" alt="">Google Workspace AI</p>
         <h1 style="font-size:2em; white-space:nowrap">Empower Daily Workflow with AI</h1>
-        <p class="lead" style="margin-top:.7em">Real use cases, by department &mdash; and which tool builds each one.</p>
+        <p class="lead" style="margin-top:.7em">Potential use cases, by department &mdash; and which tool would build each one.</p>
         <div class="tgrid">
           <div class="tnode"><img src="https://api.iconify.design/logos/google-gmail.svg" alt=""><span>Gmail</span></div>
           <div class="tnode"><img src="https://api.iconify.design/logos/google-drive.svg" alt=""><span>Drive</span></div>
@@ -305,7 +338,8 @@
     </section>
 
     <section data-team="1">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:megaphone"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Marketing</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:megaphone"></iconify-icon></span><div><p class="kicker">Potential use cases</p><h2>Marketing</h2></div><span class="tbc"><iconify-icon icon="lucide:circle-alert"></iconify-icon>To be confirmed</span></div>
+      <div class="tbc-wm">To be confirmed</div>
       <div class="ucs">
         <div class="uc">
           <div class="uc-top"><h3>Brand voice</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
@@ -345,7 +379,8 @@
     </section>
 
     <section data-team="1">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:handshake"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Sales &amp; BD</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:handshake"></iconify-icon></span><div><p class="kicker">Potential use cases</p><h2>Sales &amp; BD</h2></div><span class="tbc"><iconify-icon icon="lucide:circle-alert"></iconify-icon>To be confirmed</span></div>
+      <div class="tbc-wm">To be confirmed</div>
       <div class="ucs">
         <div class="uc">
           <div class="uc-top"><h3>Proposal drafting</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
@@ -385,7 +420,8 @@
     </section>
 
     <section data-team="1">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:calculator"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Finance</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:calculator"></iconify-icon></span><div><p class="kicker">Potential use cases</p><h2>Finance</h2></div><span class="tbc"><iconify-icon icon="lucide:circle-alert"></iconify-icon>To be confirmed</span></div>
+      <div class="tbc-wm">To be confirmed</div>
       <div class="ucs">
         <div class="uc">
           <div class="uc-top"><h3>Renewal alerts</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>
@@ -429,7 +465,8 @@
     </section>
 
     <section data-team="1">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:users-round"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>HR</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:users-round"></iconify-icon></span><div><p class="kicker">Potential use cases</p><h2>HR</h2></div><span class="tbc"><iconify-icon icon="lucide:circle-alert"></iconify-icon>To be confirmed</span></div>
+      <div class="tbc-wm">To be confirmed</div>
       <div class="ucs">
         <div class="uc">
           <div class="uc-top"><h3>Policy answers</h3><span class="bdg gem"><img src="https://www.gstatic.com/images/branding/productlogos/gemini/v1/192px.svg" alt="">Skill</span></div>
@@ -471,7 +508,8 @@
     </section>
 
     <section data-team="1">
-      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:settings-2"></iconify-icon></span><div><p class="kicker">Use cases</p><h2>Admin &amp; Ops</h2></div></div>
+      <div class="slide-head"><span class="hicon"><iconify-icon icon="lucide:settings-2"></iconify-icon></span><div><p class="kicker">Potential use cases</p><h2>Admin &amp; Ops</h2></div><span class="tbc"><iconify-icon icon="lucide:circle-alert"></iconify-icon>To be confirmed</span></div>
+      <div class="tbc-wm">To be confirmed</div>
       <div class="ucs">
         <div class="uc">
           <div class="uc-top"><h3>Minutes into actions</h3><span class="bdg studio"><i class="smk"></i>Studio</span></div>

@@ -1,7 +1,6 @@
 ---
 title: "AI Gateway Development"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
@@ -403,7 +402,9 @@ layout: null
           sec.style.position = 'relative'; sec.style.top = '0'; sec.style.left = '0';
           return html2canvas(sec, {
             backgroundColor: getComputedStyle(document.body).backgroundColor,
-            scale: 2, useCORS: true, logging: false, width: 1280, height: 720
+            scale: 2, useCORS: true, logging: false,
+            width: sec.offsetWidth, height: sec.offsetHeight,
+            windowWidth: sec.offsetWidth, windowHeight: sec.offsetHeight
           }).then(function (cv) {
             sl.style.transform = keep.t; sl.style.left = keep.l; sl.style.top = keep.tp;
             sec.style.top = keep.st; sec.style.left = keep.sl2; sec.style.position = keep.sp;

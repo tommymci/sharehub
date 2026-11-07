@@ -1,7 +1,6 @@
 ---
 title: "AI Gateway Development"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
@@ -205,6 +204,31 @@ layout: null
   .ord b{ color:#fff; font-weight:800; font-size:14.5px; flex:none; }
   .ord p{ margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
 
+  /* ---------- phone: flatten the deck into a scrollable page ----------
+     Reveal keeps one slide on screen inside a fixed, non-scrolling viewport,
+     which is why a zoomed slide cannot be dragged around. On a phone the deck
+     becomes an ordinary tall page at its natural 1280px width: every slide
+     stacked, nothing transformed, so one finger pans and two fingers zoom
+     exactly as they do on any website.
+
+     This is driven by a class, not a media query — the viewport is declared
+     at 1300px, so `max-width` queries would compare against 1300 and never
+     match on the device they are meant to catch. */
+  html.m, html.m body{ height:auto; overflow:visible; }
+  html.m .reveal-viewport{ position:static; height:auto; overflow:visible; }
+  html.m .reveal{ position:static; height:auto; width:1280px; margin:0 auto; }
+  html.m .reveal .slides{ position:static !important; transform:none !important;
+    width:1280px !important; left:0 !important; top:0 !important; bottom:auto !important;
+    padding:0 !important; }
+  html.m .reveal .slides > section{ position:static !important; display:flex !important;
+    opacity:1 !important; visibility:visible !important; transform:none !important;
+    width:1280px !important; height:700px !important; margin:0 0 18px !important;
+    top:auto !important; left:auto !important; }
+  html.m .reveal .progress, html.m .reveal .controls,
+  html.m .reveal .slide-number{ display:none !important; }
+  /* fixed chrome would hover over the zoomed slide — let it scroll away */
+  html.m .brandbar, html.m .btn-f, html.m .btn-t, html.m .btn-c{ position:absolute; }
+
   /* ---- light theme ---- */
   html.light{ --bg:#FFFFFF; --panel:#F3F6FA; --panel-2:#FAFBFD; --line-s:#D8E2EC;
               --text:#0A1726; --muted:#5A6B82; --mc-orange:#B45309; --mc-orange-deep:#92400E;
@@ -310,12 +334,13 @@ layout: null
        between slides. */
     var isNarrow = window.matchMedia('(max-width: 900px)').matches;
     if (isNarrow) {
+      document.documentElement.classList.add('m');
       var vp = document.getElementById('vp');
       if (vp) vp.setAttribute('content',
-        'width=1300, initial-scale=0.28, minimum-scale=0.2, maximum-scale=6, user-scalable=yes');
+        'width=1300, initial-scale=0.3, minimum-scale=0.25, maximum-scale=6, user-scalable=yes');
     }
     Reveal.initialize({ width:1280, height:720, margin:0.02, hash:true,
-      slideNumber:'c/t', controls:isNarrow, controlsLayout:'bottom-right',
+      slideNumber:'c/t', controls:false,
       touch:!isNarrow, center:!isNarrow, progress:true, transition:'slide',
       transitionSpeed:'fast' });
     (function () {

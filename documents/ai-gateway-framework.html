@@ -1,14 +1,13 @@
 ---
 title: "MC AI Gateway Framework"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" id="vp" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark light">
 <title>AI Gateway Framework</title>
 <link rel="icon" type="image/png" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
@@ -470,10 +469,26 @@ layout: null
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
   <script>
-    var isNarrow = window.matchMedia('(max-width: 768px)').matches;
-    Reveal.initialize({ width:1280, height:720, margin:0.02, center:true, hash:true,
-      slideNumber:'c/t', controls:false, progress:true, transition:'slide',
-      transitionSpeed:'fast', view: isNarrow ? 'scroll' : null });
+    /* On a phone, Reveal's own scaling is the problem: each slide is a CSS
+       transform, and pinch-zooming a transformed element is what makes the
+       content jump or refuse to pan. So on narrow screens the page declares a
+       desktop-width viewport, Reveal lays the slide out at its natural size,
+       and the browser's own zoom and pan do the work — the behaviour people
+       already expect from a wide page on a phone.
+
+       Reveal's touch handling is turned off there for the same reason (it
+       swallows the second finger), so the on-screen arrows come back to move
+       between slides. */
+    var isNarrow = window.matchMedia('(max-width: 900px)').matches;
+    if (isNarrow) {
+      var vp = document.getElementById('vp');
+      if (vp) vp.setAttribute('content',
+        'width=1300, initial-scale=0.28, minimum-scale=0.2, maximum-scale=6, user-scalable=yes');
+    }
+    Reveal.initialize({ width:1280, height:720, margin:0.02, hash:true,
+      slideNumber:'c/t', controls:isNarrow, controlsLayout:'bottom-right',
+      touch:!isNarrow, center:!isNarrow, progress:true, transition:'slide',
+      transitionSpeed:'fast' });
     (function () {
       var KEY = 'gws-theme', root = document.documentElement;
       function apply(m){ root.classList.toggle('light', m === 'light');

@@ -1,7 +1,6 @@
 ---
 title: "MC AI Gateway Framework"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
@@ -559,13 +558,26 @@ layout: null
         var chrome = [btn, document.getElementById('themeBtn'),
                       document.querySelector('.btn-f')];
         lib().then(function () {
+          /* Capture the slide itself, not the page around it. Reveal scales and
+             positions .slides with a transform, so that is neutralised for the
+             shot and put back afterwards — otherwise html2canvas bakes in
+             whatever zoom the window happens to be at. */
+          var sec = document.querySelector('.reveal .slides section.present')
+                 || document.querySelector('.reveal .slides section');
+          if (!sec) { btn.classList.remove('busy'); return; }
+          var sl = document.querySelector('.reveal .slides');
+          var keep = { t: sl.style.transform, l: sl.style.left, tp: sl.style.top,
+                       st: sec.style.top, sl2: sec.style.left, sp: sec.style.position };
           var subs = inlineIcons();
           chrome.forEach(function (e) { if (e) e.style.visibility = 'hidden'; });
-          return html2canvas(document.body, {
+          sl.style.transform = 'none'; sl.style.left = '0'; sl.style.top = '0';
+          sec.style.position = 'relative'; sec.style.top = '0'; sec.style.left = '0';
+          return html2canvas(sec, {
             backgroundColor: getComputedStyle(document.body).backgroundColor,
-            scale: 2, useCORS: true, logging: false,
-            width: window.innerWidth, height: window.innerHeight
+            scale: 2, useCORS: true, logging: false, width: 1280, height: 720
           }).then(function (cv) {
+            sl.style.transform = keep.t; sl.style.left = keep.l; sl.style.top = keep.tp;
+            sec.style.top = keep.st; sec.style.left = keep.sl2; sec.style.position = keep.sp;
             chrome.forEach(function (e) { if (e) e.style.visibility = ''; });
             restore(subs);
             var n = (Reveal.getIndices().h || 0) + 1;

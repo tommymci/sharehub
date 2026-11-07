@@ -1,14 +1,13 @@
 ---
 title: "AI Gateway Development"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" id="vp" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="color-scheme" content="dark light">
 <title>AI Gateway Development</title>
 <link rel="icon" type="image/png" href="https://apps.masterconcept.ai/static/brand/brand/128/masterconcept-mark-128.png">
@@ -205,44 +204,6 @@ layout: null
   .ord b{ color:#fff; font-weight:800; font-size:14.5px; flex:none; }
   .ord p{ margin:0; color:var(--muted); font-size:14px; line-height:1.4; }
 
-  /* ---------- phone: flatten the deck into a scrollable page ----------
-     Reveal keeps one slide on screen inside a fixed, non-scrolling viewport,
-     which is why a zoomed slide cannot be dragged around. On a phone the deck
-     becomes an ordinary tall page at its natural 1280px width: every slide
-     stacked, nothing transformed, so one finger pans and two fingers zoom
-     exactly as they do on any website.
-
-     This is driven by a class, not a media query — the viewport is declared
-     at 1300px, so `max-width` queries would compare against 1300 and never
-     match on the device they are meant to catch. */
-  html.m, html.m body{ height:auto; overflow:visible; }
-  html.m .reveal-viewport{ position:static; height:auto; overflow:visible; }
-  html.m .reveal{ position:static; height:auto; width:1280px; margin:0 auto; }
-  html.m .reveal .slides{ position:static !important; transform:none !important;
-    width:1280px !important; left:0 !important; top:0 !important; bottom:auto !important;
-    padding:0 !important; }
-  html.m .reveal .slides > section{ position:static !important; display:flex !important;
-    opacity:1 !important; visibility:visible !important; transform:none !important;
-    width:1280px !important; height:700px !important; margin:0 0 18px !important;
-    top:auto !important; left:auto !important; }
-  html.m .reveal .progress, html.m .reveal .controls,
-  html.m .reveal .slide-number{ display:none !important; }
-  /* The stack is shorter than the (very tall) 1300px-wide viewport, so this
-     centres it on screen instead of pinning it to the top. */
-  html.m body{ min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-    padding-top:170px; padding-bottom:40px; }   /* clear the enlarged chrome */
-  /* Fixed chrome would hover over the zoomed slide — let it scroll away. It is
-     also sized UP, not down: at a 1300px viewport scaled to fit a phone, the
-     desktop sizes land at about six physical pixels. */
-  html.m .brandbar, html.m .btn-f, html.m .btn-t, html.m .btn-c{ position:absolute; }
-  html.m .brandbar{ top:30px; left:36px; padding:16px 30px 16px 22px; border-radius:30px; gap:20px; }
-  html.m .brandbar img{ height:50px; }
-  html.m .brandbar .nm{ font-size:31px; }
-  html.m .btn-f, html.m .btn-t, html.m .btn-c{ width:88px; height:88px; border-radius:26px; top:30px; }
-  html.m .btn-f{ right:36px; } html.m .btn-t{ right:146px; } html.m .btn-c{ right:256px; }
-  html.m .btn-f iconify-icon, html.m .btn-t iconify-icon,
-  html.m .btn-c iconify-icon{ font-size:42px; }
-
   /* ---- light theme ---- */
   html.light{ --bg:#FFFFFF; --panel:#F3F6FA; --panel-2:#FAFBFD; --line-s:#D8E2EC;
               --text:#0A1726; --muted:#5A6B82; --mc-orange:#B45309; --mc-orange-deep:#92400E;
@@ -353,32 +314,37 @@ layout: null
       if (vp) vp.setAttribute('content',
         'width=1300, initial-scale=0.3, minimum-scale=0.25, maximum-scale=6, user-scalable=yes');
     }
-    /* On a phone reveal.js is not started at all. Its docs offer scroll view for
-       mobile (which rescales every slide to the viewport) and nothing for pinch
-       zoom or panning — disableLayout is the only documented way out of its
-       scaling. Leaving it uninitialised is simpler and more predictable: the
-       sections stay plain blocks at their natural size, laid out by the CSS
-       above, with no transforms, no swipe capture and no slide changes to
-       trigger by accident. */
-    if (!isNarrow) {
-      Reveal.initialize({ width:1280, height:720, margin:0.02, hash:true,
-        slideNumber:'c/t', controls:false, progress:true,
-        transition:'slide', transitionSpeed:'fast' });
-    }
-    (function () {
-      var KEY = 'gws-theme', root = document.documentElement;
-      function apply(m){ root.classList.toggle('light', m === 'light');
-        var i = document.querySelector('#themeBtn iconify-icon');
-        if (i) i.setAttribute('icon', m === 'light' ? 'lucide:moon' : 'lucide:sun'); }
-      var forced = new URLSearchParams(location.search).get('theme'), saved;
-      try { saved = localStorage.getItem(KEY); } catch(e){}
-      apply(forced || saved || 'dark');
-      document.addEventListener('click', function(e){
-        if (!e.target.closest('#themeBtn')) return;
-        var n = root.classList.contains('light') ? 'dark' : 'light';
-        apply(n); try { localStorage.setItem(KEY, n); } catch(e){}
+    /* One slide at a time on every device. The deck is not responsive by
+       design — on a phone the slide scales to fit and Chrome's own pinch zoom
+       takes it from there, so nothing here intercepts the second finger.
+       The arrows are shown on small screens because a swipe is easy to mistake
+       for a pan once you are zoomed in. */
+    var isNarrow = window.matchMedia('(max-width: 900px)').matches;
+    Reveal.initialize({ width:1280, height:720, margin:0.02, center:true, hash:true,
+      slideNumber:'c/t', controls:isNarrow, controlsLayout:'bottom-right',
+      controlsBackArrows:'visible', progress:true,
+      transition:'slide', transitionSpeed:'fast' });
+
+    /* Tap anywhere to advance, on phones only. Guarded two ways, because the
+       same finger is also used to pan a zoomed slide: a gesture that moved more
+       than a few pixels is a pan and is ignored, and taps on a link, a button
+       or the arrows are left to do their own job. Wraps at the end so a deck
+       this short can be read in a loop. */
+    if (isNarrow) {
+      var tx = 0, ty = 0, moved = false;
+      document.addEventListener('pointerdown', function (e) {
+        tx = e.clientX; ty = e.clientY; moved = false;
+      }, true);
+      document.addEventListener('pointermove', function (e) {
+        if (Math.abs(e.clientX - tx) > 12 || Math.abs(e.clientY - ty) > 12) moved = true;
+      }, true);
+      document.addEventListener('click', function (e) {
+        if (moved) return;
+        if (e.target.closest('a, button, input, select, textarea, .controls')) return;
+        if (Reveal.isLastSlide()) Reveal.slide(0); else Reveal.next();
       });
-    })();
+    }
+
     /* Save the current slide as a PNG. iconify-icon keeps its <svg> in a shadow
        root, which html2canvas cannot see — so each icon is mirrored into a plain
        span for the capture and removed again afterwards. */
@@ -429,7 +395,7 @@ layout: null
           }).then(function (cv) {
             chrome.forEach(function (e) { if (e) e.style.visibility = ''; });
             restore(subs);
-            var n = (window.Reveal && Reveal.getIndices ? Reveal.getIndices().h : 0) + 1;
+            var n = (Reveal.getIndices().h || 0) + 1;
             var a = document.createElement('a');
             a.download = 'ai-gateway-' + n + '.png';
             a.href = cv.toDataURL('image/png');

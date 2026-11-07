@@ -1,7 +1,6 @@
 ---
 title: "MC AI Gateway Framework"
 date: 2026-11-07
-layout: null
 ---
 
 <!DOCTYPE html>
@@ -227,8 +226,21 @@ layout: null
     top:auto !important; left:auto !important; }
   html.m .reveal .progress, html.m .reveal .controls,
   html.m .reveal .slide-number{ display:none !important; }
-  /* fixed chrome would hover over the zoomed slide — let it scroll away */
+  /* The stack is shorter than the (very tall) 1300px-wide viewport, so this
+     centres it on screen instead of pinning it to the top. */
+  html.m body{ min-height:100vh; display:flex; flex-direction:column; justify-content:center;
+    padding-top:170px; padding-bottom:40px; }   /* clear the enlarged chrome */
+  /* Fixed chrome would hover over the zoomed slide — let it scroll away. It is
+     also sized UP, not down: at a 1300px viewport scaled to fit a phone, the
+     desktop sizes land at about six physical pixels. */
   html.m .brandbar, html.m .btn-f, html.m .btn-t, html.m .btn-c{ position:absolute; }
+  html.m .brandbar{ top:30px; left:36px; padding:16px 30px 16px 22px; border-radius:30px; gap:20px; }
+  html.m .brandbar img{ height:50px; }
+  html.m .brandbar .nm{ font-size:31px; }
+  html.m .btn-f, html.m .btn-t, html.m .btn-c{ width:88px; height:88px; border-radius:26px; top:30px; }
+  html.m .btn-f{ right:36px; } html.m .btn-t{ right:146px; } html.m .btn-c{ right:256px; }
+  html.m .btn-f iconify-icon, html.m .btn-t iconify-icon,
+  html.m .btn-c iconify-icon{ font-size:42px; }
 
   /* ---- light theme ---- */
   html.light{ --bg:#FFFFFF; --panel:#F3F6FA; --panel-2:#FAFBFD; --line-s:#D8E2EC;
@@ -512,10 +524,18 @@ layout: null
       if (vp) vp.setAttribute('content',
         'width=1300, initial-scale=0.3, minimum-scale=0.25, maximum-scale=6, user-scalable=yes');
     }
-    Reveal.initialize({ width:1280, height:720, margin:0.02, hash:true,
-      slideNumber:'c/t', controls:false,
-      touch:!isNarrow, center:!isNarrow, progress:true, transition:'slide',
-      transitionSpeed:'fast' });
+    /* On a phone reveal.js is not started at all. Its docs offer scroll view for
+       mobile (which rescales every slide to the viewport) and nothing for pinch
+       zoom or panning — disableLayout is the only documented way out of its
+       scaling. Leaving it uninitialised is simpler and more predictable: the
+       sections stay plain blocks at their natural size, laid out by the CSS
+       above, with no transforms, no swipe capture and no slide changes to
+       trigger by accident. */
+    if (!isNarrow) {
+      Reveal.initialize({ width:1280, height:720, margin:0.02, hash:true,
+        slideNumber:'c/t', controls:false, progress:true,
+        transition:'slide', transitionSpeed:'fast' });
+    }
     (function () {
       var KEY = 'gws-theme', root = document.documentElement;
       function apply(m){ root.classList.toggle('light', m === 'light');
@@ -580,7 +600,7 @@ layout: null
           }).then(function (cv) {
             chrome.forEach(function (e) { if (e) e.style.visibility = ''; });
             restore(subs);
-            var n = (Reveal.getIndices().h || 0) + 1;
+            var n = (window.Reveal && Reveal.getIndices ? Reveal.getIndices().h : 0) + 1;
             var a = document.createElement('a');
             a.download = 'ai-gateway-' + n + '.png';
             a.href = cv.toDataURL('image/png');
